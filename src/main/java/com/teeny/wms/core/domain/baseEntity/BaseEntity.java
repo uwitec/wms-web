@@ -1,4 +1,4 @@
-package com.teeny.wms.core.domain.BaseEntity;
+package com.teeny.wms.core.domain.baseEntity;
 
 /**
  * Created by lilei on 2017/7/23.
@@ -9,6 +9,14 @@ public class BaseEntity<T> {
     private int result;//状态码
     private String msg;//消息
     private T data;
+
+    public BaseEntity(T data) {
+        this.data = data;
+    }
+
+    public BaseEntity() {
+
+    }
 
     public int getResult() {
         return result;

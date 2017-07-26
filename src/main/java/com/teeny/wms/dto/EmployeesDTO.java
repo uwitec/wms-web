@@ -1,10 +1,12 @@
 package com.teeny.wms.dto;
 
+import java.io.Serializable;
+
 /**
  * Created by lilei on 2017/7/17.
  *
  */
-public class EmployeesDTO {
+public class EmployeesDTO implements Serializable{
     private int id;
     private String username;
     private String password;
