@@ -43,11 +43,11 @@ AS
            ,ISNULL(d.locationid,0) locationid,ISNULL(d.WholeLoc,0) WholeLoc,ISNULL(d.SingleLoc,0) SingleLoc
            ,ISNULL(d.Supplier_id,0) Supplier_id
     INTO #pda_Products
-    FROM products a LEFT JOIN unit b 
+    FROM [GXQHYY].dbo.products a LEFT JOIN [GXQHYY].dbo.unit b
          ON a.unit1_id=b.unit_id
-         LEFT JOIN unit c 
+         LEFT JOIN [GXQHYY].dbo.unit c
          ON a.WholeUnit_id=b.unit_id 
-         LEFT JOIN productbalance d
+         LEFT JOIN [GXQHYY].dbo.productbalance d
          ON a.product_id=d.p_id AND d.Y_id=2
     WHERE a.deleted<>1 AND child_number=0 AND a.ModifyDate>@timestamp AND a.ModifyDate<=@Curtimestamp
     
@@ -73,10 +73,10 @@ AS
   ELSE IF @Data_Type=2
   BEGIN
     SELECT @timestamp=e_timestamp FROM pda_timestamp
-    SELECT @Curtimestamp=CAST(ISNULL(MAX(ModifyDate),0) AS BIGINT) FROM employees 
+    SELECT @Curtimestamp=CAST(ISNULL(MAX(ModifyDate),0) AS BIGINT) FROM [GXQHYY].dbo.employees
     SELECT a.emp_id e_id,a.serial_number,b.loginpass password,a.pinyin,a.name,a.alias,a.phone,a.address
     INTO #pda_employees
-    FROM employees a LEFT JOIN users b 
+    FROM [GXQHYY].dbo.employees a LEFT JOIN [GXQHYY].dbo.users b
          ON a.emp_id=b.e_id    
     WHERE a.deleted<>1 AND a.child_number=0 AND a.ModifyDate>@timestamp AND a.ModifyDate<=@Curtimestamp
     
@@ -96,10 +96,10 @@ AS
   ELSE IF @Data_Type=3
   BEGIN
     SELECT @timestamp=s_timestamp FROM pda_timestamp
-    SELECT @Curtimestamp=CAST(ISNULL(MAX(ModifyDate),0) AS BIGINT) FROM storages 
+    SELECT @Curtimestamp=CAST(ISNULL(MAX(ModifyDate),0) AS BIGINT) FROM [GXQHYY].dbo.storages
     SELECT storage_id s_id,serial_number,pinyin,name,alias,WholeFlag,storeCondition,qualityFlag
     INTO #pda_storages
-    FROM storages   
+    FROM [GXQHYY].dbo.storages
     WHERE deleted<>1 AND child_number=0 AND ModifyDate>@timestamp AND ModifyDate<=@Curtimestamp
     
     DELETE CI 
@@ -118,10 +118,10 @@ AS
   ELSE IF @Data_Type=4
   BEGIN
     SELECT @timestamp=sa_timestamp FROM pda_timestamp
-    SELECT @Curtimestamp=CAST(ISNULL(MAX(ModifyDate),0) AS BIGINT) FROM stockArea 
+    SELECT @Curtimestamp=CAST(ISNULL(MAX(ModifyDate),0) AS BIGINT) FROM [GXQHYY].dbo.stockArea
     SELECT a.sa_id,a.s_id,a.serial_number,b.WholeFlag,b.storeCondition,b.qualityFlag,a.name
     INTO #pda_stockArea
-    FROM stockArea a INNER JOIN storages b 
+    FROM [GXQHYY].dbo.stockArea a INNER JOIN [GXQHYY].dbo.storages b
          ON a.s_id=b.storage_id
     WHERE a.deleted<>1 AND a.ModifyDate>@timestamp AND a.ModifyDate<=@Curtimestamp
     
@@ -141,10 +141,10 @@ AS
   ELSE IF @Data_Type=5
   BEGIN
     SELECT @timestamp=sc_timestamp FROM pda_timestamp
-    SELECT @Curtimestamp=CAST(ISNULL(MAX(ModifyDate),0) AS BIGINT) FROM WMSRegion 
+    SELECT @Curtimestamp=CAST(ISNULL(MAX(ModifyDate),0) AS BIGINT) FROM [GXQHYY].dbo.WMSRegion
     SELECT a.ID sc_id,b.s_id,a.serial_number,a.name
     INTO #pda_Area
-    FROM WMSRegion a INNER JOIN stockArea b 
+    FROM [GXQHYY].dbo.WMSRegion a INNER JOIN [GXQHYY].dbo.stockArea b
          ON a.Store_KQ_ID=b.sa_id   
     WHERE a.deleted<>1 AND a.ModifyDate>@timestamp AND a.ModifyDate<=@Curtimestamp
     
@@ -164,10 +164,10 @@ AS
   ELSE IF @Data_Type=6
   BEGIN
     SELECT @timestamp=l_timestamp FROM pda_timestamp
-    SELECT @Curtimestamp=CAST(ISNULL(MAX(ModifyDate),0) AS BIGINT) FROM stockArea 
+    SELECT @Curtimestamp=CAST(ISNULL(MAX(ModifyDate),0) AS BIGINT) FROM [GXQHYY].dbo.stockArea
     SELECT a.loc_id l_id,a.s_id,a.loc_code,a.loc_name,a.sa_id,a.Regionid sc_id,LocationType ShelfName
     INTO #pda_location
-    FROM location a INNER JOIN storages b 
+    FROM [GXQHYY].dbo.location a INNER JOIN [GXQHYY].dbo.storages b
          ON a.s_id=b.storage_id
     WHERE a.deleted<>1 AND a.ModifyDate>@timestamp AND a.ModifyDate<=@Curtimestamp
     
@@ -187,11 +187,11 @@ AS
   ELSE IF @Data_Type=7
   BEGIN
     SELECT @timestamp=c_timestamp FROM pda_timestamp
-    SELECT @Curtimestamp=CAST(ISNULL(MAX(ModifyDate),0) AS BIGINT) FROM storages 
+    SELECT @Curtimestamp=CAST(ISNULL(MAX(ModifyDate),0) AS BIGINT) FROM [GXQHYY].dbo.storages
     SELECT a.client_id c_id,a.serial_number,a.pinyin,a.name,a.alias,a.csflag,a.contact_personal
            ,a.phone_number,a.address,ISNULL(b.RoadName,'') RoadName
     INTO #pda_clients
-    FROM clients a LEFT JOIN SendRoad b 
+    FROM [GXQHYY].dbo.clients a LEFT JOIN [GXQHYY].dbo.SendRoad b
          ON a.RoadID=b.RoadID  
     WHERE a.deleted<>1 AND a.child_number=0 AND a.ModifyDate>@timestamp AND a.ModifyDate<=@Curtimestamp
     
@@ -215,7 +215,7 @@ AS
     INSERT INTO pda_PutOnBill
       (billid,billnumber,e_id,billstates,pdastates,pdaInTime,pdaReTime,pdaWrTime)
     SELECT a.Gspbillid,b.billnumber,b.e_id,a.BillStates,0,GETDATE(),0,0
-    FROM GSPbillidx a INNER JOIN orderidx b 
+    FROM [GXQHYY].dbo.GSPbillidx a INNER JOIN [GXQHYY].dbo.orderidx b
          ON a.Ybillid=b.billid AND a.Ybilltype=b.billtype
     WHERE a.Gspbillid=@billid
     
@@ -224,7 +224,7 @@ AS
        ,CostPrice,CostTotal,S_id,Location_id,Supplier_id,InstoreTime,LineSort,DealStates,pdastates)
     SELECT Gspsmb_id,Gspbill_id,p_id,MakeDate,Validdate,Batchno,EligibleQty,TaxPrice,TaxTotal
            ,CostPrice,CostTotal,S_id,Location_id,Supplier_id,InstoreTime,Gspsmb_id,0,0
-    FROM GSPbilldetail
+    FROM [GXQHYY].dbo.GSPbilldetail
     WHERE Gspbill_id=@billid  
   END
   --上架确认单回写
@@ -232,7 +232,7 @@ AS
   BEGIN
     SELECT c.bill_id,c.smb_id,c.EligibleQty,c.S_id,c.Location_id,c.LineSort
     INTO #PutOnBill_D
-    FROM pda_PutOnBill a INNER JOIN GSPbillidx b
+    FROM pda_PutOnBill a INNER JOIN [GXQHYY].dbo.GSPbillidx b
          ON a.billid=b.Gspbillid 
          INNER JOIN pda_PutOnBill_D c 
          ON a.billid=c.bill_id
@@ -240,7 +240,7 @@ AS
     
     UPDATE R SET  
     AuditMan1=@login_id,AuditTime1=GETDATE(),S_id=CI.S_id
-    FROM GSPbillidx R INNER JOIN 
+    FROM [GXQHYY].dbo.GSPbillidx R INNER JOIN
          (
 			SELECT bill_id,MIN(S_id) S_id  
 			FROM #PutOnBill_D
@@ -251,7 +251,7 @@ AS
 	EligibleQty=CASE WHEN R.EligibleQty>=CI.EligibleQty THEN R.EligibleQty ELSE CI.EligibleQty END
 	,S_id=CI.S_id
 	,Location_id=CI.Location_id
-	FROM GSPbilldetail R INNER JOIN #PutOnBill_D CI 
+	FROM [GXQHYY].dbo.GSPbilldetail R INNER JOIN #PutOnBill_D CI
 	     ON R.Gspsmb_id=CI.smb_id	
 	WHERE CI.smb_id>0
 	     
@@ -272,7 +272,7 @@ AS
 		   ,a.CanSaleQty,a.BatchBarCode,a.Batchcomment,a.BatchPrice,a.Iscold,a.Isspec,a.Y_id,a.Aoid,a.SfdAcounts
 		   ,a.OrgBillid,a.YrowGuid,a.CommisionFlag,a.RowGUID,a.Comment,a.Comment2,a.Comment3,a.factoryid,a.costtaxrate
 		   ,a.costtaxprice,a.costtaxtotal,a.OldOrderQty,a.OldOrderUnit,a.OldOrderUnitId,a.OldOrderUnitRate,a.WholeQty,a.PartQty
-	FROM GSPbilldetail a INNER JOIN #PutOnBill_D b 
+	FROM [GXQHYY].dbo.GSPbilldetail a INNER JOIN #PutOnBill_D b
 	     ON a.Gspsmb_id=b.LineSort	
 	WHERE b.smb_id=0
 	
@@ -283,7 +283,7 @@ AS
 	,TaxTotal=R.EligibleQty*R.TaxPrice
 	,costtaxtotal=R.EligibleQty*R.costtaxprice
 	,TaxMoney=R.EligibleQty*(R.TaxPrice-R.DiscountPrice)
-    FROM GSPbilldetail R INNER JOIN 
+    FROM [GXQHYY].dbo.GSPbilldetail R INNER JOIN
          (
 			SELECT bill_id 
 			FROM #PutOnBill_D
@@ -312,7 +312,7 @@ AS
     INSERT INTO pda_CheckBill
       (billid,billnumber,FirstStates,c_id,TempStore,billstates,pdastates,pdaInTime,pdaReTime,pdaWrTime)
     SELECT b.billid,b.billnumber,b.PrioRity,b.c_id,a.HoldId,b.billstates,0,GETDATE(),0,0
-    FROM GSPbillidx a INNER JOIN orderidx b 
+    FROM [GXQHYY].dbo.GSPbillidx a INNER JOIN [GXQHYY].dbo.orderidx b
          ON a.Ybillid=b.billid AND a.Ybilltype=b.billtype
          LEFT JOIN pda_CheckBill c 
          ON b.billid=c.billid
@@ -321,7 +321,7 @@ AS
     INSERT INTO pda_CheckBill_B
       (smb_id,bill_id,PickType,barcode,EligibleQty,PickNo,pickemp_id,checkemp_id,DealStates,pdastates)
     SELECT id,a.billid,a.billtype,a.Tag,a.qty,b.BillNumber,b.B_CustomName4,0,0,0
-    FROM GSPWholeTag a INNER JOIN GSPbillidx b 
+    FROM [GXQHYY].dbo.GSPWholeTag a INNER JOIN [GXQHYY].dbo.GSPbillidx b
          ON a.billid=b.Gspbillid
     WHERE a.billid=@billid  
   END
@@ -330,7 +330,7 @@ AS
   BEGIN
     UPDATE CI SET 
     billstates=CI.billstates
-    FROM pda_CheckBill R INNER JOIN orderidx CI
+    FROM pda_CheckBill R INNER JOIN [GXQHYY].dbo.orderidx CI
          ON R.billid=CI.billid 
     WHERE R.pdastates=2 AND CI.BillStates=3	    
   END  
@@ -349,7 +349,7 @@ AS
            ,'','',b.contact_personal,b.phone_number,b.Address,g.TaxTotal,b.comment,b.WholeQty,b.PartQty
 		   ,b.inbags,'','',0,g.isSpecial,g.isCold,g.IsOTC,0,GETDATE()
 		   ,0,0
-	FROM Sendidx a INNER JOIN VW_GSPBILLIDX b
+	FROM [GXQHYY].dbo.Sendidx a INNER JOIN [GXQHYY].dbo.VW_GSPBILLIDX b
 		 ON a.Send_id=b.Sendid
 		 LEFT JOIN orderidx O 
 		 ON b.Yguid = o.Guid
@@ -361,7 +361,7 @@ AS
 						 ,CASE WHEN b.isspec = 1 THEN 1 ELSE 0 END AS IsSpecial 
 						 ,CASE WHEN b.Iscold = 1 THEN 1 ELSE 0 END AS Iscold 
 						 ,CASE WHEN b.otcflag = '1' THEN 1 ELSE 0 END AS IsOTC 
-				  FROM GSPbilldetail a  left join vw_Products b 
+				  FROM [GXQHYY].dbo.GSPbilldetail a  left join [GXQHYY].dbo.vw_Products b
 					   ON a.p_id=b.product_id 								
 				) gd 
 			GROUP by Gspbill_id 		 
@@ -401,13 +401,13 @@ AS
     Transportation_States=2
     ,ArriveCustomer=CI.pdaOutTime
     ,ArriveStation=CI.pdaOutTime
-    FROM Sendidx R INNER JOIN  
+    FROM [GXQHYY].dbo.Sendidx R INNER JOIN
          (
            SELECT billid,MAX(pdaOutTime) pdaOutTime
            FROM #pda_SendBill
            GROUP BY billid           
          ) CI ON R.Send_id=CI.billid
-    WHERE NOT EXISTS(SELECT 1 FROM Sendmangebill s WHERE s.sendid=R.Send_id AND s.Transportation_States<>2)
+    WHERE NOT EXISTS(SELECT 1 FROM [GXQHYY].dbo.Sendmangebill s WHERE s.sendid=R.Send_id AND s.Transportation_States<>2)
 
     DROP TABLE #pda_SendBill     
   END  
@@ -421,19 +421,19 @@ AS
     INSERT INTO pda_pdBill
       (billid,pdname,s_id,billstates,pdastates,pdaInTime,pdaReTime,pdaWrTime)
     SELECT pdidx,'',k_id,1,0,GETDATE(),0,0
-    FROM pdplanidx
-    WHERE pdidx=@billid and PdStatus=@billstates-1
+    FROM [GXQHYY].dbo.pdplanidx
+    WHERE pdidx=@billid and billstates=@billstates-1
     
     INSERT INTO pda_pdBill_D
       (smb_id,bill_id,p_id,MakeDate,Validdate,Batchno,EligibleQty,pdQty,S_id,Location_id,Supplier_id,InstoreTime,DealStates,pdastates)
     SELECT PdPlan_id,pdidx,p_id,MakeDate,Validdate,Batchno,quantity,0,S_id,Location_id,Supplier_id,InstoreTime,0,0
-    FROM PdPlan 
+    FROM [GXQHYY].dbo.PdPlan
     WHERE pdidx=@billid AND @Data_Type=11
     
     INSERT INTO pda_pdBill_D
       (smb_id,bill_id,p_id,MakeDate,Validdate,Batchno,EligibleQty,pdQty,S_id,Location_id,Supplier_id,InstoreTime,DealStates,pdastates)
     SELECT a.PdPlan_id,a.pdidx,a.p_id,a.MakeDate,a.Validdate,a.Batchno,a.quantity,ISNULL(b.pdQty,0),a.S_id,a.Location_id,a.Supplier_id,a.InstoreTime,0,0
-    FROM PdPlan a LEFT JOIN pda_pdBill_D b 
+    FROM [GXQHYY].dbo.PdPlan a LEFT JOIN pda_pdBill_D b
          ON a.pdidx=b.bill_id AND a.PdPlan_id=b.smb_id AND b.billstates=1
     WHERE pdidx=@billid AND @Data_Type=12 AND a.quantity<>ISNULL(b.pdQty,0)
   END  
@@ -462,7 +462,7 @@ AS
 		  SELECT @smb_id=MAX(smb_id)
 		  FROM (SELECT TOP 1000 * FROM #pdBill_D WHERE billid=@billid ORDER BY smb_id) t 
 		  
-		  SELECT @nOrderYid=y_id,@s_id=k_id FROM pdplanidx WHERE pdidx=@billid 		  
+		  SELECT @nOrderYid=y_id,@s_id=k_id FROM [GXQHYY].dbo.pdplanidx WHERE pdidx=@billid
 		  EXEC TS_H_CreateBillSN 58, 1, NULL, 0, 0, @szBillNumber OUTPUT, @nOrderYid
 		  
 		  INSERT INTO BillDraftidx
@@ -497,10 +497,10 @@ AS
           ,ssmoney=CI.taxtotal
           ,quantity=CI.totalmoney
           ,SendQTY=CI.quantity
-          FROM BillDraftidx R INNER JOIN 
+          FROM [GXQHYY].dbo.BillDraftidx R INNER JOIN
                (
                  SELECT SUM(taxtotal) taxtotal,SUM(totalmoney) totalmoney,SUM(quantity) quantity
-                 FROM GoodsCheckBillDrf
+                 FROM [GXQHYY].dbo.GoodsCheckBillDrf
                  WHERE bill_id=@nNewBillID AND taxtotal>0
                ) CI ON 0=0
           WHERE R.billid=@nNewBillID
