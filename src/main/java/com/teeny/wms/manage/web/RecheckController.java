@@ -36,7 +36,7 @@ public class RecheckController {
         model.addAttribute("data", data);
     }
 
-
+    @RequestMapping(value = "/api/reviewer", method = RequestMethod.GET)
     public void getReviewer(Model model, @RequestHeader("account") int id) {
         BaseEntity<List<CommonDTO>> data = employeesService.getReviewer(id);
     }

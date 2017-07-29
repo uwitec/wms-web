@@ -6,6 +6,7 @@ import com.teeny.wms.service.AcceptanceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -22,9 +23,16 @@ public class AcceptanceController {
     @Autowired
     private AcceptanceService acceptanceService;
 
+    //获取单位
     @RequestMapping(value = "/api/unit", method = RequestMethod.GET)
     public void getUnit(Model model, @RequestHeader("account") int account) {
         BaseEntity<List<CommonDTO>> data = acceptanceService.getUnit(account);
+    }
+
+    //获取订单
+    @RequestMapping(value = "/api/order/{unitId}", method = RequestMethod.GET)
+    public void getBillWithUnitId(Model model, @PathVariable("unitId") int unitId) {
+
     }
 
 }
