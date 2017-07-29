@@ -297,7 +297,7 @@ AS
 	FETCH NEXT FROM Cur_PutOnBill INTO @billid 
 	WHILE @@FETCH_STATUS=0 
 	  BEGIN
-		EXEC dbo.TS_H_CreateNewGspBill @billid,531,20,@nRet OUTPUT
+		EXEC [GXQHYY].dbo.TS_H_CreateNewGspBill @billid,531,20,@nRet OUTPUT
 		IF @nRet>0
 		  UPDATE GSPbillidx SET BillStates=13 WHERE Gspbillid=@billid 
 		FETCH NEXT FROM Cur_PutOnBill INTO @billid 
@@ -463,7 +463,7 @@ AS
 		  FROM (SELECT TOP 1000 * FROM #pdBill_D WHERE billid=@billid ORDER BY smb_id) t 
 		  
 		  SELECT @nOrderYid=y_id,@s_id=k_id FROM [GXQHYY].dbo.pdplanidx WHERE pdidx=@billid
-		  EXEC TS_H_CreateBillSN 58, 1, NULL, 0, 0, @szBillNumber OUTPUT, @nOrderYid
+		  EXEC [GXQHYY].dbo.TS_H_CreateBillSN 58, 1, NULL, 0, 0, @szBillNumber OUTPUT, @nOrderYid
 		  
 		  INSERT INTO BillDraftidx
 		    (billdate,billnumber,billtype,e_id,sout_id,sin_id,auditman,inputman
