@@ -8,7 +8,5 @@ import com.teeny.wms.dto.EmployeesDTO;
  *
  */
 public interface SystemService {
-    Employess findByUsername(String username);
 
-    EmployeesDTO findByPinyin(String username);
 }

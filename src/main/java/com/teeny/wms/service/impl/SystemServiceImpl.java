@@ -13,14 +13,4 @@ import org.springframework.stereotype.Service;
 @Service
 public class SystemServiceImpl implements SystemService {
 
-    @Autowired
-    private EmployessRepository employessRepository;
-
-    public Employess findByUsername(String username) {
-        return employessRepository.findEmployerByUsername(username);
-    }
-
-    public EmployeesDTO findByPinyin(String username) {
-        return employessRepository.findByPinyin(username);
-    }
 }
