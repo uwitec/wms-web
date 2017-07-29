@@ -1,4 +1,4 @@
-# --目标是9系，8系，器械PDA程序通用，但各版本之间字段可能不通用，故建中间表
+--目标是9系，8系，器械PDA程序通用，但各版本之间字段可能不通用，故建中间表
 IF not exists (select 1 from dbo.sysobjects where id = object_id(N'[dbo].[pda_timestamp]') and OBJECTPROPERTY(id, N'IsUserTable') = 1)
 begin
 	CREATE TABLE [dbo].pda_timestamp (
