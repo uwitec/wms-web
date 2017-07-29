@@ -1,11 +1,13 @@
 package com.teeny.wms.core.domain;
 
+import java.io.Serializable;
+
 /**
  * Created by lilei on 2017/7/15.
  *
  */
 
-public class Employess {
+public class Employess implements Serializable{
     private int eid;
     private String serialNumber;
     private String password;

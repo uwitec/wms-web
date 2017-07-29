@@ -19,12 +19,17 @@ public class PasswordValidater implements PasswordEncoder{
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return des.encrytor(rawPass);
+        return rawPass;
     }
 
     public boolean isPasswordValid(String encPass, String rawPass, Object salt) {
+        System.out.print(encPass);
+        System.out.print("---");
+        System.out.print(rawPass);
         String pass1 = ""+encPass;
         String pass2 = encodePassword(rawPass, salt);
-        return pass1.equals(pass2);
+        //return pass1.equals(pass2);
+        boolean flag = encPass.equals(rawPass);
+        return flag;
     }
 }

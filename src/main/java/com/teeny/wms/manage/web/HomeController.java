@@ -1,6 +1,5 @@
 package com.teeny.wms.manage.web;
 
-import com.sun.org.apache.xpath.internal.operations.Mod;
 import com.teeny.wms.core.domain.baseEntity.BaseEntity;
 import com.teeny.wms.dto.BillCountDTO;
 import com.teeny.wms.dto.CommonDTO;

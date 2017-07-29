@@ -7,11 +7,11 @@
       <jdbc-driver>com.microsoft.sqlserver.jdbc.SQLServerDriver</jdbc-driver>
       <jdbc-url>jdbc:sqlserver://localhost;databaseName=GXQHYY</jdbc-url>
     </data-source>
-    <data-source source="LOCAL" name="wms@localhost" uuid="83e88404-13f6-4b37-8c24-659df72b802e">
+    <data-source source="LOCAL" name="yyt@localhost" uuid="baf883eb-7c45-4205-9aa5-b9fc0956fda5">
       <driver-ref>sqlserver.ms</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>com.microsoft.sqlserver.jdbc.SQLServerDriver</jdbc-driver>
-      <jdbc-url>jdbc:sqlserver://localhost;databaseName=wms</jdbc-url>
+      <jdbc-url>jdbc:sqlserver://localhost;databaseName=yyt</jdbc-url>
     </data-source>
   </component>
 </project>

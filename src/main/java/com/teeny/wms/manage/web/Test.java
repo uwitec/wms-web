@@ -1,5 +1,6 @@
 package com.teeny.wms.manage.web;
 
+import com.teeny.wms.dto.CommonDTO;
 import com.teeny.wms.dto.EmployeesDTO;
 import com.teeny.wms.service.SystemService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,7 +54,7 @@ public class Test {
 
     @RequestMapping(value = "/employer", method = RequestMethod.GET)
     public void findEmployerByUsername(Model model) {
-        EmployeesDTO employeesDTO = systemService.findByPinyin("haha");
-        model.addAttribute("emp",employeesDTO);
+        List<CommonDTO> employees = systemService.findAll();
+        model.addAttribute("emp",employees);
     }
 }

@@ -16,7 +16,7 @@
 
 	<oauth2:client-details-service id="clientDetailsService">
 		<oauth2:client client-id="wms" authorities="PLATFORM"
-			scope="SCOPE_TRUST" authorized-grant-types="password,refresh_token" />
+			scope="SCOPE_TRUST" authorized-grant-types="password,authorization_code,refresh_token" />
 	</oauth2:client-details-service>
 
 	<bean id="oauth2ClientDetailsUserService"

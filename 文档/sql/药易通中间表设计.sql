@@ -366,3 +366,24 @@ begin
 	) ON [PRIMARY]
 end
 GO
+
+-- ÐÂÔö±í
+IF not exists (select 1 from dbo.sysobjects where id = object_id(N'[dbo].[oauth_access_token]') and OBJECTPROPERTY(id, N'IsUserTable') = 1)
+begin
+create table oauth_access_token (
+	token_id VARCHAR(256),
+	token VARBINARY(MAX),
+	authentication_id VARCHAR(256),
+	user_name VARCHAR(256),
+	client_id VARCHAR(256),
+	authentication VARBINARY(MAX),
+	refresh_token VARCHAR(256)
+);
+
+IF not exists (select 1 from dbo.sysobjects where id = object_id(N'[dbo].[oauth_refresh_token]') and OBJECTPROPERTY(id, N'IsUserTable') = 1)
+begin
+create table oauth_refresh_token (
+	token_id VARCHAR(256),
+	token VARBINARY(MAX),
+	authentication VARBINARY(MAX)
+);

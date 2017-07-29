@@ -19,4 +19,8 @@ public interface EmployessRepository {
     @Select("SELECT e_id AS id, name FROM pda_employees")
     List<CommonDTO> findAll();
 
+    public Employess findEmployerByUsername(@Param("username") String username);
+
+    public void addEmployer(Employess employess);
+    public EmployeesDTO findByPinyin(@Param("username") String username);
 }

@@ -9,11 +9,9 @@
     
     <select id="findEmployerByUsername" parameterType="string" resultType="com.teeny.wms.core.domain.Employess">
         SELECT
-            e.e_id AS eid,
-            e.pinyin,
-            e.password,
-            e.name AS username
-        FROM pda_employees e WHERE e.name = #{username}
+            e.e_id AS id,
+            e.password
+        FROM pda_employees e WHERE e.pinyin = #{username}
     </select>
 
     <select id="findByPinyin" parameterType="string" resultType="com.teeny.wms.dto.EmployeesDTO">
