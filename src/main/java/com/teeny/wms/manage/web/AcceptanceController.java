@@ -2,6 +2,7 @@ package com.teeny.wms.manage.web;
 
 import com.teeny.wms.core.domain.baseEntity.BaseEntity;
 import com.teeny.wms.dto.CommonDTO;
+import com.teeny.wms.dto.OrderDetailDTO;
 import com.teeny.wms.service.AcceptanceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -25,14 +26,20 @@ public class AcceptanceController {
 
     //获取单位
     @RequestMapping(value = "/api/unit", method = RequestMethod.GET)
-    public void getUnit(Model model, @RequestHeader("account") int account) {
+    public void getUnit(Model model, @RequestHeader("account") String account) {
         BaseEntity<List<CommonDTO>> data = acceptanceService.getUnit(account);
     }
 
     //获取订单
     @RequestMapping(value = "/api/order/{unitId}", method = RequestMethod.GET)
-    public void getBillWithUnitId(Model model, @PathVariable("unitId") int unitId) {
+    public void getOrderWithUnitId(Model model, @PathVariable("unitId") int unitId, @RequestHeader("account") String account) {
+        BaseEntity<List<CommonDTO>> data = acceptanceService.getOrderWithUnitId(unitId, account);
+    }
 
+    //获取订单详情
+    @RequestMapping(value = "/api/orderDetailds/{orderId}", method = RequestMethod.GET)
+    public void getOrderDetailsWithOrderId(Model model, @RequestHeader("account") String account, @PathVariable("orderId") int orderId) {
+        BaseEntity<OrderDetailDTO> data = acceptanceService.getOrderDetailsWithOrderId(account, orderId);
     }
 
 }

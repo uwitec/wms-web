@@ -1,7 +1,9 @@
 package com.teeny.wms.manage.web;
 
+import com.teeny.wms.core.domain.Employess;
 import com.teeny.wms.dto.CommonDTO;
 import com.teeny.wms.dto.EmployeesDTO;
+import com.teeny.wms.security.CurrentUser;
 import com.teeny.wms.service.SystemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -53,7 +55,8 @@ public class Test {
 //    }
 
     @RequestMapping(value = "/employer", method = RequestMethod.GET)
-    public void findEmployerByUsername(Model model) {
+    public void findEmployerByUsername(Model model, @CurrentUser Employess employess) {
+        System.out.print(employess.getPassword());
         List<CommonDTO> employees = systemService.findAll();
         model.addAttribute("emp",employees);
     }

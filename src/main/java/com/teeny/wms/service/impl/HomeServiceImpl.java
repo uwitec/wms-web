@@ -30,12 +30,12 @@ public class HomeServiceImpl implements HomeService {
     }
 
     @Override
-    public BaseEntity<List<CommonDTO>> getWarehouse() {
-        return new BaseEntity<List<CommonDTO>>(storagesRepository.findAll());
+    public BaseEntity<List<CommonDTO>> getWarehouse(String account) {
+        return new BaseEntity<List<CommonDTO>>(storagesRepository.findAll(account));
     }
 
     @Override
-    public BaseEntity<BillCountDTO> getInfoByWarehouse(int account, int warehouseId) {
+    public BaseEntity<BillCountDTO> getInfoByWarehouse(String account, int warehouseId) {
         BillCountDTO billCountDTO = new BillCountDTO();
         // TODO: 2017/7/25 待完成 下次继续
         return new BaseEntity<BillCountDTO>(billCountDTO);

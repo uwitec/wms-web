@@ -24,7 +24,7 @@ public class QueryInvoiceController {
     private QueryInvoiceService queryInvoiceService;
 
     @RequestMapping(value = "/api/document/{type}", method = RequestMethod.GET)
-    public void getDocument(Model model, @PathVariable("type") int type, @RequestHeader("account") int account) {
+    public void getDocument(Model model, @PathVariable("type") int type, @RequestHeader("account") String account) {
         BaseEntity<List<QueryDocumentDTO>> data = queryInvoiceService.getDocumentByType(type, account);
         model.addAttribute("data", data);
     }

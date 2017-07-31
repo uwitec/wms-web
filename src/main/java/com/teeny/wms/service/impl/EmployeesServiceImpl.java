@@ -21,7 +21,7 @@ public class EmployeesServiceImpl implements EmployeesService {
     private EmployessRepository employessRepository;
 
     @Override
-    public BaseEntity<List<CommonDTO>> getReviewer(int id) {
-        return new BaseEntity<List<CommonDTO>>(employessRepository.findAll());
+    public BaseEntity<List<CommonDTO>> getReviewer(String account) {
+        return new BaseEntity<List<CommonDTO>>(employessRepository.findAll(account));
     }
 }

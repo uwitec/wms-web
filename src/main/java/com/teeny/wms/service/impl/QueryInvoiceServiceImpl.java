@@ -16,7 +16,7 @@ import java.util.List;
 public class QueryInvoiceServiceImpl implements QueryInvoiceService {
 
     @Override
-    public BaseEntity<List<QueryDocumentDTO>> getDocumentByType(int type, int account) {
+    public BaseEntity<List<QueryDocumentDTO>> getDocumentByType(int type, String account) {
         // TODO: 2017/7/26  
         return null;
     }

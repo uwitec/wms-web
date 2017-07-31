@@ -17,7 +17,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     private SystemService systemService;
 
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        System.out.print("username----------"+username);
         Employess user = systemService.findByUsername(username);
         if (user == null) {
             throw new UsernameNotFoundException("User not Found");

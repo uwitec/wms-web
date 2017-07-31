@@ -23,9 +23,6 @@ public class PasswordValidater implements PasswordEncoder{
     }
 
     public boolean isPasswordValid(String encPass, String rawPass, Object salt) {
-        System.out.print(encPass);
-        System.out.print("---");
-        System.out.print(rawPass);
         String pass1 = ""+encPass;
         String pass2 = encodePassword(rawPass, salt);
         //return pass1.equals(pass2);

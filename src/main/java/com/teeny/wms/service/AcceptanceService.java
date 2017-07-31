@@ -10,7 +10,9 @@ import java.util.List;
  * Created by lilei on 2017/7/26.
  */
 public interface AcceptanceService {
-    BaseEntity<List<CommonDTO>> getUnit(int account);
+    BaseEntity<List<CommonDTO>> getUnit(String account);
 
-    BaseEntity<OrderDetailDTO> getOrderWithUnitId(int unitId, int account);
+    BaseEntity<List<CommonDTO>> getOrderWithUnitId(int unitId, String account);
+
+    BaseEntity<OrderDetailDTO> getOrderDetailsWithOrderId(String account, int orderId);
 }

@@ -31,18 +31,18 @@ public class RecheckController {
      * @param billId 订单ID
      */
     @RequestMapping(value = "/api/exWarehouseReview/{billId}", method = RequestMethod.GET)
-    public void getWarehouseReview(Model model, @RequestHeader("account") int account, @PathVariable("billId") int billId) {
+    public void getWarehouseReview(Model model, @RequestHeader("account") String account, @PathVariable("billId") int billId) {
         BaseEntity<ReviewUpdateDTO> data = recheckService.getWarehouseReview(account, billId);
         model.addAttribute("data", data);
     }
 
     @RequestMapping(value = "/api/reviewer", method = RequestMethod.GET)
-    public void getReviewer(Model model, @RequestHeader("account") int id) {
-        BaseEntity<List<CommonDTO>> data = employeesService.getReviewer(id);
+    public void getReviewer(Model model, @RequestHeader("account") String account) {
+        BaseEntity<List<CommonDTO>> data = employeesService.getReviewer(account);
     }
 
     @RequestMapping(value = "/api/update", method = RequestMethod.POST)
-    public void updateReview(@RequestHeader("account") int account, @RequestBody ReviewUpdateDTO reviewUpdateDTO) {
+    public void updateReview(@RequestHeader("account") String account, @RequestBody ReviewUpdateDTO reviewUpdateDTO) {
         recheckService.updateRecheckBill(account, reviewUpdateDTO);
     }
 
