@@ -99,7 +99,7 @@ refresh_token| String | 否       |refresh_token|  888e79a3-a27f-4e6d-abcf-32d7b
    
 参数名      | 类型   | 是否可空 | 参数说明 | 样例
 -----------|--------|---------|---------|-----
-warehouseId | String | 否       |仓库id|  11
+warehouseId | String | 是       |仓库id|  11
 
 * 出参    
 ```
@@ -113,4 +113,23 @@ warehouseId | String | 否       |仓库id|  11
              "tranferBillCount":5,
            }
  }
+```
+
+2.获取仓库
+* URL      
+home/warehouseList
+* 入参   
+无
+* 出参    
+```
+{
+  "result": 0,
+  "msg": "请求成功!",
+  "data": [
+    {
+      "id": 5,
+      "name": "abc"
+    },...
+  ]
+}
 ```
