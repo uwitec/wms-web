@@ -1,8 +1,7 @@
 package com.teeny.wms.service.impl;
 
 import com.teeny.wms.core.domain.baseEntity.BaseEntity;
-import com.teeny.wms.core.repository.AccountRepository;
-import com.teeny.wms.core.repository.StoragesRepository;
+import com.teeny.wms.core.repository.*;
 import com.teeny.wms.dto.BillCountDTO;
 import com.teeny.wms.dto.CommonDTO;
 import com.teeny.wms.service.HomeService;
@@ -23,7 +22,14 @@ public class HomeServiceImpl implements HomeService {
     private AccountRepository accountRepository;
     @Autowired
     private StoragesRepository storagesRepository;
-
+    @Autowired
+    private TranBillRepository tranBillRepository;
+    @Autowired
+    private RecBillRepository recBillRepository;
+    @Autowired
+    private PutOnBillRepository putOnBillRepository;
+    @Autowired
+    private CheckBillRepository checkBillRepository;
     @Override
     public BaseEntity<List<CommonDTO>> getAccountSet() {
         return new BaseEntity<List<CommonDTO>>(accountRepository.getAccountSet());
@@ -31,13 +37,22 @@ public class HomeServiceImpl implements HomeService {
 
     @Override
     public BaseEntity<List<CommonDTO>> getWarehouse(String account) {
-        return new BaseEntity<List<CommonDTO>>(storagesRepository.findAll(account));
+        List<CommonDTO> data = storagesRepository.findAll(account);
+        return new BaseEntity<List<CommonDTO>>(data);
     }
 
     @Override
     public BaseEntity<BillCountDTO> getInfoByWarehouse(String account, int warehouseId) {
         BillCountDTO billCountDTO = new BillCountDTO();
-        // TODO: 2017/7/25 待完成 下次继续
+
+        int tranBillCount = tranBillRepository.countByWarehoust(warehouseId, account);
+        int checkBillCount = checkBillRepository.countByWarehoust(warehouseId, account);
+        int putOnCount = putOnBillRepository.countByWarehoust(warehouseId, account);
+        int recCount = recBillRepository.countByWarehoust(warehouseId, account);
+        billCountDTO.setPutawayBillCount(putOnCount);
+        billCountDTO.setTranferBillCount(tranBillCount);
+        billCountDTO.setReviewBillCount(recCount);
+        billCountDTO.setReviewBillCount(checkBillCount);
         return new BaseEntity<BillCountDTO>(billCountDTO);
     }
 }

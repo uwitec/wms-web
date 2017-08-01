@@ -1,5 +1,6 @@
 package com.teeny.wms.core.repository;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -7,4 +8,6 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface PutOnBillRepository {
+    int countByWarehoust(@Param("warehouseId") int warehouseId, @Param("account") String account);
 }
+

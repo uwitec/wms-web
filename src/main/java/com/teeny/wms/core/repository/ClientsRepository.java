@@ -1,6 +1,7 @@
 package com.teeny.wms.core.repository;
 
 import com.teeny.wms.dto.CommonDTO;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Repository;
 
@@ -12,6 +13,6 @@ import java.util.List;
 @Repository
 public interface ClientsRepository {
 
-    @Select("SELECT c_id AS id, name from pda_clients")
-    List<CommonDTO> findAll(String account);
+    @Select("SELECT c_id AS id, name FROM ${account}.dbo.pda_clients")
+    List<CommonDTO> findAll(@Param("account") String account);
 }

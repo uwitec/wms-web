@@ -19,7 +19,7 @@ public interface EmployessRepository {
     @Select("SELECT e_id AS id, name FROM pda_employees")
     List<CommonDTO> findAll(String account);
 
-    public Employess findEmployerByUsername(@Param("username") String username);
+    public Employess findEmployerByUsername(@Param("username") String username, @Param("account") String account);
 
     public void addEmployer(Employess employess);
     public EmployeesDTO findByPinyin(@Param("username") String username);

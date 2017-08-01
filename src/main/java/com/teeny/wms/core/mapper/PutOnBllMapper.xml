@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.teeny.wms.core.repository.PutOnBillRepository">
+    <cache />
+
+    <select id="countByWarehoust" resultType="int">
+        SELECT count(*) FROM ${account}.dbo.pda_PutOnBill_D p
+        WHERE p.smb_id != 0
+            <if test="warehouseId != 0">
+                AND s_id=#{warehouseId}
+            </if>
+    </select>
+
+</mapper>

@@ -47,7 +47,7 @@ FROM [GXQHYY].dbo.products a LEFT JOIN [GXQHYY].dbo.unit b
 ON a.unit1_id=b.unit_id
 LEFT JOIN [GXQHYY].dbo.unit c
 ON a.WholeUnit_id=b.unit_id
-LEFT JOIN productbalance d
+LEFT JOIN [GXQHYY].dbo.productbalance d
 ON a.product_id=d.p_id AND d.Y_id=2
 WHERE a.deleted<>1 AND child_number=0 AND a.ModifyDate>@timestamp AND a.ModifyDate<=@Curtimestamp
 
@@ -76,7 +76,7 @@ SELECT @timestamp=e_timestamp FROM pda_timestamp
 SELECT @Curtimestamp=CAST(ISNULL(MAX(ModifyDate),0) AS BIGINT) FROM [GXQHYY].dbo.employees
 SELECT a.emp_id e_id,a.serial_number,b.loginpass password,a.pinyin,a.name,a.alias,a.phone,a.address
 INTO #pda_employees
-FROM [GXQHYY].dbo.employees a LEFT JOIN users b
+FROM [GXQHYY].dbo.employees a LEFT JOIN [GXQHYY].dbo.users b
 ON a.emp_id=b.e_id
 WHERE a.deleted<>1 AND a.child_number=0 AND a.ModifyDate>@timestamp AND a.ModifyDate<=@Curtimestamp
 

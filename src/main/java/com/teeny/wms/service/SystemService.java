@@ -11,9 +11,9 @@ import java.util.List;
  *
  */
 public interface SystemService {
-    Employess findByUsername(String username);
+    Employess findByUsername(String username, String account);
 
     EmployeesDTO findByPinyin(String username);
 
-    List<CommonDTO> findAll();
+    List<CommonDTO> findAll(String account);
 }

@@ -24,26 +24,23 @@ public class HomeController {
     private HomeService homeService;
 
     // 获取账套
-    @RequestMapping(value = "/accountSet", method = RequestMethod.GET)
-    public void getAccountSet(Model model, @CurrentUser Employess employess) {
-        System.out.print(employess.getPinyin());
+    @RequestMapping(value = "/log/accountSets", method = RequestMethod.GET)
+    public void getAccountSet(Model model) {
         BaseEntity<List<CommonDTO>> data = homeService.getAccountSet();
         model.addAttribute("list", data);
     }
 
     // 获取所有仓库
-    @RequestMapping(value = "/api/warehouse", method = RequestMethod.GET)
-    public void getWarehouse(Model model, @CurrentUser Employess employess, String account) {
+    @RequestMapping(value = "/api/home/warehouseList", method = RequestMethod.GET)
+    public void getWarehouse(Model model, @RequestHeader("account") String account) {
         BaseEntity<List<CommonDTO>> data = homeService.getWarehouse(account);
         model.addAttribute("list",data);
     }
 
-    @RequestMapping(value = "/api/info/{warehouseId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/api/home/info/{warehouseId}", method = RequestMethod.GET)
     public void getBillCountByWarehouseType(Model model, @PathVariable("warehouseId") int warehouseId, @RequestHeader("account") String account) {
         BaseEntity<BillCountDTO> data = homeService.getInfoByWarehouse(account, warehouseId);
         model.addAttribute("data",data);
     }
-
-
 
 }

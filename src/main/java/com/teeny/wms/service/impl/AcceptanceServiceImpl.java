@@ -2,6 +2,7 @@ package com.teeny.wms.service.impl;
 
 import com.teeny.wms.core.domain.baseEntity.BaseEntity;
 import com.teeny.wms.core.repository.ClientsRepository;
+import com.teeny.wms.core.repository.RecBillRepository;
 import com.teeny.wms.dto.CommonDTO;
 import com.teeny.wms.dto.OrderDetailDTO;
 import com.teeny.wms.service.AcceptanceService;
@@ -20,6 +21,8 @@ public class AcceptanceServiceImpl implements AcceptanceService {
 
     @Autowired
     private ClientsRepository clientsRepository;
+    @Autowired
+    private RecBillRepository recBillRepository;
 
 
     @Override
@@ -30,8 +33,7 @@ public class AcceptanceServiceImpl implements AcceptanceService {
 
     @Override
     public BaseEntity<List<CommonDTO>> getOrderWithUnitId(int unitId, String account) {
-        // TODO: 2017/7/30
-       return null;
+       return new BaseEntity<>(recBillRepository.getOrderBillWithUnitId(unitId, account));
     }
 
     @Override

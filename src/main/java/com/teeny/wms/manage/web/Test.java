@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -55,9 +56,9 @@ public class Test {
 //    }
 
     @RequestMapping(value = "/employer", method = RequestMethod.GET)
-    public void findEmployerByUsername(Model model, @CurrentUser Employess employess) {
+    public void findEmployerByUsername(Model model, @CurrentUser Employess employess, @RequestHeader("account") String account) {
         System.out.print(employess.getPassword());
-        List<CommonDTO> employees = systemService.findAll();
+        List<CommonDTO> employees = systemService.findAll(account);
         model.addAttribute("emp",employees);
     }
 }

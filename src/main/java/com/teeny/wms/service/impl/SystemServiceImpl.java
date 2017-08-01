@@ -19,8 +19,8 @@ public class SystemServiceImpl implements SystemService {
     @Autowired
     private EmployessRepository employessRepository;
 
-    public Employess findByUsername(String username) {
-        return employessRepository.findEmployerByUsername(username);
+    public Employess findByUsername(String username, String account) {
+        return employessRepository.findEmployerByUsername(username, account);
     }
 
     public EmployeesDTO findByPinyin(String username) {
@@ -28,8 +28,8 @@ public class SystemServiceImpl implements SystemService {
     }
 
     @Override
-    public List<CommonDTO> findAll() {
-        return employessRepository.findAll();
+    public List<CommonDTO> findAll(String account) {
+        return employessRepository.findAll(account);
     }
 
 

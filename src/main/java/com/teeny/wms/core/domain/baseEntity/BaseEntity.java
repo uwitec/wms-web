@@ -6,8 +6,8 @@ package com.teeny.wms.core.domain.baseEntity;
 public class BaseEntity<T> {
 
 
-    private int result;//状态码
-    private String msg;//消息
+    private int result = 0;//状态码
+    private String msg = "请求成功！";//消息
     private T data;
 
     public BaseEntity(T data) {

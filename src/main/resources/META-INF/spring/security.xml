@@ -131,7 +131,7 @@
 		access-decision-manager-ref="oauth2AccessDecisionManager"
 		use-expressions="true">
 		<security:anonymous enabled="false" />
-		<security:intercept-url pattern="/api/**"
+		<security:intercept-url pattern="/apii/**"
 			access="hasAnyRole('ROLE_GENERAL_USER')" />
 		<security:custom-filter ref="adminResourceServer"
 			before="PRE_AUTH_FILTER" />

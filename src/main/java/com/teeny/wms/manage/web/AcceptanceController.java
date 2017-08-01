@@ -28,6 +28,7 @@ public class AcceptanceController {
     @RequestMapping(value = "/api/unit", method = RequestMethod.GET)
     public void getUnit(Model model, @RequestHeader("account") String account) {
         BaseEntity<List<CommonDTO>> data = acceptanceService.getUnit(account);
+        model.addAttribute("data", data);
     }
 
     //获取订单
