@@ -6,7 +6,9 @@
 #### 登陆模块    
 1.服务器连接测试    
 * URL      
-log/test
+log/test    
+* 方法    
+GET
 * 入参   
 无
 * 出参    
@@ -21,6 +23,8 @@ log/test
 2.登陆
 * URL      
  log/in
+* 方法    
+ POST
 * 入参    
    
 参数名      | 类型   | 是否可空 | 参数说明 | 样例
@@ -44,6 +48,8 @@ password   | String | 否       |密码     |  123456
 3.注销    
 * URL      
 log/out
+* 方法    
+ POST
 * 入参   
 无
 * 出参    
@@ -58,6 +64,8 @@ log/out
 4.获取账套
 * URL      
 log/accountSets
+* 方法    
+ GET
 * 入参   
 无
 * 出参    
@@ -77,6 +85,8 @@ log/accountSets
 5.刷新token
 * URL      
 log/refreshToken
+* 方法    
+ POST
 * 入参   
 
 参数名      | 类型   | 是否可空 | 参数说明 | 样例
@@ -95,6 +105,8 @@ refresh_token| String | 否       |refresh_token|  888e79a3-a27f-4e6d-abcf-32d7b
 1.获取首页信息    
 * URL      
  home/info
+ * 方法    
+  GET
 * 入参    
    
 参数名      | 类型   | 是否可空 | 参数说明 | 样例
@@ -118,6 +130,8 @@ warehouseId | String | 是       |仓库id|  11
 2.获取仓库
 * URL      
 home/warehouseList
+* 方法    
+ GET
 * 入参   
 无
 * 出参    
