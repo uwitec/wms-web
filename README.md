@@ -54,7 +54,7 @@ log/out
 ```
 {
    "result": 0,
-   "msg": "测试通过!",
+   "msg": "退出成功!",
    "data": null
  }
 ```
