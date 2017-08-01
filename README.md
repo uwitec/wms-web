@@ -71,10 +71,10 @@ warehouseId | String | 否       |仓库id|  11
    "result": 0,
    "msg": "请求成功!",
    "data": {
-             "acceptBillCount" : "1",
-             "putawayBillCount" : "3",
-             "reviewBillCount" : "4",
-             "tranferBillCount" : "5",
+             "acceptBillCount":1,
+             "putawayBillCount":3,
+             "reviewBillCount":4,
+             "tranferBillCount":5,
            }
  }
 `
