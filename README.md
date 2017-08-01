@@ -10,7 +10,8 @@ test/connection
 * 入参   
 无
 * 出参    
-```{
+```
+{
    "result": 0,
    "msg": "测试通过!",
    "data": null
@@ -30,7 +31,8 @@ username   | String | 否       |用户名   |  CLL
 password   | String | 否       |密码     |  123456
 
 * 出参    
-```{
+```
+{
    "result": 0,
    "msg": "登陆成功!",
    "data": {
@@ -49,7 +51,8 @@ log/out
 * 入参   
 无
 * 出参    
-```{
+```
+{
    "result": 0,
    "msg": "测试通过!",
    "data": null
@@ -67,7 +70,8 @@ log/out
 warehouseId | String | 否       |仓库id|  11
 
 * 出参    
-```{
+```
+{
    "result": 0,
    "msg": "请求成功!",
    "data": {
