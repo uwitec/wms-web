@@ -1,7 +1,7 @@
 # App接口文档
 
 #### Base URL    
-* http://host:port/wms/api/
+* http://host:port/wms/
 
 #### 登陆模块    
 1.服务器连接测试    
@@ -106,7 +106,7 @@ refresh_token| String | 否       |refresh_token|  888e79a3-a27f-4e6d-abcf-32d7b
 * URL      
  home/info
  * 方法    
-  GET
+  POST
 * 入参    
    
 参数名      | 类型   | 是否可空 | 参数说明 | 样例
@@ -147,3 +147,6 @@ home/warehouseList
   ]
 }
 ```
+
+#### 验收模块    
+1.   
