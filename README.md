@@ -64,18 +64,17 @@ log/out
    
 参数名      | 类型   | 是否可空 | 参数说明 | 样例
 -----------|--------|---------|---------|-----
-warehouse_id | String | 否       | *      |  11
+warehouse_id | String | 否       |仓库id|  11
 
 * 出参    
 `{
    "result": 0,
    "msg": "请求成功!",
    "data": {
-             "access_token" : "9ca58a19-190e-42c4-8c30-658e6c0b2459",
-             "token_type" : "bearer",
-             "refresh_token" : "edf58afb-88ce-435d-8c27-177a85495738",
-             "expires_in" : 43199,
-             "scope" : "SCOPE_TRUST"
+             "acceptBillCount" : "1",
+             "putawayBillCount" : "3",
+             "reviewBillCount" : "4",
+             "tranferBillCount" : "5",
            }
  }
 `
