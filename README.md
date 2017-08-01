@@ -6,7 +6,7 @@
 #### 登陆模块    
 1.服务器连接测试    
 * URL      
-test/connection
+log/test
 * 入参   
 无
 * 出参    
@@ -25,8 +25,7 @@ test/connection
    
 参数名      | 类型   | 是否可空 | 参数说明 | 样例
 -----------|--------|---------|---------|-----
-grant_type | String | 否       | *      |  password
-client_id  | String | 否       | *      |  wms
+accountSet  | String | 否       |账套名|  abc
 username   | String | 否       |用户名   |  CLL
 password   | String | 否       |密码     |  123456
 
@@ -37,10 +36,7 @@ password   | String | 否       |密码     |  123456
    "msg": "登陆成功!",
    "data": {
              "access_token" : "9ca58a19-190e-42c4-8c30-658e6c0b2459",
-             "token_type" : "bearer",
              "refresh_token" : "edf58afb-88ce-435d-8c27-177a85495738",
-             "expires_in" : 43199,
-             "scope" : "SCOPE_TRUST"
            }
  }
 ```
@@ -73,6 +69,26 @@ log/accountSets
     {
       "id": 5,
       "name": "abc"
+    },...
+  ]
+}
+```
+
+5.刷新token
+* URL      
+log/refreshToken
+* 入参   
+参数名      | 类型   | 是否可空 | 参数说明 | 样例
+-----------|--------|---------|---------|-----
+refresh_token  | String | 否       |refresh_token|  888e79a3-a27f-4e6d-abcf-32d7bbc35a84
+* 出参    
+```
+{
+  "result": 0,
+  "msg": "请求成功!",
+  "data": [
+    {
+      "access_token": "888e79a3-a27f-4e6d-abcf-32d7bbc35a84",
     },...
   ]
 }
