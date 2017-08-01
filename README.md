@@ -86,12 +86,8 @@ refresh_token| String | 否       |refresh_token|  888e79a3-a27f-4e6d-abcf-32d7b
 ```
 {
   "result": 0,
-  "msg": "请求成功!",
-  "data": [
-    {
-      "access_token": "888e79a3-a27f-4e6d-abcf-32d7bbc35a84",
-    },...
-  ]
+  "msg":"请求成功!",
+  "data":"888e79a3-a27f-4e6d-abcf-32d7bbc35a84"
 }
 ```
 
