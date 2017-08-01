@@ -10,12 +10,12 @@ test/connection
 * 入参   
 无
 * 出参    
-`{
+```{
    "result": 0,
    "msg": "测试通过!",
    "data": null
  }
-`
+```
 
 2.登陆
 * URL      
@@ -30,7 +30,7 @@ username   | String | 否       |用户名   |  CLL
 password   | String | 否       |密码     |  123456
 
 * 出参    
-`{
+```{
    "result": 0,
    "msg": "登陆成功!",
    "data": {
@@ -41,7 +41,7 @@ password   | String | 否       |密码     |  123456
              "scope" : "SCOPE_TRUST"
            }
  }
-`
+```
 
 3.注销    
 * URL      
@@ -49,12 +49,12 @@ log/out
 * 入参   
 无
 * 出参    
-`{
+```{
    "result": 0,
    "msg": "测试通过!",
    "data": null
  }
-`
+```
 
 #### 首页模块    
 1.获取首页信息    
@@ -67,7 +67,7 @@ log/out
 warehouseId | String | 否       |仓库id|  11
 
 * 出参    
-`{
+```{
    "result": 0,
    "msg": "请求成功!",
    "data": {
@@ -77,4 +77,4 @@ warehouseId | String | 否       |仓库id|  11
              "tranferBillCount":5,
            }
  }
-`
+```
