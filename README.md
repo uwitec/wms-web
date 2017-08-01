@@ -80,7 +80,7 @@ log/refreshToken
 * 入参   
 参数名      | 类型   | 是否可空 | 参数说明 | 样例
 -----------|--------|---------|---------|-----
-refresh_token  | String | 否       |refresh_token|  888e79a3-a27f-4e6d-abcf-32d7bbc35a84
+refresh_token  | String | 否       |refresh_token|  888e79a3-a27f-4e6d-abcf-32d7bbc35a84    
 * 出参    
 ```
 {
