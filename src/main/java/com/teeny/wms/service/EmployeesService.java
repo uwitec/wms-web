@@ -10,5 +10,5 @@ import java.util.List;
  */
 public interface EmployeesService {
 
-    BaseEntity<List<CommonDTO>> getReviewer(int id);
+    BaseEntity<List<CommonDTO>> getReviewer(String account);
 }

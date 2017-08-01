@@ -13,5 +13,5 @@ import java.util.List;
 public interface ClientsRepository {
 
     @Select("SELECT c_id AS id, name from pda_clients")
-    List<CommonDTO> findAll();
+    List<CommonDTO> findAll(String account);
 }

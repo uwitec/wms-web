@@ -23,16 +23,19 @@ public class AcceptanceServiceImpl implements AcceptanceService {
 
 
     @Override
-    public BaseEntity<List<CommonDTO>> getUnit(int account) {
-        // TODO: 2017/7/26
-        return null;
+    public BaseEntity<List<CommonDTO>> getUnit(String account) {
+        List<CommonDTO> unitList = clientsRepository.findAll(account);
+        return new BaseEntity<>(unitList);
     }
 
     @Override
-    public BaseEntity<OrderDetailDTO> getOrderWithUnitId(int unitId, int account) {
+    public BaseEntity<List<CommonDTO>> getOrderWithUnitId(int unitId, String account) {
+        // TODO: 2017/7/30
+       return null;
+    }
 
-        List<CommonDTO> unitList = clientsRepository.findAll();
-
+    @Override
+    public BaseEntity<OrderDetailDTO> getOrderDetailsWithOrderId(String account, int orderId) {
         return null;
     }
 }

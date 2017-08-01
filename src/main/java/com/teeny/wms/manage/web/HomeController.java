@@ -1,8 +1,10 @@
 package com.teeny.wms.manage.web;
 
+import com.teeny.wms.core.domain.Employess;
 import com.teeny.wms.core.domain.baseEntity.BaseEntity;
 import com.teeny.wms.dto.BillCountDTO;
 import com.teeny.wms.dto.CommonDTO;
+import com.teeny.wms.security.CurrentUser;
 import com.teeny.wms.service.HomeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -23,20 +25,21 @@ public class HomeController {
 
     // 获取账套
     @RequestMapping(value = "/accountSet", method = RequestMethod.GET)
-    public void getAccountSet(Model model) {
+    public void getAccountSet(Model model, @CurrentUser Employess employess) {
+        System.out.print(employess.getPinyin());
         BaseEntity<List<CommonDTO>> data = homeService.getAccountSet();
         model.addAttribute("list", data);
     }
 
     // 获取所有仓库
     @RequestMapping(value = "/api/warehouse", method = RequestMethod.GET)
-    public void getWarehouse(Model model) {
-        BaseEntity<List<CommonDTO>> data = homeService.getWarehouse();
+    public void getWarehouse(Model model, @CurrentUser Employess employess, String account) {
+        BaseEntity<List<CommonDTO>> data = homeService.getWarehouse(account);
         model.addAttribute("list",data);
     }
 
     @RequestMapping(value = "/api/info/{warehouseId}", method = RequestMethod.GET)
-    public void getBillCountByWarehouseType(Model model, @PathVariable("warehouseId") int warehouseId, @RequestHeader("account") int account) {
+    public void getBillCountByWarehouseType(Model model, @PathVariable("warehouseId") int warehouseId, @RequestHeader("account") String account) {
         BaseEntity<BillCountDTO> data = homeService.getInfoByWarehouse(account, warehouseId);
         model.addAttribute("data",data);
     }

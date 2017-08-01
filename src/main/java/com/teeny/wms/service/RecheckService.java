@@ -8,7 +8,7 @@ import com.teeny.wms.dto.ReviewUpdateDTO;
  */
 public interface RecheckService {
 
-    void updateRecheckBill(int account, ReviewUpdateDTO reviewUpdateDTO);
+    void updateRecheckBill(String account, ReviewUpdateDTO reviewUpdateDTO);
 
-    BaseEntity<ReviewUpdateDTO> getWarehouseReview(int account, int billId);
+    BaseEntity<ReviewUpdateDTO> getWarehouseReview(String account, int billId);
 }

@@ -229,8 +229,6 @@ begin
 		pdastates INT NOT NULL DEFAULT 0,--交换状态 0提供 1pda已读取 2pda已回写
 		pdaInTime DATETIME NOT NULL DEFAULT 0,--提供时间
 		pdaReTime DATETIME NOT NULL DEFAULT 0,--读取时间
-		pdaWrTime DATETIME NOT NULL DEFAULT 0--回写时间
-	) ON [PRIMARY]
 end
 GO
 
@@ -239,23 +237,25 @@ GO
 -- drop table pda_CheckBill_D
 IF not exists (select 1 from dbo.sysobjects where id = object_id(N'[dbo].[pda_CheckBill_D]') and OBJECTPROPERTY(id, N'IsUserTable') = 1)
 begin
-	CREATE TABLE [dbo].pda_CheckBill_D(
-	    smb_id INT NOT NULL DEFAULT 0,--复核单明细表id
-	    bill_id INT NOT NULL DEFAULT 0,--复核单id,=pda_CheckBill.billid
-	    p_id INT NOT NULL DEFAULT 0,--商品id,=pda_Products.p_id
-		MakeDate	DATETIME NOT NULL DEFAULT 0,--生产日期
-		Validdate	DATETIME NOT NULL DEFAULT 0,--效期
-		Batchno	VARCHAR(20) NOT NULL DEFAULT '',--批号
-		EligibleQty	NUMERIC(18,4) NOT NULL DEFAULT 0,--订单数量
-		PickQty	NUMERIC(18,4) NOT NULL DEFAULT 0,--拣货数量
-		CheckQty	NUMERIC(18,4) NOT NULL DEFAULT 0,--复核数量
-		CheckState VARCHAR(200) NOT NULL DEFAULT '',--复核结论
-		CheckReason VARCHAR(200) NOT NULL DEFAULT '',--差异原因
-		TaxPrice	NUMERIC(18,4) NOT NULL DEFAULT 0,--含税单价
-		TaxTotal	NUMERIC(18,4) NOT NULL DEFAULT 0,--含税金额
-		CostPrice	NUMERIC(18,4) NOT NULL DEFAULT 0,--成本单价
-		CostTotal	NUMERIC(18,4) NOT NULL DEFAULT 0,--成本金额
-		S_id	INT NOT NULL DEFAULT 0,--仓库id,=pda_storages.s_id
+CREATE TABLE [dbo].pda_CheckBill_D(
+smb_id INT NOT NULL DEFAULT 0,--复核单明细表id
+bill_id INT NOT NULL DEFAULT 0,--复核单id,=pda_CheckBill.billid
+p_id INT NOT NULL DEFAULT 0,--商品id,=pda_Products.p_id
+MakeDate	DATETIME NOT NULL DEFAULT 0,--生产日期
+Validdate	DATETIME NOT NULL DEFAULT 0,--效期
+Batchno	VARCHAR(20) NOT NULL DEFAULT '',--批号
+EligibleQty	NUMERIC(18,4) NOT NULL DEFAULT 0,--订单数量
+PickQty	NUMERIC(18,4) NOT NULL DEFAULT 0,--拣货数量
+CheckQty	NUMERIC(18,4) NOT NULL DEFAULT 0,--复核数量
+CheckState VARCHAR(200) NOT NULL DEFAULT '',--复核结论
+CheckReason VARCHAR(200) NOT NULL DEFAULT '',--差异原因
+TaxPrice	NUMERIC(18,4) NOT NULL DEFAULT 0,--含税单价
+TaxTotal	NUMERIC(18,4) NOT NULL DEFAULT 0,--含税金额
+CostPrice	NUMERIC(18,4) NOT NULL DEFAULT 0,--成本单价
+CostTotal	NUMERIC(18,4) NOT NULL DEFAULT 0,--成本金额
+S_id	INT NOT NULL DEFAULT 0,--仓库id,=pda_storages.s_id
+		pdaWrTime DATETIME NOT NULL DEFAULT 0--回写时间
+	) ON [PRIMARY]
 		Location_id	INT NOT NULL DEFAULT 0,--货位id,=pda_location.l_id
 		Supplier_id	INT NOT NULL DEFAULT 0,--供应商id,=pda_PutOnBill.c_id
 		InstoreTime	DATETIME NOT NULL DEFAULT 0,--入库时间

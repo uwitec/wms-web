@@ -17,7 +17,7 @@ import java.util.List;
 public interface EmployessRepository {
 
     @Select("SELECT e_id AS id, name FROM pda_employees")
-    List<CommonDTO> findAll();
+    List<CommonDTO> findAll(String account);
 
     public Employess findEmployerByUsername(@Param("username") String username);
 

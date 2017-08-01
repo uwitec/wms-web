@@ -10,5 +10,5 @@ import java.util.List;
  */
 public interface QueryInvoiceService {
 
-    BaseEntity<List<QueryDocumentDTO>> getDocumentByType(int type, int account);
+    BaseEntity<List<QueryDocumentDTO>> getDocumentByType(int type, String account);
 }

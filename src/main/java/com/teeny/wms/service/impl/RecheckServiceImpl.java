@@ -14,12 +14,12 @@ import org.springframework.transaction.annotation.Transactional;
 public class RecheckServiceImpl implements RecheckService {
 
     @Override
-    public void updateRecheckBill(int account, ReviewUpdateDTO reviewUpdateDTO) {
+    public void updateRecheckBill(String account, ReviewUpdateDTO reviewUpdateDTO) {
 
     }
 
     @Override
-    public BaseEntity<ReviewUpdateDTO> getWarehouseReview(int account, int billId) {
+    public BaseEntity<ReviewUpdateDTO> getWarehouseReview(String account, int billId) {
         return null;
     }
 }

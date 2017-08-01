@@ -14,7 +14,7 @@ public interface HomeService {
 
     BaseEntity<List<CommonDTO>> getAccountSet();
 
-    BaseEntity<List<CommonDTO>> getWarehouse();
+    BaseEntity<List<CommonDTO>> getWarehouse(String account);
 
-    BaseEntity<BillCountDTO> getInfoByWarehouse(int account, int warehouseId);
+    BaseEntity<BillCountDTO> getInfoByWarehouse(String account, int warehouseId);
 }
