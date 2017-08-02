@@ -7,11 +7,11 @@
     <cache />
 
     <select id="countByWarehoust" resultType="int">
-        SELECT count(*) FROM ${account}.dbo.pda_PutOnBill_D p
-        WHERE p.smb_id != 0
+        SELECT count(*) FROM ${account}.dbo.pda_PutOnBill p
+        <where>
             <if test="warehouseId != 0">
                 AND s_id=#{warehouseId}
             </if>
+        </where>
     </select>
-
 </mapper>

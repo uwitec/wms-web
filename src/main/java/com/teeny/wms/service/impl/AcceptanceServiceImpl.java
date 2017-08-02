@@ -1,10 +1,11 @@
 package com.teeny.wms.service.impl;
 
 import com.teeny.wms.core.domain.baseEntity.BaseEntity;
+import com.teeny.wms.core.repository.CallProcedureRepository;
+import com.teeny.wms.core.repository.CheckBillRepository;
 import com.teeny.wms.core.repository.ClientsRepository;
 import com.teeny.wms.core.repository.RecBillRepository;
-import com.teeny.wms.dto.CommonDTO;
-import com.teeny.wms.dto.OrderDetailDTO;
+import com.teeny.wms.dto.*;
 import com.teeny.wms.service.AcceptanceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,6 +24,8 @@ public class AcceptanceServiceImpl implements AcceptanceService {
     private ClientsRepository clientsRepository;
     @Autowired
     private RecBillRepository recBillRepository;
+    @Autowired
+    private CallProcedureRepository callProcedureRepository;
 
 
     @Override
@@ -38,6 +41,32 @@ public class AcceptanceServiceImpl implements AcceptanceService {
 
     @Override
     public BaseEntity<OrderDetailDTO> getOrderDetailsWithOrderId(String account, int orderId) {
-        return null;
+
+        OrderDetailDTO data = new OrderDetailDTO();
+        RecBillDTO bill = recBillRepository.getOrder(orderId, account);
+        if (bill != null) {
+            data.setBuyer(bill.getBuyer());
+            data.setBuyerId(bill.getBuyerId());
+            data.setOrderId(bill.getOrderId());
+            data.setStatus(bill.getStatus());
+        }
+
+        List<GoodsDTO> acceptenceList = recBillRepository.getGoodsByBillIdAndStatus(orderId,1,account);
+
+        List<GoodsDTO> onOrderList = recBillRepository.getGoodsByBillIdAndStatus(orderId,0,account);
+        data.setOnOrderList(onOrderList);
+        data.setAcceptanceOrderList(acceptenceList);
+        return new BaseEntity<>(data);
+    }
+
+    @Override
+    public void updateGoodsByOrderId(RecUpdateDTO recUpdateDTO, String account) {
+        recBillRepository.updateGoodsByOrderId(recUpdateDTO.getId(), account);
+//        callProcedureRepository.CallProcedure();
+    }
+
+    @Override
+    public void updateGoodsByGoodsId(RecUpdateDTO recUpdateDTO, String account) {
+        recBillRepository.updateGoodsByGoodsId(recUpdateDTO.getId(), account);
     }
 }

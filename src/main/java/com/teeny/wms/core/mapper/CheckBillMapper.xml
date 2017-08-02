@@ -7,10 +7,10 @@
     <cache />
 
     <select id="countByWarehoust" resultType="int">
-        SELECT count(*) FROM ${account}.dbo.pda_CheckBill_D
+        SELECT count(*) FROM ${account}.dbo.pda_CheckBill
         <where>
             <if test="warehouseId != 0">
-                S_id=#{warehouseId}
+                s_id=#{warehouseId}
             </if>
         </where>
     </select>

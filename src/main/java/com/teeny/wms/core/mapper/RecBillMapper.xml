@@ -7,12 +7,20 @@
     <cache />
 
     <select id="countByWarehoust" resultType="int">
-        SELECT count(*) FROM ${account}.dbo.pda_RecBill_d p
+        SELECT count(*) FROM ${account}.dbo.pda_RecBill p
         <where>
             <if test="warehouseId != 0">
                 S_id=#{warehouseId}
             </if>
         </where>
+    </select>
+
+    <select id="getGoodsByBillIdAndStatus" resultType="com.teeny.wms.dto.GoodsDTO">
+        SELECT  d.TaxPrice AS retialPrice,d.Yqty AS amount,d.smb_id AS id ,c.name AS manufacturer,
+                d.Batchno AS lotNo, p.name AS goodsName, p.standard AS specification
+        FROM ${account}.dbo.pda_RecBill_D d
+            LEFT JOIN ${account}.dbo.pda_Products p ON d.p_id=p.p_id
+            LEFT JOIN ${account}.dbo.pda_clients c ON c.c_id=d.Supplier_id WHERE d.bill_id=#{orderId} AND d.DealStates=#{status}
     </select>
 
 </mapper>
