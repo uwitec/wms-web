@@ -150,3 +150,51 @@ home/warehouseList
 
 #### 验收模块    
 1.   
+
+
+
+#### 复核模块
+1.出库复核
+* URL
+exWarehouseReview/{billId}
+* 方法
+ GET
+* 入参   
+billId 销售单号
+* 出参
+```
+{
+  "result": 0,
+  "msg": "请求成功!",
+  "data": [
+    {
+     "billNo":"CG-2017-02-24-0003",
+     "priority":"一级",
+     "tempArea":"ABC",
+     "documentStatus":"已上架",
+     "sendRoad":"配送线路",
+     "billRemark":"AAAAAAAAAAA",
+     "replenishmentOrderCount":"2",
+     "wholeQuantity":"10",
+     "pxCount":"3",
+     "packCount":"5"
+    },...
+  ]
+}
+```
+2.复核完成
+* URL
+checkCompeleted
+* 方法
+ POST
+* 入参   
+```
+{
+    "billNo":"CG-2017-02-24-0003",
+    "reviewerId":"22",
+    "diffRemark":"无差异"
+}
+```
+* 出参
+无
+
