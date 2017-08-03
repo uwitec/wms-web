@@ -150,7 +150,7 @@ home/warehouseList
 
 #### 验收模块    
 1. 获取单位
-* URL
+* URL    
 acceptence/unit
 * 方法
 GET
@@ -171,7 +171,7 @@ GET
 ```
 
 2. 获取订单
-* URL
+* URL    
 acceptence/order/{unitId}
 * 方法
 GET
@@ -186,7 +186,7 @@ unitId 单位ID
 ```
 
 3. 获取订单详情
-* URL
+* URL    
 acceptence/orderDetailds/{orderId}
 * 方法
 GET
@@ -212,7 +212,7 @@ orderId 订单ID
 }
 ```
 4. 一键完成
-* URL 
+* URL     
 acceptence/allCompete
 * 入参
 ```
