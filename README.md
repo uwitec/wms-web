@@ -149,7 +149,81 @@ home/warehouseList
 ```
 
 #### 验收模块    
-1.   
+1. 获取单位
+* URL
+acceptence/unit
+* 方法
+GET
+* 入参
+无
+* 出参
+```
+{
+    "result": 0,
+      "msg": "请求成功!",
+      "data": [
+        {
+          "id": 5,
+          "name": "AA公司"
+        },...
+      ]
+}
+```
+
+2. 获取订单
+* URL
+acceptence/order/{unitId}
+* 方法
+GET
+* 入参
+unitId 单位ID
+* 出参
+```j
+{
+    "id":"3",
+    "name":"CG-2017-02-24-0003"
+}
+```
+
+3. 获取订单详情
+* URL
+acceptence/orderDetailds/{orderId}
+* 方法
+GET
+* 入参
+orderId 订单ID
+* 出参
+```
+{
+  "orderId":"3",
+  "status":"10",
+  "buyer":"3",
+  "buyerId":"陈莉莉",
+  "acceptanceOrderList":[{
+    "goodsName":"阿莫西林",
+    "lotNo":"批号",
+    "specification":"规格",
+    "validityDate":"有效期",
+    "retialPrice":"零售价",
+    "amount":"数量",
+    "manufacturer":"AAA公司"
+  }],
+  "onOrderList":[{}]
+}
+```
+4. 一键完成
+* URL 
+acceptence/allCompete
+* 入参
+```
+{
+  "id":"订单id",
+  "buyId":"采购员Id"
+}
+```
+* 出参
+无
+
 
 
 
