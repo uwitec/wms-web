@@ -156,7 +156,7 @@ home/warehouseList
 #### 复核模块
 1.出库复核
 * URL    
-recheck/exWarehouseReview/{billId}
+recheck/exWarehouseReview/{billNo}
 * 方法
  GET
 * 入参   
