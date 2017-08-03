@@ -156,7 +156,7 @@ home/warehouseList
 #### 复核模块
 1.出库复核
 * URL    
-exWarehouseReview/{billId}
+recheck/exWarehouseReview/{billId}
 * 方法
  GET
 * 入参   
@@ -184,7 +184,7 @@ billId 销售单号
 ```
 2.复核完成
 * URL    
-checkCompeleted
+recheck/completed
 * 方法
  POST
 * 入参   
