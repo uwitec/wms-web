@@ -240,11 +240,12 @@ billNo 销售单号
 {
   "result": 0,
   "msg": "请求成功!",
-  "data": [
-    {
+  "data": {
      "billNo":"CG-2017-02-24-0003",
      "priority":"一级",
      "tempArea":"ABC",
+     "customer":"湛江市万邦药业有限公司",
+     "status":"1"
      "documentStatus":"已上架",
      "sendRoad":"配送线路",
      "billRemark":"AAAAAAAAAAA",
@@ -252,9 +253,8 @@ billNo 销售单号
      "wholeQuantity":"10",
      "pxCount":"3",
      "packCount":"5"
-    },...
-  ]
-}
+
+    }
 ```
 2.复核完成
 * URL    
