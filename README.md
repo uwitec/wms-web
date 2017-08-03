@@ -253,7 +253,6 @@ billNo 销售单号
      "wholeQuantity":"10",
      "pxCount":"3",
      "packCount":"5"
-
     }
 ```
 2.复核完成
