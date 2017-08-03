@@ -160,7 +160,7 @@ recheck/exWarehouseReview/{billNo}
 * 方法
  GET
 * 入参   
-billId 销售单号
+billNo 销售单号
 * 出参
 ```
 {
