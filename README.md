@@ -22,7 +22,7 @@ GET
 
 2.登陆
 * URL      
- log/in
+ oauth/token
 * 方法    
  POST
 * 入参    
@@ -34,13 +34,16 @@ username   | String | 否       |用户名   |  CLL
 password   | String | 否       |密码     |  123456
 
 * 出参    
-```
+```json
 {
    "result": 0,
    "msg": "登陆成功!",
    "data": {
-             "access_token" : "9ca58a19-190e-42c4-8c30-658e6c0b2459",
-             "refresh_token" : "edf58afb-88ce-435d-8c27-177a85495738",
+             "access_token":"73c59e9d-ee16-46c0-9045-c099f93113a4",
+             "token_type":"bearer",
+             "refresh_token":"edf58afb-88ce-435d-8c27-177a85495738",
+             "expires_in":42826,
+             "scope":"SCOPE_TRUST"
            }
  }
 ```
