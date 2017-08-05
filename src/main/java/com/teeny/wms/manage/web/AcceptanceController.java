@@ -23,28 +23,28 @@ public class AcceptanceController {
     private AcceptanceService acceptanceService;
 
     //获取单位
-    @RequestMapping(value = "/api/unit", method = RequestMethod.GET)
+    @RequestMapping(value = "/api/acceptance/unit", method = RequestMethod.GET)
     public void getUnit(Model model, @RequestHeader("account") String account) {
         BaseEntity<List<CommonDTO>> data = acceptanceService.getUnit(account);
         model.addAttribute("data", data);
     }
 
     //获取订单
-    @RequestMapping(value = "/api/order/{unitId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/api/acceptance/orders/{unitId}", method = RequestMethod.GET)
     public void getOrderWithUnitId(Model model, @PathVariable("unitId") int unitId, @RequestHeader("account") String account) {
         BaseEntity<List<CommonDTO>> data = acceptanceService.getOrderWithUnitId(unitId, account);
         model.addAttribute("data", data);
     }
 
     //获取订单详情
-    @RequestMapping(value = "/api/orderDetailds/{orderId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/api/acceptance/detail/{orderId}", method = RequestMethod.GET)
     public void getOrderDetailsWithOrderId(Model model, @RequestHeader("account") String account, @PathVariable("orderId") int orderId) {
         BaseEntity<OrderDetailDTO> data = acceptanceService.getOrderDetailsWithOrderId(account, orderId);
         model.addAttribute("data", data);
     }
 
     //一键完成
-    @RequestMapping(value = "/api/allCompete/{orderId}", method = RequestMethod.POST)
+    @RequestMapping(value = "/api/acceptance/allCompete", method = RequestMethod.POST)
     public void allCompeteByOrderId(Model model, @RequestBody RecUpdateDTO recUpdateDTO, @RequestHeader("account") String account) {
         acceptanceService.updateGoodsByOrderId(recUpdateDTO, account);
         //acceptanceService.updateRecBillStatus(1);

@@ -14,4 +14,29 @@
             </if>
         </where>
     </select>
+
+
+    <select id="getGoodsList" resultType="com.teeny.wms.dto.PutawayDTO">
+        SELECT TOP ${limit} temp.id,temp.status,temp.location, temp.goodsName,temp.lotNo, temp.produceDate, temp.unit, temp.amount, temp.standard, temp.manufacturers FROM (
+        SELECT row_number() OVER(ORDER BY b.pdaInTime DESC ) AS rowid, d.smb_id AS id, d.DealStates AS status, l.loc_name AS location, p.name AS goodsName, d.Batchno AS lotNo, d.MakeDate AS produceDate, p.unit1Name AS unit, d.EligibleQty AS amount, p.standard, p.Factory AS manufacturers FROM #{account}.dbo.pda_PutOnBill_D d
+        LEFT JOIN #{account}.dbo.pda_PutOnBill b ON d.bill_id=b.billid
+        LEFT JOIN #{account}.dbo.pda_Products p ON d.p_id=p.p_id
+        LEFT JOIN #{account}.dbo.pda_location l ON l.l_id=d.Location_id
+        <where>
+            <if test="billNo != null and billNo != ''">
+                b.billnumber=#{billNo}
+            </if>
+            <if test="type != null">
+                AND d.DealStates = #{type}
+            </if>
+            <if test="locationName != null and locationName != ''">
+                AND l.loc_name = #{locationName}
+            </if>
+            <if test="goods != null and goods != ''">
+                AND p.name = #{goods}
+            </if>
+        </where>
+        ) AS temp WHERE rowid > (${page}*${limit});
+    </select>
+
 </mapper>

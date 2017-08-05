@@ -2,6 +2,7 @@ package com.teeny.wms.manage.web;
 
 import com.teeny.wms.core.domain.baseEntity.BaseEntity;
 import com.teeny.wms.dto.CommonDTO;
+import com.teeny.wms.dto.ReviewDTO;
 import com.teeny.wms.dto.ReviewUpdateDTO;
 import com.teeny.wms.service.EmployeesService;
 import com.teeny.wms.service.RecheckService;
@@ -25,14 +26,14 @@ public class RecheckController {
     private RecheckService recheckService;
 
     /**
-     *
+     *出库复核
      * @param model
      * @param account 账套ID
-     * @param billId 订单ID
+     * @param billNo 订单单号
      */
-    @RequestMapping(value = "/api/exWarehouseReview/{billId}", method = RequestMethod.GET)
-    public void getWarehouseReview(Model model, @RequestHeader("account") String account, @PathVariable("billId") int billId) {
-        BaseEntity<ReviewUpdateDTO> data = recheckService.getWarehouseReview(account, billId);
+    @RequestMapping(value = "/api/recheck/exWarehouseReview/{billNo}", method = RequestMethod.GET)
+    public void getWarehouseReview(Model model, @RequestHeader("account") String account, @PathVariable("billNo") int billNo) {
+        BaseEntity<ReviewDTO> data = recheckService.getWarehouseReview(account, billNo);
         model.addAttribute("data", data);
     }
 
@@ -41,7 +42,7 @@ public class RecheckController {
         BaseEntity<List<CommonDTO>> data = employeesService.getReviewer(account);
     }
 
-    @RequestMapping(value = "/api/update", method = RequestMethod.POST)
+    @RequestMapping(value = "/api/recheck/completed", method = RequestMethod.POST)
     public void updateReview(@RequestHeader("account") String account, @RequestBody ReviewUpdateDTO reviewUpdateDTO) {
         recheckService.updateRecheckBill(account, reviewUpdateDTO);
     }

@@ -13,5 +13,11 @@
       <jdbc-driver>com.microsoft.sqlserver.jdbc.SQLServerDriver</jdbc-driver>
       <jdbc-url>jdbc:sqlserver://localhost;databaseName=yyt</jdbc-url>
     </data-source>
+    <data-source source="LOCAL" name="kk@localhost" uuid="665dbe12-17da-4019-b67c-453c50d5fec9">
+      <driver-ref>sqlserver.ms</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>com.microsoft.sqlserver.jdbc.SQLServerDriver</jdbc-driver>
+      <jdbc-url>jdbc:sqlserver://localhost;databaseName=kk</jdbc-url>
+    </data-source>
   </component>
 </project>
