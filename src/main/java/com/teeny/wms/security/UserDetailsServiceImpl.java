@@ -2,7 +2,6 @@ package com.teeny.wms.security;
 
 import com.teeny.wms.core.domain.Employess;
 import com.teeny.wms.service.SystemService;
-import com.teeny.wms.utils.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -17,8 +16,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     private SystemService systemService;
 
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        String[] temp = username.split("$");
+        String[] temp = username.split("@");
         Employess user = systemService.findByUsername(temp[0], temp[1]);
+        //Employess user = systemService.findByUsername(username, "yyt");
         if (user == null) {
             throw new UsernameNotFoundException("User not Found");
         }

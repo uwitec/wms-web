@@ -39,4 +39,62 @@
         ) AS temp WHERE rowid > (${page}*${limit});
     </select>
 
+    <update id="copyData">
+        INSERT INTO ${account}.dbo.pda_PutOnBill_D
+        (bill_id,
+         p_id,
+         MakeDate,
+         Validdate,
+         Batchno,
+         EligibleQty,
+         TaxPrice,
+         TaxTotal,
+         CostPrice,
+         CostTotal,
+         S_id,
+         Location_id,
+         Supplier_id,
+         InstoreTime,
+         LineSort,
+         DealStates,
+         pdastates)
+            SELECT bill_id,p_id,MakeDate,Validdate,Batchno,EligibleQty,TaxPrice,TaxTotal,CostPrice,CostTotal,S_id,Location_id,Supplier_id,InstoreTime,LineSort,DealStates,pdastates
+            FROM pda_PutOnBill_D d
+        WHERE d.smb_id = #{account}
+    </update>
+
+    <update id="copyDataByBillId">
+        INSERT INTO ${account}.dbo.pda_PutOnBill_D
+        (bill_id,
+        p_id,
+        MakeDate,
+        Validdate,
+        Batchno,
+        EligibleQty,
+        TaxPrice,
+        TaxTotal,
+        CostPrice,
+        CostTotal,
+        S_id,
+        Location_id,
+        Supplier_id,
+        InstoreTime,
+        LineSort,
+        DealStates,
+        pdastates)
+        SELECT bill_id,p_id,MakeDate,Validdate,Batchno,EligibleQty,TaxPrice,TaxTotal,CostPrice,CostTotal,S_id,Location_id,Supplier_id,InstoreTime,LineSort,DealStates,d.pdastates
+        FROM pda_PutOnBill_D d
+        LEFT JOIN pda_PutOnBill b ON b.billid=d.bill_id
+        WHERE b.billid=#{billId}
+    </update>
+
+    <select id="countByIdType" resultType="int">
+        SELECT * FROM pda_PutOnBill_D d
+            LEFT JOIN pda_PutOnBill b ON b.billid=d.bill_id
+        WHERE b.billid=(SELECT d1.bill_id FROM pda_PutOnBill_D d1 WHERE d1.smb_id = ${bdId})
+        <if test="idType=0">
+            AND d.smb_id!=0
+        </if>
+    </select>
+
 </mapper>
