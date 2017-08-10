@@ -325,6 +325,7 @@ begin
 end
 GO
 
+
 --动态盘点单
 -- drop table pda_pdBill
 IF not exists (select 1 from dbo.sysobjects where id = object_id(N'[dbo].[pda_pdBill]') and OBJECTPROPERTY(id, N'IsUserTable') = 1)
@@ -341,7 +342,6 @@ begin
 	) ON [PRIMARY]
 end
 GO
-
 
 --动态盘点明细表
 -- drop table pda_pdBill_D

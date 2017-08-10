@@ -7,15 +7,6 @@
       <jdbc-driver>com.microsoft.sqlserver.jdbc.SQLServerDriver</jdbc-driver>
       <jdbc-url>jdbc:sqlserver://localhost;databaseName=GXQHYY</jdbc-url>
     </data-source>
-    <data-source source="LOCAL" name="yyt@localhost" uuid="8c494c30-681f-4f77-ae92-63582f4ab3b1">
-      <driver-ref>sqlserver.ms</driver-ref>
-      <synchronize>true</synchronize>
-      <jdbc-driver>com.microsoft.sqlserver.jdbc.SQLServerDriver</jdbc-driver>
-      <jdbc-url>jdbc:sqlserver://localhost;database=yyt</jdbc-url>
-      <driver-properties>
-        <property name="applicationName" value="DataGrip" />
-      </driver-properties>
-    </data-source>
     <data-source source="LOCAL" name="kk@localhost" uuid="93125b6b-2d65-4371-8f26-99151b8a574b">
       <driver-ref>sqlserver.ms</driver-ref>
       <synchronize>true</synchronize>
@@ -24,6 +15,12 @@
       <driver-properties>
         <property name="applicationName" value="DataGrip" />
       </driver-properties>
+    </data-source>
+    <data-source source="LOCAL" name="yyt@localhost" uuid="3ddf48f8-d799-4e00-b7db-9ec3321c784d">
+      <driver-ref>sqlserver.ms</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>com.microsoft.sqlserver.jdbc.SQLServerDriver</jdbc-driver>
+      <jdbc-url>jdbc:sqlserver://localhost;databaseName=yyt</jdbc-url>
     </data-source>
   </component>
 </project>
