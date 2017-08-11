@@ -368,7 +368,8 @@ orderNoId  | int     | 否       |订单号id |  5
       {
         "orderNoId": 11111(这个商品所以在的订单id),
         "allocationId": 11111(这个商品所以在的订单下的货位id),
-        "goodsId": 11111(这个商品详情id),
+        "goodsId": 11111(这个商品id),
+        "goodsDetailId": 11111(这个商品详情id),
         "articleNo": "货号",
         "status": "状态",
         "goodsName": "商品名",
