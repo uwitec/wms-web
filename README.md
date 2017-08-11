@@ -476,3 +476,33 @@ int limit //每页总数
   }
 }
 ```
+2. 商品明细
+* URL
+api/productsInventroy/details/{id}
+* 方法
+GET
+* 入参
+id 
+*出参
+```
+{
+    "result": 0,
+      "msg": "请求成功!",
+      "data": {
+        {
+        "id":"Id",
+        "goodsName":"商品名",
+        "number":"编号",
+        "location":"货位",
+        "lotNo":"批号",
+        "amount":"数量",
+        "unit":"单位",
+        "validateDate":"有效期",
+        "standard":"规格",
+        "manufacturer":"厂家",
+        "productDate":"生产日期"
+        }
+      }
+}
+```
+
