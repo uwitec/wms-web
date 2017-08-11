@@ -7,3 +7,4 @@ ALTER TABLE pda_pdBill ADD a_id INT;
 ALTER TABLE pda_pdBill ADD sa_id INT;
 ALTER TABLE pda_TranBill ADD sa_id INT;
 ALTER TABLE pda_TranBill ADD as_outid INT;
+ALTER TABLE pda_Products ADD brcode VARCHAR(20);

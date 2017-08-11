@@ -505,4 +505,8 @@ id
       }
 }
 ```
+#### 调拨单
+1. 获取list
+* URL
+api/transfer/list/{}/{}
 

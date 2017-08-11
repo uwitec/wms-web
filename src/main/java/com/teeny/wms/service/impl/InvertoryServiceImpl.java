@@ -50,14 +50,29 @@ public class InvertoryServiceImpl implements invertoryService {
     }
 
 
+
+
     ////////////////单品盘点/////////////////////////////////////
+    @Override
+    public BaseEntity<ProductsInventoryDTO> getProductsInventoryList(String product, String location, int page, int limit, String account) {
+
+        ProductsInventoryDTO productsInventoryDTO = new ProductsInventoryDTO();
+        int total = pdBillRepository.countProductInventory(product, location, account);
+        productsInventoryDTO.setTotal(total);
+        if (total>0) {
+            List<PdListDTO> data = pdBillRepository.getProductsInventoryList(product, location, page, limit, account);
+            productsInventoryDTO.setList(data);
+        }
+        return new BaseEntity<>(productsInventoryDTO);
+    }
 
     @Override
-    public BaseEntity<List<ProductsInventoryDTO>> getProductsInventoryList(ProductsQueryDTO productsQueryDTO, String account) {
+    public BaseEntity<ProductDetailsDTO> getDetailsById(int id, String account) {
 
-        List<ProductsInventoryDTO> list = pdBillRepository.getProductsInventoryList(productsQueryDTO.getGoodsName(), productsQueryDTO.getLocation(), account);
+        ProductDetailsDTO dto = pdBillRepository.getById(id, account);
 
 
         return null;
     }
+
 }

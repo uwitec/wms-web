@@ -134,7 +134,8 @@
     </select>
 
     <select id="getStoreInventoryList" resultType="com.teeny.wms.dto.StoreInventoryDTO">
-        SELECT d.smb_id AS id, p.name AS goodsName, l.loc_name AS location,d.EligibleQty AS countInBill, d.pdQty AS inventroyCount, p.unit1Name AS unit, c.name AS manufacturer   FROM pda_pdBill_D d
+        SELECT d.smb_id AS id, p.name AS goodsName, l.loc_name AS location,d.EligibleQty AS countInBill, d.pdQty AS inventroyCount, p.unit1Name AS unit, c.name AS manufacturer
+        FROM pda_pdBill_D d
         LEFT JOIN pda_pdBill b ON b.billid=d.bill_id
         LEFT JOIN pda_Products p ON d.p_id=p.p_id
         LEFT JOIN pda_stockArea sa ON sa.sa_id=b.sa_id
@@ -161,8 +162,53 @@
     </select>
 
     <!--////////////////////单品盘点////////////////////-->
+
+    <select id="countProductInventory" resultType="int">
+        SELECT count(*) FROM ${account}.dbo.pda_kcpdBill_D d
+            LEFT JOIN ${account}.dbo.pda_Products p ON p.p_id=d.p_id
+            LEFT JOIN ${account}.dbo.pda_location l ON l.l_id=d.Location_id
+            <where>
+                <if test="product != null and product != ''">
+                    p.name LIKE concat('%', #{product}, '%')
+                </if>
+                <if test="location != null and location != ''">
+                    AND l.loc_name LIKE concat('%', #{location}, '%')
+                </if>
+            </where>
+    </select>
+
     <select id="getProductsInventoryList" resultType="com.teeny.wms.dto.ProductsInventoryDTO">
-        SELECT * FROM pda_Area;
+
+        SELECT TOP 5 temp.storehouse_id AS id,
+            temp.name AS goodsName,
+            temp.loc_name AS location,
+            temp.Batchno AS lotNo,
+            temp.quantity AS amount,
+            temp.Validdate AS validateDate,
+            temp.standard AS standard,
+            temp.Factory AS manufacturer,
+            temp.pdastates AS status FROM (
+        SELECT row_number() OVER(ORDER BY b.pdaInTime DESC) AS rowid, d.storehouse_id AS id,
+            p.name AS goodsName,
+            l.loc_name AS location,
+            d.Batchno AS lotNo,
+            d.quantity AS amount,
+            d.Validdate AS validateDate,
+            p.standard AS standard,
+            p.Factory AS manufacturer,
+            d.pdastates AS status
+            FROM ${account}.dbo.pda_kcpdBill_D d
+            LEFT JOIN ${account}.dbo.pda_Products p ON p.p_id=d.p_id
+            LEFT JOIN ${account}.dbo.pda_location l ON l.l_id=d.Location_id
+            <where>
+                <if test="product != null and product != ''">
+                    p.name LIKE concat('%', #{product}, '%')
+                </if>
+                <if test="location != null and location != ''">
+                    AND l.loc_name LIKE concat('%', #{location}, '%')
+                </if>
+            </where>
+        ) AS temp WHERE rowid > (${page}*${limit});
     </select>
 
 

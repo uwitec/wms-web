@@ -15,4 +15,44 @@
        </where>
     </select>
 
+    <select id="getTransferList" resultType="com.teeny.wms.dto.TransferListDTO">
+        SELECT TOP ${limit} temp.smb_id AS id,temp.name AS goodsName, temp.Batchno AS lotNo,
+            temp.standard AS standard, temp.Factory AS manufacturer,
+            temp.unit1Name AS unit, temp.quantity AS amount,
+            temp.Validdate AS validateDate, temp.MakeDate AS productDate FROM (
+          SELECT row_number() OVER(ORDER BY b.pdaInTime DESC ) AS rowid, d.smb_id AS id,p.name AS goodsName, d.Batchno AS lotNo,
+            p.standard AS standard, p.Factory AS manufacturer,
+            p.unit1Name AS unit, d.quantity AS amount,
+            d.Validdate AS validateDate, d.MakeDate AS productDate FROM pda_TranBill_D d
+            LEFT JOIN pda_Products p ON p.p_id=d.p_id
+            LEFT JOIN pda_TranBill b ON b.billid=d.bill_id
+            WHERE
+            d.DealStates = 0
+            <if test="billNo != null and billNO != ''">
+                AND b.billnumber=#{billNo}
+            </if>
+            <if test="goodsName != null and goodsName != ''">
+                AND p.name LIKE concat('%',#{goodsName},'%')
+            </if>
+            <if test="s_inid != null">
+                AND d.ss_id = #{s_inid}
+            </if>
+            <if test="s_outid != null">
+                AND d.sd_id = #{s_outid}
+            </if>
+            <if test="sa_inid != null">
+                AND b.sa_inid=#{sa_inid}
+            </if>
+            <if test="sa_outid != null">
+                AND b.sa_outid=#{sa_outid}
+            </if>
+            <if test="l_inid != null">
+                AND d.Location_id = #{l_inid}
+            </if>
+            <if test="l_outid != null">
+                AND d.location_id2 = #{l_outid}
+            </if>
+        ) AS temp WHERE rowid > (${page}*${limit});
+    </select>
+
 </mapper>
