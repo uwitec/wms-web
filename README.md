@@ -279,7 +279,7 @@ recheck/completed
 1.获取上架单号
 * URL    
 shelve/orderNoList
-* 方法
+* 方法    
  GET
 * 入参   
 无
@@ -300,7 +300,7 @@ shelve/orderNoList
 2.获取获取货位
 * URL    
 shelve/allocationList/{orderNoId}
-* 方法
+* 方法    
  GET
 * 入参   
 
@@ -324,15 +324,15 @@ orderNoId | int     | 否       |订单号id |  5
 
 3.获取商品
 * URL    
-shelve/goods/{orderNoId}/{allocationId}
-* 方法
+shelve/goodsList/{orderNoId}/{allocationId}
+* 方法    
  GET
 * 入参   
 
 参数名      | 类型   | 是否可空 | 参数说明 | 样例
 -----------|--------|---------|---------|-----
 orderNoId  | int     | 否       |订单号id |  5
-allocationId | int     | 否     |货位id |  2
+allocationId | int     | 是     |货位id |  3(默认0)
 
 * 出参
 ```
@@ -351,7 +351,7 @@ allocationId | int     | 否     |货位id |  2
 4.获取商品详情列表
 * URL    
 shelve/goodsDetailList/{orderNoId}/{allocationId}/{goodsId}
-* 方法
+* 方法    
  GET
 * 入参   
 
@@ -368,7 +368,9 @@ allocationId | int     | 是     |货位id |  3(默认0)
   "msg": "请求成功!",
   "data": [
       {
-        "id": 11111(这个商品详情id),
+        "orderNoId": 11111(这个商品所以在的订单id),
+        "allocationId": 11111(这个商品所以在的订单下的货位id),
+        "goodsId": 11111(这个商品详情id),
         "articleNo": "货号",
         "status": "状态",
         "goodsName": "商品名",
@@ -377,7 +379,44 @@ allocationId | int     | 是     |货位id |  3(默认0)
         "productionDate": "生产日期",
         "unit": "单位",
         "amount": "数量",
-        "manufacturer": "厂家",
+        "manufacturer": "厂家"
+      },...
+    ]
+}
+```
+
+5.获取商品详情列表
+* URL    
+shelve/allShelve
+* 方法    
+ POST
+* 入参   
+
+参数名      | 类型   | 是否可空 | 参数说明 | 样例
+-----------|--------|---------|---------|-----
+orderNoId  | int     | 否       |订单号id |  5
+allocationId | int     | 是     |货位id |  2(默认0)
+allocationId | int     | 是     |货位id |  3(默认0)
+
+* 出参
+```
+{
+  "result": 0,
+  "msg": "请求成功!",
+  "data": [
+      {
+        "orderNoId": 11111(这个商品所以在的订单id),
+        "allocationId": 11111(这个商品所以在的订单下的货位id),
+        "goodsId": 11111(这个商品详情id),
+        "articleNo": "货号",
+        "status": "状态",
+        "goodsName": "商品名",
+        "logNo": "批号",
+        "specification": "规格",
+        "productionDate": "生产日期",
+        "unit": "单位",
+        "amount": "数量",
+        "manufacturer": "厂家"
       },...
     ]
 }
