@@ -445,4 +445,34 @@ goodsDetailId | int | 否       |商品详情id|  5
   "data": null
 }
 ```
-
+#### 单品盘点
+1. 获取
+* URL
+api/productsInventroy/getList/{product}/{location}/{page}/{limit}
+* 方法
+GET
+* 入参
+String product // 商品名
+String location //货位
+int page //当前页数
+int limit //每页总数
+* 出参
+```
+{
+  "result": 0,
+  "msg": "请求成功!",
+  "data": {
+    "total":"总数",
+    "list":[{
+        "id":"ID",
+        "goodsName":"商品名",
+        "location":"货位",
+        "lotNo":"批号",
+        "amount":"数量",
+        "validateDate":"有效期",
+        "standard":"规格",
+        "manufacturer":"厂家"
+    },...]
+  }
+}
+```
