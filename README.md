@@ -385,9 +385,9 @@ allocationId | int     | 是     |货位id |  3(默认0)
 }
 ```
 
-5.获取商品详情列表
+5.全部上架
 * URL    
-shelve/allShelve
+shelve/all
 * 方法    
  POST
 * 入参   
@@ -396,28 +396,53 @@ shelve/allShelve
 -----------|--------|---------|---------|-----
 orderNoId  | int     | 否       |订单号id |  5
 allocationId | int     | 是     |货位id |  2(默认0)
-allocationId | int     | 是     |货位id |  3(默认0)
+goodsId     | int     | 是     |商品id |  3(默认0)
 
 * 出参
 ```
 {
   "result": 0,
   "msg": "请求成功!",
-  "data": [
-      {
-        "orderNoId": 11111(这个商品所以在的订单id),
-        "allocationId": 11111(这个商品所以在的订单下的货位id),
-        "goodsId": 11111(这个商品详情id),
-        "articleNo": "货号",
-        "status": "状态",
-        "goodsName": "商品名",
-        "logNo": "批号",
-        "specification": "规格",
-        "productionDate": "生产日期",
-        "unit": "单位",
-        "amount": "数量",
-        "manufacturer": "厂家"
-      },...
-    ]
+  "data": null
+}
+```
+
+6.单个上架
+* URL    
+shelve/single
+* 方法    
+ POST
+* 入参   
+
+参数名      | 类型   | 是否可空 | 参数说明 | 样例
+-----------|--------|---------|---------|-----
+goodsDetailId | int | 否       |商品详情id|  5
+
+* 出参
+```
+{
+  "result": 0,
+  "msg": "请求成功!",
+  "data": null
+}
+```
+
+7.修改
+* URL    
+shelve/update
+* 方法    
+ POST
+* 入参   
+
+参数名      | 类型   | 是否可空 | 参数说明 | 样例
+-----------|--------|---------|---------|-----
+goodsDetailId | int | 否       |商品详情id|  5
+
+* 出参
+```
+{
+  "result": 0,
+  "msg": "请求成功!",
+  "data": null
 }
 ```
