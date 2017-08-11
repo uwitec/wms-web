@@ -350,7 +350,7 @@ allocationId | int     | 是     |货位id |  3(默认0)
 
 4.获取商品详情列表
 * URL    
-shelve/goodsDetailList/{orderNoId}/{allocationId}/{goodsId}
+shelve/goodsDetailList/{orderNoId}
 * 方法    
  GET
 * 入参   
@@ -358,8 +358,6 @@ shelve/goodsDetailList/{orderNoId}/{allocationId}/{goodsId}
 参数名      | 类型   | 是否可空 | 参数说明 | 样例
 -----------|--------|---------|---------|-----
 orderNoId  | int     | 否       |订单号id |  5
-allocationId | int     | 是     |货位id |  2(默认0)
-allocationId | int     | 是     |货位id |  3(默认0)
 
 * 出参
 ```
@@ -446,3 +444,4 @@ goodsDetailId | int | 否       |商品详情id|  5
   "data": null
 }
 ```
+
