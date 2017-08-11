@@ -373,7 +373,7 @@ orderNoId  | int     | 否       |订单号id |  5
         "articleNo": "货号",
         "status": "状态",
         "goodsName": "商品名",
-        "logNo": "批号",
+        "lotNo": "批号",
         "specification": "规格",
         "productionDate": "生产日期",
         "unit": "单位",
