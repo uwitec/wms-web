@@ -274,3 +274,101 @@ recheck/completed
 * 出参
 无
 
+
+#### 上架入库模块
+1.获取上架单号
+* URL    
+shelve/orderNoList
+* 方法
+ GET
+* 入参   
+无
+* 出参
+```
+{
+  "result": 0,
+  "msg": "请求成功!",
+  "data": [
+      {
+        "id": 5,
+        "name": "abc"
+      },...
+    ]
+```
+
+2.获取获取货位
+* URL    
+shelve/allocationList/{orderNoId}
+* 方法
+ GET
+* 入参   
+参数名      | 类型   | 是否可空 | 参数说明 | 样例
+-----------|--------|---------|---------|-----
+orderNoId | int     | 否       |订单号id |  5
+* 出参
+```
+{
+  "result": 0,
+  "msg": "请求成功!",
+  "data": [
+      {
+        "id": 5,
+        "name": "abc"
+      },...
+    ]
+```
+
+3.获取商品
+* URL    
+shelve/goods/{orderNoId}/{allocationId}
+* 方法
+ GET
+* 入参   
+参数名      | 类型   | 是否可空 | 参数说明 | 样例
+-----------|--------|---------|---------|-----
+orderNoId  | int     | 否       |订单号id |  5
+allocationId | int     | 否     |货位id |  2
+* 出参
+```
+{
+  "result": 0,
+  "msg": "请求成功!",
+  "data": [
+      {
+        "id": 5,
+        "name": "abc"
+      },...
+    ]
+```
+
+4.获取商品详情列表
+* URL    
+shelve/goodsDetailList/{orderNoId}/{allocationId}/{goodsId}
+* 方法
+ GET
+* 入参   
+参数名      | 类型   | 是否可空 | 参数说明 | 样例
+-----------|--------|---------|---------|-----
+orderNoId  | int     | 否       |订单号id |  5
+allocationId | int     | 是     |货位id |  2(默认0)
+allocationId | int     | 是     |货位id |  3(默认0)
+* 出参
+```
+{
+  "result": 0,
+  "msg": "请求成功!",
+  "data": [
+      {
+        "id": 11111(这个商品详情id),
+        "articleNo": "货号",
+        "status": "状态",
+        "goodsName": "商品名",
+        "logNo": "批号",
+        "specification": "规格",
+        "productionDate": "生产日期",
+        "unit": "单位",
+        "amount": "数量",
+        "manufacturer": "厂家",
+      },...
+    ]
+```
