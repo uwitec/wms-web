@@ -3,6 +3,7 @@ package com.teeny.wms.manage.web;
 import com.teeny.wms.core.domain.baseEntity.BaseEntity;
 import com.teeny.wms.dto.BillCountDTO;
 import com.teeny.wms.dto.CommonDTO;
+import com.teeny.wms.dto.QueryDocumentDTO;
 import com.teeny.wms.service.HomeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -41,6 +42,13 @@ public class HomeController {
     @RequestMapping(value = "/api/home/info/{warehouseId}", method = RequestMethod.GET)
     public BaseEntity<BillCountDTO> getBillCountByWarehouseType(@RequestHeader("sId") int sId, @RequestHeader("account") String account) {
         return homeService.getInfoByWarehouse(account, sId);
+    }
+
+    //单据查询
+    @ResponseBody
+    @RequestMapping(value = "/api/home/doucmentList/{type}", method = RequestMethod.GET)
+    public BaseEntity<List<QueryDocumentDTO>> getDocumentList(@PathVariable("type") int type, @RequestHeader("account") String account) {
+        return homeService.getDocumentList(type, account);
     }
 
 }

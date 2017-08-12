@@ -2,6 +2,7 @@ package com.teeny.wms.core.repository;
 
 import com.teeny.wms.dto.CommonDTO;
 import com.teeny.wms.dto.GoodsDTO;
+import com.teeny.wms.dto.QueryDocumentDTO;
 import com.teeny.wms.dto.RecBillDTO;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
@@ -34,4 +35,6 @@ public interface RecBillRepository {
     void updateGoodsByGoodsId(@Param("goodsId") int goodsId,@Param("account") String account);
 
 
+    @Select("SELECT b.billid AS id,b.billnumber AS documentNo, b.pdaInTime AS documentDate, CASE b.billstates WHEN 10 THEN '验收中' WHEN 13 THEN '已验收' ELSE '' END AS status FROM ${account}.dbo.pda_RecBill b;")
+    List<QueryDocumentDTO> getBill(String account);
 }

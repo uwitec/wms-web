@@ -8,21 +8,25 @@ import java.io.Serializable;
  */
 public class QueryDocumentDTO implements Serializable {
 
-    private int status;
+    private int id;
+    private String status;
     private String documentNo;
     private String documentDate;
 
-    public QueryDocumentDTO(int status, String documentNo, String documentDate) {
-        this.status = status;
-        this.documentNo = documentNo;
-        this.documentDate = documentDate;
+
+    public int getId() {
+        return id;
     }
 
-    public int getStatus() {
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(int status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 

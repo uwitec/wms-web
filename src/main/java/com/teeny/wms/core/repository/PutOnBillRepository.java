@@ -1,6 +1,7 @@
 package com.teeny.wms.core.repository;
 
 import com.teeny.wms.dto.PutawayDTO;
+import com.teeny.wms.dto.QueryDocumentDTO;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
@@ -41,5 +42,8 @@ public interface PutOnBillRepository {
 
     //复制数据
     void copyData(@Param("goodsDetailId") int goodsDetailId, @Param("allcationId") int allcationId, @Param("amout") int amount, @Param("account") String account);
+
+    @Select("SELECT b.billid AS id,b.billnumber AS documentNo, b.pdaInTime AS documentDate, CASE b.billstates WHEN 10 THEN '验收中' WHEN 13 THEN '已验收' ELSE '' END AS status FROM ${account}.dbo.pda_PutOnBill b;")
+    List<QueryDocumentDTO> getBill(String account);
 }
 

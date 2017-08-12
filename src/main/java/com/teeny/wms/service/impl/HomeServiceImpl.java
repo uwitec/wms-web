@@ -4,11 +4,13 @@ import com.teeny.wms.core.domain.baseEntity.BaseEntity;
 import com.teeny.wms.core.repository.*;
 import com.teeny.wms.dto.BillCountDTO;
 import com.teeny.wms.dto.CommonDTO;
+import com.teeny.wms.dto.QueryDocumentDTO;
 import com.teeny.wms.service.HomeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -54,5 +56,31 @@ public class HomeServiceImpl implements HomeService {
         billCountDTO.setReviewBillCount(recCount);
         billCountDTO.setReviewBillCount(checkBillCount);
         return new BaseEntity<BillCountDTO>(billCountDTO);
+    }
+
+    @Override
+    public BaseEntity<List<QueryDocumentDTO>> getDocumentList(int type, String account) {
+
+        List<QueryDocumentDTO> data = new ArrayList<QueryDocumentDTO>();
+        if (type == 0) {
+            data.addAll(recBillRepository.getBill(account));
+            data.addAll(putOnBillRepository.getBill(account));
+            data.addAll(tranBillRepository.getBill(account));
+            data.addAll(checkBillRepository.getBill(account));
+        }
+        if (type == 1) {
+            data = recBillRepository.getBill(account);
+        }
+        if (type == 2) {
+            data = putOnBillRepository.getBill(account);
+        }
+        if (type == 3) {
+            data = tranBillRepository.getBill(account);
+        }
+        if (type == 4) {
+            data = checkBillRepository.getBill(account);
+        }
+
+        return null;
     }
 }

@@ -1,9 +1,12 @@
 package com.teeny.wms.core.repository;
 
+import com.teeny.wms.dto.QueryDocumentDTO;
 import com.teeny.wms.dto.ReviewDTO;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 /**
  * Created by lilei on 2017/7/22.
@@ -25,4 +28,7 @@ public interface CheckBillRepository {
 
     // TODO: 2017/8/3
     void updateCheckBill(@Param("billNo") String billNo,@Param("reviewerId") int reviewerId,@Param("remark") String remark, String account);
+
+    @Select("SELECT b.billid AS id,b.billnumber AS documentNo, b.pdaInTime AS documentDate, CASE b.billstates WHEN 10 THEN '验收中' WHEN 13 THEN '已验收' ELSE '' END AS status FROM ${account}.dbo.pda_CheckBill b;")
+    List<QueryDocumentDTO> getBill(String account);
 }
