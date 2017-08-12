@@ -36,10 +36,11 @@ public class HomeController {
         //model.addAttribute("list",data);
     }
 
+    //获取订单数
     @ResponseBody
     @RequestMapping(value = "/api/home/info/{warehouseId}", method = RequestMethod.GET)
-    public BaseEntity<BillCountDTO> getBillCountByWarehouseType(@PathVariable("warehouseId") int warehouseId, @RequestHeader("account") String account) {
-        return homeService.getInfoByWarehouse(account, warehouseId);
+    public BaseEntity<BillCountDTO> getBillCountByWarehouseType(@RequestHeader("sId") int sId, @RequestHeader("account") String account) {
+        return homeService.getInfoByWarehouse(account, sId);
     }
 
 }

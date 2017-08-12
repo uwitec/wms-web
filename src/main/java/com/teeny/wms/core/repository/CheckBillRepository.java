@@ -1,19 +1,16 @@
 package com.teeny.wms.core.repository;
 
-import com.teeny.wms.dto.RecBillDTO;
 import com.teeny.wms.dto.ReviewDTO;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Repository;
-
-import java.util.List;
 
 /**
  * Created by lilei on 2017/7/22.
  */
 @Repository
 public interface CheckBillRepository {
-    int countByWarehoust(@Param("warehouseId") int warehouseId, @Param("account") String account);
+    int countByWarehousId(@Param("warehouseId") int warehouseId, @Param("account") String account);
 
 
     @Select("SELECT c.billnumber  AS billNo, c.FirstStates AS priority, c.TempStore AS tempArea, c.pdastates AS status, c.billstates AS documentStatus, c.remark AS billRemark, cl.name AS customer, cl.RoadName AS deliveryLine FROM ${account}.dbo.pda_CheckBill c LEFT JOIN ${account}.dbo.pda_clients cl ON c.c_id=cl.c_id WHERE c.billnumber=#{billNo}")

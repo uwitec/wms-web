@@ -5,7 +5,6 @@ import com.teeny.wms.dto.GoodsDTO;
 import com.teeny.wms.dto.RecBillDTO;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
-import org.springframework.security.access.method.P;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -16,7 +15,7 @@ import java.util.List;
  */
 @Repository
 public interface RecBillRepository {
-    int countByWarehoust(@Param("warehouseId") int warehouseId, @Param("account") String account);
+    int countByWarehousId(@Param("warehouseId") int warehouseId, @Param("account") String account);
 
     @Select("SELECT billid AS id, billnumber AS name FROM ${account}.dbo.pda_RecBill WHERE c_id=#{unitId}")
     List<CommonDTO> getOrderBillWithUnitId(@Param("unitId") int unitId, @Param("account") String account);

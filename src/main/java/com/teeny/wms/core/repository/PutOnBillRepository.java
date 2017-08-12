@@ -13,7 +13,7 @@ import java.util.List;
  */
 @Repository
 public interface PutOnBillRepository {
-    int countByWarehoust(@Param("warehouseId") int warehouseId, @Param("account") String account);
+    int countByWarehousId(@Param("warehouseId") int warehouseId, @Param("account") String account);
 
     List<PutawayDTO> getGoodsDetailList(@Param("orderNoId") int orderNoId, @Param("account") String account);
 

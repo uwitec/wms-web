@@ -6,7 +6,7 @@
 <mapper namespace="com.teeny.wms.core.repository.PutOnBillRepository">
     <cache />
 
-    <select id="countByWarehoust" resultType="int">
+    <select id="countByWarehousId" resultType="int">
         SELECT count(*) FROM ${account}.dbo.pda_PutOnBill p
         <where>
             <if test="warehouseId != 0">

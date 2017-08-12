@@ -42,13 +42,13 @@ public class HomeServiceImpl implements HomeService {
     }
 
     @Override
-    public BaseEntity<BillCountDTO> getInfoByWarehouse(String account, int warehouseId) {
+    public BaseEntity<BillCountDTO> getInfoByWarehouse(String account, int sId) {
         BillCountDTO billCountDTO = new BillCountDTO();
 
-        int tranBillCount = tranBillRepository.countByWarehoust(warehouseId, account);
-        int checkBillCount = checkBillRepository.countByWarehoust(warehouseId, account);
-        int putOnCount = putOnBillRepository.countByWarehoust(warehouseId, account);
-        int recCount = recBillRepository.countByWarehoust(warehouseId, account);
+        int tranBillCount = tranBillRepository.countByWarehousId(sId, account);
+        int checkBillCount = checkBillRepository.countByWarehousId(sId, account);
+        int putOnCount = putOnBillRepository.countByWarehousId(sId, account);
+        int recCount = recBillRepository.countByWarehousId(sId, account);
         billCountDTO.setPutawayBillCount(putOnCount);
         billCountDTO.setTranferBillCount(tranBillCount);
         billCountDTO.setReviewBillCount(recCount);
