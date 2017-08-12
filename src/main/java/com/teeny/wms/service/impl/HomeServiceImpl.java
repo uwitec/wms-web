@@ -81,6 +81,6 @@ public class HomeServiceImpl implements HomeService {
             data = checkBillRepository.getBill(account);
         }
 
-        return null;
+        return new BaseEntity<List<QueryDocumentDTO>>(data);
     }
 }
