@@ -179,16 +179,7 @@
 
     <select id="getProductsInventoryList" resultType="com.teeny.wms.dto.ProductsInventoryDTO">
 
-        SELECT TOP 5 temp.storehouse_id AS id,
-            temp.name AS goodsName,
-            temp.loc_name AS location,
-            temp.Batchno AS lotNo,
-            temp.quantity AS amount,
-            temp.Validdate AS validateDate,
-            temp.standard AS standard,
-            temp.Factory AS manufacturer,
-            temp.pdastates AS status FROM (
-        SELECT row_number() OVER(ORDER BY b.pdaInTime DESC) AS rowid, d.storehouse_id AS id,
+        SELECT  d.storehouse_id AS id,
             p.name AS goodsName,
             l.loc_name AS location,
             d.Batchno AS lotNo,
@@ -196,20 +187,32 @@
             d.Validdate AS validateDate,
             p.standard AS standard,
             p.Factory AS manufacturer,
-            d.pdastates AS status
+            CASE d.pdastates WHEN 0 THEN '未盘点' ELSE '已盘点' END AS status
             FROM ${account}.dbo.pda_kcpdBill_D d
             LEFT JOIN ${account}.dbo.pda_Products p ON p.p_id=d.p_id
             LEFT JOIN ${account}.dbo.pda_location l ON l.l_id=d.Location_id
-            <where>
+            WHERE d.ss_id = #{sId} AND d.DealStates = 0
                 <if test="product != null and product != ''">
                     p.name LIKE concat('%', #{product}, '%')
                 </if>
                 <if test="location != null and location != ''">
                     AND l.loc_name LIKE concat('%', #{location}, '%')
                 </if>
-            </where>
-        ) AS temp WHERE rowid > (${page}*${limit});
     </select>
+
+
+    <update id="updateStatus">
+        UPDATE pda_kcpdBill_D SET DealStates = 1,pdastates = 1
+        WHERE d.ss_id = #{sId}
+        <if test="product != null and product != ''">
+            AND p_id IN (SELECT p.p_id FROM pda_Products p LEFT JOIN pda_kcpdBill_D d ON d.p_id=p.p_id
+            WHERE p.name LIKE concat('%',#{product},'%'))
+        </if>
+        <if test="location != null and location != ''">
+            AND Location_id IN
+            (SELECT l.l_id FROM pda_location l LEFT JOIN pda_kcpdBill_D d1 ON d1.Location_id=l.l_id WHERE l.loc_name LIKE concat('%',#{location},'%'))
+        </if>
+    </update>
 
 
 

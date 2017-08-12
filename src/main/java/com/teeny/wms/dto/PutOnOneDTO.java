@@ -1,6 +1,7 @@
 package com.teeny.wms.dto;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * Class description:
@@ -14,31 +15,44 @@ import java.io.Serializable;
  */
 public class PutOnOneDTO implements Serializable {
 
-    private int bdId;//id
-    private String locCode; //货位编码
-    private int amount; //数量
+    private int goodsDetailId;//id
+    private List<UpdateEntity> allcations; //货位编码
 
-    public int getBdId() {
-        return bdId;
+    public static class UpdateEntity {
+        private int allcationId;  //货位id
+        private int amount;      //数量
+
+        public int getAllcationId() {
+            return allcationId;
+        }
+
+        public void setAllcationId(int allcationId) {
+            this.allcationId = allcationId;
+        }
+
+        public int getAmount() {
+            return amount;
+        }
+
+        public void setAmount(int amount) {
+            this.amount = amount;
+        }
     }
 
-    public void setBdId(int bdId) {
-        this.bdId = bdId;
+    public int getGoodsDetailId() {
+        return goodsDetailId;
     }
 
-    public String getLocCode() {
-        return locCode;
+    public void setGoodsDetailId(int goodsDetailId) {
+        this.goodsDetailId = goodsDetailId;
     }
 
-    public void setLocCode(String locCode) {
-        this.locCode = locCode;
+    public List<UpdateEntity> getAllcations() {
+        return allcations;
     }
 
-    public int getAmount() {
-        return amount;
-    }
-
-    public void setAmount(int amount) {
-        this.amount = amount;
+    public void setAllcations(List<UpdateEntity> allcations) {
+        this.allcations = allcations;
     }
 }
+

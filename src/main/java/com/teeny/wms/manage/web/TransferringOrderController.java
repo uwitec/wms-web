@@ -21,7 +21,7 @@ public class TransferringOrderController {
     @Autowired
     private TransferService transferService;
 
-    @RequestMapping(value = "/api/transfer/list/{billNo}/{goodsName}/{s_inid}/{s_outid}/{sa_outid}/{sa_outid}/{l_inid}/{l_outid}/{page}/{limit}", method = RequestMethod.GET)
+    @RequestMapping(value = "/api/transfer/list/{billNo}/{goodsName}/{s_inid}/{s_outid}/{sa_outid}/{sa_outid}/{l_inid}/{l_outid}", method = RequestMethod.GET)
     public void getTranList(Model model, @PathVariable("billNo") String billNo,
                             @PathVariable("goodsName") String goodsName,
                             @PathVariable("s_inid") int s_inid,
@@ -29,8 +29,8 @@ public class TransferringOrderController {
                             @PathVariable("sa_inid") int sa_inid,
                             @PathVariable("sa_outid") int sa_outid,
                             @PathVariable("l_inid") int l_inid,
-                            @PathVariable("l_outid") int l_outid, @PathVariable("page") int page, @PathVariable("limit") int limit, @RequestHeader("account") String account) {
-        BaseEntity<TransferListDTO> data = transferService.getTransferList(billNo, goodsName, s_inid, s_outid, sa_inid, sa_outid, l_inid, l_outid, page, limit, account);
+                            @PathVariable("l_outid") int l_outid, @RequestHeader("account") String account) {
+        BaseEntity<TransferListDTO> data = transferService.getTransferList(billNo, goodsName, s_inid, s_outid, sa_inid, sa_outid, l_inid, l_outid, account);
     }
 
 }

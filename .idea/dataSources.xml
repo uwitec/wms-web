@@ -1,26 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="GXQHYY@localhost" uuid="2ed7d86f-1b1c-4755-80f2-58fb631c079e">
+    <data-source source="LOCAL" name="yyt@localhost" uuid="c2c17631-f2b6-4d7f-abf3-8cc4aa05313a">
       <driver-ref>sqlserver.ms</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>com.microsoft.sqlserver.jdbc.SQLServerDriver</jdbc-driver>
-      <jdbc-url>jdbc:sqlserver://localhost;databaseName=GXQHYY</jdbc-url>
-    </data-source>
-    <data-source source="LOCAL" name="kk@localhost" uuid="93125b6b-2d65-4371-8f26-99151b8a574b">
-      <driver-ref>sqlserver.ms</driver-ref>
-      <synchronize>true</synchronize>
-      <jdbc-driver>com.microsoft.sqlserver.jdbc.SQLServerDriver</jdbc-driver>
-      <jdbc-url>jdbc:sqlserver://localhost;database=kk</jdbc-url>
+      <jdbc-url>jdbc:sqlserver://localhost;database=yyt</jdbc-url>
       <driver-properties>
         <property name="applicationName" value="DataGrip" />
       </driver-properties>
-    </data-source>
-    <data-source source="LOCAL" name="yyt@localhost" uuid="3ddf48f8-d799-4e00-b7db-9ec3321c784d">
-      <driver-ref>sqlserver.ms</driver-ref>
-      <synchronize>true</synchronize>
-      <jdbc-driver>com.microsoft.sqlserver.jdbc.SQLServerDriver</jdbc-driver>
-      <jdbc-url>jdbc:sqlserver://localhost;databaseName=yyt</jdbc-url>
     </data-source>
   </component>
 </project>

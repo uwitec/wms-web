@@ -1,10 +1,7 @@
 package com.teeny.wms.service;
 
 import com.teeny.wms.core.domain.baseEntity.BaseEntity;
-import com.teeny.wms.dto.ProductDetailsDTO;
-import com.teeny.wms.dto.ProductsInventoryDTO;
-import com.teeny.wms.dto.StoreInventoryDTO;
-import com.teeny.wms.dto.StoreInventoryQueryDTO;
+import com.teeny.wms.dto.*;
 
 import java.util.List;
 
@@ -14,7 +11,19 @@ import java.util.List;
 public interface invertoryService {
     BaseEntity<StoreInventoryDTO> getInventoryList(StoreInventoryQueryDTO storeInventoryQueryDTO, String account);
 
-    BaseEntity<ProductsInventoryDTO> getProductsInventoryList(String product, String location, int page, int limit, String account);
+    BaseEntity<ProductsInventoryDTO> getProductsInventoryList(String product, String location, int sId, String account);
 
     BaseEntity<ProductDetailsDTO> getDetailsById(int id, String account);
+
+    void confirmProductPd(String product, String location, int sId, String account);
+
+    BaseEntity<CommonDTO> updateProduct(int id, int amount, String account);
+
+    BaseEntity<List<String>> getProductsList(String goodsName, String account);
+
+    BaseEntity<List<String>> getStandardList(String goodsName, String account);
+
+    BaseEntity<String> addProduct(AddProductDTO addProductDTO, String account);
+
+    BaseEntity<ProductAddDetailDTO> getDetailsByNameAndStandard(String goodsName, String standard, String account);
 }

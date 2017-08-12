@@ -3,7 +3,6 @@ package com.teeny.wms.service;
 import com.teeny.wms.core.domain.baseEntity.BaseEntity;
 import com.teeny.wms.dto.PutOnOneDTO;
 import com.teeny.wms.dto.PutawayDTO;
-import com.teeny.wms.dto.QueryPutOnBillDTO;
 
 import java.util.List;
 
@@ -13,9 +12,9 @@ import java.util.List;
  */
 public interface PutOnBillService {
 
-    BaseEntity<List<PutawayDTO>> getGoodsList(QueryPutOnBillDTO queryPutOnBillDTO, String account);
+    BaseEntity<List<PutawayDTO>> getGoodsDetailList(int orderNoId, String account);
 
-    void putOnBillQuickly(int billId, String account);
+    void putOnBillQuickly(int orderNoId, int allocationId, int goodsId, String account);
 
     void putOnBillWithOne(int bdId, String account);
 

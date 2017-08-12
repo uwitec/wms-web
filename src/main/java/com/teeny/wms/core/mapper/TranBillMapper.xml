@@ -16,11 +16,7 @@
     </select>
 
     <select id="getTransferList" resultType="com.teeny.wms.dto.TransferListDTO">
-        SELECT TOP ${limit} temp.smb_id AS id,temp.name AS goodsName, temp.Batchno AS lotNo,
-            temp.standard AS standard, temp.Factory AS manufacturer,
-            temp.unit1Name AS unit, temp.quantity AS amount,
-            temp.Validdate AS validateDate, temp.MakeDate AS productDate FROM (
-          SELECT row_number() OVER(ORDER BY b.pdaInTime DESC ) AS rowid, d.smb_id AS id,p.name AS goodsName, d.Batchno AS lotNo,
+        SELECT  d.smb_id AS id,p.name AS goodsName, d.Batchno AS lotNo,
             p.standard AS standard, p.Factory AS manufacturer,
             p.unit1Name AS unit, d.quantity AS amount,
             d.Validdate AS validateDate, d.MakeDate AS productDate FROM pda_TranBill_D d
@@ -52,7 +48,6 @@
             <if test="l_outid != null">
                 AND d.location_id2 = #{l_outid}
             </if>
-        ) AS temp WHERE rowid > (${page}*${limit});
     </select>
 
 </mapper>

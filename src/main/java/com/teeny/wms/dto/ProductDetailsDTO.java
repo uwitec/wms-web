@@ -18,7 +18,7 @@ public class ProductDetailsDTO implements Serializable {
     private String validateDate; //有效期
     private String standard; //规格
     private String productDate; //生产日期
-    private int status; //状态
+    private String status; //状态
 
 
     public int getId() {
@@ -109,11 +109,11 @@ public class ProductDetailsDTO implements Serializable {
         this.productDate = productDate;
     }
 
-    public int getStatus() {
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(int status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 }

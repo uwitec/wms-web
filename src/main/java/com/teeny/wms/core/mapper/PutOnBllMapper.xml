@@ -16,54 +16,29 @@
     </select>
 
 
-    <select id="getGoodsList" resultType="com.teeny.wms.dto.PutawayDTO">
-        SELECT TOP ${limit} temp.id,temp.status,temp.location, temp.goodsName,temp.lotNo, temp.produceDate, temp.unit, temp.amount, temp.standard, temp.manufacturers FROM (
-        SELECT row_number() OVER(ORDER BY b.pdaInTime DESC ) AS rowid, d.smb_id AS id, d.DealStates AS status, l.loc_name AS location, p.name AS goodsName, d.Batchno AS lotNo, d.MakeDate AS produceDate, p.unit1Name AS unit, d.EligibleQty AS amount, p.standard, p.Factory AS manufacturers FROM #{account}.dbo.pda_PutOnBill_D d
+    <select id="getGoodsDetailList" resultType="com.teeny.wms.dto.PutawayDTO">
+      SELECT d.smb_id AS id, CASE d.DealStates WHEN 0 THEN '未上架' ELSE '已上架' END AS status, l.loc_name AS location, p.name AS goodsName, d.Batchno AS lotNo, d.MakeDate AS produceDate, p.unit1Name AS unit, d.EligibleQty AS amount, p.standard, p.Factory AS manufacturers FROM #{account}.dbo.pda_PutOnBill_D d
         LEFT JOIN #{account}.dbo.pda_PutOnBill b ON d.bill_id=b.billid
-        LEFT JOIN #{account}.dbo.pda_Products p ON d.p_id=p.p_id
         LEFT JOIN #{account}.dbo.pda_location l ON l.l_id=d.Location_id
-        <where>
-            <if test="billNo != null and billNo != ''">
-                b.billnumber=#{billNo}
-            </if>
-            <if test="type != null">
-                AND d.DealStates = #{type}
-            </if>
-            <if test="locationName != null and locationName != ''">
-                AND l.loc_name = #{locationName}
-            </if>
-            <if test="goods != null and goods != ''">
-                AND p.name = #{goods}
-            </if>
-        </where>
-        ) AS temp WHERE rowid > (${page}*${limit});
+        WHERE b.billid=#{orderNoId} AND d.smb_id!=0;
     </select>
 
-    <update id="copyData">
-        INSERT INTO ${account}.dbo.pda_PutOnBill_D
-        (bill_id,
-         p_id,
-         MakeDate,
-         Validdate,
-         Batchno,
-         EligibleQty,
-         TaxPrice,
-         TaxTotal,
-         CostPrice,
-         CostTotal,
-         S_id,
-         Location_id,
-         Supplier_id,
-         InstoreTime,
-         LineSort,
-         DealStates,
-         pdastates)
-            SELECT bill_id,p_id,MakeDate,Validdate,Batchno,EligibleQty,TaxPrice,TaxTotal,CostPrice,CostTotal,S_id,Location_id,Supplier_id,InstoreTime,LineSort,DealStates,pdastates
-            FROM pda_PutOnBill_D d
-        WHERE d.smb_id = #{account}
+
+    <!--                      更新                             -->
+
+
+    <update id="updateDetailsStatus">
+        UPDATE pda_PutOnBill_D SET DealStates=1
+        WHERE bill_id = (SELECT b.billid FROM pda_pdBill b WHERE b.billid=#{orderNoId})
+        <if test="allocationId != 0">
+            AND Location_id = #{allocationId}
+        </if>
+        <if test="goodsId != 0">
+            AND p_id = #{goodsId}
+        </if>
     </update>
 
-    <update id="copyDataByBillId">
+    <update id="copyData">
         INSERT INTO ${account}.dbo.pda_PutOnBill_D
         (bill_id,
         p_id,
@@ -82,19 +57,9 @@
         LineSort,
         DealStates,
         pdastates)
-        SELECT bill_id,p_id,MakeDate,Validdate,Batchno,EligibleQty,TaxPrice,TaxTotal,CostPrice,CostTotal,S_id,Location_id,Supplier_id,InstoreTime,LineSort,DealStates,d.pdastates
+        SELECT bill_id,p_id,MakeDate,Validdate,Batchno,#{amout},TaxPrice,TaxTotal,CostPrice,CostTotal,S_id,#{allcationId},Supplier_id,InstoreTime,LineSort,1,1
         FROM pda_PutOnBill_D d
-        LEFT JOIN pda_PutOnBill b ON b.billid=d.bill_id
-        WHERE b.billid=#{billId}
+        WHERE d.smb_id = #{goodsDetailId}
     </update>
-
-    <select id="countByIdType" resultType="int">
-        SELECT * FROM pda_PutOnBill_D d
-            LEFT JOIN pda_PutOnBill b ON b.billid=d.bill_id
-        WHERE b.billid=(SELECT d1.bill_id FROM pda_PutOnBill_D d1 WHERE d1.smb_id = ${bdId})
-        <if test="idType=0">
-            AND d.smb_id!=0
-        </if>
-    </select>
 
 </mapper>

@@ -19,10 +19,11 @@ public class TransfenServiceImpl implements TransferService {
     TranBillRepository tranBillRepository;
 
     @Override
-    public BaseEntity<TransferListDTO> getTransferList(String billNo, String goodsName, int s_inid, int s_outid, int sa_inid, int sa_outid, int l_inid, int l_outid, int page, int limit, String account) {
+    public BaseEntity<TransferListDTO> getTransferList(String billNo, String goodsName, int s_inid, int s_outid, int sa_inid, int sa_outid, int l_inid, int l_outid, String account) {
 
-        TransferListDTO list = tranBillRepository.getTransferList(billNo, goodsName, s_inid, s_outid, sa_inid, sa_outid, l_inid, l_outid, page, limit, account);
+        TransferListDTO list = tranBillRepository.getTransferList(billNo, goodsName, s_inid, s_outid, sa_inid, sa_outid, l_inid, l_outid, account);
 
         return null;
     }
+
 }

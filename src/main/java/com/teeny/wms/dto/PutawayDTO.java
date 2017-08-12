@@ -1,7 +1,5 @@
 package com.teeny.wms.dto;
 
-import org.springframework.stereotype.Service;
-
 import java.io.Serializable;
 
 /**
@@ -13,7 +11,7 @@ public class PutawayDTO implements Serializable {
     private int id; //上架确认单ID
     private String location; //货位
     private String goodsName; //商品名
-    private int stauts; //状态 0:未处理,1:已上架
+    private String stauts; //状态 0:未处理,1:已上架
     private String lotNo; //批号
     private String produceDate; //生产日期
     private String unit; //单位
@@ -95,11 +93,11 @@ public class PutawayDTO implements Serializable {
         this.manufacturers = manufacturers;
     }
 
-    public int getStauts() {
+    public String getStauts() {
         return stauts;
     }
 
-    public void setStauts(int stauts) {
+    public void setStauts(String stauts) {
         this.stauts = stauts;
     }
 }

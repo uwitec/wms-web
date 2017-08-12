@@ -4,8 +4,8 @@ import com.teeny.wms.core.domain.baseEntity.BaseEntity;
 import com.teeny.wms.core.repository.PutOnBillRepository;
 import com.teeny.wms.dto.PutOnOneDTO;
 import com.teeny.wms.dto.PutawayDTO;
-import com.teeny.wms.dto.QueryPutOnBillDTO;
 import com.teeny.wms.service.PutOnBillService;
+import com.teeny.wms.utils.CollectionsUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,7 +15,6 @@ import java.util.List;
 
 /**
  * Created by bao on 2017/8/4.
- *
  */
 @Service
 @Transactional
@@ -25,45 +24,51 @@ public class PutOnBillServiceImpl implements PutOnBillService {
     private PutOnBillRepository putOnBillRepository;
 
     @Override
-    public BaseEntity<List<PutawayDTO>> getGoodsList(QueryPutOnBillDTO queryPutOnBillDTO, String account) {
+    public BaseEntity<List<PutawayDTO>> getGoodsDetailList(int orderNoId, String account) {
 
-        List<PutawayDTO> list = putOnBillRepository.getGoodsList(queryPutOnBillDTO.getBillNo(), queryPutOnBillDTO.getType(), queryPutOnBillDTO.getGoods(), queryPutOnBillDTO.getLocationName(), queryPutOnBillDTO.getPage(), queryPutOnBillDTO.getLimit());
-
+        List<PutawayDTO> list = putOnBillRepository.getGoodsDetailList(orderNoId, account);
         return new BaseEntity<List<PutawayDTO>>(list);
     }
 
     @Override
-    public void putOnBillQuickly(int billId, String account) {
+    public void putOnBillQuickly(int orderNoId, int allocationId, int goodsId, String account) {
 
-        putOnBillRepository.updatePutOnBill(billId, account);
-        putOnBillRepository.copyDataByBillId(billId, account);
-        putOnBillRepository.updatePutOnBillDByBillId(billId, account);
+        putOnBillRepository.updateDetailsStatus(orderNoId, allocationId, goodsId, account);
 
+        int count = putOnBillRepository.countByIdType(orderNoId, account);
+        if (count == 0) {
+            putOnBillRepository.updatePutOnBill(orderNoId, account);
+        }
     }
 
     @Override
-    public void putOnBillWithOne(int bdId, String account) {
+    public void putOnBillWithOne(int goodsDetailId, String account) {
 
-        int count = putOnBillRepository.dataIsExisted(bdId, account);
+        putOnBillRepository.updatePutOnBillDById(goodsDetailId, account);
+        int orderNoId = putOnBillRepository.getBillIdByDetailId(goodsDetailId, account);
+        int count = putOnBillRepository.countByIdType(orderNoId, account);
         if (count == 0) {
-            putOnBillRepository.copyData(bdId, account);
-        }
-        putOnBillRepository.updatePutOnBillDById(bdId, account);
-
-        int count1 = putOnBillRepository.countByIdType(1, bdId, account);
-        int count2 = putOnBillRepository.countByIdType(0, bdId, account);
-        if (count2 == count1) {
-            putOnBillRepository.updatePutOnBillByBdId(bdId, account);
+            putOnBillRepository.updatePutOnBill(orderNoId, account);
         }
     }
+
 
     @Override
     public void updateOne(PutOnOneDTO putOnOneDTO, String account) {
-        int count = putOnBillRepository.dataIsExisted(putOnOneDTO.getBdId(), account);
-        if (count == 0) {
-            putOnBillRepository.copyData(putOnOneDTO.getBdId(), account);
+
+        int count = CollectionsUtils.sizeOf(putOnOneDTO.getAllcations());
+        if (count > 0) {
+            for (PutOnOneDTO.UpdateEntity entity : putOnOneDTO.getAllcations()) {
+                putOnBillRepository.copyData(putOnOneDTO.getGoodsDetailId(), entity.getAllcationId(), entity.getAmount(), account);
+                putOnBillRepository.updatePutOnBillDById(putOnOneDTO.getGoodsDetailId(), account);
+            }
         }
-        putOnBillRepository.updateOne(putOnOneDTO.getBdId(), putOnOneDTO.getLocCode(), putOnOneDTO.getAmount(), account);
+        int orderNoId = putOnBillRepository.getBillIdByDetailId(putOnOneDTO.getGoodsDetailId(), account);
+        int total = putOnBillRepository.countByIdType(orderNoId, account);
+        if (total == 0) {
+            putOnBillRepository.updatePutOnBill(orderNoId, account);
+        }
     }
+
 
 }

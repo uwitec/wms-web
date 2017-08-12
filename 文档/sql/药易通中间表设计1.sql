@@ -210,7 +210,7 @@ begin
 		LineSort  int NOT NULL DEFAULT 0, --原始行号，复制行时，需要保留该数值不变，用于关联ERP原始明细 0531,复制的行smb_id=0
 		DealStates  int NOT NULL DEFAULT 0,--处理状态，0 未处理, 1 PDA已经处理（上架） 0531
 		pdastates INT NOT NULL DEFAULT 0,--状态 0提供数据 1pda回写数据
-	) ON [PRIMARY]
+) ON [PRIMARY]
 end
 GO
 

@@ -15,7 +15,7 @@ public class PdListDTO implements Serializable {
     private int amount; //数量
     private String validateDate; //有效期
     private String standard; //规格
-    private int status; //状态
+    private String status; //状态
 
     public int getId() {
         return id;
@@ -81,11 +81,11 @@ public class PdListDTO implements Serializable {
         this.standard = standard;
     }
 
-    public int getStatus() {
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(int status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 }
