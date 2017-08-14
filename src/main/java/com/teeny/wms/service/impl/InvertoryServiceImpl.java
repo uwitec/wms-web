@@ -4,7 +4,7 @@ import com.teeny.wms.core.domain.baseEntity.BaseEntity;
 import com.teeny.wms.core.repository.PdBillRepository;
 import com.teeny.wms.core.repository.ProductsRepository;
 import com.teeny.wms.dto.*;
-import com.teeny.wms.service.invertoryService;
+import com.teeny.wms.service.InvertoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,7 +16,7 @@ import java.util.List;
  */
 @Service
 @Transactional
-public class InvertoryServiceImpl implements invertoryService {
+public class InvertoryServiceImpl implements InvertoryService {
 
     @Autowired
     private PdBillRepository pdBillRepository;
@@ -27,20 +27,20 @@ public class InvertoryServiceImpl implements invertoryService {
 
 
     @Override
-    public BaseEntity<StoreInventoryDTO> getInventoryList(String pdType, int goodsId, int saId, int areaId, int locationId, String account) {
+    public BaseEntity<StoreInventoryDTO> getInventoryList(String pdType, int goodsId, int saId, int areaId, int locationId, String account, int sId) {
         StoreInventoryDTO storeInventoryDTO = new StoreInventoryDTO();
 
         // 已盘点bill数
-        int billCount = pdBillRepository.getBillCount(goodsId, saId, areaId, locationId, pdType, 1, account);
+        int billCount = pdBillRepository.getBillCount(goodsId, saId, areaId, locationId, pdType, 1, account, sId);
         // 盘点总数
-        int billTotal = pdBillRepository.getBillTotal(goodsId, saId, areaId, locationId, pdType, 1, account);
+        int billTotal = pdBillRepository.getBillTotal(goodsId, saId, areaId, locationId, pdType, 1, account, sId);
 
         //商品数
-        int pcount = pdBillRepository.getPcount(goodsId, saId, areaId, locationId, pdType,1, account);
+        int pcount = pdBillRepository.getPcount(goodsId, saId, areaId, locationId, pdType,1, account, sId);
         //总商品数
-        int ptotal = pdBillRepository.getPtotal(goodsId, saId, areaId, locationId, pdType,1, account);
+        int ptotal = pdBillRepository.getPtotal(goodsId, saId, areaId, locationId, pdType,1, account, sId);
 
-        List<StoreInventoryGoodsDTO> list = pdBillRepository.getStoreInventoryList(goodsId, saId, areaId, locationId, pdType, 1, account);
+        List<StoreInventoryGoodsDTO> list = pdBillRepository.getStoreInventoryList(goodsId, saId, areaId, locationId, pdType, account, sId);
 
         storeInventoryDTO.setBillCount(billCount);
         storeInventoryDTO.setBillTotalCount(billTotal);
@@ -62,24 +62,54 @@ public class InvertoryServiceImpl implements invertoryService {
     }
 
     @Override
-    public BaseEntity<String> completeByParam(StorePdCompleteDTO storePdCompleteDTO, String account, int sId) {
-        pdBillRepository.updateByParam(storePdCompleteDTO.getSpan(), storePdCompleteDTO.getwAreaid(),
-                storePdCompleteDTO.getAreaId(),
-                storePdCompleteDTO.getGoodsId(), storePdCompleteDTO.getAllocationId(), account, sId);
+    public BaseEntity<String> completeByParam(List<Integer> ids, String account, int sId) {
 
-        int count = pdBillRepository.countByParam(storePdCompleteDTO.getSpan(), storePdCompleteDTO.getwAreaid(),
-                storePdCompleteDTO.getAreaId(),
-                storePdCompleteDTO.getGoodsId(), storePdCompleteDTO.getAllocationId(), account, sId);
-
-        if (count == 0) {
-            int billId = pdBillRepository.getBillId(storePdCompleteDTO.getSpan(), storePdCompleteDTO.getwAreaid(),
-                    storePdCompleteDTO.getAreaId(),
-                    storePdCompleteDTO.getGoodsId(), storePdCompleteDTO.getAllocationId(), account, sId);
-            pdBillRepository.completeWithBillId(billId);
+        if (ids.size()>0) {
+            for (Integer id : ids) {
+                pdBillRepository.completeOne(id, account);
+            }
+            int count = pdBillRepository.countByType(ids.get(0), account);
+            if (count == 0 ) {
+                pdBillRepository.completeWithGoodsDetailId(ids.get(0), account);
+            }
         }
-
-        return null;
+        return new BaseEntity<String>("");
     }
+
+
+    /////////////////////仓库盘点//////////////////////////////////////////
+
+    @Override
+    public BaseEntity<StorePdDTO> getStroeList(String pdType, int goodsId, int saId, int areaId, int locationId, String account, int sId) {
+
+        StorePdDTO storePdDTO = new StorePdDTO();
+
+        int billCount = pdBillRepository.getBillCount(goodsId, saId, areaId, locationId, pdType, 4, account, sId);
+        // 盘点总数
+        int billTotal = pdBillRepository.getBillTotal(goodsId, saId, areaId, locationId, pdType, 4, account, sId);
+
+        //商品数
+        int pcount = pdBillRepository.getPcount(goodsId, saId, areaId, locationId, pdType,1, account, sId);
+        //总商品数
+        int ptotal = pdBillRepository.getPtotal(goodsId, saId, areaId, locationId, pdType,4, account, sId);
+
+
+
+        List<StroePdListDTO> list = pdBillRepository.getStroePdList(pdType, saId, areaId, locationId, goodsId, account, sId);
+
+
+
+        storePdDTO.setBillCount(billCount);
+        storePdDTO.setBillTotalCount(billTotal);
+        storePdDTO.setGoodsCount(pcount);
+        storePdDTO.setGoodsTotal(ptotal);
+        storePdDTO.setGoods(list);
+
+
+        return new BaseEntity<StorePdDTO>(storePdDTO);
+    }
+
+
 
 
     ////////////////单品盘点/////////////////////////////////////

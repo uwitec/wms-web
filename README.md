@@ -701,11 +701,7 @@ shopFirst/complete
 
 参数名      | 类型   | 是否可空 | 参数说明 | 样例
 -----------|--------|---------|---------|-----
-span      | String | 否       |盘点范围|  月度盘点
-wAreaId      | int | 否       |库区id|  5
-areaId      | int | 否       |区域id|  5
-allocationId| int | 否       |货位id|  5
-goodsId | int | 是       |商品id|  5
+ids      | List<String> | 否   | id数组|  {"ids":[3,4,5]}
 
 * 出参
 ```
@@ -727,9 +723,10 @@ shopFirst/add
 -----------|--------|---------|---------|-----
 id       | int | 否       |这条数据的id|  5
 batch      | [] | 否       |批次|  {"lotNo":"D33", "amount": 4, "vDate":"2019-7-5"}
-batch.lotNo      | String | 否       |批号|  DF44444
-batch.amount      | int | 否       |数量|  5
-batch.vDate      | String | 否       |有效期至|  2019-7-5
+batch.lotNo  | String | 否       |批号|  DF44444
+batch.amount  | int | 否       |数量|  5
+batch.vDate   | String | 否   |有效期至|  2019-7-5
+
 
 * 出参
 ```

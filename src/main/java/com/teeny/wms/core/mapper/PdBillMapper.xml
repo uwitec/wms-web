@@ -93,7 +93,7 @@
         LEFT JOIN ${account}.dbo.pda_Area a ON a.sc_id=b.a_id
         LEFT JOIN ${account}.dbo.pda_location l ON l.l_id=d.Location_id
         WHERE
-          b.pdname = #{pdType} AND d.DealStates = 0
+          b.pdname = #{pdType} AND d.DealStates = 0 AND b.billstates = 1
         <if test="saId != 0">
             AND b.sa_id = #{saId}
         </if>
@@ -107,43 +107,6 @@
             AND d.p_id = #{goodsId}
         </if>
     </select>
-
-    <update id="updateByParam">
-        UPDATE ${account}.dbo.pda_pdBill_D SET DealStates = 1
-        WHERE Location_id = #{allocationId}
-              AND S_id = #{sId}
-                <if test="goodsId != 0">
-                    AND p_id = #{goodsId}
-                </if>
-              AND bill_id =
-        (SELECT b.billid FROM ${account}.dbo.pda_pdBill b
-          WHERE b.pdname = #{span}
-              <if test="saId != 0">
-                  AND b.sa_id = #{saId}
-              </if>
-              <if test="areaId != 0">
-                  AND b.a_id=#{areaId}
-              </if>
-          )
-    </update>
-
-    <select id="countByParam" resultType="int">
-        SELECT count(*) FROM ${account}.dbo.pda_pdBill_D d LEFT JOIN ${account}.dbo.pda_pdBill b ON d.bill_id=b.billid
-        WHERE b.pdname=#{span} AND d.S_id = #{sId}
-          <if test="saId != 0">
-              AND b.sa_id = #{saId}
-          </if>
-          <if test="areaId != 0">
-              AND b.a_id = #{areaId}
-          </if>
-          <if test="allocationId != 0">
-              AND d.Location_id = #{allocationId}
-          </if>
-          <if test="goodsId != 0">
-              AND d.p_id = #{goodsId}
-          </if>
-    </select>
-
 
     <!--////////////////////单品盘点////////////////////-->
 
@@ -199,5 +162,10 @@
     </update>
 
 
+    <!-- -                          仓库盘点                  -->
+
+    <select id="getStroePdList" resultType="com.teeny.wms.dto.StroePdListDTO">
+#         //////////////未完成
+    </select>
 
 </mapper>

@@ -2,7 +2,7 @@ package com.teeny.wms.manage.web;
 
 import com.teeny.wms.core.domain.baseEntity.BaseEntity;
 import com.teeny.wms.dto.*;
-import com.teeny.wms.service.invertoryService;
+import com.teeny.wms.service.InvertoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -18,7 +18,7 @@ import java.util.Map;
 public class ProductInventoryController {
 
     @Autowired
-    private invertoryService invertoryService;
+    private InvertoryService invertoryService;
 
     //单品盘点
     @ResponseBody

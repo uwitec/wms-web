@@ -8,9 +8,9 @@ import java.util.List;
 /**
  * Created by lilei on 2017/8/7.
  */
-public interface invertoryService {
+public interface InvertoryService {
 
-    BaseEntity<StoreInventoryDTO> getInventoryList(String pdType, int goodsId, int saId, int areaId, int locationId, String account);
+    BaseEntity<StoreInventoryDTO> getInventoryList(String pdType, int goodsId, int saId, int areaId, int locationId, String account, int sId);
 
     BaseEntity<ProductsInventoryDTO> getProductsInventoryList(String product, String location, int sId, String account);
 
@@ -30,5 +30,7 @@ public interface invertoryService {
 
     BaseEntity<String> completeOne(int goodsDetailId, String account);
 
-    BaseEntity<String> completeByParam(StorePdCompleteDTO storePdCompleteDTO, String account, int sId);
+    BaseEntity<String> completeByParam(List<Integer> ids, String account, int sId);
+
+    BaseEntity<StorePdDTO> getStroeList(String pdType, int goodsId, int saId, int areaId, int locationId, String account, int sId);
 }
