@@ -334,7 +334,7 @@ begin
 	    billid INT NOT NULL DEFAULT 0,--盘点单id
 	    pdname VARCHAR(50) NOT NULL DEFAULT '',--盘点名称
 	    s_id INT NOT NULL DEFAULT 0,--仓库id,=pda_storages.s_id
-		billstates INT NOT NULL DEFAULT 10,--盘单状态 0:未完成 1：初盘 2：复盘 3：已完成
+		billstates INT NOT NULL DEFAULT 10,--盘单状态 0:未完成 1：门店初盘 2：复盘 3：已完成 4：仓库初盘
 		pdastates INT NOT NULL DEFAULT 0,--交换状态 0提供 1pda已读取 2pda已回写
 		pdaInTime DATETIME NOT NULL DEFAULT 0,--提供时间
 		pdaReTime DATETIME NOT NULL DEFAULT 0,--读取时间

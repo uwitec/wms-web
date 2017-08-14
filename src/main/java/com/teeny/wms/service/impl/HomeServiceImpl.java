@@ -2,6 +2,7 @@ package com.teeny.wms.service.impl;
 
 import com.teeny.wms.core.domain.baseEntity.BaseEntity;
 import com.teeny.wms.core.repository.*;
+import com.teeny.wms.dto.AccountSetDTO;
 import com.teeny.wms.dto.BillCountDTO;
 import com.teeny.wms.dto.CommonDTO;
 import com.teeny.wms.dto.QueryDocumentDTO;
@@ -33,8 +34,8 @@ public class HomeServiceImpl implements HomeService {
     @Autowired
     private CheckBillRepository checkBillRepository;
     @Override
-    public BaseEntity<List<CommonDTO>> getAccountSet() {
-        return new BaseEntity<List<CommonDTO>>(accountRepository.getAccountSet());
+    public BaseEntity<List<AccountSetDTO>> getAccountSet() {
+        return new BaseEntity<List<AccountSetDTO>>(accountRepository.getAccountSet());
     }
 
     @Override

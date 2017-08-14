@@ -1,6 +1,7 @@
 package com.teeny.wms.manage.web;
 
 import com.teeny.wms.core.domain.baseEntity.BaseEntity;
+import com.teeny.wms.dto.AccountSetDTO;
 import com.teeny.wms.dto.BillCountDTO;
 import com.teeny.wms.dto.CommonDTO;
 import com.teeny.wms.dto.QueryDocumentDTO;
@@ -31,7 +32,7 @@ public class HomeController {
     // 获取账套
     @RequestMapping(value = "/log/accountSets", method = RequestMethod.GET)
     @ResponseBody
-    public BaseEntity<List<CommonDTO>> getAccountSet() {
+    public BaseEntity<List<AccountSetDTO>> getAccountSet() {
         return homeService.getAccountSet();
     }
 

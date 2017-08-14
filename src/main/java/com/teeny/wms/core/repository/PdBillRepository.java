@@ -18,18 +18,41 @@ import java.util.List;
 public interface PdBillRepository {
 
     //获取已盘点数
-    int getBillCount(@Param("goods") String goods, @Param("storageArea") String storageArea, @Param("area") String area, @Param("location") String location, @Param("type") String type, @Param("account") String account);
+    int getBillCount(@Param("goodsId") int goodsId, @Param("saId") int saId, @Param("areaId") int areaId, @Param("locationId") int locationId, @Param("pdType") String type, @Param("type") int pdType, @Param("account") String account);
     //获取盘点总数
-    int getBillTotal(@Param("goods") String goods, @Param("storageArea") String storageArea, @Param("area") String area, @Param("location") String location, @Param("type") String type, @Param("account") String account);
+    int getBillTotal(@Param("goodsId") int goodsId, @Param("saId") int saId, @Param("areaId") int areaId, @Param("locationId") int locationId, @Param("pdType") String type, @Param("type") int pdType, @Param("account") String account);
 
     //商品数
-    int getPcount(@Param("goods") String goods, @Param("storageArea") String storageArea, @Param("area") String area, @Param("location") String location, @Param("type") String type, @Param("account") String account);
+    int getPcount(@Param("goodsId") int goodsId, @Param("saId") int saId, @Param("areaId") int areaId, @Param("locationId") int locationId, @Param("pdType") String type, @Param("type") int pdType, @Param("account") String account);
     //商品总数
-    int getPtotal(@Param("goods") String goods, @Param("storageArea") String storageArea, @Param("area") String area, @Param("location") String location, @Param("type") String type, @Param("account") String account);
+    int getPtotal(@Param("goodsId") int goodsId, @Param("saId") int saId, @Param("areaId") int areaId, @Param("locationId") int locationId, @Param("pdType") String type, @Param("type") int pdType, @Param("account") String account);
 
 
-    List<StoreInventoryGoodsDTO> getStoreInventoryList(@Param("goods") String goods, @Param("storageArea") String storageArea, @Param("area") String area, @Param("location") String location, @Param("type") String type, @Param("account") String account);
+    List<StoreInventoryGoodsDTO> getStoreInventoryList(@Param("goodsId") int goodsId, @Param("saId") int saId, @Param("areaId") int areaId, @Param("locationId") int locationId, @Param("pdType") String type, @Param("type") int pdType, @Param("account") String account);
 
+     @Update("UPDATE ${account}.dbo.pda_pdBill_D SET DealStates = 1 WHERE smb_id = #{goodsDetailId}")
+    void completeOne(@Param("goodsDetailId") int goodsDetailId, @Param("account") String account);
+
+    //查询未盘点数
+    @Select("SELECT count(*) FROM ${account}.dbo.pda_pdBill_D d WHERE d.DealStates=0 AND d.bill_id = (SELECT d1.bill_id FROM ${account}.dbo.pda_pdBill_D d1 WHERE d1.smb_id=#{goodsDetailId})")
+    int countByType(@Param("goodsDetailId") int goodsDetailId, @Param("account") String account);
+
+    //完成bill
+    @Update("UPDATE ${account}.dbo.pda_pdBill SET pdastates = 2 WHERE billid = (SELECT d.bill_id FROM ${account}.dbo.pda_pdBill_D d WHERE d.smb_id = #{goodsDetailId})")
+    void completeWithGoodsDetailId(@Param("goodsDetailId") int goodsDetailId, @Param("account") String account);
+
+    //完成byParam
+    void updateByParam(@Param("span") String span, @Param("saId") int saId, @Param("areaId") int areaId, @Param("goodsId") int goodsId,@Param("allocationId") int allocationId, @Param("account") String account, @Param("sId") int sId);
+
+    
+    int countByParam(@Param("span") String span, @Param("saId") int saId, @Param("areaId") int areaId, @Param("goodsId") int goodsId,@Param("allocationId") int allocationId, @Param("account") String account, @Param("sId") int sId);
+
+    // TODO: 2017/8/14  
+    int getBillId(@Param("span") String span, @Param("saId") int saId, @Param("areaId") int areaId, @Param("goodsId") int goodsId,@Param("allocationId") int allocationId, @Param("account") String account, @Param("sId") int sId);
+
+    // TODO: 2017/8/14  
+    void completeWithBillId(int billId);
+    
     ///////////////单品盘点///////////////////////////
 
     List<PdListDTO> getProductsInventoryList(@Param("product") String product, @Param("location") String location, @Param("sId") int sId, @Param("account") String account);
@@ -55,4 +78,6 @@ public interface PdBillRepository {
     //添加数据
     // TODO: 2017/8/12
     void addProduct(@Param("pid") int pid,@Param("amount") int amount,@Param("locationId") int locationId,@Param("validateDate") String validateDate, @Param("lotNo") String lotNo);
+
+    
 }

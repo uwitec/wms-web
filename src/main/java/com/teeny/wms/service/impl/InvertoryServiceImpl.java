@@ -25,33 +25,61 @@ public class InvertoryServiceImpl implements invertoryService {
 
     //////////////////////门店盘点//////////////////////////////////////
 
-    @Override
-    public BaseEntity<StoreInventoryDTO> getInventoryList(StoreInventoryQueryDTO storeInventoryQueryDTO, String account) {
 
+    @Override
+    public BaseEntity<StoreInventoryDTO> getInventoryList(String pdType, int goodsId, int saId, int areaId, int locationId, String account) {
         StoreInventoryDTO storeInventoryDTO = new StoreInventoryDTO();
 
         // 已盘点bill数
-        int billCount = pdBillRepository.getBillCount(storeInventoryQueryDTO.getGoods(), storeInventoryQueryDTO.getStorageArea(), storeInventoryQueryDTO.getArea(), storeInventoryQueryDTO.getLocation(), storeInventoryQueryDTO.getType(), account);
+        int billCount = pdBillRepository.getBillCount(goodsId, saId, areaId, locationId, pdType, 1, account);
         // 盘点总数
-        int billTotal = pdBillRepository.getBillTotal(storeInventoryQueryDTO.getGoods(), storeInventoryQueryDTO.getStorageArea(), storeInventoryQueryDTO.getArea(), storeInventoryQueryDTO.getLocation(), storeInventoryQueryDTO.getType(), account);
+        int billTotal = pdBillRepository.getBillTotal(goodsId, saId, areaId, locationId, pdType, 1, account);
 
         //商品数
-        int pcount = pdBillRepository.getPcount(storeInventoryQueryDTO.getGoods(), storeInventoryQueryDTO.getStorageArea(), storeInventoryQueryDTO.getArea(), storeInventoryQueryDTO.getLocation(), storeInventoryQueryDTO.getType(), account);
+        int pcount = pdBillRepository.getPcount(goodsId, saId, areaId, locationId, pdType,1, account);
         //总商品数
-        int ptotal = pdBillRepository.getPtotal(storeInventoryQueryDTO.getGoods(), storeInventoryQueryDTO.getStorageArea(), storeInventoryQueryDTO.getArea(), storeInventoryQueryDTO.getLocation(), storeInventoryQueryDTO.getType(), account);
+        int ptotal = pdBillRepository.getPtotal(goodsId, saId, areaId, locationId, pdType,1, account);
 
-        List<StoreInventoryGoodsDTO> list = pdBillRepository.getStoreInventoryList(storeInventoryQueryDTO.getGoods(), storeInventoryQueryDTO.getStorageArea(), storeInventoryQueryDTO.getArea(), storeInventoryQueryDTO.getLocation(), storeInventoryQueryDTO.getType(), account);
+        List<StoreInventoryGoodsDTO> list = pdBillRepository.getStoreInventoryList(goodsId, saId, areaId, locationId, pdType, 1, account);
 
         storeInventoryDTO.setBillCount(billCount);
         storeInventoryDTO.setBillTotalCount(billTotal);
         storeInventoryDTO.setGoodsCount(pcount);
         storeInventoryDTO.setGoodsTotal(ptotal);
+        storeInventoryDTO.setGoods(list);
+        return new BaseEntity<StoreInventoryDTO>(storeInventoryDTO);
+    }
 
+    @Override
+    public BaseEntity<String> completeOne(int goodsDetailId, String account) {
+        pdBillRepository.completeOne(goodsDetailId, account);
+
+        int count = pdBillRepository.countByType(goodsDetailId, account);
+        if (count == 0 ) {
+            pdBillRepository.completeWithGoodsDetailId(goodsDetailId, account);
+        }
+        return new BaseEntity<String>("");
+    }
+
+    @Override
+    public BaseEntity<String> completeByParam(StorePdCompleteDTO storePdCompleteDTO, String account, int sId) {
+        pdBillRepository.updateByParam(storePdCompleteDTO.getSpan(), storePdCompleteDTO.getwAreaid(),
+                storePdCompleteDTO.getAreaId(),
+                storePdCompleteDTO.getGoodsId(), storePdCompleteDTO.getAllocationId(), account, sId);
+
+        int count = pdBillRepository.countByParam(storePdCompleteDTO.getSpan(), storePdCompleteDTO.getwAreaid(),
+                storePdCompleteDTO.getAreaId(),
+                storePdCompleteDTO.getGoodsId(), storePdCompleteDTO.getAllocationId(), account, sId);
+
+        if (count == 0) {
+            int billId = pdBillRepository.getBillId(storePdCompleteDTO.getSpan(), storePdCompleteDTO.getwAreaid(),
+                    storePdCompleteDTO.getAreaId(),
+                    storePdCompleteDTO.getGoodsId(), storePdCompleteDTO.getAllocationId(), account, sId);
+            pdBillRepository.completeWithBillId(billId);
+        }
 
         return null;
     }
-
-
 
 
     ////////////////单品盘点/////////////////////////////////////
