@@ -7,7 +7,6 @@ import com.teeny.wms.dto.QueryDocumentDTO;
 import com.teeny.wms.service.HomeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,17 +21,24 @@ public class HomeController {
     @Autowired
     private HomeService homeService;
 
+    // 测试接口
+    @RequestMapping(value = "/log/test", method = RequestMethod.GET)
+    @ResponseBody
+    public BaseEntity<Object> test() {
+        return new BaseEntity<>();
+    }
+
     // 获取账套
     @RequestMapping(value = "/log/accountSets", method = RequestMethod.GET)
-    public void getAccountSet(Model model) {
-        BaseEntity<List<CommonDTO>> data = homeService.getAccountSet();
-        model.addAttribute("list", data);
+    @ResponseBody
+    public BaseEntity<List<CommonDTO>> getAccountSet() {
+        return homeService.getAccountSet();
     }
 
     // 获取所有仓库
     @ResponseBody
     @RequestMapping(value = "/api/home/warehouseList", method = RequestMethod.GET)
-    public BaseEntity<List<CommonDTO>> getWarehouse( @RequestHeader("account") String account) {
+    public BaseEntity<List<CommonDTO>> getWarehouse(@RequestHeader("account") String account) {
         return homeService.getWarehouse(account);
         //model.addAttribute("list",data);
     }
