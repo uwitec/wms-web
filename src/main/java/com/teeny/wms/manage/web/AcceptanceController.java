@@ -32,7 +32,7 @@ public class AcceptanceController {
     //获取订单
     @RequestMapping(value = "/api/acceptance/orders/{unitId}", method = RequestMethod.GET)
     @ResponseBody
-    public BaseEntity<List<CommonDTO>> getOrderWithUnitId(Model model, @PathVariable("unitId") int unitId, @RequestHeader("account") String account) {
+    public BaseEntity<List<CommonDTO>> getOrderWithUnitId(@PathVariable("unitId") int unitId, @RequestHeader("account") String account) {
         return acceptanceService.getOrderWithUnitId(unitId, account);
     }
 
