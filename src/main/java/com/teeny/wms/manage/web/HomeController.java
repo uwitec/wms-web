@@ -39,7 +39,7 @@ public class HomeController {
 
     //获取订单数
     @ResponseBody
-    @RequestMapping(value = "/api/home/info/{warehouseId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/api/home/info", method = RequestMethod.GET)
     public BaseEntity<BillCountDTO> getBillCountByWarehouseType(@RequestHeader("sId") int sId, @RequestHeader("account") String account) {
         return homeService.getInfoByWarehouse(account, sId);
     }
