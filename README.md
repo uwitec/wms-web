@@ -701,7 +701,7 @@ shopFirst/complete
 
 参数名      | 类型   | 是否可空 | 参数说明 | 样例
 -----------|--------|---------|---------|-----
-ids      | List<String> | 否   | id数组|  {"ids":[3,4,5]}
+ids      | List<Integer> | 否   | id数组|  {"ids":[3,4,5]}
 
 * 出参
 ```
@@ -719,13 +719,18 @@ shopFirst/add
  POST
 * 入参   
 
-参数名      | 类型   | 是否可空 | 参数说明 | 样例
------------|--------|---------|---------|-----
-id       | int | 否       |这条数据的id|  5
-batch      | [] | 否       |批次|  {"lotNo":"D33", "amount": 4, "vDate":"2019-7-5"}
-batch.lotNo  | String | 否       |批号|  DF44444
-batch.amount  | int | 否       |数量|  5
-batch.vDate   | String | 否   |有效期至|  2019-7-5
+``
+{
+    "id":"id",
+    [
+       {
+            "lotNo":"批号",
+            "validateDate":"有效期",
+            "count":"数量 float 类型"
+        }
+    ]
+}
+``
 
 
 * 出参
@@ -756,7 +761,77 @@ goodsDetailId | int | 否       |商品详情id|  5
   "data": ””
 }
 ```
+4. 获取详细列表
+* URL 
+shopFirst/getList/{pdType}/{saId}/{areaId}
+* 方法
+GET
+* 入参
+参数名      | 类型   | 是否可空 | 参数说明 | 样例
+-----------|--------|---------|---------|-----
+pdType | string | 否       |盘点类型|  月度
+saId   | int   | 否 | 库区id   | 3
+areaId  | int | 否  | 区域ID  | 3
+* 出参
+```
+{
+  "result": 0,
+  "msg": "请求成功!",
+  "data": [
+    {
+        "id":"3",
+        "goodsName":"商品名",
+        "location":"货位",
+        "inventroyCount":"盘点数量",
+        "countInBill":"账面数量",
+        "unit":"单位盒",
+        "manufacturer":"厂家",
+        "status":"状态 0/1 未盘点/已盘点",
+    }
+  ]
+}
+```
 
+5. 获取库区
+* URL
+shopFirst/saList
+* 方法
+GET
+* 入参
+无
+* 出参
+```
+{
+  "result": 0,
+  "msg": "请求成功!",
+  "data": [
+    {
+        "id":"3",
+        "name":"某某库区"
+    }
+  ]
+}
+```
+6. 获取区域
+* URL
+shopFirst/areaList
+* 方法
+GET
+* 入参
+无
+* 出参
+```
+{
+  "result": 0,
+  "msg": "请求成功!",
+  "data": [
+    {
+        "id":"3",
+        "name":"某某区域"
+    }
+  ]
+}
+```
 
 #### 仓库初盘
 1.完成
@@ -768,11 +843,8 @@ warehouseFirst/complete
 
 参数名      | 类型   | 是否可空 | 参数说明 | 样例
 -----------|--------|---------|---------|-----
-span      | String | 否       |盘点范围|  月度盘点
-wAreaId      | int | 否       |库区id|  5
-areaId      | int | 否       |区域id|  5
-allocationId| int | 否       |货位id|  5
-goodsId | int | 是       |商品id|  5
+ids      | List<Integer> | 否   | id数组|  {"ids":[3,4,5]}
+
 
 * 出参
 ```
@@ -790,13 +862,18 @@ warehouseFirst/add
  POST
 * 入参   
 
-参数名      | 类型   | 是否可空 | 参数说明 | 样例
------------|--------|---------|---------|-----
-id       | int | 否       |这条数据的id|  5
-batch      | [] | 否       |批次|  {"lotNo":"D33", "amount": 4, "vDate":"2019-7-5"}
-batch.lotNo      | String | 否       |批号|  DF44444
-batch.amount      | int | 否       |数量|  5
-batch.vDate      | String | 否       |有效期至|  2019-7-5
+``
+{
+    "id":"id",
+    [
+       {
+            "lotNo":"批号",
+            "validateDate":"有效期",
+            "count":"数量 float 类型"
+        }
+    ]
+}
+``
 
 * 出参
 ```
@@ -826,7 +903,75 @@ goodsDetailId | int | 否       |商品详情id|  5
   "data": ””
 }
 ```
-
+4. 获取详情列表
+* URL 
+warehouseFirst/getList/{pdType}/{saId}/{areaId}
+* 方法
+GET
+* 入参
+参数名      | 类型   | 是否可空 | 参数说明 | 样例
+-----------|--------|---------|---------|-----
+pdType | string | 否       |盘点类型|  月度
+saId   | int   | 否 | 库区id   | 3
+areaId  | int | 否  | 区域ID  | 3
+* 出参
+```
+{
+  "result": 0,
+  "msg": "请求成功!",
+  "data": [
+    {
+        "id":"3",
+        "goodsName":"商品名",
+        "location":"货位",
+        "lotNo":"批号",
+        "inventroyCount":"盘点数量",
+        "standard":"规格",
+        "status":"状态 0/1 未盘点/已盘点",
+    }
+  ]
+}
+```
+5. 获取库区
+* URL
+warehouseFirst/saList
+* 方法
+GET
+* 入参
+无
+* 出参
+```
+{
+  "result": 0,
+  "msg": "请求成功!",
+  "data": [
+    {
+        "id":"3",
+        "name":"某某库区"
+    }
+  ]
+}
+```
+6. 获取区域
+* URL
+warehouseFirst/areaList
+* 方法
+GET
+* 入参
+无
+* 出参
+```
+{
+  "result": 0,
+  "msg": "请求成功!",
+  "data": [
+    {
+        "id":"3",
+        "name":"某某区域"
+    }
+  ]
+}
+```
 
 #### 复盘
 1.完成
@@ -838,11 +983,8 @@ secondCount/complete
 
 参数名      | 类型   | 是否可空 | 参数说明 | 样例
 -----------|--------|---------|---------|-----
-span      | String | 否       |盘点范围|  月度盘点
-wAreaId      | int | 否       |库区id|  5
-areaId      | int | 否       |区域id|  5
-allocationId| int | 否       |货位id|  5
-goodsId | int | 是       |商品id|  5
+ids      | List<Integer> | 否   | id数组|  {"ids":[3,4,5]}
+
 
 * 出参
 ```
@@ -860,13 +1002,18 @@ secondCount/add
  POST
 * 入参   
 
-参数名      | 类型   | 是否可空 | 参数说明 | 样例
------------|--------|---------|---------|-----
-id       | int | 否       |这条数据的id|  5
-batch      | [] | 否       |批次|  {"lotNo":"D33", "amount": 4, "vDate":"2019-7-5"}
-batch.lotNo      | String | 否       |批号|  DF44444
-batch.amount      | int | 否       |数量|  5
-batch.vDate      | String | 否       |有效期至|  2019-7-5
+``
+{
+    "id":"id",
+    [
+       {
+            "lotNo":"批号",
+            "validateDate":"有效期",
+            "count":"数量 float 类型"
+        }
+    ]
+}
+``
 
 * 出参
 ```
@@ -894,6 +1041,75 @@ goodsDetailId | int | 否       |商品详情id|  5
   "result": 0,
   "msg": "请求成功!",
   "data": ””
+}
+```
+4. 获取详情列表
+* URL 
+secondCount/getList/{pdType}/{saId}/{areaId}
+* 方法
+GET
+* 入参
+参数名      | 类型   | 是否可空 | 参数说明 | 样例
+-----------|--------|---------|---------|-----
+pdType | string | 否       |盘点类型|  月度
+saId   | int   | 否 | 库区id   | 3
+areaId  | int | 否  | 区域ID  | 3
+* 出参
+```
+{
+  "result": 0,
+  "msg": "请求成功!",
+  "data": [
+    {
+        "id":"3",
+        "goodsName":"商品名",
+        "location":"货位",
+        "lotNo":"批号",
+        "inventroyCount":"盘点数量",
+        "standard":"规格",
+        "status":"状态 0/1 未盘点/已盘点",
+    }
+  ]
+}
+```
+5. 获取库区
+* URL
+secondCount/saList
+* 方法
+GET
+* 入参
+无
+* 出参
+```
+{
+  "result": 0,
+  "msg": "请求成功!",
+  "data": [
+    {
+        "id":"3",
+        "name":"某某库区"
+    }
+  ]
+}
+```
+6. 获取区域
+* URL
+secondCount/areaList
+* 方法
+GET
+* 入参
+无
+* 出参
+```
+{
+  "result": 0,
+  "msg": "请求成功!",
+  "data": [
+    {
+        "id":"3",
+        "name":"某某区域"
+    }
+  ]
 }
 ```
 #### 单据查询
