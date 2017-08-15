@@ -35,8 +35,8 @@ public class AcceptanceServiceImpl implements AcceptanceService {
     }
 
     @Override
-    public BaseEntity<List<CommonDTO>> getOrderWithUnitId(int unitId, String account) {
-       return new BaseEntity<>(recBillRepository.getOrderBillWithUnitId(unitId, account));
+    public BaseEntity<List<CommonDTO>> getOrderWithUnitId(int unitId, int sId, String account) {
+       return new BaseEntity<>(recBillRepository.getOrderBillWithUnitId(unitId, sId, account));
     }
 
     @Override
@@ -52,8 +52,10 @@ public class AcceptanceServiceImpl implements AcceptanceService {
         }
 
         List<GoodsDTO> acceptenceList = recBillRepository.getGoodsByBillIdAndStatus(orderId,1,account);
-
         List<GoodsDTO> onOrderList = recBillRepository.getGoodsByBillIdAndStatus(orderId,0,account);
+
+        recBillRepository.updateBillPdaStatus(orderId, account);
+
         data.setOnOrderList(onOrderList);
         data.setAcceptanceOrderList(acceptenceList);
         return new BaseEntity<>(data);

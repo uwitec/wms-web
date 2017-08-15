@@ -13,7 +13,7 @@ import java.util.List;
 public interface AcceptanceService {
     BaseEntity<List<CommonDTO>> getUnit(String account);
 
-    BaseEntity<List<CommonDTO>> getOrderWithUnitId(int unitId, String account);
+    BaseEntity<List<CommonDTO>> getOrderWithUnitId(int unitId, int sId, String account);
 
     BaseEntity<OrderDetailDTO> getOrderDetailsWithOrderId(String account, int orderId);
 

@@ -13,6 +13,7 @@ public class StoreInventoryGoodsDTO implements Serializable{
     private float countInBill; //账面数量
     private String unit; //单位盒
     private String manufacturer; //厂家
+    private int status; //状态
 
 
     public int getId() {
@@ -69,5 +70,13 @@ public class StoreInventoryGoodsDTO implements Serializable{
 
     public void setManufacturer(String manufacturer) {
         this.manufacturer = manufacturer;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
     }
 }

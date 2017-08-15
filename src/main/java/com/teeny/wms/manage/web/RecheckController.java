@@ -32,9 +32,8 @@ public class RecheckController {
      * @param billNo 订单单号
      */
     @RequestMapping(value = "/api/recheck/exWarehouseReview/{billNo}", method = RequestMethod.GET)
-    public void getWarehouseReview(Model model, @RequestHeader("account") String account, @PathVariable("billNo") int billNo) {
-        BaseEntity<ReviewDTO> data = recheckService.getWarehouseReview(account, billNo);
-        model.addAttribute("data", data);
+    public BaseEntity<ReviewDTO> getWarehouseReview(Model model, @RequestHeader("account") String account, @PathVariable("billNo") int billNo) {
+        return recheckService.getWarehouseReview(account, billNo);
     }
 
     @RequestMapping(value = "/api/reviewer", method = RequestMethod.GET)

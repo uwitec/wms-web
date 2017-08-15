@@ -6,6 +6,7 @@ import com.teeny.wms.dto.QueryDocumentDTO;
 import com.teeny.wms.dto.RecBillDTO;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -18,8 +19,8 @@ import java.util.List;
 public interface RecBillRepository {
     int countByWarehousId(@Param("warehouseId") int warehouseId, @Param("account") String account);
 
-    @Select("SELECT billid AS id, billnumber AS name FROM ${account}.dbo.pda_RecBill WHERE c_id=#{unitId}")
-    List<CommonDTO> getOrderBillWithUnitId(@Param("unitId") int unitId, @Param("account") String account);
+    @Select("SELECT billid AS id, billnumber AS name FROM ${account}.dbo.pda_RecBill WHERE c_id=#{unitId} AND s_id=#{sId}")
+    List<CommonDTO> getOrderBillWithUnitId(@Param("unitId") int unitId, @Param("sId") int sId, @Param("account") String account);
 
 
 
@@ -36,5 +37,8 @@ public interface RecBillRepository {
 
 
     @Select("SELECT b.billid AS id,b.billnumber AS documentNo, b.pdaInTime AS documentDate, CASE b.billstates WHEN 10 THEN '验收中' WHEN 13 THEN '已验收' ELSE '' END AS status FROM ${account}.dbo.pda_RecBill b;")
-    List<QueryDocumentDTO> getBill(String account);
+    List<QueryDocumentDTO> getBill(@Param("account") String account);
+
+    @Update("UPDATE pda_RecBill SET pdastates = 1 WHERE billid = #{orderId}")
+    void updateBillPdaStatus(@Param("orderId") int orderId, @Param("account") String account);
 }

@@ -39,6 +39,9 @@ public class RecheckServiceImpl implements RecheckService {
         reviewDTO.setWholeQuantity(wholeCount);
         reviewDTO.setPackCount(packCount);
         reviewDTO.setPxCount(pxCount);
+
+        checkBillRepository.updateBillPdaStatus(billNo, account);
+
         return new BaseEntity<ReviewDTO>(reviewDTO);
     }
 }

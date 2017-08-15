@@ -4,6 +4,7 @@ import com.teeny.wms.dto.QueryDocumentDTO;
 import com.teeny.wms.dto.ReviewDTO;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -31,4 +32,7 @@ public interface CheckBillRepository {
 
     @Select("SELECT b.billid AS id,b.billnumber AS documentNo, b.pdaInTime AS documentDate, CASE b.billstates WHEN 10 THEN '验收中' WHEN 13 THEN '已验收' ELSE '' END AS status FROM ${account}.dbo.pda_CheckBill b;")
     List<QueryDocumentDTO> getBill(String account);
+
+    @Update("UPDATE ${account}.dbo.pda_CheckBill SET pdastates = 1 WHERE billnumber = #{billNo}")
+    void updateBillPdaStatus(@Param("billNo") int billNo, @Param("account") String account);
 }

@@ -32,25 +32,25 @@ public class AcceptanceController {
     //获取订单
     @RequestMapping(value = "/api/acceptance/orders/{unitId}", method = RequestMethod.GET)
     @ResponseBody
-    public BaseEntity<List<CommonDTO>> getOrderWithUnitId(@PathVariable("unitId") int unitId, @RequestHeader("account") String account) {
-        return acceptanceService.getOrderWithUnitId(unitId, account);
+    public BaseEntity<List<CommonDTO>> getOrderWithUnitId(@PathVariable("unitId") int unitId, @RequestHeader("account") String account, @RequestHeader("sId") int sId) {
+        return acceptanceService.getOrderWithUnitId(unitId, sId, account);
     }
 
     //获取订单详情
     @RequestMapping(value = "/api/acceptance/detail/{orderId}", method = RequestMethod.GET)
     @ResponseBody
-    public BaseEntity<OrderDetailDTO> getOrderDetailsWithOrderId(Model model, @RequestHeader("account") String account, @PathVariable("orderId") int orderId) {
+    public BaseEntity<OrderDetailDTO> getOrderDetailsWithOrderId(@RequestHeader("account") String account, @PathVariable("orderId") int orderId) {
         return acceptanceService.getOrderDetailsWithOrderId(account, orderId);
     }
 
     //一键完成
     @RequestMapping(value = "/api/acceptance/allCompete", method = RequestMethod.POST)
-    public void allCompeteByOrderId(Model model, @RequestBody RecUpdateDTO recUpdateDTO, @RequestHeader("account") String account) {
+    public void allCompeteByOrderId(@RequestBody RecUpdateDTO recUpdateDTO, @RequestHeader("account") String account) {
         acceptanceService.updateGoodsByOrderId(recUpdateDTO, account);
         //acceptanceService.updateRecBillStatus(1);
     }
 
-    public void competeByGoodsId(Model model, @RequestBody RecUpdateDTO recUpdateDTO, @RequestHeader("account") String account) {
+    public void competeByGoodsId(@RequestBody RecUpdateDTO recUpdateDTO, @RequestHeader("account") String account) {
         acceptanceService.updateGoodsByGoodsId(recUpdateDTO, account);
     }
 

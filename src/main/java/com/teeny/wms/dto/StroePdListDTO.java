@@ -13,6 +13,7 @@ public class StroePdListDTO implements Serializable {
     private String lotNo; // 批号
     private float inventroyCount; //盘点数量
     private String standard; //规格
+    private int status; //状态
 
 
     public int getId() {
@@ -61,5 +62,13 @@ public class StroePdListDTO implements Serializable {
 
     public void setStandard(String standard) {
         this.standard = standard;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
     }
 }

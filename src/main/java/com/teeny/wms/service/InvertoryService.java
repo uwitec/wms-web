@@ -10,7 +10,7 @@ import java.util.List;
  */
 public interface InvertoryService {
 
-    BaseEntity<StoreInventoryDTO> getInventoryList(String pdType, int goodsId, int saId, int areaId, int locationId, String account, int sId);
+    BaseEntity<List<StoreInventoryGoodsDTO>> getInventoryList(String pdType, int saId, int areaId,String account);
 
     BaseEntity<ProductsInventoryDTO> getProductsInventoryList(String product, String location, int sId, String account);
 
@@ -30,7 +30,9 @@ public interface InvertoryService {
 
     BaseEntity<String> completeOne(int goodsDetailId, String account);
 
-    BaseEntity<String> completeByParam(List<Integer> ids, String account, int sId);
+    BaseEntity<String> completeByParam(List<Integer> ids, String account);
 
-    BaseEntity<StorePdDTO> getStroeList(String pdType, int goodsId, int saId, int areaId, int locationId, String account, int sId);
+    BaseEntity<List<StroePdListDTO>> getStroeList(String pdType, int saId, int areaId, String account, int btype, int dype);
+
+    BaseEntity<String> edit(PdEditDTO pdEditDTO, String account);
 }

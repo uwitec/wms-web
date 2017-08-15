@@ -14,5 +14,6 @@ import java.util.List;
 @Repository
 public interface StoragesRepository {
 
+    @Select("SELECT s.s_id AS id, s.name FROM ${account}.dbo.pda_storages s")
     List<CommonDTO> findAll(@Param("account") String account);
 }

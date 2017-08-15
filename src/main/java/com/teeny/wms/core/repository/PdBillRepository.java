@@ -18,20 +18,20 @@ import java.util.List;
 @Repository
 public interface PdBillRepository {
 
-    //获取已盘点数
-    int getBillCount(@Param("goodsId") int goodsId, @Param("saId") int saId, @Param("areaId") int areaId, @Param("locationId") int locationId, @Param("pdType") String pdType, @Param("type") int type, @Param("account") String account, @Param("sId") int sId);
-    //获取盘点总数
-    int getBillTotal(@Param("goodsId") int goodsId, @Param("saId") int saId, @Param("areaId") int areaId, @Param("locationId") int locationId, @Param("pdType") String type, @Param("type") int pdType, @Param("account") String account, @Param("sId") int sId);
+//    //获取已盘点数
+//    int getBillCount(@Param("goodsId") int goodsId, @Param("saId") int saId, @Param("areaId") int areaId, @Param("locationId") int locationId, @Param("pdType") String pdType, @Param("type") int type, @Param("account") String account, @Param("sId") int sId);
+//    //获取盘点总数
+//    int getBillTotal(@Param("goodsId") int goodsId, @Param("saId") int saId, @Param("areaId") int areaId, @Param("locationId") int locationId, @Param("pdType") String type, @Param("type") int pdType, @Param("account") String account, @Param("sId") int sId);
+//
+//    //商品数
+//    int getPcount(@Param("goodsId") int goodsId, @Param("saId") int saId, @Param("areaId") int areaId, @Param("locationId") int locationId, @Param("pdType") String type, @Param("type") int pdType, @Param("account") String account, @Param("sId") int sId);
+//    //商品总数
+//    int getPtotal(@Param("goodsId") int goodsId, @Param("saId") int saId, @Param("areaId") int areaId, @Param("locationId") int locationId, @Param("pdType") String type, @Param("type") int pdType, @Param("account") String account, @Param("sId") int sId);
 
-    //商品数
-    int getPcount(@Param("goodsId") int goodsId, @Param("saId") int saId, @Param("areaId") int areaId, @Param("locationId") int locationId, @Param("pdType") String type, @Param("type") int pdType, @Param("account") String account, @Param("sId") int sId);
-    //商品总数
-    int getPtotal(@Param("goodsId") int goodsId, @Param("saId") int saId, @Param("areaId") int areaId, @Param("locationId") int locationId, @Param("pdType") String type, @Param("type") int pdType, @Param("account") String account, @Param("sId") int sId);
 
+    List<StoreInventoryGoodsDTO> getStoreInventoryList(@Param("pdType") String pdType, @Param("saId") int saId, @Param("areaId") int areaId, @Param("account") String account);
 
-    List<StoreInventoryGoodsDTO> getStoreInventoryList(@Param("goodsId") int goodsId, @Param("saId") int saId, @Param("areaId") int areaId, @Param("locationId") int locationId, @Param("pdType") String pdType, @Param("account") String account, @Param("sId") int sId);
-
-     @Update("UPDATE ${account}.dbo.pda_pdBill_D SET DealStates = 1 WHERE smb_id = #{goodsDetailId}")
+    @Update("UPDATE ${account}.dbo.pda_pdBill_D SET DealStates = 1, SET pdastates = 2 WHERE smb_id = #{goodsDetailId}")
     void completeOne(@Param("goodsDetailId") int goodsDetailId, @Param("account") String account);
 
     //查询未盘点数
@@ -45,9 +45,12 @@ public interface PdBillRepository {
 
     /////////////////////////仓库盘点//////////////////////////
 
-    List<StroePdListDTO> getStroePdList(@Param("pdType") String pdType, @Param("saId") int saId, @Param("areaId") int areaId, @Param("locationId") int locationId, @Param("goodsId") int goodsId,@Param("account") String account, @Param("sId") int sId);
+    //  根据btype 和dtype来判断是仓库初盘还是复盘
+    List<StroePdListDTO> getStroePdList(@Param("pdType") String pdType, @Param("saId") int saId, @Param("areaId") int areaId, @Param("account") String account, @Param("btype") int btype, @Param("dtype") int dtypr);
 
 
+    //盘点编辑 复制数据
+    void edit(@Param("id") int id, @Param("lotNo") String lotNo, @Param("count") float count, @Param("validateDate") String validateDate, @Param("account") String account);
 
     ///////////////单品盘点///////////////////////////
 
@@ -65,6 +68,7 @@ public interface PdBillRepository {
             " FROM ${account}.dbo.pda_kcpdBill_D d LEFT JOIN ${account}.dbo.pda_Products p ON p.p_id=d.p_id" +
             " LEFT JOIN ${account}.dbo.pda_location l ON l.l_id=d.Location_id WHERE d.storehouse_id=#{id}")
     ProductDetailsDTO getById(@Param("id") int id, @Param("account") String account);
+
     //盘点确定
     void updateStatus(@Param("product") String product, @Param("location") String location, @Param("sId") int sId, @Param("account") String account);
 
