@@ -11,8 +11,7 @@ public class OrderDetailDTO implements Serializable{
     private int status; //订单状态
     private int buyerId; //验收人ID
     private String buyer; //验收人名
-    private List<GoodsDTO> acceptanceOrderList; //已验收
-    private List<GoodsDTO> onOrderList; //待验收
+    private List<GoodsDTO> goodsList;
 
     public int getOrderId() {
         return orderId;
@@ -46,19 +45,11 @@ public class OrderDetailDTO implements Serializable{
         this.buyer = buyer;
     }
 
-    public List<GoodsDTO> getAcceptanceOrderList() {
-        return acceptanceOrderList;
+    public List<GoodsDTO> getGoodsList() {
+        return goodsList;
     }
 
-    public void setAcceptanceOrderList(List<GoodsDTO> acceptanceOrderList) {
-        this.acceptanceOrderList = acceptanceOrderList;
-    }
-
-    public List<GoodsDTO> getOnOrderList() {
-        return onOrderList;
-    }
-
-    public void setOnOrderList(List<GoodsDTO> onOrderList) {
-        this.onOrderList = onOrderList;
+    public void setGoodsList(List<GoodsDTO> goodsList) {
+        this.goodsList = goodsList;
     }
 }

@@ -12,6 +12,8 @@ import java.io.Serializable;
  */
 public class ProductAddDetailDTO implements Serializable {
     private int pId;
+    private String goodsName;
+    private String standard;//规格
     private String number; //编号
     private String unit; //单位
     private String manufacturers;
@@ -46,5 +48,21 @@ public class ProductAddDetailDTO implements Serializable {
 
     public void setManufacturers(String manufacturers) {
         this.manufacturers = manufacturers;
+    }
+
+    public String getGoodsName() {
+        return goodsName;
+    }
+
+    public void setGoodsName(String goodsName) {
+        this.goodsName = goodsName;
+    }
+
+    public String getStandard() {
+        return standard;
+    }
+
+    public void setStandard(String standard) {
+        this.standard = standard;
     }
 }

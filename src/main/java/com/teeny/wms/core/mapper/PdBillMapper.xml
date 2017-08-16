@@ -85,7 +85,7 @@
 
     <!--门店初盘-->
 
-    <select id="getStoreInventoryList" resultType="com.teeny.wms.dto.StoreInventoryDTO">
+    <select id="getStoreInventoryList" resultType="com.teeny.wms.dto.StoreInventoryGoodsDTO">
         SELECT d.smb_id AS id, p.name AS goodsName, l.loc_name AS location,d.EligibleQty AS countInBill,
         d.pdQty AS inventroyCount, p.unit1Name AS unit, c.name AS manufacturer, d.DealStates AS status
         FROM ${account}.dbo.pda_pdBill_D d
@@ -96,7 +96,7 @@
         LEFT JOIN ${account}.dbo.pda_Area a ON a.sc_id=b.a_id
         LEFT JOIN ${account}.dbo.pda_location l ON l.l_id=d.Location_id
         WHERE
-          b.pdname = #{pdType} AND b.billstates = 1 AND d.billstates=1
+          b.pdname = #{pdType} AND b.billstates = 1 AND d.billstates=1 AND b.s_id = #{sId}
         <if test="saId != 0">
             AND b.sa_id = #{saId}
         </if>
@@ -108,7 +108,7 @@
     <!--//复制数据-->
     <insert id="edit">
         INSERT INTO ${account}.dbo.pda_pdBill_D (bill_id, p_id,MakeDate,EligibleQty,S_id, Location_id, Supplier_id, InstoreTime, billstates,Validdate, Batchno,pdQty,DealStates,pdastates)
-            SELECT d.bill_id,d.p_id,d.MakeDate,d.EligibleQty,d.S_id,d.Location_id,d.Supplier_id,d.InstoreTime,d.billstates,#{validateDate},#{lotNo},#{count},1,1 FROM ${account}.dbo.pda_pdBill_D d WHERE d.smb_id = #{id}
+            SELECT d.bill_id,d.p_id,d.MakeDate,d.EligibleQty,d.S_id,d.Location_id,d.Supplier_id,d.InstoreTime,d.billstates,#{validateDate},#{lotNo},#{count},d.DealStates,d.pdastates FROM ${account}.dbo.pda_pdBill_D d WHERE d.smb_id = #{id}
     </insert>
 
     <!--////////////////////单品盘点////////////////////-->
@@ -137,32 +137,35 @@
             d.Validdate AS validateDate,
             p.standard AS standard,
             p.Factory AS manufacturer,
-            CASE d.pdastates WHEN 0 THEN '未盘点' ELSE '已盘点' END AS status
+            d.pdastates AS status,
+            d.Batchno AS lotNo,
+            p.unit1Name AS unit,
+            d.MakeDate AS productDate
             FROM ${account}.dbo.pda_kcpdBill_D d
             LEFT JOIN ${account}.dbo.pda_Products p ON p.p_id=d.p_id
             LEFT JOIN ${account}.dbo.pda_location l ON l.l_id=d.Location_id
-            WHERE d.ss_id = #{sId} AND d.DealStates = 0
+            WHERE d.ss_id = #{sId} AND d.DealStates=0
                 <if test="product != null and product != ''">
-                    p.name LIKE concat('%', #{product}, '%')
+                    p.barcode = #{product}
                 </if>
                 <if test="location != null and location != ''">
-                    AND l.loc_name LIKE concat('%', #{location}, '%')
+                    AND l.loc_code = #{location}
                 </if>
     </select>
 
 
-    <update id="updateStatus">
-        UPDATE pda_kcpdBill_D SET DealStates = 1,pdastates = 1
-        WHERE d.ss_id = #{sId}
-        <if test="product != null and product != ''">
-            AND p_id IN (SELECT p.p_id FROM pda_Products p LEFT JOIN pda_kcpdBill_D d ON d.p_id=p.p_id
-            WHERE p.name LIKE concat('%',#{product},'%'))
-        </if>
-        <if test="location != null and location != ''">
-            AND Location_id IN
-            (SELECT l.l_id FROM pda_location l LEFT JOIN pda_kcpdBill_D d1 ON d1.Location_id=l.l_id WHERE l.loc_name LIKE concat('%',#{location},'%'))
-        </if>
-    </update>
+    <!--<update id="updateStatus">-->
+        <!--UPDATE pda_kcpdBill_D SET DealStates = 1,pdastates = 1-->
+        <!--WHERE d.ss_id = #{sId}-->
+        <!--<if test="product != null and product != ''">-->
+            <!--AND p_id IN (SELECT p.p_id FROM pda_Products p LEFT JOIN pda_kcpdBill_D d ON d.p_id=p.p_id-->
+            <!--WHERE p.name LIKE concat('%',#{product},'%'))-->
+        <!--</if>-->
+        <!--<if test="location != null and location != ''">-->
+            <!--AND Location_id IN-->
+            <!--(SELECT l.l_id FROM pda_location l LEFT JOIN pda_kcpdBill_D d1 ON d1.Location_id=l.l_id WHERE l.loc_name LIKE concat('%',#{location},'%'))-->
+        <!--</if>-->
+    <!--</update>-->
 
 
     <!-- -                          仓库盘点 /  复盘    btype/dtype             -->
@@ -174,7 +177,13 @@
             LEFT JOIN ${account}.dbo.pda_pdBill b ON b.billid=d.bill_id
             LEFT JOIN ${account}.dbo.pda_Products p ON p.p_id=d.p_id
             LEFT JOIN ${account}.dbo.pda_location l ON l.l_id = d.Location_id
-        WHERE b.pdname = #{pdType} AND b.sa_id = #{saId} AND b.a_id = #{aId} AND b.billstates = #{btype} AND d.billstates = #{dtype}
+        WHERE b.pdname = #{pdType} AND b.sa_id = #{saId} AND b.a_id = #{aId} AND b.s_id = #{sId} AND b.billstates = #{btype} AND d.billstates = #{dtype}
     </select>
+
+
+    <insert id="addProduct">
+        INSERT INTO ${account}.dbo.pda_kcpdBill_D (p_id,MakeDate,Validdate,Batchno,quantity,pdqty,CostPrice,CostTotal,ss_id,Location_id,DealStates,pdastates)
+                SELECT p.p_id,0,#{validateDate},#{lotNo},#{amount},#{amount},0,0,#{s_id},(SELECT l.l_id FROM ${account}.dbo.pda_location l WHERE l.loc_code = #{locationCode}),1,1 FROM ${account}.dbo.pda_Products p WHERE p.p_id=#{pId}
+    </insert>
 
 </mapper>

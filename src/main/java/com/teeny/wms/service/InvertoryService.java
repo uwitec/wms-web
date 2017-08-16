@@ -10,29 +10,29 @@ import java.util.List;
  */
 public interface InvertoryService {
 
-    BaseEntity<List<StoreInventoryGoodsDTO>> getInventoryList(String pdType, int saId, int areaId,String account);
+    BaseEntity<List<StoreInventoryGoodsDTO>> getInventoryList(String pdType, int saId, int areaId,String account, int sId);
 
-    BaseEntity<ProductsInventoryDTO> getProductsInventoryList(String product, String location, int sId, String account);
+    BaseEntity<List<PdListDTO>> getProductsInventoryList(String product, String location, int sId, String account);
 
     BaseEntity<ProductDetailsDTO> getDetailsById(int id, String account);
 
-    void confirmProductPd(String product, String location, int sId, String account);
+    BaseEntity<String> confirmProductPd(List<Integer> ids, int sId, String account);
 
-    BaseEntity<CommonDTO> updateProduct(int id, int amount, String account);
+    BaseEntity<CommonDTO> updateProduct(int id, float count, String account);
 
-    BaseEntity<List<String>> getProductsList(String goodsName, String account);
+    BaseEntity<List<CommonDTO>> getProductsList(String goodsName, String account);
 
     BaseEntity<List<String>> getStandardList(String goodsName, String account);
 
     BaseEntity<String> addProduct(AddProductDTO addProductDTO, String account);
 
-    BaseEntity<ProductAddDetailDTO> getDetailsByNameAndStandard(String goodsName, String standard, String account);
+    BaseEntity<ProductAddDetailDTO> getDetailsByNameAndStandard(String goodsCode, String account);
 
     BaseEntity<String> completeOne(int goodsDetailId, String account);
 
     BaseEntity<String> completeByParam(List<Integer> ids, String account);
 
-    BaseEntity<List<StroePdListDTO>> getStroeList(String pdType, int saId, int areaId, String account, int btype, int dype);
+    BaseEntity<List<StroePdListDTO>> getStroeList(String pdType, int saId, int areaId, String account, int btype, int dype, int sId);
 
     BaseEntity<String> edit(PdEditDTO pdEditDTO, String account);
 }

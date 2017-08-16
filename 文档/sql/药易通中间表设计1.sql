@@ -506,3 +506,5 @@ create table oauth_refresh_token (
 ) ON [PRIMARY]
 	end
 GO
+
+

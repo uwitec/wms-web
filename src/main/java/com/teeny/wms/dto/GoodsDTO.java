@@ -12,8 +12,9 @@ public class GoodsDTO implements Serializable {
     private String specification; //规格
     private String validityDate; //有效期
     private float retialPrice; //零售价
-    private int amount; //数量
+    private float amount; //数量
     private String manufacturer; //厂家
+    private int status;
 
 
     public String getGoodsName() {
@@ -56,11 +57,11 @@ public class GoodsDTO implements Serializable {
         this.retialPrice = retialPrice;
     }
 
-    public int getAmount() {
+    public float getAmount() {
         return amount;
     }
 
-    public void setAmount(int amount) {
+    public void setAmount(float amount) {
         this.amount = amount;
     }
 
@@ -70,5 +71,13 @@ public class GoodsDTO implements Serializable {
 
     public void setManufacturer(String manufacturer) {
         this.manufacturer = manufacturer;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
     }
 }

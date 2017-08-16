@@ -11,37 +11,18 @@ import java.io.Serializable;
  * @since 2017/8/12
  */
 public class AddProductDTO implements Serializable{
-    private int pid;
-    private String goodsName;
-    private String number;
+    private int pId;
     private String lotNo;
-    private int locationId;
-    private String standard;
-    private int amount;
+    private String locationCode;
+    private float amount;
     private String validateDate; //有效期
 
-    public int getPid() {
-        return pid;
+    public int getpId() {
+        return pId;
     }
 
-    public void setPid(int pid) {
-        this.pid = pid;
-    }
-
-    public String getGoodsName() {
-        return goodsName;
-    }
-
-    public void setGoodsName(String goodsName) {
-        this.goodsName = goodsName;
-    }
-
-    public String getNumber() {
-        return number;
-    }
-
-    public void setNumber(String number) {
-        this.number = number;
+    public void setpId(int pId) {
+        this.pId = pId;
     }
 
     public String getLotNo() {
@@ -52,27 +33,19 @@ public class AddProductDTO implements Serializable{
         this.lotNo = lotNo;
     }
 
-    public int getLocationId() {
-        return locationId;
+    public String getLocationCode() {
+        return locationCode;
     }
 
-    public void setLocationId(int locationId) {
-        this.locationId = locationId;
+    public void setLocationCode(String locationCode) {
+        this.locationCode = locationCode;
     }
 
-    public String getStandard() {
-        return standard;
-    }
-
-    public void setStandard(String standard) {
-        this.standard = standard;
-    }
-
-    public int getAmount() {
+    public float getAmount() {
         return amount;
     }
 
-    public void setAmount(int amount) {
+    public void setAmount(float amount) {
         this.amount = amount;
     }
 

@@ -9,15 +9,15 @@ public class ProductDetailsDTO implements Serializable {
 
     private int id; //id
     private String goodsName; //商品名
-    private String number; //编号
+    private String number; //编号111
     private String lotNo; //批号
     private String location; //货位
     private String manufacturer; //厂家
-    private String unit; //单位
-    private int amount; //实际数量
+    private String unit; //单位11111
+    private int amount; //数量
     private String validateDate; //有效期
     private String standard; //规格
-    private String productDate; //生产日期
+    private String productDate; //生产日期111
     private String status; //状态
 
 

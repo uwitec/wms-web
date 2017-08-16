@@ -7,7 +7,6 @@ import com.teeny.wms.dto.RecUpdateDTO;
 import com.teeny.wms.service.AcceptanceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -45,13 +44,22 @@ public class AcceptanceController {
 
     //一键完成
     @RequestMapping(value = "/api/acceptance/allCompete", method = RequestMethod.POST)
-    public void allCompeteByOrderId(@RequestBody RecUpdateDTO recUpdateDTO, @RequestHeader("account") String account) {
-        acceptanceService.updateGoodsByOrderId(recUpdateDTO, account);
-        //acceptanceService.updateRecBillStatus(1);
+    public BaseEntity<String> allCompeteByOrderId(@RequestParam("billId") int billId, @RequestHeader("account") String account) {
+        return acceptanceService.updateGoodsByOrderId(billId, account);
     }
 
-    public void competeByGoodsId(@RequestBody RecUpdateDTO recUpdateDTO, @RequestHeader("account") String account) {
-        acceptanceService.updateGoodsByGoodsId(recUpdateDTO, account);
+    //单个修改
+    @ResponseBody
+    @RequestMapping(value = "/api/acceptance/update", method = RequestMethod.POST)
+    public BaseEntity<String> competeByGoodsId(@RequestBody RecUpdateDTO recUpdateDTO, @RequestHeader("account") String account) {
+        return acceptanceService.updateGoodsByGoodsId(recUpdateDTO, account);
+    }
+
+    //单个完成
+    @ResponseBody
+    @RequestMapping(value = "", method = RequestMethod.POST)
+    public BaseEntity<String> completeOne(@RequestParam("id") int id, @RequestHeader("account") String account){
+        return acceptanceService.completeOne(id, account);
     }
 
 }

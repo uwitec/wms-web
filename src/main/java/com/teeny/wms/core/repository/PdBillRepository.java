@@ -29,7 +29,7 @@ public interface PdBillRepository {
 //    int getPtotal(@Param("goodsId") int goodsId, @Param("saId") int saId, @Param("areaId") int areaId, @Param("locationId") int locationId, @Param("pdType") String type, @Param("type") int pdType, @Param("account") String account, @Param("sId") int sId);
 
 
-    List<StoreInventoryGoodsDTO> getStoreInventoryList(@Param("pdType") String pdType, @Param("saId") int saId, @Param("areaId") int areaId, @Param("account") String account);
+    List<StoreInventoryGoodsDTO> getStoreInventoryList(@Param("pdType") String pdType, @Param("saId") int saId, @Param("areaId") int areaId, @Param("account") String account, @Param("sId") int sId);
 
     @Update("UPDATE ${account}.dbo.pda_pdBill_D SET DealStates = 1, SET pdastates = 2 WHERE smb_id = #{goodsDetailId}")
     void completeOne(@Param("goodsDetailId") int goodsDetailId, @Param("account") String account);
@@ -46,7 +46,7 @@ public interface PdBillRepository {
     /////////////////////////仓库盘点//////////////////////////
 
     //  根据btype 和dtype来判断是仓库初盘还是复盘
-    List<StroePdListDTO> getStroePdList(@Param("pdType") String pdType, @Param("saId") int saId, @Param("areaId") int areaId, @Param("account") String account, @Param("btype") int btype, @Param("dtype") int dtypr);
+    List<StroePdListDTO> getStroePdList(@Param("pdType") String pdType, @Param("saId") int saId, @Param("areaId") int areaId, @Param("account") String account, @Param("btype") int btype, @Param("dtype") int dtype, @Param("sId") int sId);
 
 
     //盘点编辑 复制数据
@@ -56,28 +56,30 @@ public interface PdBillRepository {
 
     List<PdListDTO> getProductsInventoryList(@Param("product") String product, @Param("location") String location, @Param("sId") int sId, @Param("account") String account);
 
-    int countProductInventory(@Param("product") String product, @Param("location") String location, @Param("sId") int sId ,@Param("account") String account);
+    //单品盘点获取数量
+    //int countProductInventory(@Param("product") String product, @Param("location") String location, @Param("sId") int sId ,@Param("account") String account);
 
     //获取商品明细
     @Select("SELECT d.storehouse_id AS id,p.name AS goodsName, " +
-            "p.barcode AS number,l.loc_name AS location, " +
+            "p.serial_number AS number,l.loc_name AS location, " +
             "d.Batchno AS lotNo,d.quantity AS amount, " +
             "d.Validdate AS validateDate,p.unit1Name AS unit, " +
-            "p.standard AS standard,p.Factory AS manufacturer, " +
-            "d.MakeDate AS productDate, CASE d.pdastates WHEN 0 THEN '未盘点' ELSE '已盘点' END AS status " +
+            "p.standard, p.Factory AS manufacturer, " +
+            "d.MakeDate AS productDate, d.DealStates AS status " +
             " FROM ${account}.dbo.pda_kcpdBill_D d LEFT JOIN ${account}.dbo.pda_Products p ON p.p_id=d.p_id" +
             " LEFT JOIN ${account}.dbo.pda_location l ON l.l_id=d.Location_id WHERE d.storehouse_id=#{id}")
     ProductDetailsDTO getById(@Param("id") int id, @Param("account") String account);
 
     //盘点确定
-    void updateStatus(@Param("product") String product, @Param("location") String location, @Param("sId") int sId, @Param("account") String account);
+    @Update("UPDATE ${account}.dbo.pda_kcpdBill_D SET pdastates=1, DealStates=1 WHERE storehouse_id = #{id} AND ss_id=#{id}")
+    void updateStatus(@Param("id") int id, @Param("sId") int sId, @Param("account") String account);
 
-    @Update("UPDATE ${account}.dbo.pda_kcpdBill_D  SET pdqty = #{amount}, DealStates=1,pdastates=1 WHERE storehouse_id = #{id}")
-    void updateProductStatus(@Param("id") int id,@Param("amount") int amount,@Param("account") String account);
+    @Update("UPDATE ${account}.dbo.pda_kcpdBill_D  SET pdqty = #{count}, DealStates=1,pdastates=1 WHERE storehouse_id = #{id}")
+    void updateProductStatus(@Param("id") int id,@Param("count") float count,@Param("account") String account);
+
 
     //添加数据
-    // TODO: 2017/8/12
-    void addProduct(@Param("pid") int pid,@Param("amount") int amount,@Param("locationId") int locationId,@Param("validateDate") String validateDate, @Param("lotNo") String lotNo);
+    void addProduct(@Param("pId") int pId, @Param("lotNo") String lotNo, @Param("locationCode") String locationCode, @Param("amount") float amount, @Param("validateDate") String validateDate);
 
 
 }

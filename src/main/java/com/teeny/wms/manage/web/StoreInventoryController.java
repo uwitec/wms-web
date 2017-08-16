@@ -28,8 +28,8 @@ public class StoreInventoryController {
     //门店盘点
     @ResponseBody
     @RequestMapping(value = "/api/shopFirst/getList/{pdType}/{saId}/{areaId}", method = RequestMethod.GET)
-    public BaseEntity<List<StoreInventoryGoodsDTO>> getInventory(@PathVariable("pdType") String pdType, @PathVariable("saId") int saId, @PathVariable("areaId") int areaId, @RequestHeader("account") String account) {
-        return invertoryService.getInventoryList(pdType, saId, areaId, account);
+    public BaseEntity<List<StoreInventoryGoodsDTO>> getInventory(@PathVariable("pdType") String pdType, @PathVariable("saId") int saId, @PathVariable("areaId") int areaId, @RequestHeader("account") String account, @RequestHeader("sId") int sId) {
+        return invertoryService.getInventoryList(pdType, saId, areaId, account, sId);
     }
 
     //单个完成

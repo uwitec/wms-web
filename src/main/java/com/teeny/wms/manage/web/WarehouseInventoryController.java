@@ -3,7 +3,6 @@ package com.teeny.wms.manage.web;
 import com.teeny.wms.core.domain.baseEntity.BaseEntity;
 import com.teeny.wms.dto.CommonDTO;
 import com.teeny.wms.dto.PdEditDTO;
-import com.teeny.wms.dto.StorePdDTO;
 import com.teeny.wms.dto.StroePdListDTO;
 import com.teeny.wms.service.CommonService;
 import com.teeny.wms.service.InvertoryService;
@@ -28,8 +27,8 @@ public class WarehouseInventoryController {
     @ResponseBody
     @RequestMapping(value = "/api/warehouseFirst/list/{pdType}/{saId}/{areaId}", method = RequestMethod.GET)
     public BaseEntity<List<StroePdListDTO>> getList(@PathVariable("pdType") String pdType, @PathVariable("saId") int saId,
-                                                    @PathVariable("areaId") int areaId, @RequestHeader("account") String account) {
-        return invertoryService.getStroeList(pdType, saId, areaId, account, 4,1);
+                                                    @PathVariable("areaId") int areaId, @RequestHeader("account") String account, @RequestHeader("sId") int sId) {
+        return invertoryService.getStroeList(pdType, saId, areaId, account, 4,1, sId);
     }
 
     //获取库区

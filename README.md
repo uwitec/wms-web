@@ -448,14 +448,12 @@ goodsDetailId | int | 否       |商品详情id|  5
 #### 单品盘点
 1. 获取
 * URL
-api/productsInventroy/getList/{product}/{location}/{page}/{limit}
+api/productsInventroy/getList/{product}/{location}
 * 方法
 GET
 * 入参
-String product // 商品名
-String location //货位
-int page //当前页数
-int limit //每页总数
+String product // 商品名码
+String location //货位码
 * 出参
 ```
 {
@@ -466,31 +464,6 @@ int limit //每页总数
     "list":[{
         "id":"ID",
         "goodsName":"商品名",
-        "location":"货位",
-        "lotNo":"批号",
-        "amount":"数量",
-        "validateDate":"有效期",
-        "standard":"规格",
-        "manufacturer":"厂家"
-    },...]
-  }
-}
-```
-2. 商品明细
-* URL
-api/productsInventroy/details/{id}
-* 方法
-GET
-* 入参
-id 
-*出参
-```
-{
-    "result": 0,
-      "msg": "请求成功!",
-      "data": {
-        "id":"Id",
-        "goodsName":"商品名",
         "number":"编号",
         "location":"货位",
         "lotNo":"批号",
@@ -500,123 +473,45 @@ id
         "standard":"规格",
         "manufacturer":"厂家",
         "productDate":"生产日期"
-      }
+        "status":"状态"
+    },...]
+  }
 }
 ```
-3. 盘点确定
+
+2. 盘点确定
 * URL
 productsInventroy/confirm
 * 方法 
 POST
 * 入参
-String location 货位
-String product 商品名
+```
+    {
+        ids:[2,3,4]
+    }
+```
 * 出参
 无
-4. 商品修改
+3. 商品修改
 * URL 
 productsInventroy/update
 *方法
 POST
 * 入参
 int id 盘点详情id
-int amount 盘点数量
+int count 盘点数量
 * 出参
 无 
-5. 获取商品名
+4. 新增单品查询
 * URL
-api/productsInventroy/goodsList/{goodsName}
+productsInventroy/detail/{goodsCode}
 * 方法
 GET
 * 入参
 
 参数名      | 类型   | 是否可空 | 参数说明 | 样例
 -----------|--------|---------|---------|-----
-goodsName  | String | 否      |商品名    |  某某胶囊
-* 出参
-List<String>  商品名
-6. 获取批号
-* URL
-productsInventroy/lotNoList/{goodsName}
-* 方法
-GET
-* 入参
-
-参数名      | 类型   | 是否可空 | 参数说明 | 样例
------------|--------|---------|---------|-----
-goodsName  | String | 否      |商品完整名    |  某某胶囊
-* 出参
-List<String> lotNos  批号
-```
-    {
-    "result": 0,
-     "msg": "请求成功!",
-     "data": [
-       {
-           id: id,
-           name: name
-       }
-     ]
-    }
-```
-7. 获取货位
-* URL
-productsInventroy/locationList/{goodsName}
-* 方法
-GET
-* 入参
-
-参数名      | 类型   | 是否可空 | 参数说明 | 样例
------------|--------|---------|---------|-----
-goodsName  | String | 否      |商品完整名    |  
-* 出参
-```
-    {
-    "result": 0,
-      "msg": "请求成功!",
-      "data": [
-        {
-            id: id,
-            name: name
-        }
-      ]
-    }
-```
-
-8. 获取规格
-* URL 
-productsInventroy/standardList/{goodsName}
-* 方法
-GET
-* 入参
-
-参数名      | 类型   | 是否可空 | 参数说明 | 样例
------------|--------|---------|---------|-----
-goodsName  | String | 否      |商品完整名    |  
-* 出参
-```
-    {
-    "result": 0,
-      "msg": "请求成功!",
-      "data": [
-        {
-            id: id,
-            name: name
-        }
-      ]
-    }
-```
-9. 新增单品查询
-* URL
-productsInventroy/detail/{goodsName}/{standard}
-* 方法
-GET
-* 入参
-
-参数名      | 类型   | 是否可空 | 参数说明 | 样例
------------|--------|---------|---------|-----
-goodsName  | String | 否      |商品完整名    |  
-standard   | String | 否      | 规格| 50ml|
+goodsCode  | String | 否      |商品码    |  
 
 * 出参
 ```
@@ -626,6 +521,8 @@ standard   | String | 否      | 规格| 50ml|
           "data": [
             {
                 "pId": 1,
+                "goodsName":"某某商品名",
+                "number":"编号"
                 "number":"某某编号"
                 "unit": 瓶,
                 "manufacturers":"某某厂家"
@@ -644,8 +541,8 @@ POST
 -----------|--------|---------|---------|-----
 pid        | int | 否      |商品id    |  1
 lotNo    | String | 否    | 批号| hfsdh4  |
-locationId    | int | 否    | 货位id| 56  |
-amount    | int | 否    | 数量| 56  |
+locationCode    | String | 否    | 货位码| 5fsdf6423423  |
+amount    | float | 否    | 数量| 56  |
 validateDate    | String | 否  | 有效期至| 2017-4-1  |
 
 

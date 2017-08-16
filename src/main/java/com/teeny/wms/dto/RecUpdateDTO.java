@@ -1,14 +1,15 @@
 package com.teeny.wms.dto;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * Created by lilei on 2017/8/2.
  */
 public class RecUpdateDTO implements Serializable {
 
-    private int id;
-    private int userId;
+  private int id;
+  private List<AcceptAddDTO> param;
 
     public int getId() {
         return id;
@@ -18,11 +19,11 @@ public class RecUpdateDTO implements Serializable {
         this.id = id;
     }
 
-    public int getUserId() {
-        return userId;
+    public List<AcceptAddDTO> getParam() {
+        return param;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public void setParam(List<AcceptAddDTO> param) {
+        this.param = param;
     }
 }

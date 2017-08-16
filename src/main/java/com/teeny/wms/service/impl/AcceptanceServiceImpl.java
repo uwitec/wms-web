@@ -2,7 +2,6 @@ package com.teeny.wms.service.impl;
 
 import com.teeny.wms.core.domain.baseEntity.BaseEntity;
 import com.teeny.wms.core.repository.CallProcedureRepository;
-import com.teeny.wms.core.repository.CheckBillRepository;
 import com.teeny.wms.core.repository.ClientsRepository;
 import com.teeny.wms.core.repository.RecBillRepository;
 import com.teeny.wms.dto.*;
@@ -51,24 +50,44 @@ public class AcceptanceServiceImpl implements AcceptanceService {
             data.setStatus(bill.getStatus());
         }
 
-        List<GoodsDTO> acceptenceList = recBillRepository.getGoodsByBillIdAndStatus(orderId,1,account);
-        List<GoodsDTO> onOrderList = recBillRepository.getGoodsByBillIdAndStatus(orderId,0,account);
-
-        recBillRepository.updateBillPdaStatus(orderId, account);
-
-        data.setOnOrderList(onOrderList);
-        data.setAcceptanceOrderList(acceptenceList);
-        return new BaseEntity<>(data);
+        List<GoodsDTO> list = recBillRepository.getGoodsByBillId(orderId, account);
+        data.setGoodsList(list);
+        recBillRepository.updateBillPdaStatus(orderId, 1, account);
+        return new BaseEntity<OrderDetailDTO>(data);
     }
 
     @Override
-    public void updateGoodsByOrderId(RecUpdateDTO recUpdateDTO, String account) {
-        recBillRepository.updateGoodsByOrderId(recUpdateDTO.getId(), account);
-//        callProcedureRepository.CallProcedure();
-    }
+    public BaseEntity<String> updateGoodsByOrderId(int billId, String account) {
+        recBillRepository.updateGoodsByOrderId(billId, account);
+        recBillRepository.updateBillPdaStatus(billId, 2, account);
+        return new BaseEntity<String>("");
+}
 
     @Override
-    public void updateGoodsByGoodsId(RecUpdateDTO recUpdateDTO, String account) {
+    public BaseEntity<String> updateGoodsByGoodsId(RecUpdateDTO recUpdateDTO, String account) {
+
+        for (AcceptAddDTO dto : recUpdateDTO.getParam()) {
+            recBillRepository.addData(recUpdateDTO.getId(), dto.getLotNo(), dto.getAmount(), dto.getPrice(), dto.getSerialNo(), dto.getValidityDate());
+        }
+
+        int count = recBillRepository.countByDealType(recUpdateDTO.getId(), account);
+        if (count == 0) {
+            recBillRepository.updateBillByGoodsId(recUpdateDTO.getId(), account);
+        }
+
         recBillRepository.updateGoodsByGoodsId(recUpdateDTO.getId(), account);
+        return new BaseEntity<String>("");
+    }
+
+
+    //单个完成
+    @Override
+    public BaseEntity<String> completeOne(int id, String account) {
+        recBillRepository.completeOne(id, account);
+        int count = recBillRepository.countByDealType(id, account);
+        if (count == 0) {
+            recBillRepository.updateBillByGoodsId(id, account);
+        }
+        return new BaseEntity<String>("");
     }
 }
