@@ -52,15 +52,18 @@ public class PutawayController {
 
     //快速上架
     @RequestMapping(value = "/api/shelve/all", method = RequestMethod.POST)
-    public BaseEntity<String> putOnQuickly(@RequestBody int orderNoId, @RequestBody int allocationId, @RequestBody int goodsId, @RequestHeader("account") String account) {
+    @ResponseBody
+    public BaseEntity putOnQuickly(@RequestBody int orderNoId, @RequestBody int allocationId, @RequestBody int goodsId, @RequestHeader("account") String account) {
         putOnBillService.putOnBillQuickly(orderNoId, allocationId, goodsId, account);
-        return new BaseEntity<String>("");
+        return new BaseEntity();
     }
 
     //单个上架
     @RequestMapping(value = "/api/shelve/single", method = RequestMethod.POST)
-    public void putOnWithOne(@RequestBody int goodsDetailId, @RequestHeader("account") String account) {
+    @ResponseBody
+    public BaseEntity putOnWithOne(@RequestBody int goodsDetailId, @RequestHeader("account") String account) {
         putOnBillService.putOnBillWithOne(goodsDetailId, account);
+        return new BaseEntity();
     }
 
     //修改
