@@ -15,17 +15,10 @@
         </where>
     </select>
 
-    <!--<select id="getGoodsByBillIdAndStatus" resultType="com.teeny.wms.dto.GoodsDTO">-->
-        <!--SELECT  d.TaxPrice AS retialPrice,d.Yqty AS amount,d.smb_id AS id ,c.name AS manufacturer,-->
-                <!--d.Batchno AS lotNo, p.name AS goodsName, p.standard AS specification-->
-        <!--FROM ${account}.dbo.pda_RecBill_D d-->
-            <!--LEFT JOIN ${account}.dbo.pda_Products p ON d.p_id=p.p_id-->
-            <!--LEFT JOIN ${account}.dbo.pda_clients c ON c.c_id=d.Supplier_id WHERE d.bill_id=#{orderId} AND d.DealStates=#{status}-->
-    <!--</select>-->
-
     <select id="getGoodsByBillId" resultType="com.teeny.wms.dto.GoodsDTO">
-        SELECT  d.TaxPrice AS retialPrice,d.Yqty AS amount,d.smb_id AS id ,c.name AS manufacturer,
-                d.Batchno AS lotNo, p.name AS goodsName, p.standard AS specification, d.DealStates AS status
+        SELECT  d.smb_id AS id,d.TaxPrice AS retialPrice,d.Yqty AS amount,c.name AS manufacturer,
+                d.Batchno AS lotNo, p.name AS goodsName, p.standard AS specification,
+                d.Validdate AS validityDate,p.makearea AS produceArea, d.DealStates AS status
         FROM ${account}.dbo.pda_RecBill_D d
             LEFT JOIN ${account}.dbo.pda_Products p ON d.p_id=p.p_id
             LEFT JOIN ${account}.dbo.pda_clients c ON c.c_id=d.Supplier_id WHERE d.bill_id=#{orderId}

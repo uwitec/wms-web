@@ -7,13 +7,16 @@ import java.io.Serializable;
  *
  */
 public class GoodsDTO implements Serializable {
-    private String goodsName; //商品名
-    private String lotNo; //批号
-    private String specification; //规格
-    private String validityDate; //有效期
-    private float retialPrice; //零售价
-    private float amount; //数量
-    private String manufacturer; //厂家
+    private int id;//id 1
+    private String goodsName; //商品名 1
+    private String lotNo; //批号 1
+    private String specification; //规格 1
+    private String validityDate; //有效期 1
+    private float retialPrice; //零售价 1
+    private float amount; //数量 1
+    private String manufacturer; //厂家 1
+    private String produceArea; //产地
+    private String serialNo; //序号
     private int status;
 
 
@@ -79,5 +82,29 @@ public class GoodsDTO implements Serializable {
 
     public void setStatus(int status) {
         this.status = status;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getProduceArea() {
+        return produceArea;
+    }
+
+    public void setProduceArea(String produceArea) {
+        this.produceArea = produceArea;
+    }
+
+    public String getSerialNo() {
+        return serialNo;
+    }
+
+    public void setSerialNo(String serialNo) {
+        this.serialNo = serialNo;
     }
 }

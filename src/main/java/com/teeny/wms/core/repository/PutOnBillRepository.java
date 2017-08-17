@@ -16,7 +16,7 @@ import java.util.List;
 public interface PutOnBillRepository {
     int countByWarehousId(@Param("warehouseId") int warehouseId, @Param("account") String account);
 
-    List<PutawayDTO> getGoodsDetailList(@Param("orderNoId") int orderNoId, @Param("account") String account);
+    List<PutawayDTO> getGoodsDetailList(@Param("orderNoId") int orderNoId, @Param("account") String account, @Param("sId") int sId);
 
 
 
@@ -45,5 +45,20 @@ public interface PutOnBillRepository {
 
     @Select("SELECT b.billid AS id,b.billnumber AS documentNo, b.pdaInTime AS documentDate, CASE b.billstates WHEN 10 THEN '验收中' WHEN 13 THEN '已验收' ELSE '' END AS status FROM ${account}.dbo.pda_PutOnBill b;")
     List<QueryDocumentDTO> getBill(String account);
+
+    @Update("UPDATE ${account}.dbo.pda_PutOnBill_D SET EligibleQty=#{amount} WHERE smb_id=#{id}")
+    void updateGoodsAmount(@Param("id") int id,@Param("amount") float amount,@Param("account") String account);
+
+
+    void copyDataByParam(@Param("id") int id,@Param("amount") float amount,@Param("locationId") int locationId);
+
+    @Select("SELECT count(*) FROM ${account}.dbo.pda_PutOnBill_D d WHERE d.bill_id = (SELECT d1.bill_id FROM ${account}.dbo.pda_PutOnBill_D d1 WHERE d1.smb_id=#{id})")
+    int countBySmbId(@Param("id") int id, @Param("account") String account);
+
+    @Update("UPDATE ${account}.dbo.pda_PutOnBill SET pdastates=2, pdaWrTime=getdate() WHERE billid=(SELECT d.bill_id FROM ${account}.dbo.pda_PutOnBill_D d WHERE d.smb_id=#{id})")
+    void updatePutBySmbId(@Param("id") int id, @Param("account") String account);
+
+    @Update("UPDATE ${account}.dbo.pda_PutOnBill SET pdaReTime = getdate(), pdastates=1 WHERE billid=#{orderNoId} AND s_id=#{sId}")
+    void uodateBillStatus(@Param("orderNoId") int orderNoId,@Param("account") String account,@Param("sId") int sId);
 }
 

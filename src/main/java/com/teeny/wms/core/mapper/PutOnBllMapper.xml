@@ -17,10 +17,10 @@
 
 
     <select id="getGoodsDetailList" resultType="com.teeny.wms.dto.PutawayDTO">
-      SELECT d.smb_id AS id, CASE d.DealStates WHEN 0 THEN '未上架' ELSE '已上架' END AS status, l.loc_name AS location, p.name AS goodsName, d.Batchno AS lotNo, d.MakeDate AS produceDate, p.unit1Name AS unit, d.EligibleQty AS amount, p.standard, p.Factory AS manufacturers FROM #{account}.dbo.pda_PutOnBill_D d
+      SELECT d.smb_id AS id, d.DealStates AS status, l.loc_name AS location, p.name AS goodsName, d.Batchno AS lotNo, d.MakeDate AS produceDate, p.unit1Name AS unit, d.EligibleQty AS amount, p.standard, p.Factory AS manufacturers FROM #{account}.dbo.pda_PutOnBill_D d
         LEFT JOIN #{account}.dbo.pda_PutOnBill b ON d.bill_id=b.billid
         LEFT JOIN #{account}.dbo.pda_location l ON l.l_id=d.Location_id
-        WHERE b.billid=#{orderNoId} AND d.smb_id!=0;
+        WHERE b.billid=#{orderNoId} AND d.S_id=#{sId}
     </select>
 
 
@@ -61,5 +61,10 @@
         FROM pda_PutOnBill_D d
         WHERE d.smb_id = #{goodsDetailId}
     </update>
+
+    <insert id="copyDataByParam">
+        INSERT INTO ${account}.dbo.pda_PutOnBill_D (bill_id, p_id, MakeDate, Validdate, Batchno, EligibleQty, TaxPrice, TaxTotal, CostPrice, CostTotal, S_id, Location_id, Supplier_id, InstoreTime, LineSort, DealStates, pdastates)
+                SELECT d.bill_id,d.p_id,d.MakeDate,d.Validdate,d.Batchno,#{amount},d.TaxPrice,d.TaxTotal,d.CostPrice,d.CostTotal,d.S_id,#{locationId},d.Supplier_id,d.InstoreTime,d.LineSort,1,1 FROM ${account}.dbo.pda_PutOnBill_D d WHERE d.smb_id=#{id}
+    </insert>
 
 </mapper>
