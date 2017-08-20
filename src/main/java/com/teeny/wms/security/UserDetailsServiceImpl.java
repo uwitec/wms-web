@@ -9,13 +9,14 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 /**
  * Created by lilei on 2017/7/10.
- */
+         */
 public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Autowired
     private SystemService systemService;
 
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        System.out.println(username);
         String[] temp = username.split("@");
         Employess user = systemService.findByUsername(temp[0], temp[1]);
         //Employess user = systemService.findByUsername(username, "yyt");

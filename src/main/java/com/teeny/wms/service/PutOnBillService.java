@@ -14,9 +14,9 @@ public interface PutOnBillService {
 
     BaseEntity<List<PutawayDTO>> getGoodsDetailList(int orderNoId, String account, int sId);
 
-    void putOnBillQuickly(int orderNoId, int allocationId, int goodsId, String account);
+    BaseEntity<String> putOnBillQuickly(List<Integer> ids, String account);
 
     void putOnBillWithOne(int bdId, String account);
 
-    void updateOne(PutawayAddDTO putawayAddDTO, String account);
+    BaseEntity<String> updateOne(PutawayAddDTO putawayAddDTO, String account);
 }

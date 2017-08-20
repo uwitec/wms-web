@@ -19,35 +19,16 @@
         SELECT  d.smb_id AS id,p.name AS goodsName, d.Batchno AS lotNo,
             p.standard AS standard, p.Factory AS manufacturer,
             p.unit1Name AS unit, d.quantity AS amount,
-            d.Validdate AS validateDate, d.MakeDate AS productDate FROM pda_TranBill_D d
-            LEFT JOIN pda_Products p ON p.p_id=d.p_id
-            LEFT JOIN pda_TranBill b ON b.billid=d.bill_id
-            WHERE
-            d.DealStates = 0
-            <if test="billNo != null and billNO != ''">
-                AND b.billnumber=#{billNo}
-            </if>
-            <if test="goodsName != null and goodsName != ''">
-                AND p.name LIKE concat('%',#{goodsName},'%')
-            </if>
-            <if test="s_inid != null">
-                AND d.ss_id = #{s_inid}
-            </if>
-            <if test="s_outid != null">
-                AND d.sd_id = #{s_outid}
-            </if>
-            <if test="sa_inid != null">
-                AND b.sa_inid=#{sa_inid}
-            </if>
-            <if test="sa_outid != null">
-                AND b.sa_outid=#{sa_outid}
-            </if>
-            <if test="l_inid != null">
-                AND d.Location_id = #{l_inid}
-            </if>
-            <if test="l_outid != null">
-                AND d.location_id2 = #{l_outid}
-            </if>
+            d.Validdate AS validateDate, d.MakeDate AS productDate,
+            p.barcode, b.sout_id AS exportWId, b.sa_outid AS exportSId,
+            d.Location_id AS exportAId, b.sin_id AS importWId,
+            d.DealStates AS status,
+            b.sin_id AS importWId, b.sa_inid AS importSId, d.location_id2 AS importAId
+
+        FROM ${account}.dbo.pda_TranBill_D d
+            LEFT JOIN ${account}.dbo.pda_Products p ON p.p_id=d.p_id
+            LEFT JOIN ${account}.dbo.pda_TranBill b ON b.billid=d.bill_id
+            WHERE b.billnumber = #{billNo}
     </select>
 
 </mapper>

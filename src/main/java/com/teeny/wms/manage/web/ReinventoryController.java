@@ -35,14 +35,14 @@ public class ReinventoryController {
     //获取库区
     @ResponseBody
     @RequestMapping(value = "/api/secondCount/saList", method = RequestMethod.GET)
-    public BaseEntity<CommonDTO> getSaList(@RequestHeader("account") String account) {
+    public BaseEntity<List<CommonDTO>> getSaList(@RequestHeader("account") String account) {
         return commonService.getSaList(account);
     }
 
     //获取区域
     @ResponseBody
     @RequestMapping(value = "/api/secondCount/areaList", method = RequestMethod.GET)
-    public BaseEntity<CommonDTO> getAreaList(@RequestHeader("account") String account) {
+    public BaseEntity<List<CommonDTO>> getAreaList(@RequestHeader("account") String account) {
         return commonService.getAreaList(account);
     }
 
