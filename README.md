@@ -664,11 +664,13 @@ shopFirst/getList/{pdType}/{saId}/{areaId}
 * 方法
 GET
 * 入参
+
 参数名      | 类型   | 是否可空 | 参数说明 | 样例
 -----------|--------|---------|---------|-----
 pdType | string | 否       |盘点类型|  月度
 saId   | int   | 否 | 库区id   | 3
 areaId  | int | 否  | 区域ID  | 3
+
 * 出参
 ```
 {
