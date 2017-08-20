@@ -42,7 +42,7 @@ public class StoreInventoryController {
     //确定
     @ResponseBody
     @RequestMapping(value = "/api/shopFirst/complete", method = RequestMethod.POST)
-    public BaseEntity<String> completeByBillId(@RequestParam("ids") List<Integer> ids, @RequestHeader("account") String account, @RequestHeader("sId") int sId) {
+    public BaseEntity<String> completeByBillId(@RequestBody List<Integer> ids, @RequestHeader("account") String account, @RequestHeader("sId") int sId) {
         return invertoryService.completeByParam(ids, account);
     }
 
