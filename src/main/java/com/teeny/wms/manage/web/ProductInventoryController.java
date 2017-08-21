@@ -2,7 +2,7 @@ package com.teeny.wms.manage.web;
 
 import com.teeny.wms.core.domain.baseEntity.BaseEntity;
 import com.teeny.wms.dto.*;
-import com.teeny.wms.service.InvertoryService;
+import com.teeny.wms.service.InventoryService;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,20 +18,20 @@ import java.util.List;
 public class ProductInventoryController {
 
     @Autowired
-    private InvertoryService invertoryService;
+    private InventoryService inventoryService;
 
     //单品盘点
     @ResponseBody
     @RequestMapping(value = "/api/productsInventroy/getList/{product}/{location}", method = RequestMethod.GET)
     public BaseEntity<List<PdListDTO>> getProductsInvertoryList(@RequestHeader("sId") int sId ,@PathVariable("product") String product, @PathVariable("location") String location, @RequestHeader("account") String account) {
-        return invertoryService.getProductsInventoryList(product, location, sId, account);
+        return inventoryService.getProductsInventoryList(product, location, sId, account);
     }
 
 //    //商品明细
 //    @ResponseBody
 //    @RequestMapping(value = "/api/productsInventroy/details/{id}", method = RequestMethod.GET)
 //    public BaseEntity<ProductDetailsDTO> getDetails(@RequestHeader("sId") int sId, @PathVariable("id") int id, @RequestHeader("account") String account) {
-//       return invertoryService.getDetailsById(id, account);
+//       return inventoryService.getDetailsById(id, account);
 //    }
 
 
@@ -39,14 +39,14 @@ public class ProductInventoryController {
     @ResponseBody
     @RequestMapping(value = "/api/productsInventroy/confirm", method = RequestMethod.POST)
     public BaseEntity<String> confirm(@Param("ids") List<Integer> ids, @RequestHeader("account") String account, @RequestHeader("sId") int sId) {
-        return invertoryService.confirmProductPd(ids, sId, account);
+        return inventoryService.confirmProductPd(ids, sId, account);
     }
 
     //商品修改(商品明细 保存)
     @ResponseBody
     @RequestMapping(value = "/api/productsInventroy/update", method = RequestMethod.POST)
     public BaseEntity<String> update(@RequestParam("id") int id, @RequestParam("count") float count, @RequestHeader("account") String account) {
-        BaseEntity<CommonDTO> data = invertoryService.updateProduct(id, count, account);
+        BaseEntity<CommonDTO> data = inventoryService.updateProduct(id, count, account);
         return null;
     }
 
@@ -56,7 +56,7 @@ public class ProductInventoryController {
     @ResponseBody
     @RequestMapping(value = "/api/productsInventroy/detail/{goodsCode}", method = RequestMethod.GET)
     public BaseEntity<ProductAddDetailDTO> getProductDetail(@PathVariable("goodsCode") String goodsCode, @RequestHeader("account") String account) {
-        BaseEntity<ProductAddDetailDTO> data = invertoryService.getDetailsByNameAndStandard(goodsCode, account);
+        BaseEntity<ProductAddDetailDTO> data = inventoryService.getDetailsByNameAndStandard(goodsCode, account);
         return data;
     }
 
@@ -65,7 +65,7 @@ public class ProductInventoryController {
     @ResponseBody
     @RequestMapping(value = "/api/productsInventroy/addProduct", method = RequestMethod.PUT)
     public BaseEntity<String> addProduct(@RequestBody AddProductDTO addProductDTO, @RequestHeader("account") String account) {
-        BaseEntity<String> data = invertoryService.addProduct(addProductDTO, account);
+        BaseEntity<String> data = inventoryService.addProduct(addProductDTO, account);
         return data;
     }
 

@@ -9,7 +9,7 @@ public class StoreInventoryGoodsDTO implements Serializable{
     private int id; //id
     private String goodsName; //商品名
     private String location; // 货位
-    private float inventroyCount; //盘点数量
+    private float inventoryCount; //盘点数量
     private float countInBill; //账面数量
     private String unit; //单位盒
     private String manufacturer; //厂家
@@ -40,12 +40,12 @@ public class StoreInventoryGoodsDTO implements Serializable{
         this.location = location;
     }
 
-    public float getInventroyCount() {
-        return inventroyCount;
+    public float getInventoryCount() {
+        return inventoryCount;
     }
 
-    public void setInventroyCount(float inventroyCount) {
-        this.inventroyCount = inventroyCount;
+    public void setInventoryCount(float inventoryCount) {
+        this.inventoryCount = inventoryCount;
     }
 
     public float getCountInBill() {

@@ -681,7 +681,7 @@ areaId  | int | 否  | 区域ID  | 3
         "id":"3",
         "goodsName":"商品名",
         "location":"货位",
-        "inventroyCount":"盘点数量",
+        "inventoryCount":"盘点数量",
         "countInBill":"账面数量",
         "unit":"单位盒",
         "manufacturer":"厂家",
@@ -824,7 +824,7 @@ areaId  | int | 否  | 区域ID  | 3
         "goodsName":"商品名",
         "location":"货位",
         "lotNo":"批号",
-        "inventroyCount":"盘点数量",
+        "inventoryCount":"盘点数量",
         "standard":"规格",
         "status":"状态 0/1 未盘点/已盘点",
     }
@@ -964,7 +964,7 @@ areaId  | int | 否  | 区域ID  | 3
         "goodsName":"商品名",
         "location":"货位",
         "lotNo":"批号",
-        "inventroyCount":"盘点数量",
+        "inventoryCount":"盘点数量",
         "standard":"规格",
         "status":"状态 0/1 未盘点/已盘点",
     }

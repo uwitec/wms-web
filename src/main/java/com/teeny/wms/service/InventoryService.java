@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * Created by lilei on 2017/8/7.
  */
-public interface InvertoryService {
+public interface InventoryService {
 
     BaseEntity<List<StoreInventoryGoodsDTO>> getInventoryList(String pdType, int saId, int areaId,String account, int sId);
 

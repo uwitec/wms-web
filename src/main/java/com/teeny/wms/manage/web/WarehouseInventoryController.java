@@ -5,7 +5,7 @@ import com.teeny.wms.dto.CommonDTO;
 import com.teeny.wms.dto.PdEditDTO;
 import com.teeny.wms.dto.StroePdListDTO;
 import com.teeny.wms.service.CommonService;
-import com.teeny.wms.service.InvertoryService;
+import com.teeny.wms.service.InventoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -20,7 +20,7 @@ import java.util.List;
 public class WarehouseInventoryController {
 
     @Autowired
-    public InvertoryService invertoryService;
+    public InventoryService inventoryService;
     @Autowired
     public CommonService commonService;
 
@@ -28,7 +28,7 @@ public class WarehouseInventoryController {
     @RequestMapping(value = "/api/warehouseFirst/list/{pdType}/{saId}/{areaId}", method = RequestMethod.GET)
     public BaseEntity<List<StroePdListDTO>> getList(@PathVariable("pdType") String pdType, @PathVariable("saId") int saId,
                                                     @PathVariable("areaId") int areaId, @RequestHeader("account") String account, @RequestHeader("sId") int sId) {
-        return invertoryService.getStroeList(pdType, saId, areaId, account, 4,1, sId);
+        return inventoryService.getStroeList(pdType, saId, areaId, account, 4,1, sId);
     }
 
     //获取库区
@@ -49,21 +49,21 @@ public class WarehouseInventoryController {
     @ResponseBody
     @RequestMapping(value = "/api/warehouseFirst/single", method = RequestMethod.POST)
     public BaseEntity<String> completeOne(@RequestParam("goodsDetailId") int goodsDetailId, @RequestHeader("account") String account) {
-        return invertoryService.completeOne(goodsDetailId, account);
+        return inventoryService.completeOne(goodsDetailId, account);
     }
 
     //确定
     @ResponseBody
     @RequestMapping(value = "/api/warehouseFirst/complete", method = RequestMethod.POST)
     public BaseEntity<String> completeByBillId(@RequestParam("ids") List<Integer> ids, @RequestHeader("account") String account, @RequestHeader("sId") int sId) {
-        return invertoryService.completeByParam(ids, account);
+        return inventoryService.completeByParam(ids, account);
     }
 
     //盘点编辑
     @ResponseBody
     @RequestMapping(value = "/api/warehouseFirst/edit", method = RequestMethod.POST)
     public BaseEntity<String> edit(@RequestBody PdEditDTO pdEditDTO, @RequestHeader("account") String account) {
-        return invertoryService.edit(pdEditDTO, account);
+        return inventoryService.edit(pdEditDTO, account);
     }
 
 }

@@ -4,7 +4,7 @@ import com.teeny.wms.core.domain.baseEntity.BaseEntity;
 import com.teeny.wms.core.repository.PdBillRepository;
 import com.teeny.wms.core.repository.ProductsRepository;
 import com.teeny.wms.dto.*;
-import com.teeny.wms.service.InvertoryService;
+import com.teeny.wms.service.InventoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,7 +16,7 @@ import java.util.List;
  */
 @Service
 @Transactional
-public class InvertoryServiceImpl implements InvertoryService {
+public class InventoryServiceImpl implements InventoryService {
 
     @Autowired
     private PdBillRepository pdBillRepository;
