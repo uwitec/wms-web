@@ -24,7 +24,7 @@ public interface RecBillRepository {
 
 
 
-    @Select("SELECT r.billid AS orderId,r.e_id AS buyerId,r.billstates AS status,e.name AS buyer FROM ${account}.dbo.pda_RecBill r LEFT JOIN ${account}.dbo.pda_employees e ON r.e_id=e.e_id WHERE r.billid=#{orderId}")
+    @Select("SELECT r.billid AS orderId,r.e_id AS buyerId, case r.billstates when 10 then '未处理' else '已审核' end AS status,e.name AS buyer FROM ${account}.dbo.pda_RecBill r LEFT JOIN ${account}.dbo.pda_employees e ON r.e_id=e.e_id WHERE r.billid=#{orderId}")
     RecBillDTO getOrder(@Param("orderId") int orderId, @Param("account") String account);
 
    // List<GoodsDTO> getGoodsByBillIdAndStatus(@Param("orderId") int orderId, @Param("status") int status, @Param("account") String account);

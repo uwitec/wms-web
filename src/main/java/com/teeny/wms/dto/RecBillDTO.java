@@ -8,7 +8,7 @@ import java.io.Serializable;
 public class RecBillDTO implements Serializable {
 
     private int orderId;
-    private int status;
+    private String status;
     private int buyerId;
     private String buyer;
 
@@ -20,11 +20,11 @@ public class RecBillDTO implements Serializable {
         this.orderId = orderId;
     }
 
-    public int getStatus() {
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(int status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 
