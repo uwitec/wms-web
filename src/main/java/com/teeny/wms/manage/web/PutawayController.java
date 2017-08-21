@@ -44,7 +44,7 @@ public class PutawayController {
 //    }
 
     //查询
-    @RequestMapping(value = "/api/shelve/goodsDetailList/{orderNoId}", method = RequestMethod.POST)
+    @RequestMapping(value = "/api/shelve/orderNoList/{orderNoId}", method = RequestMethod.POST)
     public void getPutOnBill(@PathVariable("orderNoId") int orderNoId, @RequestHeader("account") String account, @RequestHeader("sId") int sId) {
         BaseEntity<List<PutawayDTO>> data = putOnBillService.getGoodsDetailList(orderNoId, account, sId);
     }
