@@ -16,7 +16,7 @@ import java.util.List;
 public interface PutOnBillRepository {
     int countByWarehousId(@Param("warehouseId") int warehouseId, @Param("account") String account);
 
-    List<PutawayDTO> getGoodsDetailList(@Param("orderNoId") int orderNoId, @Param("account") String account, @Param("sId") int sId);
+    List<PutawayDTO> getGoodsDetailList(@Param("orderNoId") String orderNoId, @Param("account") String account, @Param("sId") int sId);
 
 
 
@@ -67,5 +67,8 @@ public interface PutOnBillRepository {
 
     @Update("UPDATE ${account}.dbo.pda_PutOnBill SET pdastates=2,pdaWrTime=getdate() WHERE billid = (SELECT d.bill_id FROM ${account}.dbo.pda_PutOnBill_D d WHERE d.smb_id=#{id})")
     void updatePutOnBillDBySmbId(@Param("id") Integer id, @Param("account") String account);
+
+    @Select("SELECT b.billid FROM ${account}.dbo.pda_PutOnBill b WHERE b.billnumber=#{orderNoId}")
+    int getBillByBillNumber(@Param("orderNoId") String orderNoId, @Param("account") String account,@Param("sId") int sId);
 }
 

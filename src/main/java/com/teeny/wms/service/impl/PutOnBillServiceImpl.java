@@ -26,10 +26,11 @@ public class PutOnBillServiceImpl implements PutOnBillService {
     private LocationRepository locationRepository;
 
     @Override
-    public BaseEntity<List<PutawayDTO>> getGoodsDetailList(int orderNoId, String account, int sId) {
+    public BaseEntity<List<PutawayDTO>> getGoodsDetailList(String orderNoId, String account, int sId) {
 
         List<PutawayDTO> list = putOnBillRepository.getGoodsDetailList(orderNoId, account, sId);
-        putOnBillRepository.uodateBillStatus(orderNoId, account, sId);
+        int id = putOnBillRepository.getBillByBillNumber(orderNoId, account, sId);
+        putOnBillRepository.uodateBillStatus(id, account, sId);
         return new BaseEntity<List<PutawayDTO>>(list);
     }
 

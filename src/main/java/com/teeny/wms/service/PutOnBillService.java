@@ -12,7 +12,7 @@ import java.util.List;
  */
 public interface PutOnBillService {
 
-    BaseEntity<List<PutawayDTO>> getGoodsDetailList(int orderNoId, String account, int sId);
+    BaseEntity<List<PutawayDTO>> getGoodsDetailList(String orderNoId, String account, int sId);
 
     BaseEntity<String> putOnBillQuickly(List<Integer> ids, String account);
 
