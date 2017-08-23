@@ -86,9 +86,20 @@
     <!--门店初盘-->
 
     <select id="getStoreInventoryList" resultType="com.teeny.wms.dto.StoreInventoryGoodsDTO">
-        SELECT d.smb_id AS id, p.name AS goodsName, l.loc_name AS location,d.EligibleQty AS countInBill,
-        d.pdQty AS inventoryCount, p.unit1Name AS unit, c.name AS manufacturer, d.DealStates AS status ,
-        p.standard AS specification, l.loc_code AS locationCode, p.barcode AS goodsCode
+        SELECT
+        d.smb_id AS id,
+        d.bill_id AS billId,
+        d.p_id AS goodsId,
+        p.name AS goodsName,
+        l.loc_code AS location,
+        d.EligibleQty AS countInBill,
+        d.pdQty AS inventoryCount,
+        p.unit1Name AS unit,
+        c.name AS manufacturer,
+        d.DealStates AS status ,
+        p.specification AS specification,
+        l.loc_code AS locationCode,
+        p.barcode AS goodsCode
         FROM ${account}.dbo.pda_pdBill_D d
         LEFT JOIN ${account}.dbo.pda_pdBill b ON b.billid=d.bill_id
         LEFT JOIN ${account}.dbo.pda_Products p ON d.p_id=p.p_id
@@ -149,7 +160,7 @@
         d.Batchno AS lotNo,
         d.quantity AS amount,
         d.Validdate AS validateDate,
-        p.standard AS standard,
+        p.specification AS specification,
         p.Factory AS manufacturer,
         d.pdastates AS status,
         d.Batchno AS lotNo,
@@ -186,19 +197,32 @@
 
     <select id="getStroePdList" resultType="com.teeny.wms.dto.StroePdListDTO">
         SELECT
-            d.smb_id     AS id,
-            p.name       AS goodsName,
-            l.loc_name   AS location,
-            d.Batchno    AS lotNo,
-            d.pdQty      AS inventoryCount,
-            p.standard,
-            d.DealStates AS status
+        d.smb_id AS id,
+        d.bill_id AS billId,
+        d.p_id AS goodsId,
+        l.loc_code AS locationCode,
+        p.barcode AS goodsCode,
+        l.loc_name AS location,
+        d.pdQty AS inventoryCount,
+        d.Batchno AS lotNo,
+        p.name AS goodsName,
+        p.specification AS specification,
+        c.name AS manufacturer,
+        d.EligibleQty AS countInBill,
+        d.Validdate AS validateDate,
+        d.MakeDate AS productionDate,
+        p.unit1Name AS unit,
+        d.DealStates AS status
         FROM ${account}.dbo.pda_pdBill_D d
-            LEFT JOIN ${account}.dbo.pda_pdBill b ON b.billid = d.bill_id
-            LEFT JOIN ${account}.dbo.pda_Products p ON p.p_id = d.p_id
-            LEFT JOIN ${account}.dbo.pda_location l ON l.l_id = d.Location_id
-        WHERE b.pdname = #{pdType} AND b.sa_id = #{saId} AND b.a_id = #{aId} AND b.s_id = #{sId} AND
-              b.billstates = #{btype} AND d.billstates = #{dtype}
+        LEFT JOIN ${account}.dbo.pda_pdBill b ON b.billid = d.bill_id
+        LEFT JOIN ${account}.dbo.pda_Products p ON p.p_id = d.p_id
+        LEFT JOIN ${account}.dbo.pda_location l ON l.l_id = d.Location_id
+        LEFT JOIN ${account}.dbo.pda_clients c ON c.c_id = d.Supplier_id
+        WHERE b.pdname = #{pdType} AND b.sa_id = #{saId} AND b.a_id = #{aId} AND b.billstates = #{btype}
+        AND d.billstates = #{dtype}
+        <if test="sId != 0">
+            AND b.s_id = #{sId}
+        </if>
     </select>
 
 

@@ -28,7 +28,7 @@ IF @Data_Type=1
 BEGIN
 SELECT @timestamp=p_timestamp FROM pda_timestamp
 SELECT @Curtimestamp=CAST(ISNULL(MAX(ModifyDate),0) AS BIGINT) FROM [kk].dbo.products
-SELECT a.product_id p_id,a.serial_number,a.pinyin,a.name,a.alias,a.standard,a.medtype,a.permitcode,a.PerCodevalid
+SELECT a.product_id p_id,a.serial_number,a.pinyin,a.name,a.alias,a.specification,a.medtype,a.permitcode,a.PerCodevalid
   ,ISNULL(b.name,'') unit1Name,ISNULL(c.name,'') WholeUnitName
   ,CASE WHEN a.wholeUnit_id = a.unit2_id THEN a.rate2
    WHEN a.wholeUnit_id = a.unit3_id THEN a.rate3
@@ -53,11 +53,11 @@ FROM #pda_Products R INNER JOIN pda_Products CI
   ON R.p_id=CI.p_id
 
 INSERT INTO pda_Products
-(p_id,serial_number,pinyin,name,alias,standard,medtype,permitcode,PerCodevalid,unit1Name
+(p_id,serial_number,pinyin,name,alias,specification,medtype,permitcode,PerCodevalid,unit1Name
 ,WholeUnitName,WholeRate,BulidNo,RegisterNo,Registervalid,GMPNo,GMPvaliddate,Factory
 ,StorageCon,validmonth,validday,makearea,PackStd,pack,locationid,WholeLoc,SingleLoc
 ,Supplier_id,ZT)
-SELECT p_id,serial_number,pinyin,name,alias,standard,medtype,permitcode,PerCodevalid,unit1Name
+SELECT p_id,serial_number,pinyin,name,alias,specification,medtype,permitcode,PerCodevalid,unit1Name
   ,WholeUnitName,WholeRate,BulidNo,RegisterNo,Registervalid,GMPNo,GMPvaliddate,Factory
   ,StorageCon,validmonth,validday,makearea,PackStd,pack,locationid,WholeLoc,SingleLoc
   ,Supplier_id,0

@@ -1267,7 +1267,7 @@ CREATE TABLE [dbo].GSProducts (
     YF VARCHAR(200) NOT NULL DEFAULT '',--用法
     WBZJM VARCHAR(50) NOT NULL DEFAULT '',--五笔助记码
     UnitName VARCHAR(20) NOT NULL DEFAULT '',--单位
-    standard VARCHAR(100) NOT NULL DEFAULT '',--规格
+    specification VARCHAR(100) NOT NULL DEFAULT '',--规格
     price VARCHAR(14) NOT NULL DEFAULT '',--参考价格
     FactoryName VARCHAR(100) NOT NULL DEFAULT '',--药厂名称
     permitcode VARCHAR(100) NOT NULL DEFAULT '',--国药准字
@@ -1308,7 +1308,7 @@ CREATE TABLE [dbo].GSProductMap (
 	serial_number_y VARCHAR(26) NOT NULL,--药易通编码
 	name_Y VARCHAR(100) NOT NULL,--药易通名称
 	UnitName VARCHAR(20) NOT NULL,--社保中心单位
-	standard VARCHAR(100) NOT NULL,--社保中心规格
+	specification VARCHAR(100) NOT NULL,--社保中心规格
     CONSTRAINT [PK_GSProductMap] PRIMARY KEY  CLUSTERED 
 	(
 		billid

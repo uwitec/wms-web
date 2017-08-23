@@ -10,7 +10,7 @@ import java.util.List;
  */
 public interface InventoryService {
 
-    BaseEntity<List<StoreInventoryGoodsDTO>> getInventoryList(String pdType, int saId, int areaId,String account, int sId);
+    BaseEntity<List<StoreInventoryGoodsDTO>> getInventoryList(String pdType, int saId, int areaId, String account, int sId);
 
     BaseEntity<List<PdListDTO>> getProductsInventoryList(String product, String location, int sId, String account);
 
@@ -35,4 +35,6 @@ public interface InventoryService {
     BaseEntity<List<StroePdListDTO>> getStroeList(String pdType, int saId, int areaId, String account, int btype, int dype, int sId);
 
     BaseEntity<String> edit(PdEditDTO pdEditDTO, String account);
+
+    BaseEntity<List<LotDTO>> getLotList(int billId, int goodsId, String account);
 }

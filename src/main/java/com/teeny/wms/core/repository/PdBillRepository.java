@@ -1,9 +1,6 @@
 package com.teeny.wms.core.repository;
 
-import com.teeny.wms.dto.PdListDTO;
-import com.teeny.wms.dto.ProductDetailsDTO;
-import com.teeny.wms.dto.StoreInventoryGoodsDTO;
-import com.teeny.wms.dto.StroePdListDTO;
+import com.teeny.wms.dto.*;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
@@ -31,7 +28,7 @@ public interface PdBillRepository {
 
     List<StoreInventoryGoodsDTO> getStoreInventoryList(@Param("pdType") String pdType, @Param("saId") int saId, @Param("areaId") int areaId, @Param("account") String account, @Param("sId") int sId);
 
-    @Update("UPDATE ${account}.dbo.pda_pdBill_D SET DealStates = 1, SET pdastates = 2 WHERE smb_id = #{goodsDetailId}")
+    @Update({"UPDATE ${account}.dbo.pda_pdBill_D SET DealStates = 1, pdastates = 2 WHERE smb_id = #{goodsDetailId}"})
     void completeOne(@Param("goodsDetailId") int goodsDetailId, @Param("account") String account);
 
     //查询未盘点数
@@ -75,11 +72,13 @@ public interface PdBillRepository {
     void updateStatus(@Param("id") int id, @Param("sId") int sId, @Param("account") String account);
 
     @Update("UPDATE ${account}.dbo.pda_kcpdBill_D  SET pdqty = #{count}, DealStates=1,pdastates=1 WHERE storehouse_id = #{id}")
-    void updateProductStatus(@Param("id") int id,@Param("count") float count,@Param("account") String account);
+    void updateProductStatus(@Param("id") int id, @Param("count") float count, @Param("account") String account);
 
 
     //添加数据
     void addProduct(@Param("pId") int pId, @Param("lotNo") String lotNo, @Param("locationCode") String locationCode, @Param("amount") float amount, @Param("validateDate") String validateDate);
 
-
+    //获取批次
+    @Select("SELECT d.Validdate AS validateDate, d.Batchno AS lotNo, d.EligibleQty AS count FROM ${account}.dbo.pda_pdBill_D d WHERE d.bill_id = #{billId} AND d.p_id = #{goodsId}")
+    List<LotDTO> getLotList(@Param("billId") int billId, @Param("goodsId") int goodsId, @Param("account") String account);
 }

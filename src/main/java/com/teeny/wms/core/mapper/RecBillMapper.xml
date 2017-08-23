@@ -23,7 +23,7 @@
             c.name       AS manufacturer,
             d.Batchno    AS lotNo,
             p.name       AS goodsName,
-            p.standard   AS specification,
+            p.specification   AS specification,
             d.Validdate  AS validityDate,
             p.makearea   AS produceArea,
             d.DealStates AS status

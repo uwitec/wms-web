@@ -1,9 +1,7 @@
 package com.teeny.wms.manage.web;
 
 import com.teeny.wms.core.domain.baseEntity.BaseEntity;
-import com.teeny.wms.dto.CommonDTO;
-import com.teeny.wms.dto.PdEditDTO;
-import com.teeny.wms.dto.StoreInventoryGoodsDTO;
+import com.teeny.wms.dto.*;
 import com.teeny.wms.service.CommonService;
 import com.teeny.wms.service.InventoryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +34,9 @@ public class StoreInventoryController {
     @ResponseBody
     @RequestMapping(value = "/api/shopFirst/single", method = RequestMethod.POST)
     public BaseEntity<String> completeOne(@RequestParam("goodsDetailId") int goodsDetailId, @RequestHeader("account") String account) {
-        return inventoryService.completeOne(goodsDetailId, account);
+        BaseEntity<String> result = inventoryService.completeOne(goodsDetailId, account);
+        result.setData(String.valueOf(goodsDetailId));
+        return result;
     }
 
     //确定
@@ -67,4 +67,10 @@ public class StoreInventoryController {
         return commonService.getAreaList(account);
     }
 
+    //获取批次
+    @ResponseBody
+    @RequestMapping(value = "/api/shopFirst/getLotList", method = RequestMethod.GET)
+    public BaseEntity<List<LotDTO>> getLotList(@RequestParam("billId") int billId, @RequestParam("goodsId") int goodsId, @RequestHeader("account") String account) {
+        return inventoryService.getLotList(billId, goodsId, account);
+    }
 }

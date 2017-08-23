@@ -17,7 +17,7 @@
 
 
     <select id="getGoodsDetailList" resultType="com.teeny.wms.dto.PutawayDTO">
-      SELECT d.smb_id AS id, d.DealStates AS status, l.loc_name AS location, p.name AS goodsName, d.Batchno AS lotNo, d.MakeDate AS produceDate, p.unit1Name AS unit, d.EligibleQty AS amount, p.standard, p.Factory AS manufacturers FROM #{account}.dbo.pda_PutOnBill_D d
+      SELECT d.smb_id AS id, d.DealStates AS status, l.loc_name AS location, p.name AS goodsName, d.Batchno AS lotNo, d.MakeDate AS produceDate, p.unit1Name AS unit, d.EligibleQty AS amount, p.specification, p.Factory AS manufacturers FROM #{account}.dbo.pda_PutOnBill_D d
         LEFT JOIN #{account}.dbo.pda_PutOnBill b ON d.bill_id=b.billid
         LEFT JOIN #{account}.dbo.pda_location l ON l.l_id=d.Location_id
         WHERE b.billnumber=#{orderNoId} AND d.S_id=#{sId}

@@ -29,7 +29,7 @@ public class ReinventoryController {
     @RequestMapping(value = "/api/secondCount/list/{pdType}/{saId}/{areaId}", method = RequestMethod.GET)
     public BaseEntity<List<StroePdListDTO>> getList(@PathVariable("pdType") String pdType, @PathVariable("saId") int saId,
                                                     @PathVariable("areaId") int areaId, @RequestHeader("account") String account, @RequestHeader("sId") int sId) {
-        return inventoryService.getStroeList(pdType, saId, areaId, account, 4,1, sId);
+        return inventoryService.getStroeList(pdType, saId, areaId, account, 2,10, sId);
     }
 
     //获取库区

@@ -5,8 +5,10 @@ import java.io.Serializable;
 /**
  * Created by lilei on 2017/8/7.
  */
-public class StoreInventoryGoodsDTO implements Serializable{
+public class StoreInventoryGoodsDTO implements Serializable {
     private int id; //id
+    private int billId;       //盘点单id
+    private int goodsId;       //商品id
     private String goodsName; //商品名
     private String location; // 货位
     private float inventoryCount; //盘点数量
@@ -25,6 +27,22 @@ public class StoreInventoryGoodsDTO implements Serializable{
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public int getBillId() {
+        return billId;
+    }
+
+    public void setBillId(int billId) {
+        this.billId = billId;
+    }
+
+    public int getGoodsId() {
+        return goodsId;
+    }
+
+    public void setGoodsId(int goodsId) {
+        this.goodsId = goodsId;
     }
 
     public String getGoodsName() {

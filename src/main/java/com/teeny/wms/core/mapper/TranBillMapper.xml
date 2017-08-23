@@ -17,7 +17,7 @@
 
     <select id="getTransferList" resultType="com.teeny.wms.dto.TransferListDTO">
         SELECT  d.smb_id AS id,p.name AS goodsName, d.Batchno AS lotNo,
-            p.standard AS standard, p.Factory AS manufacturer,
+            p.specification AS specification, p.Factory AS manufacturer,
             p.unit1Name AS unit, d.quantity AS amount,
             d.Validdate AS validateDate, d.MakeDate AS productDate,
             p.barcode, b.sout_id AS exportWId, b.sa_outid AS exportSId,

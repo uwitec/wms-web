@@ -470,7 +470,7 @@ String location //货位码
         "amount":"数量",
         "unit":"单位",
         "validateDate":"有效期",
-        "standard":"规格",
+        "specification":"规格",
         "manufacturer":"厂家",
         "productDate":"生产日期"
         "status":"状态"
@@ -575,7 +575,7 @@ l_outid    | int | 是  | 调出区域id| 34 |
                 "id": 1,
                 "goodsName":"商品名"
                 "lotNo": "批号",
-                "standard":"规格"
+                "specification":"规格"
                 "manufacturer":"某某厂家"
                 "unit":"单位"
                 "amount":"数量"
@@ -825,7 +825,7 @@ areaId  | int | 否  | 区域ID  | 3
         "location":"货位",
         "lotNo":"批号",
         "inventoryCount":"盘点数量",
-        "standard":"规格",
+        "specification":"规格",
         "status":"状态 0/1 未盘点/已盘点",
     }
   ]
@@ -965,7 +965,7 @@ areaId  | int | 否  | 区域ID  | 3
         "location":"货位",
         "lotNo":"批号",
         "inventoryCount":"盘点数量",
-        "standard":"规格",
+        "specification":"规格",
         "status":"状态 0/1 未盘点/已盘点",
     }
   ]
