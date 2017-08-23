@@ -18,7 +18,7 @@
     <select id="getGoodsByBillId" resultType="com.teeny.wms.dto.GoodsDTO">
         SELECT
             d.smb_id     AS id,
-            d.TaxPrice   AS retialPrice,
+            d.TaxPrice   AS retailPrice,
             d.Yqty       AS amount,
             c.name       AS manufacturer,
             d.Batchno    AS lotNo,

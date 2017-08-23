@@ -12,7 +12,7 @@ public class GoodsDTO implements Serializable {
     private String lotNo; //批号 1
     private String specification; //规格 1
     private String validityDate; //有效期 1
-    private float retialPrice; //零售价 1
+    private float retailPrice; //零售价 1
     private float amount; //数量 1
     private String manufacturer; //厂家 1
     private String produceArea; //产地
@@ -52,12 +52,12 @@ public class GoodsDTO implements Serializable {
         this.validityDate = validityDate;
     }
 
-    public float getRetialPrice() {
-        return retialPrice;
+    public float getRetailPrice() {
+        return retailPrice;
     }
 
-    public void setRetialPrice(float retialPrice) {
-        this.retialPrice = retialPrice;
+    public void setRetailPrice(float retailPrice) {
+        this.retailPrice = retailPrice;
     }
 
     public float getAmount() {

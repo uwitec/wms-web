@@ -207,7 +207,7 @@ orderId 订单ID
     "lotNo":"批号",
     "specification":"规格",
     "validityDate":"有效期",
-    "retialPrice":"零售价",
+    "retailPrice":"零售价",
     "amount":"数量",
     "manufacturer":"AAA公司"
   }],

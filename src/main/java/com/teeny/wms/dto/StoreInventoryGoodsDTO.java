@@ -12,8 +12,11 @@ public class StoreInventoryGoodsDTO implements Serializable{
     private float inventoryCount; //盘点数量
     private float countInBill; //账面数量
     private String unit; //单位盒
+    private String specification; //规格
     private String manufacturer; //厂家
     private int status; //状态
+    private String locationCode;   //货位码
+    private String goodsCode;      //商品码
 
 
     public int getId() {
@@ -64,6 +67,14 @@ public class StoreInventoryGoodsDTO implements Serializable{
         this.unit = unit;
     }
 
+    public String getSpecification() {
+        return specification;
+    }
+
+    public void setSpecification(String specification) {
+        this.specification = specification;
+    }
+
     public String getManufacturer() {
         return manufacturer;
     }
@@ -78,5 +89,21 @@ public class StoreInventoryGoodsDTO implements Serializable{
 
     public void setStatus(int status) {
         this.status = status;
+    }
+
+    public String getLocationCode() {
+        return locationCode;
+    }
+
+    public void setLocationCode(String locationCode) {
+        this.locationCode = locationCode;
+    }
+
+    public String getGoodsCode() {
+        return goodsCode;
+    }
+
+    public void setGoodsCode(String goodsCode) {
+        this.goodsCode = goodsCode;
     }
 }
