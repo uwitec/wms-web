@@ -2,6 +2,7 @@ package com.teeny.wms.manage.web;
 
 import com.teeny.wms.core.domain.baseEntity.BaseEntity;
 import com.teeny.wms.dto.CommonDTO;
+import com.teeny.wms.dto.LotDTO;
 import com.teeny.wms.dto.PdEditDTO;
 import com.teeny.wms.dto.StroePdListDTO;
 import com.teeny.wms.service.CommonService;
@@ -26,7 +27,7 @@ public class ReinventoryController {
     public CommonService commonService;
 
     @ResponseBody
-    @RequestMapping(value = "/api/secondCount/list/{pdType}/{saId}/{areaId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/api/secondInventory/getList/{pdType}/{saId}/{areaId}", method = RequestMethod.GET)
     public BaseEntity<List<StroePdListDTO>> getList(@PathVariable("pdType") String pdType, @PathVariable("saId") int saId,
                                                     @PathVariable("areaId") int areaId, @RequestHeader("account") String account, @RequestHeader("sId") int sId) {
         return inventoryService.getStroeList(pdType, saId, areaId, account, 2,10, sId);
@@ -34,36 +35,43 @@ public class ReinventoryController {
 
     //获取库区
     @ResponseBody
-    @RequestMapping(value = "/api/secondCount/saList", method = RequestMethod.GET)
+    @RequestMapping(value = "/api/secondInventory/saList", method = RequestMethod.GET)
     public BaseEntity<List<CommonDTO>> getSaList(@RequestHeader("account") String account) {
         return commonService.getSaList(account);
     }
 
     //获取区域
     @ResponseBody
-    @RequestMapping(value = "/api/secondCount/areaList", method = RequestMethod.GET)
+    @RequestMapping(value = "/api/secondInventory/areaList", method = RequestMethod.GET)
     public BaseEntity<List<CommonDTO>> getAreaList(@RequestHeader("account") String account) {
         return commonService.getAreaList(account);
     }
 
     //单个完成
     @ResponseBody
-    @RequestMapping(value = "/api/secondCount/single", method = RequestMethod.POST)
+    @RequestMapping(value = "/api/secondInventory/single", method = RequestMethod.POST)
     public BaseEntity<String> completeOne(@RequestParam("goodsDetailId") int goodsDetailId, @RequestHeader("account") String account) {
         return inventoryService.completeOne(goodsDetailId, account);
     }
 
     //确定
     @ResponseBody
-    @RequestMapping(value = "/api/secondCount/complete", method = RequestMethod.POST)
-    public BaseEntity<String> completeByBillId(@RequestParam("ids") List<Integer> ids, @RequestHeader("account") String account, @RequestHeader("sId") int sId) {
+    @RequestMapping(value = "/api/secondInventory/complete", method = RequestMethod.POST)
+    public BaseEntity<String> completeByBillId(@RequestBody List<Integer> ids, @RequestHeader("account") String account, @RequestHeader("sId") int sId) {
         return inventoryService.completeByParam(ids, account);
     }
 
     //盘点编辑
     @ResponseBody
-    @RequestMapping(value = "/api/secondCount/add", method = RequestMethod.POST)
+    @RequestMapping(value = "/api/secondInventory/edit", method = RequestMethod.POST)
     public BaseEntity<String> edit(@RequestBody PdEditDTO pdEditDTO, @RequestHeader("account") String account) {
         return inventoryService.edit(pdEditDTO, account);
+    }
+
+    //获取批次
+    @ResponseBody
+    @RequestMapping(value = "/api/secondInventory/getLotList", method = RequestMethod.GET)
+    public BaseEntity<List<LotDTO>> getLotList(@RequestParam("billId") int billId, @RequestParam("goodsId") int goodsId, @RequestHeader("account") String account) {
+        return inventoryService.getLotList(billId, goodsId, account);
     }
 }

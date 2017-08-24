@@ -875,7 +875,7 @@ GET
 #### 复盘
 1.完成
 * URL    
-secondCount/complete
+secondInventory/complete
 * 方法
  POST
 * 入参   
@@ -896,7 +896,7 @@ ids      | List<Integer> | 否   | id数组|  {"ids":[3,4,5]}
 
 2.新增
 * URL    
-secondCount/add
+secondInventory/add
 * 方法
  POST
 * 入参   
@@ -925,7 +925,7 @@ secondCount/add
 
 3.单个完成
 * URL    
-secondCount/single
+secondInventory/single
 * 方法
  POST
 * 入参   
@@ -944,7 +944,7 @@ goodsDetailId | int | 否       |商品详情id|  5
 ```
 4. 获取详情列表
 * URL 
-secondCount/getList/{pdType}/{saId}/{areaId}
+secondInventory/getList/{pdType}/{saId}/{areaId}
 * 方法
 GET
 * 入参
@@ -973,7 +973,7 @@ areaId  | int | 否  | 区域ID  | 3
 ```
 5. 获取库区
 * URL
-secondCount/saList
+secondInventory/saList
 * 方法
 GET
 * 入参
@@ -993,7 +993,7 @@ GET
 ```
 6. 获取区域
 * URL
-secondCount/areaList
+secondInventory/areaList
 * 方法
 GET
 * 入参

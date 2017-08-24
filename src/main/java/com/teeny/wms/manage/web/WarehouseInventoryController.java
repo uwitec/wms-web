@@ -57,7 +57,7 @@ public class WarehouseInventoryController {
     //确定
     @ResponseBody
     @RequestMapping(value = "/api/warehouseFirst/complete", method = RequestMethod.POST)
-    public BaseEntity<String> completeByBillId(@RequestParam("ids") List<Integer> ids, @RequestHeader("account") String account, @RequestHeader("sId") int sId) {
+    public BaseEntity<String> completeByBillId(@RequestBody List<Integer> ids, @RequestHeader("account") String account, @RequestHeader("sId") int sId) {
         return inventoryService.completeByParam(ids, account);
     }
 
