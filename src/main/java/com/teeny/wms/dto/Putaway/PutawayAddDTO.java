@@ -14,7 +14,6 @@ import java.util.List;
 public class PutawayAddDTO implements Serializable {
 
     private int id;
-    private float amount;
     private List<Location> locations;
 
     public int getId() {
@@ -23,14 +22,6 @@ public class PutawayAddDTO implements Serializable {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public float getAmount() {
-        return amount;
-    }
-
-    public void setAmount(float amount) {
-        this.amount = amount;
     }
 
     public List<Location> getLocations() {
