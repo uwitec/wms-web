@@ -79,6 +79,6 @@ public interface PdBillRepository {
     void addProduct(@Param("pId") int pId, @Param("lotNo") String lotNo, @Param("locationCode") String locationCode, @Param("amount") float amount, @Param("validateDate") String validateDate);
 
     //获取批次
-    @Select("SELECT d.Validdate AS validateDate, d.Batchno AS lotNo, d.EligibleQty AS count FROM ${account}.dbo.pda_pdBill_D d WHERE d.bill_id = #{billId} AND d.p_id = #{goodsId}")
+    @Select("SELECT CONVERT(varchar(100), d.Validdate, 23) AS validateDate, d.Batchno AS lotNo, d.EligibleQty AS count FROM ${account}.dbo.pda_pdBill_D d WHERE d.bill_id = #{billId} AND d.p_id = #{goodsId}")
     List<LotDTO> getLotList(@Param("billId") int billId, @Param("goodsId") int goodsId, @Param("account") String account);
 }

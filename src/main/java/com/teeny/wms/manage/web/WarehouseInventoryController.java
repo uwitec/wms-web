@@ -15,7 +15,7 @@ import java.util.List;
 
 /**
  * Created by lilei on 2017/7/19.
- *仓库初盘
+ * 仓库初盘
  */
 @Controller
 public class WarehouseInventoryController {
@@ -28,8 +28,9 @@ public class WarehouseInventoryController {
     @ResponseBody
     @RequestMapping(value = "/api/warehouseFirst/getList/{pdType}/{saId}/{areaId}", method = RequestMethod.GET)
     public BaseEntity<List<StroePdListDTO>> getList(@PathVariable("pdType") String pdType, @PathVariable("saId") int saId,
-                                                    @PathVariable("areaId") int areaId, @RequestHeader("account") String account, @RequestHeader("sId") int sId) {
-        return inventoryService.getStroeList(pdType, saId, areaId, account, 4,10, sId);
+                                                    @PathVariable("areaId") int areaId, @RequestHeader("account") String account,
+                                                    @RequestHeader("sId") int sId) {
+        return inventoryService.getStroeList(pdType, saId, areaId, account, 4, 10, sId);
     }
 
     //获取库区
