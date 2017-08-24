@@ -28,7 +28,7 @@ public class TransferringOrderController {
 
     //返回商品详情list
     @ResponseBody
-    @RequestMapping(value = "/api/transfer/list/{billNo}/{goodsName}/{s_inid}/{s_outid}/{sa_outid}/{sa_outid}/{l_inid}/{l_outid}", method = RequestMethod.GET)
+    @RequestMapping(value = "/api/transfer/list/{billNo}", method = RequestMethod.GET)
     public BaseEntity<List<TransferListDTO>> getTranList(Model model, @PathVariable("billNo") String billNo,
                                         @RequestHeader("account") String account) {
         return transferService.getTransferList(billNo, account);
