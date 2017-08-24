@@ -55,7 +55,7 @@ public class InventoryServiceImpl implements InventoryService {
                 pdBillRepository.completeWithGoodsDetailId(ids.get(0), account);
             }
         }
-        return new BaseEntity<String>("");
+        return new BaseEntity<String>();
     }
 
 
@@ -74,7 +74,7 @@ public class InventoryServiceImpl implements InventoryService {
             }
         }
 
-        return new BaseEntity<String>("");
+        return new BaseEntity<String>();
     }
 
     /////////////////////仓库盘点//////////////////////////////////////////
@@ -118,7 +118,7 @@ public class InventoryServiceImpl implements InventoryService {
         for (Integer id : ids) {
             pdBillRepository.updateStatus(id, sId, account);
         }
-        return new BaseEntity<String>("");
+        return new BaseEntity<String>();
     }
 
     @Override
@@ -152,7 +152,7 @@ public class InventoryServiceImpl implements InventoryService {
     @Override
     public BaseEntity<String> addProduct(AddProductDTO dto, String account) {
         pdBillRepository.addProduct(dto.getpId(), dto.getLotNo(), dto.getLocationCode(), dto.getAmount(), dto.getValidateDate());
-        return new BaseEntity<String>("");
+        return new BaseEntity<String>();
     }
 
     /*-----------------------------------------------------Common---------------------------------------------*/

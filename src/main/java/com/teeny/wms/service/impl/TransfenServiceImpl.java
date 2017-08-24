@@ -29,7 +29,7 @@ public class TransfenServiceImpl implements TransferService {
 
     @Override
     public BaseEntity<String> updateAll(List<Integer> ids, String account) {
-        if (ids.size()>0) {
+        if (ids.size() > 0) {
             for (Integer id : ids) {
                 tranBillRepository.updateOne(id, account);
             }
@@ -37,7 +37,7 @@ public class TransfenServiceImpl implements TransferService {
             if (count == 0) {
                 tranBillRepository.updateBillStatusBySmbId(ids.get(0), account);
             }
-            return new BaseEntity<String>("");
+            return new BaseEntity<String>();
         }
         return null;
     }
@@ -49,7 +49,7 @@ public class TransfenServiceImpl implements TransferService {
         if (count == 0) {
             tranBillRepository.updateBillStatusBySmbId(id, account);
         }
-        return new BaseEntity<String>("");
+        return new BaseEntity<String>();
     }
 
     @Override
@@ -63,7 +63,7 @@ public class TransfenServiceImpl implements TransferService {
         if (count == 0) {
             tranBillRepository.updateBillStatusBySmbId(putawayAddDTO.getId(), account);
         }
-        return new BaseEntity<String>("");
+        return new BaseEntity<String>();
     }
 
 }

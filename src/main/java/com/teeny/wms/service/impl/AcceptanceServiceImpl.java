@@ -60,7 +60,7 @@ public class AcceptanceServiceImpl implements AcceptanceService {
     public BaseEntity<String> updateGoodsByOrderId(int billId, String account) {
         recBillRepository.updateGoodsByOrderId(billId, account);
         recBillRepository.updateBillPdaStatus(billId, 2, account);
-        return new BaseEntity<String>("");
+        return new BaseEntity<String>();
 }
 
     @Override
@@ -76,7 +76,7 @@ public class AcceptanceServiceImpl implements AcceptanceService {
         }
 
         recBillRepository.updateGoodsByGoodsId(recUpdateDTO.getId(), account);
-        return new BaseEntity<String>("");
+        return new BaseEntity<String>();
     }
 
 
@@ -88,6 +88,6 @@ public class AcceptanceServiceImpl implements AcceptanceService {
         if (count == 0) {
             recBillRepository.updateBillByGoodsId(id, account);
         }
-        return new BaseEntity<String>("");
+        return new BaseEntity<String>();
     }
 }

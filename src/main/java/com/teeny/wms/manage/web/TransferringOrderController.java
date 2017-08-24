@@ -8,7 +8,6 @@ import com.teeny.wms.service.CommonService;
 import com.teeny.wms.service.TransferService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -29,15 +28,14 @@ public class TransferringOrderController {
     //返回商品详情list
     @ResponseBody
     @RequestMapping(value = "/api/transfer/list/{billNo}", method = RequestMethod.GET)
-    public BaseEntity<List<TransferListDTO>> getTranList(Model model, @PathVariable("billNo") String billNo,
-                                        @RequestHeader("account") String account) {
+    public BaseEntity<List<TransferListDTO>> getTranList(@PathVariable("billNo") String billNo,  @RequestHeader("account") String account) {
         return transferService.getTransferList(billNo, account);
     }
 
     //获取仓库
     @ResponseBody
     @RequestMapping(value = "/api/transfer/warehouseList", method = RequestMethod.GET)
-    public BaseEntity<List<CommonDTO>> getwarehouseList(@RequestHeader("account") String account) {
+    public BaseEntity<List<CommonDTO>> getWarehouseList(@RequestHeader("account") String account) {
         return commonService.getWarehouseList(account);
     }
 
@@ -59,7 +57,7 @@ public class TransferringOrderController {
     //完成
     @ResponseBody
     @RequestMapping(value = "/api/transfer/updateAll", method = RequestMethod.POST)
-    public BaseEntity<String> updateAll(@PathVariable("ids") List<Integer> ids, @RequestHeader("account") String account) {
+    public BaseEntity<String> updateAll(@RequestBody List<Integer> ids, @RequestHeader("account") String account) {
         return transferService.updateAll(ids, account);
     }
 

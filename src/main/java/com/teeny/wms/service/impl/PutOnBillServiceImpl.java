@@ -43,7 +43,7 @@ public class PutOnBillServiceImpl implements PutOnBillService {
         if (count == 0) {
             putOnBillRepository.updatePutOnBillDBySmbId(ids.get(0), account);
         }
-        return new BaseEntity<String>("");
+        return new BaseEntity<String>();
     }
 
     @Override
@@ -74,7 +74,7 @@ public class PutOnBillServiceImpl implements PutOnBillService {
         if (count == 0) {
             putOnBillRepository.updatePutBySmbId(putawayAddDTO.getId(), account);
         }
-        return new BaseEntity<String>("");
+        return new BaseEntity<String>();
     }
 
 }
