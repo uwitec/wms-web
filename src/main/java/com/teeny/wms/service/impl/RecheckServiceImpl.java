@@ -25,17 +25,33 @@ public class RecheckServiceImpl implements RecheckService {
     }
 
     @Override
-    public BaseEntity<ReviewDTO> getWarehouseReview(String account, int billNo) {
+    public BaseEntity<ReviewDTO> getWarehouseReview(String account, String billNo) {
         ReviewDTO reviewDTO = checkBillRepository.getIfoByBillNo(billNo, account);
         //获取补货订单数
         int replenishmentCount = checkBillRepository.getReplenishmentCount(billNo, account);
 
         //获取整货数量
-        int wholeCount = checkBillRepository.getCountByType(1, billNo, account);
+        int count1 = checkBillRepository.countById(1,billNo, account);
+        float wholeCount,pxCount,packCount;
+        if (count1!=0){
+            wholeCount = checkBillRepository.getCountByType(1, billNo, account);
+        }else {
+            wholeCount=0;
+        }
         //获取拼箱数量
-        int pxCount = checkBillRepository.getCountByType(2, billNo, account);
+        int count2 = checkBillRepository.countById(2,billNo, account);
+        if (count2 !=0) {
+            pxCount = checkBillRepository.getCountByType(2, billNo, account);
+        }else {
+            pxCount = 0;
+        }
         //获取打包数量
-        int packCount = checkBillRepository.getCountByType(3, billNo, account);
+        int count3 = checkBillRepository.countById(3,billNo, account);
+        if (count3 != 0) {
+            packCount = checkBillRepository.getCountByType(3, billNo, account);
+        }else {
+            packCount = 0;
+        }
         reviewDTO.setWholeQuantity(wholeCount);
         reviewDTO.setPackCount(packCount);
         reviewDTO.setPxCount(pxCount);

@@ -1,6 +1,7 @@
 package com.teeny.wms.core.repository;
 
 import com.teeny.wms.dto.*;
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
@@ -51,7 +52,7 @@ public interface PdBillRepository {
 
     ///////////////单品盘点///////////////////////////
 
-    List<PdListDTO> getProductsInventoryList(@Param("product") String product, @Param("location") String location, @Param("sId") int sId, @Param("account") String account);
+    List<PdListDTO> getProductsInventoryList(@Param("sId") int sId, @Param("account") String account);
 
     //单品盘点获取数量
     //int countProductInventory(@Param("product") String product, @Param("location") String location, @Param("sId") int sId ,@Param("account") String account);
@@ -81,4 +82,10 @@ public interface PdBillRepository {
     //获取批次
     @Select("SELECT CONVERT(varchar(100), d.Validdate, 23) AS validateDate, d.Batchno AS lotNo, d.EligibleQty AS count FROM ${account}.dbo.pda_pdBill_D d WHERE d.bill_id = #{billId} AND d.p_id = #{goodsId}")
     List<LotDTO> getLotList(@Param("billId") int billId, @Param("goodsId") int goodsId, @Param("account") String account);
+
+    @Select("SELECT d.smb_id AS id FROM ${account}.dbo.pda_pdBill_D d WHERE d.p_id=(SELECT d1.p_id FROM ${account}.dbo.pda_pdBill_D d1 WHERE d1.smb_id=#{id}) AND d.bill_id=(SELECT d2.bill_id FROM ${account}.dbo.pda_pdBill_D d2 WHERE d2.smb_id=#{id})")
+    List<Integer> getIdsBySmbId(@Param("id") int id, @Param("account") String account);
+
+    @Delete("DELETE FROM ${account}.dbo.pda_pdBill_D WHERE smb_id=#{id}")
+    void deleteBySmbId(@Param("id") Integer id, @Param("account") String account);
 }

@@ -23,14 +23,15 @@
             c.name       AS manufacturer,
             d.Batchno    AS lotNo,
             p.name       AS goodsName,
-            p.specification   AS specification,
+            p.standard   AS specification,
             d.Validdate  AS validityDate,
             p.makearea   AS produceArea,
             d.DealStates AS status
         FROM ${account}.dbo.pda_RecBill_D d
+            LEFT JOIN ${account}.dbo.pda_RecBill b ON b.billid=d.bill_id
             LEFT JOIN ${account}.dbo.pda_Products p ON d.p_id = p.p_id
             LEFT JOIN ${account}.dbo.pda_clients c ON c.c_id = d.Supplier_id
-        WHERE d.bill_id = #{orderId}
+        WHERE b.billnumber = #{orderId}
     </select>
 
     <insert id="addData">
@@ -55,5 +56,13 @@
             FROM ${account}.dbo.pda_RecBill_D d
             WHERE d.smb_id = #{id}
     </insert>
+
+    <select id="getOrderBillWithUnitId" resultType="com.teeny.wms.dto.CommonDTO">
+        SELECT billid AS id, billnumber AS name
+        FROM ${account}.dbo.pda_RecBill WHERE c_id=#{unitId}
+        <if test="sId != 0">
+            AND s_id=#{sId}
+        </if>
+    </select>
 
 </mapper>

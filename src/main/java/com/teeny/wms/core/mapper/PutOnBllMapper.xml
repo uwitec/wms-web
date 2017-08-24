@@ -16,11 +16,15 @@
     </select>
 
 
-    <select id="getGoodsDetailList" resultType="com.teeny.wms.dto.PutawayDTO">
-      SELECT d.smb_id AS id, d.DealStates AS status, l.loc_name AS location, p.name AS goodsName, d.Batchno AS lotNo, d.MakeDate AS produceDate, p.unit1Name AS unit, d.EligibleQty AS amount, p.specification, p.Factory AS manufacturers FROM #{account}.dbo.pda_PutOnBill_D d
-        LEFT JOIN #{account}.dbo.pda_PutOnBill b ON d.bill_id=b.billid
-        LEFT JOIN #{account}.dbo.pda_location l ON l.l_id=d.Location_id
-        WHERE b.billnumber=#{orderNoId} AND d.S_id=#{sId}
+    <select id="getGoodsDetailList" parameterType="string" resultType="com.teeny.wms.dto.PutawayDTO">
+      SELECT d.smb_id AS id, d.DealStates AS status, l.loc_name AS location, p.name AS goodsName, d.Batchno AS lotNo, d.MakeDate AS produceDate, p.unit1Name AS unit, d.EligibleQty AS amount, p.standard AS specification, p.Factory AS manufacturers FROM ${account}.dbo.pda_PutOnBill_D d
+        LEFT JOIN ${account}.dbo.pda_PutOnBill b ON d.bill_id=b.billid
+        LEFT JOIN ${account}.dbo.pda_location l ON l.l_id=d.Location_id
+        LEFT JOIN ${account}.dbo.pda_Products p ON p.p_id=d.p_id
+        WHERE b.billnumber=#{orderNoId}
+        <if test="sId !=0 ">
+            AND d.S_id=#{sId}
+        </if>
     </select>
 
 
@@ -64,7 +68,9 @@
 
     <insert id="copyDataByParam">
         INSERT INTO ${account}.dbo.pda_PutOnBill_D (bill_id, p_id, MakeDate, Validdate, Batchno, EligibleQty, TaxPrice, TaxTotal, CostPrice, CostTotal, S_id, Location_id, Supplier_id, InstoreTime, LineSort, DealStates, pdastates)
-                SELECT d.bill_id,d.p_id,d.MakeDate,d.Validdate,d.Batchno,#{amount},d.TaxPrice,d.TaxTotal,d.CostPrice,d.CostTotal,d.S_id,#{locationId},d.Supplier_id,d.InstoreTime,d.LineSort,1,1 FROM ${account}.dbo.pda_PutOnBill_D d WHERE d.smb_id=#{id}
+            SELECT d.bill_id,d.p_id,d.MakeDate,d.Validdate,d.Batchno,#{amount},d.TaxPrice,d.TaxTotal,d.CostPrice,d.CostTotal,
+                d.S_id,isnull((SELECT l.l_id FROM ${account}.dbo.pda_location l WHERE l.loc_code=#{locationCode}),0),d.Supplier_id,d.InstoreTime,d.LineSort,1,1
+            FROM ${account}.dbo.pda_PutOnBill_D d WHERE d.smb_id=#{id}
     </insert>
 
 </mapper>

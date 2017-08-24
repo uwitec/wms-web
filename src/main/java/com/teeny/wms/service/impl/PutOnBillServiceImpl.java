@@ -3,6 +3,7 @@ package com.teeny.wms.service.impl;
 import com.teeny.wms.core.domain.baseEntity.BaseEntity;
 import com.teeny.wms.core.repository.LocationRepository;
 import com.teeny.wms.core.repository.PutOnBillRepository;
+import com.teeny.wms.dto.LocationAndCountDTO;
 import com.teeny.wms.dto.Putaway.PutawayAddDTO;
 import com.teeny.wms.dto.PutawayDTO;
 import com.teeny.wms.service.PutOnBillService;
@@ -61,20 +62,42 @@ public class PutOnBillServiceImpl implements PutOnBillService {
     @Override
     public BaseEntity<String> updateOne(PutawayAddDTO putawayAddDTO, String account) {
 
-        putOnBillRepository.updateGoodsAmount(putawayAddDTO.getId(), putawayAddDTO.getAmount(), account);
-        for (PutawayAddDTO.Location location : putawayAddDTO.getLocations()) {
-            int locationId = locationRepository.findByLocationCode(location.getLocationCode(), account);
-            if (locationId == 0) {
-                //throw new Exception("");
-                // TODO: 2017/8/17  
+        List<Integer> ids = putOnBillRepository.getIdsBySmbId(putawayAddDTO.getId(),account);
+        if (putawayAddDTO.getLocations().size()>0) {
+            for (PutawayAddDTO.Location location : putawayAddDTO.getLocations()) {
+                putOnBillRepository.copyDataByParam(putawayAddDTO.getId(),location.getAmount(),location.getLocationCode(),account);
             }
-            putOnBillRepository.copyDataByParam(putawayAddDTO.getId(),location.getAmount(),locationId);
+            for (Integer i : ids) {
+                putOnBillRepository.deleteBySmbId(i, account);
+            }
         }
+
         int count = putOnBillRepository.countBySmbId(putawayAddDTO.getId(), account);
         if (count == 0) {
             putOnBillRepository.updatePutBySmbId(putawayAddDTO.getId(), account);
         }
+
+//        //putOnBillRepository.updateGoodsAmount(putawayAddDTO.getId(), putawayAddDTO.getAmount(), account);
+//        for (PutawayAddDTO.Location location : putawayAddDTO.getLocations()) {
+//            int locationId = locationRepository.findByLocationCode(location.getLocationCode(), account);
+//            if (locationId == 0) {
+//                //throw new Exception("");
+//                // TODO: 2017/8/17
+//            }
+//            putOnBillRepository.copyDataByParam(putawayAddDTO.getId(),location.getAmount(),locationId);
+//        }
+//        int count = putOnBillRepository.countBySmbId(putawayAddDTO.getId(), account);
+//        if (count == 0) {
+//            putOnBillRepository.updatePutBySmbId(putawayAddDTO.getId(), account);
+//        }
         return new BaseEntity<String>();
+    }
+
+    @Override
+    public BaseEntity<List<LocationAndCountDTO>> getLocationList(int id, String account) {
+        List<LocationAndCountDTO> list = putOnBillRepository.getLocationListById(id, account);
+
+        return new BaseEntity<List<LocationAndCountDTO>>(list);
     }
 
 }

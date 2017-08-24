@@ -16,9 +16,9 @@ public class ReviewDTO implements Serializable {
     private String status;//状态
     private int documentStatus; //单据状态
     private int replenishmentOrderCount; //补货订单数
-    private int wholeQuantity; //整货数量
-    private int pxCount; //拼箱件数
-    private int packCount; //打包件数
+    private float wholeQuantity; //整货数量
+    private float pxCount; //拼箱件数
+    private float packCount; //打包件数
     private String billRemark; //单据备注
 
     public String getBillNo() {
@@ -85,24 +85,28 @@ public class ReviewDTO implements Serializable {
         this.replenishmentOrderCount = replenishmentOrderCount;
     }
 
-    public int getWholeQuantity() {
+    public float getWholeQuantity() {
         return wholeQuantity;
     }
 
-    public void setWholeQuantity(int wholeQuantity) {
+    public void setWholeQuantity(float wholeQuantity) {
         this.wholeQuantity = wholeQuantity;
     }
 
-    public int getPxCount() {
+    public float getPxCount() {
         return pxCount;
     }
 
-    public void setPxCount(int pxCount) {
+    public void setPxCount(float pxCount) {
         this.pxCount = pxCount;
     }
 
-    public int getPackCount() {
+    public float getPackCount() {
         return packCount;
+    }
+
+    public void setPackCount(float packCount) {
+        this.packCount = packCount;
     }
 
     public void setPackCount(int packCount) {

@@ -35,7 +35,7 @@ public class AcceptanceServiceImpl implements AcceptanceService {
 
     @Override
     public BaseEntity<List<CommonDTO>> getOrderWithUnitId(int unitId, int sId, String account) {
-       return new BaseEntity<>(recBillRepository.getOrderBillWithUnitId(unitId, sId, account));
+       return new BaseEntity<List<CommonDTO>>(recBillRepository.getOrderBillWithUnitId(unitId, sId, account));
     }
 
     @Override
@@ -66,16 +66,22 @@ public class AcceptanceServiceImpl implements AcceptanceService {
     @Override
     public BaseEntity<String> updateGoodsByGoodsId(RecUpdateDTO recUpdateDTO, String account) {
 
-        for (AcceptAddDTO dto : recUpdateDTO.getParam()) {
-            recBillRepository.addData(recUpdateDTO.getId(), dto.getLotNo(), dto.getAmount(), dto.getPrice(), dto.getSerialNo(), dto.getValidityDate());
-        }
+        if (recUpdateDTO.getParam().size()>0) {
+            List<Integer> ids = recBillRepository.getIdsById(recUpdateDTO.getId(), account);
 
+            for (AcceptAddDTO dto : recUpdateDTO.getParam()) {
+                recBillRepository.addData(recUpdateDTO.getId(), dto.getLotNo(), dto.getAmount(), dto.getPrice(), dto.getSerialNo(), dto.getValidityDate());
+            }
+            for (Integer i : ids) {
+                recBillRepository.deleteById(i, account);
+            }
+        }
         int count = recBillRepository.countByDealType(recUpdateDTO.getId(), account);
         if (count == 0) {
             recBillRepository.updateBillByGoodsId(recUpdateDTO.getId(), account);
         }
 
-        recBillRepository.updateGoodsByGoodsId(recUpdateDTO.getId(), account);
+        //recBillRepository.updateGoodsByGoodsId(recUpdateDTO.getId(), account);
         return new BaseEntity<String>();
     }
 

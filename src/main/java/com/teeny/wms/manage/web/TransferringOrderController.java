@@ -2,6 +2,7 @@ package com.teeny.wms.manage.web;
 
 import com.teeny.wms.core.domain.baseEntity.BaseEntity;
 import com.teeny.wms.dto.CommonDTO;
+import com.teeny.wms.dto.LocationAndCountDTO;
 import com.teeny.wms.dto.Putaway.PutawayAddDTO;
 import com.teeny.wms.dto.TransferListDTO;
 import com.teeny.wms.service.CommonService;
@@ -42,7 +43,7 @@ public class TransferringOrderController {
     //获取库区
     @ResponseBody
     @RequestMapping(value = "/api/transfer/saList/{sid}", method = RequestMethod.GET)
-    public BaseEntity<List<CommonDTO>> getSaList(@PathVariable("id") int sid, @RequestHeader("account") String account) {
+    public BaseEntity<List<CommonDTO>> getSaList(@PathVariable("sid") int sid, @RequestHeader("account") String account) {
         return commonService.getSaListBysId(sid, account);
     }
 
@@ -66,6 +67,7 @@ public class TransferringOrderController {
     @ResponseBody
     @RequestMapping(value = "/api/transfer/updateOne", method = RequestMethod.POST)
     public BaseEntity<String> updateOne(@RequestParam("id") int id, @RequestHeader("account") String account) {
+        System.out.println(account);
         return transferService.updateOne(id, account);
     }
 
@@ -75,6 +77,14 @@ public class TransferringOrderController {
     public BaseEntity<String> update(@RequestBody PutawayAddDTO putawayAddDTO, @RequestHeader("account") String account) {
         return transferService.update(putawayAddDTO, account);
     }
+
+    //获取每个商品对应的货位
+    @ResponseBody
+    @RequestMapping(value = "/api/tranfer/getLocaitons/{id}", method = RequestMethod.GET)
+    public BaseEntity<List<LocationAndCountDTO>> getLocationAndAmount(@PathVariable("id") int id, @RequestHeader("account") String account) {
+        return transferService.getLocationListById(id, account);
+    }
+
 
 }
 

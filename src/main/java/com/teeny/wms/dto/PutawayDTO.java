@@ -11,12 +11,12 @@ public class PutawayDTO implements Serializable {
     private int id; //上架确认单ID
     private String location; //货位
     private String goodsName; //商品名
-    private String stauts; //状态 0:未处理,1:已上架
+    private String status; //状态 0:未处理,1:已上架
     private String lotNo; //批号
     private String produceDate; //生产日期
     private String unit; //单位
     private long amount; //数量
-    private String standard; //规格
+    private String specification; //规格
     private String manufacturers;// 厂家
 
 
@@ -77,12 +77,12 @@ public class PutawayDTO implements Serializable {
         this.amount = amount;
     }
 
-    public String getStandard() {
-        return standard;
+    public String getSpecification() {
+        return specification;
     }
 
-    public void setStandard(String standard) {
-        this.standard = standard;
+    public void setSpecification(String specification) {
+        this.specification = specification;
     }
 
     public String getManufacturers() {
@@ -93,11 +93,11 @@ public class PutawayDTO implements Serializable {
         this.manufacturers = manufacturers;
     }
 
-    public String getStauts() {
-        return stauts;
+    public String getStatus() {
+        return status;
     }
 
-    public void setStauts(String stauts) {
-        this.stauts = stauts;
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

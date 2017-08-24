@@ -63,16 +63,35 @@ public class InventoryServiceImpl implements InventoryService {
 
     @Override
     public BaseEntity<String> edit(PdEditDTO pdEditDTO, String account) {
-        pdBillRepository.completeOne(pdEditDTO.getId(), account);
+
         if (pdEditDTO.getParam().size() > 0) {
+            List<Integer> ids = pdBillRepository.getIdsBySmbId(pdEditDTO.getId(), account);
             for (PdEditParamDTO dto : pdEditDTO.getParam()) {
                 pdBillRepository.edit(pdEditDTO.getId(), dto.getLotNo(), dto.getCount(), dto.getValidateDate(), account);
             }
-            int count = pdBillRepository.countByType(pdEditDTO.getId(), account);
-            if (count == 0) {
-                pdBillRepository.completeWithGoodsDetailId(pdEditDTO.getId(), account);
+            for (Integer id : ids) {
+                pdBillRepository.deleteBySmbId(id, account);
             }
+        } else {
+            pdBillRepository.edit(pdEditDTO.getId(), "", 0, "", account);
+            pdBillRepository.deleteBySmbId(pdEditDTO.getId(), account);
         }
+
+        int count = pdBillRepository.countByType(pdEditDTO.getId(), account);
+        if (count == 0) {
+            pdBillRepository.completeWithGoodsDetailId(pdEditDTO.getId(), account);
+        }
+
+//        pdBillRepository.completeOne(pdEditDTO.getId(), account);
+//        if (pdEditDTO.getParam().size() > 0) {
+//            for (PdEditParamDTO dto : pdEditDTO.getParam()) {
+//                pdBillRepository.edit(pdEditDTO.getId(), dto.getLotNo(), dto.getCount(), dto.getValidateDate(), account);
+//            }
+//            int count = pdBillRepository.countByType(pdEditDTO.getId(), account);
+//            if (count == 0) {
+//                pdBillRepository.completeWithGoodsDetailId(pdEditDTO.getId(), account);
+//            }
+//        }
 
         return new BaseEntity<String>();
     }
@@ -102,8 +121,8 @@ public class InventoryServiceImpl implements InventoryService {
 
     ////////////////单品盘点/////////////////////////////////////
     @Override
-    public BaseEntity<List<PdListDTO>> getProductsInventoryList(String product, String location, int sId, String account) {
-        List<PdListDTO> data = pdBillRepository.getProductsInventoryList(product, location, sId, account);
+    public BaseEntity<List<PdListDTO>> getProductsInventoryList(int sId, String account) {
+        List<PdListDTO> data = pdBillRepository.getProductsInventoryList(sId, account);
         return new BaseEntity<>(data);
     }
 

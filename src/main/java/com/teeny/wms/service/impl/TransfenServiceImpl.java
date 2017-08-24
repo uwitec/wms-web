@@ -2,6 +2,7 @@ package com.teeny.wms.service.impl;
 
 import com.teeny.wms.core.domain.baseEntity.BaseEntity;
 import com.teeny.wms.core.repository.TranBillRepository;
+import com.teeny.wms.dto.LocationAndCountDTO;
 import com.teeny.wms.dto.Putaway.PutawayAddDTO;
 import com.teeny.wms.dto.TransferListDTO;
 import com.teeny.wms.service.TransferService;
@@ -24,7 +25,7 @@ public class TransfenServiceImpl implements TransferService {
     @Override
     public BaseEntity<List<TransferListDTO>> getTransferList(String billNo, String account) {
         List<TransferListDTO> list = tranBillRepository.getTransferList(billNo, account);
-        return null;
+        return new BaseEntity<List<TransferListDTO>>(list);
     }
 
     @Override
@@ -55,15 +56,39 @@ public class TransfenServiceImpl implements TransferService {
     @Override
     public BaseEntity<String> update(PutawayAddDTO putawayAddDTO, String account) {
 
-        tranBillRepository.updateDetails(putawayAddDTO.getId(), putawayAddDTO.getAmount(), account);
-        for (PutawayAddDTO.Location location : putawayAddDTO.getLocations()) {
-            tranBillRepository.copyData(putawayAddDTO.getId(), location.getAmount(), location.getLocationCode());
+        List<Integer> ids = tranBillRepository.getIdsBySmbId(putawayAddDTO.getId(), account);
+        if (putawayAddDTO.getLocations().size()>0) {
+            for (PutawayAddDTO.Location loc : putawayAddDTO.getLocations()) {
+                tranBillRepository.copyData(putawayAddDTO.getId(),loc.getAmount(),loc.getLocationCode());
+            }
+            for (Integer i : ids) {
+                tranBillRepository.deleteById(i,account);
+            }
+        }else {
+            tranBillRepository.copyData(putawayAddDTO.getId(),0,"");
         }
         int count = tranBillRepository.countByDealstatus(putawayAddDTO.getId(), account);
         if (count == 0) {
             tranBillRepository.updateBillStatusBySmbId(putawayAddDTO.getId(), account);
         }
+
+//        //tranBillRepository.updateDetails(putawayAddDTO.getId(), putawayAddDTO.getAmount(), account);
+//        for (PutawayAddDTO.Location location : putawayAddDTO.getLocations()) {
+//            tranBillRepository.copyData(putawayAddDTO.getId(), location.getAmount(), location.getLocationCode());
+//        }
+//        int count = tranBillRepository.countByDealstatus(putawayAddDTO.getId(), account);
+//        if (count == 0) {
+//            tranBillRepository.updateBillStatusBySmbId(putawayAddDTO.getId(), account);
+//        }
         return new BaseEntity<String>();
+    }
+
+    @Override
+    public BaseEntity<List<LocationAndCountDTO>> getLocationListById(int id, String account) {
+
+        List<LocationAndCountDTO> list = tranBillRepository.getLocationById(id, account);
+
+        return new BaseEntity<List<LocationAndCountDTO>>(list);
     }
 
 }

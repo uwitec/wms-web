@@ -17,17 +17,19 @@
 
     <select id="getTransferList" resultType="com.teeny.wms.dto.TransferListDTO">
         SELECT  d.smb_id AS id,p.name AS goodsName, d.Batchno AS lotNo,
-            p.specification AS specification, p.Factory AS manufacturer,
+            p.standard AS specification, p.Factory AS manufacturer,
             p.unit1Name AS unit, d.quantity AS amount,
             d.Validdate AS validateDate, d.MakeDate AS productDate,
             p.barcode, b.sout_id AS exportWId, b.sa_outid AS exportSId,
             d.Location_id AS exportAId, b.sin_id AS importWId,
-            d.DealStates AS status,
+            d.DealStates AS status,p.serial_number AS number,l1.loc_name AS exportName,l2.loc_name AS importName,
             b.sin_id AS importWId, b.sa_inid AS importSId, d.location_id2 AS importAId
 
         FROM ${account}.dbo.pda_TranBill_D d
             LEFT JOIN ${account}.dbo.pda_Products p ON p.p_id=d.p_id
             LEFT JOIN ${account}.dbo.pda_TranBill b ON b.billid=d.bill_id
+            LEFT JOIN ${account}.dbo.pda_location l1 ON l1.l_id=d.Location_id
+            LEFT JOIN ${account}.dbo.pda_location l2 ON l2.l_id=d.location_id2
             WHERE b.billnumber = #{billNo}
     </select>
 

@@ -57,7 +57,7 @@ public class AcceptanceController {
 
     //单个完成
     @ResponseBody
-    @RequestMapping(value = "", method = RequestMethod.POST)
+    @RequestMapping(value = "/api/acceptance/updateOne", method = RequestMethod.POST)
     public BaseEntity<String> completeOne(@RequestParam("id") int id, @RequestHeader("account") String account){
         return acceptanceService.completeOne(id, account);
     }

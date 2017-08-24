@@ -19,7 +19,6 @@ import java.util.List;
 public interface RecBillRepository {
     int countByWarehousId(@Param("warehouseId") int warehouseId, @Param("account") String account);
 
-    @Select("SELECT billid AS id, billnumber AS name FROM ${account}.dbo.pda_RecBill WHERE c_id=#{unitId} AND s_id=#{sId}")
     List<CommonDTO> getOrderBillWithUnitId(@Param("unitId") int unitId, @Param("sId") int sId, @Param("account") String account);
 
 
@@ -56,4 +55,10 @@ public interface RecBillRepository {
 
     @Update("UPDATE ${account}.dbo.pda_RecBill SET pdastates=1,pdaWrTime=getdate() WHERE billid=(SELECT d.bill_id FROM ${account}.dbo.pda_RecBill_D d WHERE d.smb_id=#{id})")
     void updateBillByGoodsId(@Param("id") int id, @Param("account") String account);
+
+    @Select("SELECT d.smb_id FROM ${account}.dbo.pda_RecBill_D d WHERE d.bill_id=(SELECT d1.bill_id FROM ${account}.dbo.pda_RecBill_D d1 WHERE d1.smb_id=#{id}) AND d.p_id=(SELECT d2.p_id FROM ${account}.dbo.pda_RecBill_D d2 WHERE d2.smb_id=#{id})")
+    List<Integer> getIdsById(@Param("id") int id, @Param("account") String account);
+
+    @Select("DELECT FROM ${account}.dbo.pda_RecBill_D WHERE smb_id=#{id}")
+    void deleteById(@Param("id") Integer id,@Param("account") String account);
 }

@@ -1,6 +1,7 @@
 package com.teeny.wms.manage.web;
 
 import com.teeny.wms.core.domain.baseEntity.BaseEntity;
+import com.teeny.wms.dto.LocationAndCountDTO;
 import com.teeny.wms.dto.Putaway.PutawayAddDTO;
 import com.teeny.wms.dto.PutawayDTO;
 import com.teeny.wms.service.PutOnBillService;
@@ -44,22 +45,23 @@ public class PutawayController {
 //    }
 
     //查询
-    @RequestMapping(value = "/api/shelve/goodsDetailList/{orderNoId}", method = RequestMethod.POST)
-    public void getPutOnBill(@PathVariable("orderNoId") String orderNoId, @RequestHeader("account") String account, @RequestHeader("sId") int sId) {
-        BaseEntity<List<PutawayDTO>> data = putOnBillService.getGoodsDetailList(orderNoId, account, sId);
+    @RequestMapping(value = "/api/shelve/goodsDetailList/{orderNoId}", method = RequestMethod.GET)
+    @ResponseBody
+    public BaseEntity<List<PutawayDTO>> getPutOnBill(@PathVariable("orderNoId") String orderNoId, @RequestHeader("account") String account, @RequestHeader("sId") int sId) {
+        return putOnBillService.getGoodsDetailList(orderNoId, account, sId);
     }
 
     //快速上架
     @RequestMapping(value = "/api/shelve/all", method = RequestMethod.POST)
     @ResponseBody
-    public BaseEntity<String> putOnQuickly(@RequestParam("ids") List<Integer> ids, @RequestHeader("account") String account) {
+    public BaseEntity<String> putOnQuickly(@RequestBody List<Integer> ids, @RequestHeader("account") String account) {
         return putOnBillService.putOnBillQuickly(ids, account);
     }
 
     //单个上架
     @RequestMapping(value = "/api/shelve/single", method = RequestMethod.POST)
     @ResponseBody
-    public BaseEntity putOnWithOne(@RequestBody int goodsDetailId, @RequestHeader("account") String account) {
+    public BaseEntity putOnWithOne(@RequestParam("goodsDetailId") int goodsDetailId, @RequestHeader("account") String account) {
         putOnBillService.putOnBillWithOne(goodsDetailId, account);
         return new BaseEntity();
     }
@@ -68,6 +70,14 @@ public class PutawayController {
     @RequestMapping(value = "/api/shelve/update", method = RequestMethod.POST)
     public BaseEntity<String> updateByBdId(@RequestBody PutawayAddDTO putawayAddDTO, @RequestHeader("account") String account) {
         return putOnBillService.updateOne(putawayAddDTO, account);
+    }
+
+
+    //获取货位
+    @ResponseBody
+    @RequestMapping(value = "/api/shelve/locationList/{id}", method = RequestMethod.GET)
+    public BaseEntity<List<LocationAndCountDTO>> getLocationList(@PathVariable("id") int id, @RequestHeader("account") String account) {
+        return putOnBillService.getLocationList(id, account);
     }
 
 }

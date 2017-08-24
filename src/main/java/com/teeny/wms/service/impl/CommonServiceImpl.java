@@ -1,11 +1,9 @@
 package com.teeny.wms.service.impl;
 
 import com.teeny.wms.core.domain.baseEntity.BaseEntity;
-import com.teeny.wms.core.repository.AreaRepository;
-import com.teeny.wms.core.repository.LocationRepository;
-import com.teeny.wms.core.repository.StockAreaRepository;
-import com.teeny.wms.core.repository.StoragesRepository;
+import com.teeny.wms.core.repository.*;
 import com.teeny.wms.dto.CommonDTO;
+import com.teeny.wms.dto.TransferFilterDTO;
 import com.teeny.wms.service.CommonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

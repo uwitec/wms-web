@@ -10,7 +10,7 @@ public class TransferListDTO implements Serializable{
     private int id; //id
     private String goodsName; //商品名
     private String lotNo; //批号
-    private String standard; //规格
+    private String specification; //规格
     private String manufacturer; //厂家
     private String unit; //单位
     private int amount; //数量
@@ -18,6 +18,9 @@ public class TransferListDTO implements Serializable{
     private String productDate; //生产日期
     private String barcode;  //商品码
     private int status; //状态
+    private String number;
+    private String exportName;
+    private String importName;
 
     private int exportWId;         //调出仓库id
     private int exportSId;         //调出库区id
@@ -25,6 +28,30 @@ public class TransferListDTO implements Serializable{
     private int importWId;         //调入仓库id
     private int importSId;         //调入库区id
     private int importAId;         //调入货位id
+
+    public String getExportName() {
+        return exportName;
+    }
+
+    public void setExportName(String exportName) {
+        this.exportName = exportName;
+    }
+
+    public String getImportName() {
+        return importName;
+    }
+
+    public void setImportName(String importName) {
+        this.importName = importName;
+    }
+
+    public String getNumber() {
+        return number;
+    }
+
+    public void setNumber(String number) {
+        this.number = number;
+    }
 
     public int getId() {
         return id;
@@ -50,12 +77,12 @@ public class TransferListDTO implements Serializable{
         this.lotNo = lotNo;
     }
 
-    public String getStandard() {
-        return standard;
+    public String getSpecification() {
+        return specification;
     }
 
-    public void setStandard(String standard) {
-        this.standard = standard;
+    public void setSpecification(String specification) {
+        this.specification = specification;
     }
 
     public String getManufacturer() {
