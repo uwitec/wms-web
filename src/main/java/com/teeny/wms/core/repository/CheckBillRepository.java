@@ -33,7 +33,7 @@ public interface CheckBillRepository {
     @Select("SELECT b.billid AS id,b.billnumber AS documentNo, b.pdaInTime AS documentDate, CASE b.billstates WHEN 10 THEN '验收中' WHEN 13 THEN '已验收' ELSE '' END AS status FROM ${account}.dbo.pda_CheckBill b;")
     List<QueryDocumentDTO> getBill(@Param("account") String account);
 
-    @Update("UPDATE ${account}.dbo.pda_CheckBill SET pdastates = 1 WHERE billnumber = #{billNo}")
+    @Update("UPDATE ${account}.dbo.pda_CheckBill SET pdastates = 1,pdaReTime=getdate() WHERE billnumber = #{billNo}")
     void updateBillPdaStatus(@Param("billNo") String billNo, @Param("account") String account);
 
     @Select("SELECT count(*) AS total FROM ${account}.dbo.pda_CheckBill_B d LEFT JOIN ${account}.dbo.pda_CheckBill b ON b.billid =d.bill_id WHERE b.billnumber=#{billNo} AND d.PickType=#{type}")

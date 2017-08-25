@@ -46,4 +46,7 @@ public interface TranBillRepository {
 
     @Select("SELECT d.quantity,l.loc_code AS amount FROM ${account}.dbo.pda_TranBill_D d, ${account}.dbo.pda_location l WHERE d.Location_id=l.l_id AND d.smb_id=#{id} AND d.p_id=(SELECT d1.p_id FROM ${account}.dbo.pda_TranBill_D d1 WHERE d1.smb_id=#{id})")
     List<LocationAndCountDTO> getLocationById(@Param("id") int id,@Param("account") String account);
+
+    @Update("UPDATE ${account}.dbo.pda_TranBill SET pdaReTime=getdate(),pdastates=1 WHERE billnumber = #{billNo}")
+    void updateBill(@Param("billNo") String billNo,@Param("account") String account);
 }

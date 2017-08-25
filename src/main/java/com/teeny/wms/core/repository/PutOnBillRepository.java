@@ -60,7 +60,7 @@ public interface PutOnBillRepository {
     @Update("UPDATE ${account}.dbo.pda_PutOnBill SET pdastates=2, pdaWrTime=getdate() WHERE billid=(SELECT d.bill_id FROM ${account}.dbo.pda_PutOnBill_D d WHERE d.smb_id=#{id})")
     void updatePutBySmbId(@Param("id") int id, @Param("account") String account);
 
-    @Update("UPDATE ${account}.dbo.pda_PutOnBill SET pdaReTime = getdate(), pdastates=1 WHERE billid=#{orderNoId} AND s_id=#{sId}")
+    @Update("UPDATE ${account}.dbo.pda_PutOnBill SET pdaReTime = getdate(), pdastates=1 WHERE billid=#{orderNoId}")
     void uodateBillStatus(@Param("orderNoId") int orderNoId,@Param("account") String account,@Param("sId") int sId);
 
     //更新一个

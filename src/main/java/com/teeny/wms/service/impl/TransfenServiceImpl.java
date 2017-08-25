@@ -25,6 +25,7 @@ public class TransfenServiceImpl implements TransferService {
     @Override
     public BaseEntity<List<TransferListDTO>> getTransferList(String billNo, String account) {
         List<TransferListDTO> list = tranBillRepository.getTransferList(billNo, account);
+        tranBillRepository.updateBill(billNo, account);
         return new BaseEntity<List<TransferListDTO>>(list);
     }
 
