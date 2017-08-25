@@ -8,7 +8,6 @@ import com.teeny.wms.service.EmployeesService;
 import com.teeny.wms.service.RecheckService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -26,10 +25,10 @@ public class RecheckController {
     private RecheckService recheckService;
 
     /**
-     *出库复核
-     * @param model
+     * 出库复核
+     *
      * @param account 账套ID
-     * @param billNo 订单单号
+     * @param billNo  订单单号
      */
     @RequestMapping(value = "/api/recheck/exWarehouseReview/{billNo}", method = RequestMethod.GET)
     public BaseEntity<ReviewDTO> getWarehouseReview(@RequestHeader("account") String account, @PathVariable("billNo") String billNo) {
@@ -37,8 +36,8 @@ public class RecheckController {
     }
 
     @RequestMapping(value = "/api/reviewer", method = RequestMethod.GET)
-    public void getReviewer(Model model, @RequestHeader("account") String account) {
-        BaseEntity<List<CommonDTO>> data = employeesService.getReviewer(account);
+    public BaseEntity<List<CommonDTO>> getReviewer(@RequestHeader("account") String account) {
+        return employeesService.getReviewer(account);
     }
 
     @RequestMapping(value = "/api/recheck/completed", method = RequestMethod.POST)
