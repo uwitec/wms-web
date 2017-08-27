@@ -29,7 +29,7 @@ public interface PdBillRepository {
 
     List<StoreInventoryGoodsDTO> getStoreInventoryList(@Param("pdType") String pdType, @Param("saId") int saId, @Param("areaId") int areaId, @Param("account") String account, @Param("sId") int sId);
 
-    @Update({"UPDATE ${account}.dbo.pda_pdBill_D SET DealStates = 1, pdastates = 2 WHERE smb_id = #{goodsDetailId}"})
+    @Update({"UPDATE ${account}.dbo.pda_pdBill_D SET DealStates = 1 WHERE smb_id = #{goodsDetailId}"})
     void completeOne(@Param("goodsDetailId") int goodsDetailId, @Param("account") String account);
 
     //查询未盘点数
@@ -69,7 +69,7 @@ public interface PdBillRepository {
     ProductDetailsDTO getById(@Param("id") int id, @Param("account") String account);
 
     //盘点确定
-    @Update("UPDATE ${account}.dbo.pda_kcpdBill_D SET pdastates=1, DealStates=1 WHERE storehouse_id = #{id} AND ss_id=#{id}")
+    @Update("UPDATE ${account}.dbo.pda_kcpdBill_D SET pDealStates=1 WHERE storehouse_id = #{id} AND ss_id=#{id}")
     void updateStatus(@Param("id") int id, @Param("sId") int sId, @Param("account") String account);
 
     @Update("UPDATE ${account}.dbo.pda_kcpdBill_D  SET pdqty = #{count}, DealStates=1,pdastates=1 WHERE storehouse_id = #{id}")
