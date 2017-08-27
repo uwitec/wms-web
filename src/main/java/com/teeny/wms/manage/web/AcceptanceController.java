@@ -44,8 +44,8 @@ public class AcceptanceController {
 
     //一键完成
     @RequestMapping(value = "/api/acceptance/allCompete", method = RequestMethod.POST)
-    public BaseEntity<String> allCompeteByOrderId(@RequestParam("billId") int billId, @RequestHeader("account") String account) {
-        return acceptanceService.updateGoodsByOrderId(billId, account);
+    public BaseEntity<String> allCompeteByOrderId(@RequestBody List<Integer> ids, @RequestHeader("account") String account) {
+        return acceptanceService.updateGoodsByOrderId(ids, account);
     }
 
     //单个修改

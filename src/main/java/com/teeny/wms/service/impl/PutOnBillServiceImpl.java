@@ -1,11 +1,14 @@
 package com.teeny.wms.service.impl;
 
+import com.teeny.wms.config.WmsException;
 import com.teeny.wms.core.domain.baseEntity.BaseEntity;
 import com.teeny.wms.core.repository.LocationRepository;
 import com.teeny.wms.core.repository.PutOnBillRepository;
+import com.teeny.wms.dto.CommonDTO;
 import com.teeny.wms.dto.LocationAndCountDTO;
 import com.teeny.wms.dto.Putaway.PutawayAddDTO;
 import com.teeny.wms.dto.PutawayDTO;
+import com.teeny.wms.service.CommonService;
 import com.teeny.wms.service.PutOnBillService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,6 +28,8 @@ public class PutOnBillServiceImpl implements PutOnBillService {
     private PutOnBillRepository putOnBillRepository;
     @Autowired
     private LocationRepository locationRepository;
+    @Autowired
+    private CommonService commonService;
 
     @Override
     public BaseEntity<List<PutawayDTO>> getGoodsDetailList(String orderNoId, String account, int sId) {
@@ -62,10 +67,18 @@ public class PutOnBillServiceImpl implements PutOnBillService {
     @Override
     public BaseEntity<String> updateOne(PutawayAddDTO putawayAddDTO, String account) {
 
-        List<Integer> ids = putOnBillRepository.getIdsBySmbId(putawayAddDTO.getId(),account);
+        List<Integer> ids = putOnBillRepository.getIdsByOriginalId(putawayAddDTO.getId(),account);
+
         if (putawayAddDTO.getLocations().size()>0) {
             for (PutawayAddDTO.Location location : putawayAddDTO.getLocations()) {
-                putOnBillRepository.copyDataByParam(putawayAddDTO.getId(),location.getAmount(),location.getLocationCode(),account);
+                int locationId = commonService.getLocationIdByCode(location.getLocationCode(), account);
+                if (locationId==0) {
+                    BaseEntity<String> baseEntity = new BaseEntity<String>();
+                    baseEntity.setMsg("找不此货位!");
+                    baseEntity.setResult(1);
+                    throw new WmsException(baseEntity);
+                }
+                putOnBillRepository.copyDataByParam(putawayAddDTO.getSmbId(),location.getAmount(),locationId,account);
             }
             for (Integer i : ids) {
                 putOnBillRepository.deleteBySmbId(i, account);
@@ -76,28 +89,33 @@ public class PutOnBillServiceImpl implements PutOnBillService {
         if (count == 0) {
             putOnBillRepository.updatePutBySmbId(putawayAddDTO.getId(), account);
         }
-
-//        //putOnBillRepository.updateGoodsAmount(putawayAddDTO.getId(), putawayAddDTO.getAmount(), account);
-//        for (PutawayAddDTO.Location location : putawayAddDTO.getLocations()) {
-//            int locationId = locationRepository.findByLocationCode(location.getLocationCode(), account);
-//            if (locationId == 0) {
-//                //throw new Exception("");
-//                // TODO: 2017/8/17
-//            }
-//            putOnBillRepository.copyDataByParam(putawayAddDTO.getId(),location.getAmount(),locationId);
-//        }
-//        int count = putOnBillRepository.countBySmbId(putawayAddDTO.getId(), account);
-//        if (count == 0) {
-//            putOnBillRepository.updatePutBySmbId(putawayAddDTO.getId(), account);
-//        }
         return new BaseEntity<String>();
     }
 
     @Override
     public BaseEntity<List<LocationAndCountDTO>> getLocationList(int id, String account) {
         List<LocationAndCountDTO> list = putOnBillRepository.getLocationListById(id, account);
-
         return new BaseEntity<List<LocationAndCountDTO>>(list);
+    }
+
+    @Override
+    public BaseEntity<List<CommonDTO>> getBills(int saId, String account) {
+
+        List<CommonDTO> list = putOnBillRepository.getBills(saId, account);
+
+        return new BaseEntity<List<CommonDTO>>(list);
+    }
+
+    @Override
+    public BaseEntity<List<CommonDTO>> getSaList(int sId, String account) {
+        List<CommonDTO> list = commonService.getSaListBysId(sId, account).getData();
+        return new BaseEntity<List<CommonDTO>>(list);
+    }
+
+    @Override
+    public BaseEntity<List<CommonDTO>> getLocations(int sId, String account) {
+        List<CommonDTO> list = putOnBillRepository.getLocations(sId, account);
+        return new BaseEntity<List<CommonDTO>>(list);
     }
 
 }

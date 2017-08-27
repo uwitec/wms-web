@@ -21,7 +21,7 @@
             p.unit1Name AS unit, d.quantity AS amount,
             d.Validdate AS validateDate, d.MakeDate AS productDate,
             p.barcode, b.sout_id AS exportWId, b.sa_outid AS exportSId,
-            d.Location_id AS exportAId, b.sin_id AS importWId,
+            d.Location_id AS exportAId, b.sin_id AS importWId, b.billnumber AS billNo,
             d.DealStates AS status,p.serial_number AS number,l1.loc_name AS exportName,l2.loc_name AS importName,
             b.sin_id AS importWId, b.sa_inid AS importSId, d.location_id2 AS importAId
 
@@ -31,6 +31,19 @@
             LEFT JOIN ${account}.dbo.pda_location l1 ON l1.l_id=d.Location_id
             LEFT JOIN ${account}.dbo.pda_location l2 ON l2.l_id=d.location_id2
             WHERE b.billnumber = #{billNo}
+    </select>
+
+
+    <select id="getBills" resultType="com.teeny.wms.dto.CommonDTO">
+        SELECT b.billid AS id,b.billnumber as name FROM ${account}.dbo.pda_TranBill b
+        <where>
+            <if test="saId!=0">
+                b.sa_inid = #{saId}
+            </if>
+            <if test="sId!=0">
+                b.sin_id = #{sId}
+            </if>
+        </where>
     </select>
 
 </mapper>

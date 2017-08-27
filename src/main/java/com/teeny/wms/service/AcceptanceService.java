@@ -17,7 +17,7 @@ public interface AcceptanceService {
 
     BaseEntity<OrderDetailDTO> getOrderDetailsWithOrderId(String account, int orderId);
 
-    BaseEntity<String> updateGoodsByOrderId(int billId, String account);
+    BaseEntity<String> updateGoodsByOrderId(List<Integer> ids, String account);
 
     BaseEntity<String> updateGoodsByGoodsId(RecUpdateDTO recUpdateDTO, String account);
 

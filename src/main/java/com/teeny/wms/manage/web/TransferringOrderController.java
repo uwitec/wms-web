@@ -26,6 +26,14 @@ public class TransferringOrderController {
     private CommonService commonService;
 
 
+
+    //获取单据
+    @ResponseBody
+    @RequestMapping(value = "/api/transfer/billList/{sId}/{saId}", method = RequestMethod.GET)
+    public BaseEntity<List<CommonDTO>> getBills(@PathVariable("sId") int sId, @PathVariable("saId") int saId, @RequestHeader("account") String account){
+        return transferService.getBills(saId, sId, account);
+    }
+
     //返回商品详情list
     @ResponseBody
     @RequestMapping(value = "/api/transfer/list/{billNo}", method = RequestMethod.GET)

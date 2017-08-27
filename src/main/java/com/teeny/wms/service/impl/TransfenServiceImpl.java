@@ -2,6 +2,7 @@ package com.teeny.wms.service.impl;
 
 import com.teeny.wms.core.domain.baseEntity.BaseEntity;
 import com.teeny.wms.core.repository.TranBillRepository;
+import com.teeny.wms.dto.CommonDTO;
 import com.teeny.wms.dto.LocationAndCountDTO;
 import com.teeny.wms.dto.Putaway.PutawayAddDTO;
 import com.teeny.wms.dto.TransferListDTO;
@@ -90,6 +91,12 @@ public class TransfenServiceImpl implements TransferService {
         List<LocationAndCountDTO> list = tranBillRepository.getLocationById(id, account);
 
         return new BaseEntity<List<LocationAndCountDTO>>(list);
+    }
+
+    @Override
+    public BaseEntity<List<CommonDTO>> getBills(int saId, int sId, String account) {
+        List<CommonDTO> list = tranBillRepository.getBills(saId, sId, account);
+        return new BaseEntity<List<CommonDTO>>(list);
     }
 
 }

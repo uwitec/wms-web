@@ -233,7 +233,8 @@ pdaInTime DATETIME NOT NULL DEFAULT 0,--提供时间
 pdaReTime DATETIME NOT NULL DEFAULT 0,--读取时间
 pdaWrTime DATETIME NOT NULL DEFAULT 0,--回写时间
 remark   VARCHAR(200)  NOT NULL DEFAULT '',--备注 0803
-diff_remark  VARCHAR(200)  NOT NULL DEFAULT ''       --差异备注0803
+diff_remark  VARCHAR(200)  NOT NULL DEFAULT '',       --差异备注0803
+receiver INT
 ) ON [PRIMARY]
 end
 GO

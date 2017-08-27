@@ -25,6 +25,7 @@
         <if test="sId !=0 ">
             AND d.S_id=#{sId}
         </if>
+        ORDER BY l.loc_name ASC
     </select>
 
 
@@ -67,10 +68,30 @@
     </update>
 
     <insert id="copyDataByParam">
-        INSERT INTO ${account}.dbo.pda_PutOnBill_D (bill_id, p_id, MakeDate, Validdate, Batchno, EligibleQty, TaxPrice, TaxTotal, CostPrice, CostTotal, S_id, Location_id, Supplier_id, InstoreTime, LineSort, DealStates, pdastates)
+        INSERT INTO ${account}.dbo.pda_PutOnBill_D (bill_id, p_id, MakeDate, Validdate, Batchno, EligibleQty, TaxPrice, TaxTotal, CostPrice, CostTotal, S_id, Location_id, Supplier_id, InstoreTime, LineSort, DealStates, pdastates, original_id)
             SELECT d.bill_id,d.p_id,d.MakeDate,d.Validdate,d.Batchno,#{amount},d.TaxPrice,d.TaxTotal,d.CostPrice,d.CostTotal,
-                d.S_id,isnull((SELECT l.l_id FROM ${account}.dbo.pda_location l WHERE l.loc_code=#{locationCode}),0),d.Supplier_id,d.InstoreTime,d.LineSort,1,1
+                d.S_id,#{locationId},d.Supplier_id,d.InstoreTime,d.LineSort,1,1,d.original_id
             FROM ${account}.dbo.pda_PutOnBill_D d WHERE d.smb_id=#{id}
     </insert>
+
+    <select id="getBills" resultType="com.teeny.wms.dto.CommonDTO">
+        SELECT b.billid AS id, b.billnumber AS name FROM pda_PutOnBill b
+        <where>
+            <if test="saId!=0">
+                b.sa_id=#{saId}
+            </if>
+        </where>
+    </select>
+
+
+    <select id="getLocations" resultType="com.teeny.wms.dto.CommonDTO">
+        SELECT DISTINCT l.l_id AS id, l.loc_name AS name
+        FROM ${account}.dbo.pda_PutOnBill_D d LEFT JOIN ${account}.dbo.pda_location l ON d.Location_id=l.l_id
+        <where>
+            <if test="sId != 0">
+                d.S_id=#{sId}
+            </if>
+        </where>
+    </select>
 
 </mapper>

@@ -7,6 +7,7 @@ import java.io.Serializable;
  */
 public class StoreInventoryGoodsDTO implements Serializable {
     private int id; //id
+    private int originalId;
     private int billId;       //盘点单id
     private int goodsId;       //商品id
     private String goodsName; //商品名
@@ -20,6 +21,14 @@ public class StoreInventoryGoodsDTO implements Serializable {
     private String locationCode;   //货位码
     private String goodsCode;      //商品码
 
+
+    public int getOriginalId() {
+        return originalId;
+    }
+
+    public void setOriginalId(int originalId) {
+        this.originalId = originalId;
+    }
 
     public int getId() {
         return id;

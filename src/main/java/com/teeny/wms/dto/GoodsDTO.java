@@ -8,6 +8,7 @@ import java.io.Serializable;
  */
 public class GoodsDTO implements Serializable {
     private int id;//id 1
+    private String billNo;
     private String goodsName; //商品名 1
     private String lotNo; //批号 1
     private String specification; //规格 1
@@ -19,6 +20,14 @@ public class GoodsDTO implements Serializable {
     private String serialNo; //序号
     private int status;
 
+
+    public String getBillNo() {
+        return billNo;
+    }
+
+    public void setBillNo(String billNo) {
+        this.billNo = billNo;
+    }
 
     public String getGoodsName() {
         return goodsName;

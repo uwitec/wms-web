@@ -1,6 +1,7 @@
 package com.teeny.wms.service;
 
 import com.teeny.wms.core.domain.baseEntity.BaseEntity;
+import com.teeny.wms.dto.CommonDTO;
 import com.teeny.wms.dto.LocationAndCountDTO;
 import com.teeny.wms.dto.Putaway.PutawayAddDTO;
 import com.teeny.wms.dto.PutawayDTO;
@@ -22,4 +23,10 @@ public interface PutOnBillService {
     BaseEntity<String> updateOne(PutawayAddDTO putawayAddDTO, String account);
 
     BaseEntity<List<LocationAndCountDTO>> getLocationList(int id, String account);
+
+    BaseEntity<List<CommonDTO>> getBills(int saId, String account);
+
+    BaseEntity<List<CommonDTO>> getSaList(int sId, String account);
+
+    BaseEntity<List<CommonDTO>> getLocations(int sId, String account);
 }

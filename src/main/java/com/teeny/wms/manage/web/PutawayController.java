@@ -1,6 +1,7 @@
 package com.teeny.wms.manage.web;
 
 import com.teeny.wms.core.domain.baseEntity.BaseEntity;
+import com.teeny.wms.dto.CommonDTO;
 import com.teeny.wms.dto.LocationAndCountDTO;
 import com.teeny.wms.dto.Putaway.PutawayAddDTO;
 import com.teeny.wms.dto.PutawayDTO;
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.crypto.interfaces.PBEKey;
 import java.util.List;
 
 
@@ -18,6 +20,7 @@ import java.util.List;
  */
 @Controller
 public class PutawayController {
+
 
     @Autowired
     private PutOnBillService putOnBillService;
@@ -43,6 +46,20 @@ public class PutawayController {
 //
 //        return null;
 //    }
+
+    //获取单号
+    @ResponseBody
+    @RequestMapping(value = "/api/shelve/billList/{saId}", method = RequestMethod.GET)
+    public BaseEntity<List<CommonDTO>> getBills(@PathVariable("saId") int saId, @RequestHeader("account") String account) {
+        return putOnBillService.getBills(saId, account);
+    }
+
+    //获取库区仓库下的库区
+    @ResponseBody
+    @RequestMapping(value = "/api/shelve/saList", method = RequestMethod.GET)
+    public BaseEntity<List<CommonDTO>> getSaList(@RequestHeader("account") String account, @RequestHeader("sId") int sId) {
+        return putOnBillService.getSaList(sId, account);
+    }
 
     //查询
     @RequestMapping(value = "/api/shelve/goodsDetailList/{orderNoId}", method = RequestMethod.GET)
@@ -73,11 +90,18 @@ public class PutawayController {
     }
 
 
-    //获取货位
+    //获取货位  详情里面的货位
     @ResponseBody
     @RequestMapping(value = "/api/shelve/locationList/{id}", method = RequestMethod.GET)
     public BaseEntity<List<LocationAndCountDTO>> getLocationList(@PathVariable("id") int id, @RequestHeader("account") String account) {
         return putOnBillService.getLocationList(id, account);
+    }
+
+    //获取上架单所有货位
+    @ResponseBody
+    @RequestMapping(value = "/api/shelve/locations", method = RequestMethod.GET)
+    public BaseEntity<List<CommonDTO>> getLocaions(@RequestHeader("account") String account, @RequestHeader("sId") int sId) {
+        return putOnBillService.getLocations(sId, account);
     }
 
 }

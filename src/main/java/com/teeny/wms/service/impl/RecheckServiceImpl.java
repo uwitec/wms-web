@@ -1,13 +1,18 @@
 package com.teeny.wms.service.impl;
 
+import com.teeny.wms.config.WmsException;
+import com.teeny.wms.core.domain.CheckBillB;
 import com.teeny.wms.core.domain.baseEntity.BaseEntity;
 import com.teeny.wms.core.repository.CheckBillRepository;
+import com.teeny.wms.dto.CommonDTO;
 import com.teeny.wms.dto.ReviewDTO;
 import com.teeny.wms.dto.ReviewUpdateDTO;
 import com.teeny.wms.service.RecheckService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 /**
  * Created by bao on 2017/7/27.
@@ -26,38 +31,45 @@ public class RecheckServiceImpl implements RecheckService {
 
     @Override
     public BaseEntity<ReviewDTO> getWarehouseReview(String account, String billNo) {
+
+        CheckBillB checkBillB = checkBillRepository.getByCode(billNo, account);
+        if (checkBillB==null) {
+            BaseEntity<String> baseEntity = new BaseEntity<String>();
+            baseEntity.setMsg(billNo+"不存在");
+            baseEntity.setResult(1);
+            baseEntity.setData("");
+            throw new WmsException(baseEntity);
+        }
+        if (checkBillB.getDealStates() == 1) {
+            BaseEntity<String> baseEntity1 = new BaseEntity<String>();
+            baseEntity1.setMsg(billNo+"已扫描!");
+            baseEntity1.setResult(1);
+            baseEntity1.setData("");
+            throw new WmsException(baseEntity1);
+        }
+        checkBillRepository.updateStatus(checkBillB.getSmbId(), account);
+
+        int count = checkBillRepository.countByStatus(checkBillB.getBillId(), account);
+        if (count==0) {
+            checkBillRepository.updateBillPdaStatus(checkBillB.getBillId(), account);
+        }
+
         ReviewDTO reviewDTO = checkBillRepository.getIfoByBillNo(billNo, account);
+
         //获取补货订单数
         int replenishmentCount = checkBillRepository.getReplenishmentCount(billNo, account);
 
-        //获取整货数量
-        int count1 = checkBillRepository.countById(1,billNo, account);
-        float wholeCount,pxCount,packCount;
-        if (count1!=0){
-            wholeCount = checkBillRepository.getCountByType(1, billNo, account);
-        }else {
-            wholeCount=0;
-        }
-        //获取拼箱数量
-        int count2 = checkBillRepository.countById(2,billNo, account);
-        if (count2 !=0) {
-            pxCount = checkBillRepository.getCountByType(2, billNo, account);
-        }else {
-            pxCount = 0;
-        }
-        //获取打包数量
-        int count3 = checkBillRepository.countById(3,billNo, account);
-        if (count3 != 0) {
-            packCount = checkBillRepository.getCountByType(3, billNo, account);
-        }else {
-            packCount = 0;
-        }
-        reviewDTO.setWholeQuantity(wholeCount);
-        reviewDTO.setPackCount(packCount);
-        reviewDTO.setPxCount(pxCount);
-
-        checkBillRepository.updateBillPdaStatus(billNo, account);
+        checkBillRepository.updateBillPdaStatus(checkBillB.getBillId(), account);
 
         return new BaseEntity<ReviewDTO>(reviewDTO);
     }
+
+    @Override
+    public BaseEntity<List<CommonDTO>> getBills(int sId, String account) {
+
+        List<CommonDTO> list = checkBillRepository.getBills(sId, account);
+
+        return new BaseEntity<List<CommonDTO>>(list);
+    }
+
 }

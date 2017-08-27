@@ -8,7 +8,9 @@ import java.util.List;
  */
 public class PdEditDTO implements Serializable {
 
-    private int id;
+    private int id;  //original_id
+
+    private int smbId; //smb_id 每条数据的id
 
     private List<PdEditParamDTO> param;
 
@@ -26,5 +28,13 @@ public class PdEditDTO implements Serializable {
 
     public void setParam(List<PdEditParamDTO> param) {
         this.param = param;
+    }
+
+    public int getSmbId() {
+        return smbId;
+    }
+
+    public void setSmbId(int smbId) {
+        this.smbId = smbId;
     }
 }

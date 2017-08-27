@@ -20,10 +20,13 @@ public class CheckBillB {
     private String pickNo;
     /*拣货人id,=pda_employees.e_id*/
     private int pickEmpId;
+    /*复核人id,=pda_employees.e_id*/
+    private int checkEmpId;
     /*处理状态，0 未处理, 1 PDA已扫到码 0531*/
     private int dealStates;
     /*交换状态 0提供 1pda已回写*/
     private int pdaStates;
+
 
     public int getSmbId() {
         return smbId;
@@ -79,6 +82,14 @@ public class CheckBillB {
 
     public void setPickEmpId(int pickEmpId) {
         this.pickEmpId = pickEmpId;
+    }
+
+    public int getCheckEmpId() {
+        return checkEmpId;
+    }
+
+    public void setCheckEmpId(int checkEmpId) {
+        this.checkEmpId = checkEmpId;
     }
 
     public int getDealStates() {

@@ -8,8 +8,17 @@ import java.util.List;
  */
 public class RecUpdateDTO implements Serializable {
 
-  private int id;
-  private List<AcceptAddDTO> param;
+    private int id;//original_id
+    private int smbId; //单据明细id
+    private List<AcceptAddDTO> param;
+
+    public int getSmbId() {
+        return smbId;
+    }
+
+    public void setSmbId(int smbId) {
+        this.smbId = smbId;
+    }
 
     public int getId() {
         return id;

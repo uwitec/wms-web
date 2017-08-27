@@ -15,6 +15,6 @@ public interface StockAreaRepository {
     @Select("SELECT s.sa_id AS id, s.name FROM ${account}.dbo.pda_stockArea s")
     List<CommonDTO> getSaList(@Param("account") String account);
 
-    @Select("SELECT s.sa_id AS id,name FROM ${account}.dbo.pda_stockArea s WHERE s.s_id = #{sid}")
-    List<CommonDTO> getSaListBySid(@Param("sid") int sid, @Param("account") String account);
+
+    List<CommonDTO> getSaListBySid(@Param("sId") int sId, @Param("account") String account);
 }

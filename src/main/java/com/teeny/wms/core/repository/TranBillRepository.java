@@ -1,5 +1,6 @@
 package com.teeny.wms.core.repository;
 
+import com.teeny.wms.dto.CommonDTO;
 import com.teeny.wms.dto.LocationAndCountDTO;
 import com.teeny.wms.dto.QueryDocumentDTO;
 import com.teeny.wms.dto.TransferListDTO;
@@ -49,4 +50,6 @@ public interface TranBillRepository {
 
     @Update("UPDATE ${account}.dbo.pda_TranBill SET pdaReTime=getdate(),pdastates=1 WHERE billnumber = #{billNo}")
     void updateBill(@Param("billNo") String billNo,@Param("account") String account);
+
+    List<CommonDTO> getBills(@Param("saId") int saId,@Param("sId") int sId,@Param("account") String account);
 }

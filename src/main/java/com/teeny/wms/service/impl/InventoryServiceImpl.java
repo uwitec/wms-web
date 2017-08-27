@@ -65,9 +65,10 @@ public class InventoryServiceImpl implements InventoryService {
     public BaseEntity<String> edit(PdEditDTO pdEditDTO, String account) {
 
         if (pdEditDTO.getParam().size() > 0) {
-            List<Integer> ids = pdBillRepository.getIdsBySmbId(pdEditDTO.getId(), account);
+            List<Integer> ids = pdBillRepository.getIdsByOriginalId(pdEditDTO.getId(), account);
+
             for (PdEditParamDTO dto : pdEditDTO.getParam()) {
-                pdBillRepository.edit(pdEditDTO.getId(), dto.getLotNo(), dto.getCount(), dto.getValidateDate(), account);
+                pdBillRepository.edit(pdEditDTO.getSmbId(), dto.getLotNo(), dto.getCount(), dto.getValidateDate(), account);
             }
             for (Integer id : ids) {
                 pdBillRepository.deleteBySmbId(id, account);
@@ -177,8 +178,8 @@ public class InventoryServiceImpl implements InventoryService {
     /*-----------------------------------------------------Common---------------------------------------------*/
 
     @Override
-    public BaseEntity<List<LotDTO>> getLotList(int billId, int goodsId, String account) {
-        List<LotDTO> data = pdBillRepository.getLotList(billId, goodsId, account);
+    public BaseEntity<List<LotDTO>> getLotList(int originalId, String account) {
+        List<LotDTO> data = pdBillRepository.getLotList(originalId, account);
         return new BaseEntity<>(data);
     }
 

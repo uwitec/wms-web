@@ -15,11 +15,43 @@ public class ReviewDTO implements Serializable {
     private String tempArea; //暂存区
     private String status;//状态
     private int documentStatus; //单据状态
-    private int replenishmentOrderCount; //补货订单数
-    private float wholeQuantity; //整货数量
-    private float pxCount; //拼箱件数
-    private float packCount; //打包件数
+    private Integer replenishmentOrderCount; //补货订单数
+    private Float wholeQuantity; //整货数量
+    private Float pxCount; //拼箱件数
+    private Float packCount; //打包件数
+
+    private Float wholeQuantityTotal; //整货数量
+    private Float pxCountTotal; //拼箱件数
+    private Float packCountTotal; //打包件数
+
+
+
     private String billRemark; //单据备注
+
+
+    public Float getWholeQuantityTotal() {
+        return wholeQuantityTotal;
+    }
+
+    public void setWholeQuantityTotal(Float wholeQuantityTotal) {
+        this.wholeQuantityTotal = wholeQuantityTotal;
+    }
+
+    public Float getPxCountTotal() {
+        return pxCountTotal;
+    }
+
+    public void setPxCountTotal(Float pxCountTotal) {
+        this.pxCountTotal = pxCountTotal;
+    }
+
+    public Float getPackCountTotal() {
+        return packCountTotal;
+    }
+
+    public void setPackCountTotal(Float packCountTotal) {
+        this.packCountTotal = packCountTotal;
+    }
 
     public String getBillNo() {
         return billNo;
@@ -77,39 +109,35 @@ public class ReviewDTO implements Serializable {
         this.documentStatus = documentStatus;
     }
 
-    public int getReplenishmentOrderCount() {
+    public Integer getReplenishmentOrderCount() {
         return replenishmentOrderCount;
     }
 
-    public void setReplenishmentOrderCount(int replenishmentOrderCount) {
+    public void setReplenishmentOrderCount(Integer replenishmentOrderCount) {
         this.replenishmentOrderCount = replenishmentOrderCount;
     }
 
-    public float getWholeQuantity() {
+    public Float getWholeQuantity() {
         return wholeQuantity;
     }
 
-    public void setWholeQuantity(float wholeQuantity) {
+    public void setWholeQuantity(Float wholeQuantity) {
         this.wholeQuantity = wholeQuantity;
     }
 
-    public float getPxCount() {
+    public Float getPxCount() {
         return pxCount;
     }
 
-    public void setPxCount(float pxCount) {
+    public void setPxCount(Float pxCount) {
         this.pxCount = pxCount;
     }
 
-    public float getPackCount() {
+    public Float getPackCount() {
         return packCount;
     }
 
-    public void setPackCount(float packCount) {
-        this.packCount = packCount;
-    }
-
-    public void setPackCount(int packCount) {
+    public void setPackCount(Float packCount) {
         this.packCount = packCount;
     }
 

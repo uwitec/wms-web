@@ -8,6 +8,7 @@ import java.io.Serializable;
 public class TransferListDTO implements Serializable{
 
     private int id; //id
+    private String billNo; //单据编号
     private String goodsName; //商品名
     private String lotNo; //批号
     private String specification; //规格
@@ -28,6 +29,14 @@ public class TransferListDTO implements Serializable{
     private int importWId;         //调入仓库id
     private int importSId;         //调入库区id
     private int importAId;         //调入货位id
+
+    public String getBillNo() {
+        return billNo;
+    }
+
+    public void setBillNo(String billNo) {
+        this.billNo = billNo;
+    }
 
     public String getExportName() {
         return exportName;

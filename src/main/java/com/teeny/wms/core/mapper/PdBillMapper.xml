@@ -91,6 +91,7 @@
         d.bill_id AS billId,
         d.p_id AS goodsId,
         p.name AS goodsName,
+        d.original_id AS originalId;
         l.loc_code AS location,
         d.EligibleQty AS countInBill,
         d.pdQty AS inventoryCount,
@@ -116,7 +117,7 @@
 
     <!--//复制数据-->
     <insert id="edit">
-        INSERT INTO ${account}.dbo.pda_pdBill_D (bill_id, p_id, MakeDate, EligibleQty, S_id, Location_id, Supplier_id, InstoreTime, billstates, Validdate, Batchno, pdQty, DealStates, pdastates)
+        INSERT INTO ${account}.dbo.pda_pdBill_D (bill_id, p_id, MakeDate, EligibleQty, S_id, Location_id, Supplier_id, InstoreTime, billstates, Validdate, Batchno, pdQty, DealStates, pdastates, original_id)
             SELECT
                 d.bill_id,
                 d.p_id,
@@ -131,7 +132,8 @@
                 #{lotNo},
                 #{count},
                 1,
-                2
+                2,
+                d.original_id
             FROM ${account}.dbo.pda_pdBill_D d
             WHERE d.smb_id = #{id}
     </insert>
@@ -161,7 +163,7 @@
             l.loc_name                              AS location,
             d.quantity                              AS repertoryQuantity,
             d.pdqty                                 AS realQuantity,
-            p.specification                              AS specification,
+            p.standard                              AS specification,
             p.unit1Name                             AS unit,
             CONVERT(VARCHAR (100), d.Validdate, 23) AS validateDate,
             CONVERT(VARCHAR (100), d.MakeDate, 23)  AS productDate,

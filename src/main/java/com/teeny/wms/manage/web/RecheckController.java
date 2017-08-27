@@ -3,7 +3,6 @@ package com.teeny.wms.manage.web;
 import com.teeny.wms.core.domain.baseEntity.BaseEntity;
 import com.teeny.wms.dto.CommonDTO;
 import com.teeny.wms.dto.ReviewDTO;
-import com.teeny.wms.dto.ReviewUpdateDTO;
 import com.teeny.wms.service.EmployeesService;
 import com.teeny.wms.service.RecheckService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,19 +29,30 @@ public class RecheckController {
      * @param account 账套ID
      * @param billNo  订单单号
      */
+    @ResponseBody
     @RequestMapping(value = "/api/recheck/exWarehouseReview/{billNo}", method = RequestMethod.GET)
     public BaseEntity<ReviewDTO> getWarehouseReview(@RequestHeader("account") String account, @PathVariable("billNo") String billNo) {
         return recheckService.getWarehouseReview(account, billNo);
     }
 
-    @RequestMapping(value = "/api/reviewer", method = RequestMethod.GET)
-    public BaseEntity<List<CommonDTO>> getReviewer(@RequestHeader("account") String account) {
-        return employeesService.getReviewer(account);
+
+    //获取单号
+    @ResponseBody
+    @RequestMapping(value = "/api/recheck/bills", method = RequestMethod.GET)
+    public BaseEntity<List<CommonDTO>> getBills(@RequestHeader("account") String account, @RequestHeader("sId") int sId) {
+        return recheckService.getBills(sId, account);
     }
 
-    @RequestMapping(value = "/api/recheck/completed", method = RequestMethod.POST)
-    public void updateReview(@RequestHeader("account") String account, @RequestBody ReviewUpdateDTO reviewUpdateDTO) {
-        recheckService.updateRecheckBill(account, reviewUpdateDTO);
-    }
+
+
+//    @RequestMapping(value = "/api/reviewer", method = RequestMethod.GET)
+//    public BaseEntity<List<CommonDTO>> getReviewer(@RequestHeader("account") String account) {
+//        return employeesService.getReviewer(account);
+//    }
+//
+//    @RequestMapping(value = "/api/recheck/completed", method = RequestMethod.POST)
+//    public void updateReview(@RequestHeader("account") String account, @RequestBody ReviewUpdateDTO reviewUpdateDTO) {
+//        recheckService.updateRecheckBill(account, reviewUpdateDTO);
+//    }
 
 }

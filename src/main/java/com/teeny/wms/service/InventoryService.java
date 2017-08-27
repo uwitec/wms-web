@@ -36,5 +36,5 @@ public interface InventoryService {
 
     BaseEntity<String> edit(PdEditDTO pdEditDTO, String account);
 
-    BaseEntity<List<LotDTO>> getLotList(int billId, int goodsId, String account);
+    BaseEntity<List<LotDTO>> getLotList(int originalId, String account);
 }

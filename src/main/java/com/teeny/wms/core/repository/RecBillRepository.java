@@ -28,8 +28,8 @@ public interface RecBillRepository {
 
    // List<GoodsDTO> getGoodsByBillIdAndStatus(@Param("orderId") int orderId, @Param("status") int status, @Param("account") String account);
 
-    @Update("UPDATE ${account}.dbo.pda_RecBill_D SET DealStates=1, pdastates=1 WHERE bill_id=#{orderId}")
-    void updateGoodsByOrderId(@Param("orderId") int orderId,@Param("account") String account);
+    @Update("UPDATE ${account}.dbo.pda_RecBill_D SET DealStates=1, pdastates=1 WHERE smb_id=#{id}")
+    void updateGoodsByOrderId(@Param("id") int id,@Param("account") String account);
 
     @Update("UPDATE ${account}.dbo.pda_RecBill_D SET DealStates=1 WHERE smb_id=#{goodsId}")
     void updateGoodsByGoodsId(@Param("goodsId") int goodsId,@Param("account") String account);
@@ -38,7 +38,7 @@ public interface RecBillRepository {
     @Select("SELECT b.billid AS id,b.billnumber AS documentNo, b.pdaInTime AS documentDate, CASE b.billstates WHEN 10 THEN '验收中' WHEN 13 THEN '已验收' ELSE '' END AS status FROM ${account}.dbo.pda_RecBill b;")
     List<QueryDocumentDTO> getBill(@Param("account") String account);
 
-    @Update("UPDATE ${account}.dbo.pda_RecBill SET pdastates = #{type}, pdaReTime = getdate() WHERE billid = #{orderId}")
+    @Update("UPDATE ${account}.dbo.pda_RecBill SET pdastates = #{type}, pdaReTime = getdate() WHERE billid = (SELECT d.bill_id FROM ${account}.dbo.pda_RecBill_D d WHERE d.smb_id=#{orderId})")
     void updateBillPdaStatus(@Param("orderId") int orderId, @Param("type") int type, @Param("account") String account);
 
     //获取list
@@ -56,9 +56,12 @@ public interface RecBillRepository {
     @Update("UPDATE ${account}.dbo.pda_RecBill SET pdastates=1,pdaWrTime=getdate() WHERE billid=(SELECT d.bill_id FROM ${account}.dbo.pda_RecBill_D d WHERE d.smb_id=#{id})")
     void updateBillByGoodsId(@Param("id") int id, @Param("account") String account);
 
-    @Select("SELECT d.smb_id FROM ${account}.dbo.pda_RecBill_D d WHERE d.bill_id=(SELECT d1.bill_id FROM ${account}.dbo.pda_RecBill_D d1 WHERE d1.smb_id=#{id}) AND d.p_id=(SELECT d2.p_id FROM ${account}.dbo.pda_RecBill_D d2 WHERE d2.smb_id=#{id})")
+    @Select("SELECT d.smb_id FROM ${account}.dbo.pda_RecBill_D d WHERE d.original_id=#{id}")
     List<Integer> getIdsById(@Param("id") int id, @Param("account") String account);
 
     @Select("DELECT FROM ${account}.dbo.pda_RecBill_D WHERE smb_id=#{id}")
     void deleteById(@Param("id") Integer id,@Param("account") String account);
+
+    @Select("SELECT count(*) FROM ${account}.dbo.pda_RecBill_D d WHERE d.bill_id = (SELECT b.bill_id FROM ${account}.dbo.pda_RecBill_D b WHERE b.smb_id=#{id})")
+    int getBilldByStatus(@Param("id") Integer id,@Param("account") String account);
 }

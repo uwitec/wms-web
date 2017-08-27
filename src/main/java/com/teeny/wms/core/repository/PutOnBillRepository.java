@@ -1,5 +1,6 @@
 package com.teeny.wms.core.repository;
 
+import com.teeny.wms.dto.CommonDTO;
 import com.teeny.wms.dto.LocationAndCountDTO;
 import com.teeny.wms.dto.PutawayDTO;
 import com.teeny.wms.dto.QueryDocumentDTO;
@@ -52,7 +53,7 @@ public interface PutOnBillRepository {
     void updateGoodsAmount(@Param("id") int id,@Param("amount") float amount,@Param("account") String account);
 
 
-    void copyDataByParam(@Param("id") int id,@Param("amount") float amount,@Param("locationCode") String locationCode, String account);
+    void copyDataByParam(@Param("id") int id,@Param("amount") float amount,@Param("locationId") int locationId, String account);
 
     @Select("SELECT count(*) FROM ${account}.dbo.pda_PutOnBill_D d WHERE d.bill_id = (SELECT d1.bill_id FROM ${account}.dbo.pda_PutOnBill_D d1 WHERE d1.smb_id=#{id})")
     int countBySmbId(@Param("id") int id, @Param("account") String account);
@@ -73,13 +74,19 @@ public interface PutOnBillRepository {
     @Select("SELECT b.billid FROM ${account}.dbo.pda_PutOnBill b WHERE b.billnumber=#{orderNoId}")
     int getBillByBillNumber(@Param("orderNoId") String orderNoId, @Param("account") String account,@Param("sId") int sId);
 
-    @Select("SELECT d.smb_id FROM ${account}.dbo.pda_PutOnBill_D d WHERE d.bill_id=(SELECT d1.bill_id FROM ${account}.dbo.pda_PutOnBill_D d1 WHERE d1.smb_id=#{id}) AND d.p_id=(SELECT d2.p_id FROM ${account}.dbo.pda_PutOnBill_D d2 WHERE d2.smb_id=#{id})")
-    List<Integer> getIdsBySmbId(@Param("id") int id,@Param("account") String account);
-
     @Delete("DELECT FROM ${account}.dbo.pda_PutOnBill_D WHERE smb_id=#{id}")
     void deleteBySmbId(@Param("id") Integer id,@Param("account") String account);
 
     @Select("SELECT d.EligibleQty AS amount,l.loc_code AS locationCode FROM ${account}.dbo.pda_PutOnBill_D d, ${account}.dbo.pda_location l WHERE d.Location_id=l.l_id AND d.p_id=(SELECT d1.p_id FROM ${account}.dbo.pda_PutOnBill_D d1 WHERE d1.smb_id=#{id})")
     List<LocationAndCountDTO> getLocationListById(@Param("id") int id, @Param("account") String account);
+
+    //获取库区下的单号
+    List<CommonDTO> getBills(@Param("saId") int saId, @Param("account") String account);
+
+    @Select("SELECT d.smb_id FROM #{id}.dbo.pda_PutOnBill_D d WHERE d.original_id=#{id}")
+    List<Integer> getIdsByOriginalId(@Param("id") int id,@Param("account") String account);
+
+    //获取所有的货位
+    List<CommonDTO> getLocations(@Param("sId") int sId,@Param("account") String account);
 }
 

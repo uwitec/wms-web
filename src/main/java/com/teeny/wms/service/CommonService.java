@@ -18,4 +18,6 @@ public interface CommonService {
     BaseEntity<List<CommonDTO>> getSaListBysId(int sid, String account);
 
     BaseEntity<List<CommonDTO>> getLocationList(int saId, String account);
+
+    int getLocationIdByCode(String locationCode, String account);
 }

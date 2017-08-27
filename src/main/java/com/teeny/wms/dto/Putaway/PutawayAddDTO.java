@@ -13,8 +13,18 @@ import java.util.List;
  */
 public class PutawayAddDTO implements Serializable {
 
-    private int id;
+
+    private int id;  //original_id
+    private int smbId; //smb_ID   这条数据的id
     private List<Location> locations;
+
+    public int getSmbId() {
+        return smbId;
+    }
+
+    public void setSmbId(int smbId) {
+        this.smbId = smbId;
+    }
 
     public int getId() {
         return id;

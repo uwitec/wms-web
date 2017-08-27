@@ -18,6 +18,7 @@
     <select id="getGoodsByBillId" resultType="com.teeny.wms.dto.GoodsDTO">
         SELECT
             d.smb_id     AS id,
+            b.billnumber AS billNo,
             d.TaxPrice   AS retailPrice,
             d.Yqty       AS amount,
             c.name       AS manufacturer,
@@ -35,7 +36,7 @@
     </select>
 
     <insert id="addData">
-        INSERT INTO ${account}.dbo.pda_RecBill_D (bill_id, p_id, MakeDate, Validdate, Batchno, Yqty, EligibleQty, TaxPrice, TaxTotal, CostPrice, CostTotal, S_id, Location_id, Supplier_id, DealStates, pdastates)
+        INSERT INTO ${account}.dbo.pda_RecBill_D (bill_id, p_id, MakeDate, Validdate, Batchno, Yqty, EligibleQty, TaxPrice, TaxTotal, CostPrice, CostTotal, S_id, Location_id, Supplier_id, DealStates, pdastates, original_id)
             SELECT
                 d.bill_id,
                 d.p_id,
@@ -52,7 +53,8 @@
                 d.Location_id,
                 d.Supplier_id,
                 1,
-                1
+                1,
+                d.original_id
             FROM ${account}.dbo.pda_RecBill_D d
             WHERE d.smb_id = #{id}
     </insert>

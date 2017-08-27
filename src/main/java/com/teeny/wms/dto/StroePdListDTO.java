@@ -8,6 +8,7 @@ import java.io.Serializable;
 public class StroePdListDTO implements Serializable {
 
     private int    id; //id
+    private int originalId;
     private int    billId;       //盘点单id
     private int    goodsId;       //商品id
     private String locationCode;   //货位码
@@ -25,6 +26,14 @@ public class StroePdListDTO implements Serializable {
     private String unit; //单位盒
     private int    status; //状态
 
+
+    public int getOriginalId() {
+        return originalId;
+    }
+
+    public void setOriginalId(int originalId) {
+        this.originalId = originalId;
+    }
 
     public int getId() {
         return id;

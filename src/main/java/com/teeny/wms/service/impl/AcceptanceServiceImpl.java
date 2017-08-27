@@ -57,9 +57,15 @@ public class AcceptanceServiceImpl implements AcceptanceService {
     }
 
     @Override
-    public BaseEntity<String> updateGoodsByOrderId(int billId, String account) {
-        recBillRepository.updateGoodsByOrderId(billId, account);
-        recBillRepository.updateBillPdaStatus(billId, 2, account);
+    public BaseEntity<String> updateGoodsByOrderId(List<Integer> ids, String account) {
+
+        for (Integer id : ids) {
+            recBillRepository.updateGoodsByOrderId(id, account);
+            int count = recBillRepository.getBilldByStatus(id, account);
+            if (count == 0) {
+                recBillRepository.updateBillPdaStatus(id, 2, account);
+            }
+        }
         return new BaseEntity<String>();
 }
 
@@ -70,7 +76,7 @@ public class AcceptanceServiceImpl implements AcceptanceService {
             List<Integer> ids = recBillRepository.getIdsById(recUpdateDTO.getId(), account);
 
             for (AcceptAddDTO dto : recUpdateDTO.getParam()) {
-                recBillRepository.addData(recUpdateDTO.getId(), dto.getLotNo(), dto.getAmount(), dto.getPrice(), dto.getSerialNo(), dto.getValidityDate());
+                recBillRepository.addData(recUpdateDTO.getSmbId(), dto.getLotNo(), dto.getAmount(), dto.getPrice(), dto.getSerialNo(), dto.getValidityDate());
             }
             for (Integer i : ids) {
                 recBillRepository.deleteById(i, account);

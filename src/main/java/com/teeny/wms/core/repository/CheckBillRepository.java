@@ -1,5 +1,7 @@
 package com.teeny.wms.core.repository;
 
+import com.teeny.wms.core.domain.CheckBillB;
+import com.teeny.wms.dto.CommonDTO;
 import com.teeny.wms.dto.QueryDocumentDTO;
 import com.teeny.wms.dto.ReviewDTO;
 import org.apache.ibatis.annotations.Param;
@@ -17,7 +19,7 @@ public interface CheckBillRepository {
     int countByWarehousId(@Param("warehouseId") int warehouseId, @Param("account") String account);
 
 
-    @Select("SELECT c.billnumber  AS billNo, c.FirstStates AS priority, c.TempStore AS tempArea, c.pdastates AS status, c.billstates AS documentStatus, c.remark AS billRemark, cl.name AS customer, cl.RoadName AS deliveryLine FROM ${account}.dbo.pda_CheckBill c LEFT JOIN ${account}.dbo.pda_clients cl ON c.c_id=cl.c_id WHERE c.billnumber=#{billNo}")
+
     ReviewDTO getIfoByBillNo(@Param("billNo") String billNo, @Param("account") String account);
 
 
@@ -33,9 +35,20 @@ public interface CheckBillRepository {
     @Select("SELECT b.billid AS id,b.billnumber AS documentNo, b.pdaInTime AS documentDate, CASE b.billstates WHEN 10 THEN '验收中' WHEN 13 THEN '已验收' ELSE '' END AS status FROM ${account}.dbo.pda_CheckBill b;")
     List<QueryDocumentDTO> getBill(@Param("account") String account);
 
-    @Update("UPDATE ${account}.dbo.pda_CheckBill SET pdastates = 1,pdaReTime=getdate() WHERE billnumber = #{billNo}")
-    void updateBillPdaStatus(@Param("billNo") String billNo, @Param("account") String account);
+    @Update("UPDATE ${account}.dbo.pda_CheckBill SET pdastates = 1,pdaReTime=getdate() WHERE billid = #{billId}")
+    void updateBillPdaStatus(@Param("billId") int billId, @Param("account") String account);
 
     @Select("SELECT count(*) AS total FROM ${account}.dbo.pda_CheckBill_B d LEFT JOIN ${account}.dbo.pda_CheckBill b ON b.billid =d.bill_id WHERE b.billnumber=#{billNo} AND d.PickType=#{type}")
     int countById(@Param("type") int type,@Param("billNo") String billNo,@Param("account") String account);
+
+    @Select("SELECT b.smb_id AS smbId,b.bill_id AS billId, b.PickType AS pickType, b.DealStates AS dealStates FROM ${account}.dbo.pda_CheckBill_B b WHERE b.barcode=#{code}")
+    CheckBillB getByCode(@Param("code") String code, @Param("account") String account);
+
+    @Update("UPDATE ${account}.dbo.pda_CheckBill_B SET DealStates=1,pdastates=1,EligibleQty=1 WHERE smb_id=#{smbId}")
+    void updateStatus(@Param("smbId") int smbId,@Param("account") String account);
+
+    @Select("SELECT count(*) AS total FROM pda_CheckBill_B b WHERE b.bill_id=#{billId} AND b.DealStates=0")
+    int countByStatus(@Param("billId") int billId,@Param("account") String account);
+
+    List<CommonDTO> getBills(@Param("sId") int sId,@Param("account") String account);
 }

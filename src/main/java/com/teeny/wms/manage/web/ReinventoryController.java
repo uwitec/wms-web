@@ -71,7 +71,7 @@ public class ReinventoryController {
     //获取批次
     @ResponseBody
     @RequestMapping(value = "/api/secondInventory/getLotList", method = RequestMethod.GET)
-    public BaseEntity<List<LotDTO>> getLotList(@RequestParam("billId") int billId, @RequestParam("goodsId") int goodsId, @RequestHeader("account") String account) {
-        return inventoryService.getLotList(billId, goodsId, account);
+    public BaseEntity<List<LotDTO>> getLotList(@RequestParam("originalId") int originalId, @RequestHeader("account") String account) {
+        return inventoryService.getLotList(originalId, account);
     }
 }
