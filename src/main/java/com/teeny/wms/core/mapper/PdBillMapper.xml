@@ -98,7 +98,7 @@
         p.unit1Name AS unit,
         c.name AS manufacturer,
         d.DealStates AS status ,
-        p.specification AS specification,
+        p.standard AS specification,
         l.loc_code AS locationCode,
         p.barcode AS goodsCode
         FROM ${account}.dbo.pda_pdBill_D d
@@ -210,7 +210,7 @@
         d.pdQty AS inventoryCount,
         d.Batchno AS lotNo,
         p.name AS goodsName,
-        p.specification AS specification,
+        p.standard AS specification,
         c.name AS manufacturer,
         d.EligibleQty AS countInBill,
         CONVERT(varchar(100), d.Validdate, 23) AS validateDate,

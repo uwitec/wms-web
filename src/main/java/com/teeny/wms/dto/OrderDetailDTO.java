@@ -8,6 +8,7 @@ import java.util.List;
  */
 public class OrderDetailDTO implements Serializable{
     private int orderId; //订单ID
+    private String billNo;
     private String status; //订单状态
     private int buyerId; //验收人ID
     private String buyer; //验收人名
@@ -19,6 +20,14 @@ public class OrderDetailDTO implements Serializable{
 
     public void setOrderId(int orderId) {
         this.orderId = orderId;
+    }
+
+    public String getBillNo() {
+        return billNo;
+    }
+
+    public void setBillNo(String billNo) {
+        this.billNo = billNo;
     }
 
     public String getStatus() {

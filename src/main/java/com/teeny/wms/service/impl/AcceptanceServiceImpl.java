@@ -1,15 +1,18 @@
 package com.teeny.wms.service.impl;
 
+import com.teeny.wms.constant.ConstantContract;
 import com.teeny.wms.core.domain.baseEntity.BaseEntity;
 import com.teeny.wms.core.repository.CallProcedureRepository;
 import com.teeny.wms.core.repository.ClientsRepository;
 import com.teeny.wms.core.repository.RecBillRepository;
 import com.teeny.wms.dto.*;
 import com.teeny.wms.service.AcceptanceService;
+import com.teeny.wms.utils.CollectionsUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -28,32 +31,42 @@ public class AcceptanceServiceImpl implements AcceptanceService {
 
 
     @Override
-    public BaseEntity<List<CommonDTO>> getUnit(String account) {
-        List<CommonDTO> unitList = clientsRepository.findAll(account);
+    public BaseEntity<List<CommonDTO>> getUnit(String account, int sId) {
+        List<CommonDTO> unitList = recBillRepository.getUnitList(account, sId);
         return new BaseEntity<>(unitList);
     }
 
     @Override
     public BaseEntity<List<CommonDTO>> getOrderWithUnitId(int unitId, int sId, String account) {
-       return new BaseEntity<List<CommonDTO>>(recBillRepository.getOrderBillWithUnitId(unitId, sId, account));
+        return new BaseEntity<List<CommonDTO>>(recBillRepository.getOrderBillWithUnitId(unitId, sId, account));
     }
 
     @Override
-    public BaseEntity<OrderDetailDTO> getOrderDetailsWithOrderId(String account, int orderId) {
-
-        OrderDetailDTO data = new OrderDetailDTO();
-        RecBillDTO bill = recBillRepository.getOrder(orderId, account);
-        if (bill != null) {
-            data.setBuyer(bill.getBuyer());
-            data.setBuyerId(bill.getBuyerId());
-            data.setOrderId(bill.getOrderId());
-            data.setStatus(bill.getStatus());
+    public BaseEntity<List<OrderDetailDTO>> getOrderListWithUnitId(String account, int unitId) {
+        List<RecBillDTO> list = recBillRepository.getOrderList(account, unitId);
+        List<OrderDetailDTO> result = new ArrayList<>();
+        if (CollectionsUtils.sizeOf(list) == 0) {
+            return new BaseEntity<>(result);
         }
+        for (RecBillDTO dto : list) {
+            OrderDetailDTO o = getOrderDetailWithUnitId(account, dto);
+            result.add(o);
+        }
+        return new BaseEntity<>(result);
+    }
 
+    private OrderDetailDTO getOrderDetailWithUnitId(String account, RecBillDTO bill) {
+        OrderDetailDTO result = new OrderDetailDTO();
+        result.setBillNo(bill.getBillNo());
+        result.setBuyer(bill.getBuyer());
+        result.setBuyerId(bill.getBuyerId());
+        result.setOrderId(bill.getOrderId());
+        result.setStatus(bill.getStatus());
+        int orderId = bill.getOrderId();
         List<GoodsDTO> list = recBillRepository.getGoodsByBillId(orderId, account);
-        data.setGoodsList(list);
-        recBillRepository.updateBillPdaStatus(orderId, 1, account);
-        return new BaseEntity<OrderDetailDTO>(data);
+        result.setGoodsList(list);
+        recBillRepository.updateBillPdaStatus(orderId, ConstantContract.PDA_STATE_READ, account);
+        return result;
     }
 
     @Override
@@ -66,13 +79,13 @@ public class AcceptanceServiceImpl implements AcceptanceService {
                 recBillRepository.updateBillPdaStatus(id, 2, account);
             }
         }
-        return new BaseEntity<String>();
-}
+        return new BaseEntity<>();
+    }
 
     @Override
     public BaseEntity<String> updateGoodsByGoodsId(RecUpdateDTO recUpdateDTO, String account) {
 
-        if (recUpdateDTO.getParam().size()>0) {
+        if (recUpdateDTO.getParam().size() > 0) {
             List<Integer> ids = recBillRepository.getIdsById(recUpdateDTO.getId(), account);
 
             for (AcceptAddDTO dto : recUpdateDTO.getParam()) {
@@ -88,7 +101,7 @@ public class AcceptanceServiceImpl implements AcceptanceService {
         }
 
         //recBillRepository.updateGoodsByGoodsId(recUpdateDTO.getId(), account);
-        return new BaseEntity<String>();
+        return new BaseEntity<>();
     }
 
 
@@ -100,6 +113,6 @@ public class AcceptanceServiceImpl implements AcceptanceService {
         if (count == 0) {
             recBillRepository.updateBillByGoodsId(id, account);
         }
-        return new BaseEntity<String>();
+        return new BaseEntity<>();
     }
 }

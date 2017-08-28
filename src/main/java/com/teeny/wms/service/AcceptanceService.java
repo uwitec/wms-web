@@ -11,11 +11,11 @@ import java.util.List;
  * Created by lilei on 2017/7/26.
  */
 public interface AcceptanceService {
-    BaseEntity<List<CommonDTO>> getUnit(String account);
+    BaseEntity<List<CommonDTO>> getUnit(String account, int sId);
 
     BaseEntity<List<CommonDTO>> getOrderWithUnitId(int unitId, int sId, String account);
 
-    BaseEntity<OrderDetailDTO> getOrderDetailsWithOrderId(String account, int orderId);
+    BaseEntity<List<OrderDetailDTO>> getOrderListWithUnitId(String account, int unitId);
 
     BaseEntity<String> updateGoodsByOrderId(List<Integer> ids, String account);
 

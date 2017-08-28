@@ -24,8 +24,8 @@ public class AcceptanceController {
     //获取单位
     @RequestMapping(value = "/api/acceptance/unit", method = RequestMethod.GET)
     @ResponseBody
-    public BaseEntity<List<CommonDTO>> getUnit(@RequestHeader("account") String account) {
-        return acceptanceService.getUnit(account);
+    public BaseEntity<List<CommonDTO>> getUnit(@RequestHeader("account") String account, @RequestHeader("sId") int id) {
+        return acceptanceService.getUnit(account, id);
     }
 
     //获取订单
@@ -35,11 +35,17 @@ public class AcceptanceController {
         return acceptanceService.getOrderWithUnitId(unitId, sId, account);
     }
 
-    //获取订单详情
-    @RequestMapping(value = "/api/acceptance/detail/{orderId}", method = RequestMethod.GET)
+    /**
+     * 获取订单详情
+     *
+     * @param account 账套的数据库名
+     * @param id      单位id
+     * @return BaseEntity<List<OrderDetailDTO>>
+     */
+    @RequestMapping(value = "/api/acceptance/detail/{id}", method = RequestMethod.GET)
     @ResponseBody
-    public BaseEntity<OrderDetailDTO> getOrderDetailsWithOrderId(@RequestHeader("account") String account, @PathVariable("orderId") int orderId) {
-        return acceptanceService.getOrderDetailsWithOrderId(account, orderId);
+    public BaseEntity<List<OrderDetailDTO>> getOrderDetailsWithUnitId(@RequestHeader("account") String account, @PathVariable("id") int id) {
+        return acceptanceService.getOrderListWithUnitId(account, id);
     }
 
     //一键完成
@@ -58,7 +64,7 @@ public class AcceptanceController {
     //单个完成
     @ResponseBody
     @RequestMapping(value = "/api/acceptance/updateOne", method = RequestMethod.POST)
-    public BaseEntity<String> completeOne(@RequestParam("id") int id, @RequestHeader("account") String account){
+    public BaseEntity<String> completeOne(@RequestParam("id") int id, @RequestHeader("account") String account) {
         return acceptanceService.completeOne(id, account);
     }
 

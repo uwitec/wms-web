@@ -29,7 +29,7 @@ serial_number VARCHAR(26) NOT NULL DEFAULT '',--编码
 pinyin VARCHAR(80) NOT NULL DEFAULT '',--拼音
 name VARCHAR(80) NOT NULL DEFAULT '',--商品名称
 alias VARCHAR(80) NOT NULL DEFAULT '',--通用名
-specification VARCHAR(100) NOT NULL DEFAULT '',--规格
+standard VARCHAR(100) NOT NULL DEFAULT '',--规格
 medtype VARCHAR(50) NOT NULL DEFAULT '',--剂型
 permitcode VARCHAR(50) NOT NULL DEFAULT '',--批准文号
 PerCodevalid DATETIME NOT NULL DEFAULT 0,--批准文号有效期

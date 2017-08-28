@@ -15,6 +15,47 @@
         </where>
     </select>
 
+    <select id="getUnitList" resultType="com.teeny.wms.dto.CommonDTO">
+        SELECT DISTINCT
+            b.c_id AS id,
+            c.name AS name
+        FROM ${account}.dbo.pda_RecBill b
+            LEFT JOIN ${account}.dbo.pda_clients c ON b.c_id = c.c_id
+        <if test="sId != 0">
+            WHERE b.s_id = #{sId}
+        </if>
+    </select>
+
+    <select id="getOrderList" resultType="com.teeny.wms.dto.RecBillDTO">
+        SELECT
+            r.billid       AS orderId,
+            r.billnumber   AS billNo,
+            r.e_id         AS buyerId,
+            e.name         AS buyer,
+            CASE r.billstates
+            WHEN 10
+                THEN '未处理'
+            ELSE '已审核' END AS status
+        FROM ${account}.dbo.pda_RecBill r
+            LEFT JOIN ${account}.dbo.pda_employees e ON r.e_id = e.e_id
+        WHERE r.c_id = #{unitId}
+    </select>
+
+    <select id="getOrder" resultType="com.teeny.wms.dto.RecBillDTO">
+        SELECT
+            r.billid       AS orderId,
+            r.billnumber   AS billNo,
+            r.e_id         AS buyerId,
+            CASE r.billstates
+            WHEN 10
+                THEN '未处理'
+            ELSE '已审核' END AS status,
+            e.name         AS buyer
+        FROM ${account}.dbo.pda_RecBill r
+            LEFT JOIN ${account}.dbo.pda_employees e ON r.e_id = e.e_id
+        WHERE r.billid = #{orderId}
+    </select>
+
     <select id="getGoodsByBillId" resultType="com.teeny.wms.dto.GoodsDTO">
         SELECT
             d.smb_id     AS id,
@@ -29,10 +70,10 @@
             p.makearea   AS produceArea,
             d.DealStates AS status
         FROM ${account}.dbo.pda_RecBill_D d
-            LEFT JOIN ${account}.dbo.pda_RecBill b ON b.billid=d.bill_id
+            LEFT JOIN ${account}.dbo.pda_RecBill b ON b.billid = d.bill_id
             LEFT JOIN ${account}.dbo.pda_Products p ON d.p_id = p.p_id
             LEFT JOIN ${account}.dbo.pda_clients c ON c.c_id = d.Supplier_id
-        WHERE b.billnumber = #{orderId}
+        WHERE b.billid = #{orderId}
     </select>
 
     <insert id="addData">

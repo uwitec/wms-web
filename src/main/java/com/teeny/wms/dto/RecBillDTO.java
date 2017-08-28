@@ -8,6 +8,7 @@ import java.io.Serializable;
 public class RecBillDTO implements Serializable {
 
     private int orderId;
+    private String billNo;
     private String status;
     private int buyerId;
     private String buyer;
@@ -18,6 +19,14 @@ public class RecBillDTO implements Serializable {
 
     public void setOrderId(int orderId) {
         this.orderId = orderId;
+    }
+
+    public String getBillNo() {
+        return billNo;
+    }
+
+    public void setBillNo(String billNo) {
+        this.billNo = billNo;
     }
 
     public String getStatus() {
