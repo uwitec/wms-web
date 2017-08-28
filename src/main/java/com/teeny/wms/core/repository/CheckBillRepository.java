@@ -23,7 +23,7 @@ public interface CheckBillRepository {
     ReviewDTO getIfoByBillNo(@Param("billNo") String billNo, @Param("account") String account);
 
 
-    @Select("SELECT count(*) FROM ${account}.dbo.pda_CheckBill WHERE billnumber = #{billNo} AND FirstStates = '1'")
+    @Select("SELECT count(*) FROM ${account}.dbo.pda_CheckBill WHERE FirstStates = '1'")
     int getReplenishmentCount(@Param("billNo") String billNo,@Param("account") String account);
 
     @Select("SELECT isnull(b.,0) FROM ${account}.dbo.pda_CheckBill_B b LEFT JOIN ${account}.dbo.pda_CheckBill c ON b.bill_id=c.billid WHERE c.billnumber=#{billNo} AND b.PickType = #{type}")
@@ -51,4 +51,10 @@ public interface CheckBillRepository {
     int countByStatus(@Param("billId") int billId,@Param("account") String account);
 
     List<CommonDTO> getBills(@Param("sId") int sId,@Param("account") String account);
+
+    @Update("UPDATE ${account}.dbo.pda_CheckBill SET billstates=13 WHERE billid=#{billId}")
+    void completeBill(@Param("billId") int billId,@Param("account") String account);
+
+    @Select("SELECT b.billstates FROM ${account}.dbo.pda_CheckBill b WHERE b.billid=#{billId}")
+    int getBillStatus(@Param("billId") int billId,@Param("account") String account);
 }

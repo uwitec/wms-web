@@ -15,8 +15,8 @@ public class AcceptAddDTO implements Serializable {
     private String lotNo;
     private String serialNo;
     private String validityDate;
-    private String price;
-    private String amount;
+    private float price;
+    private float amount;
 
 
     public String getLotNo() {
@@ -43,19 +43,19 @@ public class AcceptAddDTO implements Serializable {
         this.validityDate = validityDate;
     }
 
-    public String getPrice() {
+    public float getPrice() {
         return price;
     }
 
-    public void setPrice(String price) {
+    public void setPrice(float price) {
         this.price = price;
     }
 
-    public String getAmount() {
+    public float getAmount() {
         return amount;
     }
 
-    public void setAmount(String amount) {
+    public void setAmount(float amount) {
         this.amount = amount;
     }
 }

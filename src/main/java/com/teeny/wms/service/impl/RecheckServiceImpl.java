@@ -48,19 +48,19 @@ public class RecheckServiceImpl implements RecheckService {
             throw new WmsException(baseEntity1);
         }
         checkBillRepository.updateStatus(checkBillB.getSmbId(), account);
-
+        int billStatus = checkBillRepository.getBillStatus(checkBillB.getBillId(), account);
+        if (billStatus != 13) {
+            checkBillRepository.updateBillPdaStatus(checkBillB.getBillId(), account);
+        }
         int count = checkBillRepository.countByStatus(checkBillB.getBillId(), account);
         if (count==0) {
-            checkBillRepository.updateBillPdaStatus(checkBillB.getBillId(), account);
+            checkBillRepository.completeBill(checkBillB.getBillId(), account);
         }
 
         ReviewDTO reviewDTO = checkBillRepository.getIfoByBillNo(billNo, account);
 
         //获取补货订单数
         int replenishmentCount = checkBillRepository.getReplenishmentCount(billNo, account);
-
-        checkBillRepository.updateBillPdaStatus(checkBillB.getBillId(), account);
-
         return new BaseEntity<ReviewDTO>(reviewDTO);
     }
 

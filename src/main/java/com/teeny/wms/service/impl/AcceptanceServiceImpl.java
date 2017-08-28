@@ -71,12 +71,11 @@ public class AcceptanceServiceImpl implements AcceptanceService {
 
     @Override
     public BaseEntity<String> updateGoodsByOrderId(List<Integer> ids, String account) {
-
         for (Integer id : ids) {
             recBillRepository.updateGoodsByOrderId(id, account);
-            int count = recBillRepository.getBilldByStatus(id, account);
+            int count = recBillRepository.countByDealType(id, account);
             if (count == 0) {
-                recBillRepository.updateBillPdaStatus(id, 2, account);
+                recBillRepository.updateBillByGoodsId(id, account);
             }
         }
         return new BaseEntity<>();
@@ -94,14 +93,14 @@ public class AcceptanceServiceImpl implements AcceptanceService {
             for (Integer i : ids) {
                 recBillRepository.deleteById(i, account);
             }
+        }else {
+            recBillRepository.addData(recUpdateDTO.getSmbId(),null,null,null,null,null);
         }
-        int count = recBillRepository.countByDealType(recUpdateDTO.getId(), account);
+        int count = recBillRepository.countByDealType(recUpdateDTO.getSmbId(), account);
         if (count == 0) {
-            recBillRepository.updateBillByGoodsId(recUpdateDTO.getId(), account);
+            recBillRepository.updateBillByGoodsId(recUpdateDTO.getSmbId(), account);
         }
-
-        //recBillRepository.updateGoodsByGoodsId(recUpdateDTO.getId(), account);
-        return new BaseEntity<>();
+        return new BaseEntity<String>();
     }
 
 
@@ -113,6 +112,6 @@ public class AcceptanceServiceImpl implements AcceptanceService {
         if (count == 0) {
             recBillRepository.updateBillByGoodsId(id, account);
         }
-        return new BaseEntity<>();
+        return new BaseEntity<String>();
     }
 }

@@ -64,8 +64,8 @@ public class PutawayController {
     //查询
     @RequestMapping(value = "/api/shelve/goodsDetailList/{orderNoId}", method = RequestMethod.GET)
     @ResponseBody
-    public BaseEntity<List<PutawayDTO>> getPutOnBill(@PathVariable("orderNoId") String orderNoId, @RequestHeader("account") String account, @RequestHeader("sId") int sId) {
-        return putOnBillService.getGoodsDetailList(orderNoId, account, sId);
+    public BaseEntity<List<PutawayDTO>> getPutOnBill(@PathVariable("orderNoId") String orderNo, @RequestHeader("account") String account, @RequestHeader("sId") int sId) {
+        return putOnBillService.getGoodsDetailList(orderNo, account, sId);
     }
 
     //快速上架

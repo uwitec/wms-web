@@ -32,10 +32,9 @@ public class PutOnBillServiceImpl implements PutOnBillService {
     private CommonService commonService;
 
     @Override
-    public BaseEntity<List<PutawayDTO>> getGoodsDetailList(String orderNoId, String account, int sId) {
-
-        List<PutawayDTO> list = putOnBillRepository.getGoodsDetailList(orderNoId, account, sId);
-        int id = putOnBillRepository.getBillByBillNumber(orderNoId, account, sId);
+    public BaseEntity<List<PutawayDTO>> getGoodsDetailList(String orderNo, String account, int sId) {
+        List<PutawayDTO> list = putOnBillRepository.getGoodsDetailList(orderNo, account, sId);
+        int id = putOnBillRepository.getBillByBillNumber(orderNo, account, sId);
         putOnBillRepository.uodateBillStatus(id, account, sId);
         return new BaseEntity<List<PutawayDTO>>(list);
     }
@@ -56,10 +55,9 @@ public class PutOnBillServiceImpl implements PutOnBillService {
     public void putOnBillWithOne(int goodsDetailId, String account) {
 
         putOnBillRepository.updatePutOnBillDById(goodsDetailId, account);
-        int orderNoId = putOnBillRepository.getBillIdByDetailId(goodsDetailId, account);
-        int count = putOnBillRepository.countByIdType(orderNoId, account);
+        int count = putOnBillRepository.countBySmbId(goodsDetailId, account);
         if (count == 0) {
-            putOnBillRepository.updatePutOnBill(orderNoId, account);
+            putOnBillRepository.updatePutOnBillDBySmbId(goodsDetailId, account);
         }
     }
 
@@ -74,7 +72,7 @@ public class PutOnBillServiceImpl implements PutOnBillService {
                 int locationId = commonService.getLocationIdByCode(location.getLocationCode(), account);
                 if (locationId==0) {
                     BaseEntity<String> baseEntity = new BaseEntity<String>();
-                    baseEntity.setMsg("找不此货位!");
+                    baseEntity.setMsg("找不此货位:"+location.getLocationCode());
                     baseEntity.setResult(1);
                     throw new WmsException(baseEntity);
                 }
@@ -85,9 +83,9 @@ public class PutOnBillServiceImpl implements PutOnBillService {
             }
         }
 
-        int count = putOnBillRepository.countBySmbId(putawayAddDTO.getId(), account);
+        int count = putOnBillRepository.countBySmbId(putawayAddDTO.getSmbId(), account);
         if (count == 0) {
-            putOnBillRepository.updatePutBySmbId(putawayAddDTO.getId(), account);
+            putOnBillRepository.updatePutBySmbId(putawayAddDTO.getSmbId(), account);
         }
         return new BaseEntity<String>();
     }

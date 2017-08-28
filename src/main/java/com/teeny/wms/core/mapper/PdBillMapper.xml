@@ -132,7 +132,7 @@
                 #{lotNo},
                 #{count},
                 1,
-                2,
+                d.pdastates,
                 d.original_id
             FROM ${account}.dbo.pda_pdBill_D d
             WHERE d.smb_id = #{id}
@@ -244,11 +244,9 @@
                 0,
                 0,
                 #{s_id},
-                (SELECT l.l_id
-                 FROM ${account}.dbo.pda_location l
-                 WHERE l.loc_code = #{locationCode}),
+                #{locationId},
                 1,
-                1
+                d.pdastates
             FROM ${account}.dbo.pda_Products p
             WHERE p.p_id = #{pId}
     </insert>

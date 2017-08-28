@@ -1,9 +1,11 @@
 package com.teeny.wms.service.impl;
 
+import com.teeny.wms.config.WmsException;
 import com.teeny.wms.core.domain.baseEntity.BaseEntity;
 import com.teeny.wms.core.repository.PdBillRepository;
 import com.teeny.wms.core.repository.ProductsRepository;
 import com.teeny.wms.dto.*;
+import com.teeny.wms.service.CommonService;
 import com.teeny.wms.service.InventoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,6 +24,8 @@ public class InventoryServiceImpl implements InventoryService {
     private PdBillRepository pdBillRepository;
     @Autowired
     private ProductsRepository productsRepository;
+    @Autowired
+    CommonService commonService;
 
     //////////////////////门店盘点//////////////////////////////////////
 
@@ -35,7 +39,6 @@ public class InventoryServiceImpl implements InventoryService {
     @Override
     public BaseEntity<String> completeOne(int goodsDetailId, String account) {
         pdBillRepository.completeOne(goodsDetailId, account);
-
         int count = pdBillRepository.countByType(goodsDetailId, account);
         if (count == 0) {
             pdBillRepository.completeWithGoodsDetailId(goodsDetailId, account);
@@ -171,7 +174,14 @@ public class InventoryServiceImpl implements InventoryService {
 
     @Override
     public BaseEntity<String> addProduct(AddProductDTO dto, String account) {
-        pdBillRepository.addProduct(dto.getpId(), dto.getLotNo(), dto.getLocationCode(), dto.getAmount(), dto.getValidateDate());
+        int locationId = commonService.getLocationIdByCode(dto.getLocationCode(), account);
+        if (locationId == 0) {
+            BaseEntity<String> baseEntity = new BaseEntity<String>();
+            baseEntity.setMsg("找不此货位:"+dto.getLocationCode());
+            baseEntity.setResult(1);
+            throw new WmsException(baseEntity);
+        }
+        pdBillRepository.addProduct(dto.getpId(), dto.getLotNo(), locationId, dto.getAmount(), dto.getValidateDate());
         return new BaseEntity<String>();
     }
 

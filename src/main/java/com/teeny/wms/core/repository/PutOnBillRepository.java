@@ -35,7 +35,7 @@ public interface PutOnBillRepository {
     void updatePutOnBill(@Param("orderNoId") int orderNoId, @Param("account") String account);
 
     //单个上架
-    @Update("UPDATE ${account}.dbo.pda_PutOnBill_D SET pdastates=1, DealStates=1 WHERE smb_id = #{goodsDetailId}")
+    @Update("UPDATE ${account}.dbo.pda_PutOnBill_D SET DealStates=1 WHERE smb_id = #{goodsDetailId}")
     void updatePutOnBillDById(@Param("goodsDetailId") int goodsDetailId, @Param("account") String account);
 
     //查询billId 更具billD
@@ -55,7 +55,7 @@ public interface PutOnBillRepository {
 
     void copyDataByParam(@Param("id") int id,@Param("amount") float amount,@Param("locationId") int locationId, String account);
 
-    @Select("SELECT count(*) FROM ${account}.dbo.pda_PutOnBill_D d WHERE d.bill_id = (SELECT d1.bill_id FROM ${account}.dbo.pda_PutOnBill_D d1 WHERE d1.smb_id=#{id})")
+    @Select("SELECT count(*) FROM ${account}.dbo.pda_PutOnBill_D d WHERE d.DealStates = 0 AND d.bill_id = (SELECT d1.bill_id FROM ${account}.dbo.pda_PutOnBill_D d1 WHERE d1.smb_id=#{id})")
     int countBySmbId(@Param("id") int id, @Param("account") String account);
 
     @Update("UPDATE ${account}.dbo.pda_PutOnBill SET pdastates=2, pdaWrTime=getdate() WHERE billid=(SELECT d.bill_id FROM ${account}.dbo.pda_PutOnBill_D d WHERE d.smb_id=#{id})")
@@ -68,7 +68,7 @@ public interface PutOnBillRepository {
     @Update("UPDATE ${account}.dbo.pda_PutOnBill_D SET DealStates=1 WHERE smb_id=#{id}")
     void updateOne(@Param("id") Integer id, @Param("account") String account);
 
-    @Update("UPDATE ${account}.dbo.pda_PutOnBill SET pdastates=2,pdaWrTime=getdate() WHERE billid = (SELECT d.bill_id FROM ${account}.dbo.pda_PutOnBill_D d WHERE d.smb_id=#{id})")
+    @Update("UPDATE ${account}.dbo.pda_PutOnBill SET billstates = 13 WHERE billid = (SELECT d.bill_id FROM ${account}.dbo.pda_PutOnBill_D d WHERE d.smb_id=#{id})")
     void updatePutOnBillDBySmbId(@Param("id") Integer id, @Param("account") String account);
 
     @Select("SELECT b.billid FROM ${account}.dbo.pda_PutOnBill b WHERE b.billnumber=#{orderNoId}")

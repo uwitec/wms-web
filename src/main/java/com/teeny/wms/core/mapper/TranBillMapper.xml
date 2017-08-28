@@ -46,4 +46,12 @@
         </where>
     </select>
 
+    <insert id="copyData">
+        INSERT INTO ${account}.dbo.pda_TranBill_D
+        (bill_id,p_id,MakeDate,Validdate,Batchno,quantity,TaxPrice,TaxTotal,CostPrice,CostTotal,ss_id,sd_id,Location_id,location_id2,Supplier_id,DealStates,pdastates,original_id)
+            SELECT d.bill_id,d.p_id,d.MakeDate,d.Validdate,d.Batchno,#{amount},d.TaxPrice,d.TaxTotal,d.CostPrice,d.CostTotal,d.ss_id,d.sd_id,d.Location_id,#{locationId},d.Supplier_id,1,d.pdastates,d.original_id
+            FROM ${account}.dbo.pda_TranBill_D d WHERE d.smb_id=#{id}
+
+    </insert>
+
 </mapper>

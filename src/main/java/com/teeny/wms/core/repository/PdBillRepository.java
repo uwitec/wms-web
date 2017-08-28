@@ -69,15 +69,15 @@ public interface PdBillRepository {
     ProductDetailsDTO getById(@Param("id") int id, @Param("account") String account);
 
     //盘点确定
-    @Update("UPDATE ${account}.dbo.pda_kcpdBill_D SET pDealStates=1 WHERE storehouse_id = #{id} AND ss_id=#{id}")
+    @Update("UPDATE ${account}.dbo.pda_kcpdBill_D SET DealStates=1 WHERE storehouse_id = #{id} AND ss_id=#{id}")
     void updateStatus(@Param("id") int id, @Param("sId") int sId, @Param("account") String account);
 
-    @Update("UPDATE ${account}.dbo.pda_kcpdBill_D  SET pdqty = #{count}, DealStates=1,pdastates=1 WHERE storehouse_id = #{id}")
+    @Update("UPDATE ${account}.dbo.pda_kcpdBill_D  SET pdqty = #{count}, DealStates=1 WHERE storehouse_id = #{id}")
     void updateProductStatus(@Param("id") int id, @Param("count") float count, @Param("account") String account);
 
 
     //添加数据
-    void addProduct(@Param("pId") int pId, @Param("lotNo") String lotNo, @Param("locationCode") String locationCode, @Param("amount") float amount, @Param("validateDate") String validateDate);
+    void addProduct(@Param("pId") int pId, @Param("lotNo") String lotNo, @Param("locationId") int locationId, @Param("amount") float amount, @Param("validateDate") String validateDate);
 
     //获取批次
     @Select("SELECT CONVERT(varchar(100), d.Validdate, 23) AS validateDate, d.Batchno AS lotNo, d.EligibleQty AS count FROM ${account}.dbo.pda_pdBill_D d WHERE d.originalId = #{originalId}")

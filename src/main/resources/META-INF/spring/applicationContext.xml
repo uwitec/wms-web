@@ -57,6 +57,7 @@
             <tx:method name="update*" propagation="REQUIRED" read-only="false" rollback-for="java.lang.Exception"/>
             <tx:method name="complete*" propagation="REQUIRED" read-only="false" rollback-for="java.lang.Exception"/>
             <tx:method name="put*" propagation="REQUIRED" read-only="false" rollback-for="java.lang.Exception"/>
+            <tx:method name="confirm*" propagation="REQUIRED" read-only="false" rollback-for="java.lang.Exception"/>
 
             <tx:method name="find*" propagation="SUPPORTS"/>
             <tx:method name="get*" propagation="SUPPORTS"/>

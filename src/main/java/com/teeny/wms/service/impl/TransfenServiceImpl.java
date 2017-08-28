@@ -1,11 +1,13 @@
 package com.teeny.wms.service.impl;
 
+import com.teeny.wms.config.WmsException;
 import com.teeny.wms.core.domain.baseEntity.BaseEntity;
 import com.teeny.wms.core.repository.TranBillRepository;
 import com.teeny.wms.dto.CommonDTO;
 import com.teeny.wms.dto.LocationAndCountDTO;
 import com.teeny.wms.dto.Putaway.PutawayAddDTO;
 import com.teeny.wms.dto.TransferListDTO;
+import com.teeny.wms.service.CommonService;
 import com.teeny.wms.service.TransferService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,6 +24,8 @@ public class TransfenServiceImpl implements TransferService {
 
     @Autowired
     TranBillRepository tranBillRepository;
+    @Autowired
+    CommonService commonService;
 
     @Override
     public BaseEntity<List<TransferListDTO>> getTransferList(String billNo, String account) {
@@ -58,30 +62,29 @@ public class TransfenServiceImpl implements TransferService {
     @Override
     public BaseEntity<String> update(PutawayAddDTO putawayAddDTO, String account) {
 
-        List<Integer> ids = tranBillRepository.getIdsBySmbId(putawayAddDTO.getId(), account);
+        List<Integer> ids = tranBillRepository.getIdsByOriginalId(putawayAddDTO.getId(), account);
         if (putawayAddDTO.getLocations().size()>0) {
             for (PutawayAddDTO.Location loc : putawayAddDTO.getLocations()) {
-                tranBillRepository.copyData(putawayAddDTO.getId(),loc.getAmount(),loc.getLocationCode());
+                int locationId = commonService.getLocationIdByCode(loc.getLocationCode(), account);
+                if (locationId == 0) {
+                    BaseEntity<String> baseEntity = new BaseEntity<String>();
+                    baseEntity.setMsg("找不此货位!");
+                    baseEntity.setResult(1);
+                    throw new WmsException(baseEntity);
+                }
+                tranBillRepository.copyData(putawayAddDTO.getSmbId(),loc.getAmount(),locationId, account);
             }
             for (Integer i : ids) {
                 tranBillRepository.deleteById(i,account);
             }
         }else {
-            tranBillRepository.copyData(putawayAddDTO.getId(),0,"");
+            tranBillRepository.copyData(putawayAddDTO.getId(),0,0, account);
         }
-        int count = tranBillRepository.countByDealstatus(putawayAddDTO.getId(), account);
+        int count = tranBillRepository.countByDealstatus(putawayAddDTO.getSmbId(), account);
         if (count == 0) {
-            tranBillRepository.updateBillStatusBySmbId(putawayAddDTO.getId(), account);
+            tranBillRepository.updateBillStatusBySmbId(putawayAddDTO.getSmbId(), account);
         }
 
-//        //tranBillRepository.updateDetails(putawayAddDTO.getId(), putawayAddDTO.getAmount(), account);
-//        for (PutawayAddDTO.Location location : putawayAddDTO.getLocations()) {
-//            tranBillRepository.copyData(putawayAddDTO.getId(), location.getAmount(), location.getLocationCode());
-//        }
-//        int count = tranBillRepository.countByDealstatus(putawayAddDTO.getId(), account);
-//        if (count == 0) {
-//            tranBillRepository.updateBillStatusBySmbId(putawayAddDTO.getId(), account);
-//        }
         return new BaseEntity<String>();
     }
 
