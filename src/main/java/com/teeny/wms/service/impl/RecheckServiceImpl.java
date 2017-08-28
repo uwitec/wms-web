@@ -49,12 +49,13 @@ public class RecheckServiceImpl implements RecheckService {
         }
         checkBillRepository.updateStatus(checkBillB.getSmbId(), account);
         int billStatus = checkBillRepository.getBillStatus(checkBillB.getBillId(), account);
-        if (billStatus != 13) {
+        if (billStatus == 0) {
             checkBillRepository.updateBillPdaStatus(checkBillB.getBillId(), account);
         }
+
         int count = checkBillRepository.countByStatus(checkBillB.getBillId(), account);
-        if (count==0) {
-            checkBillRepository.completeBill(checkBillB.getBillId(), account);
+            if (count==0) {
+                checkBillRepository.completeBill(checkBillB.getBillId(), account);
         }
 
         ReviewDTO reviewDTO = checkBillRepository.getIfoByBillNo(billNo, account);

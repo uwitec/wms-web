@@ -382,7 +382,7 @@ billnumber VARCHAR(30) NOT NULL DEFAULT '',--采购订单单号
 c_id INT NOT NULL DEFAULT 0,--往来单位id,=pda_clients.c_id
 e_id INT NOT NULL DEFAULT 0,--经手人id,=pda_employees.e_id
 billstates INT NOT NULL DEFAULT 10,--状态 10未处理 13已审核
-pdastates INT NOT NULL DEFAULT 0,--交换状态 0提供 1pda已读取 2pda已回写
+pdastates INT NOT NULL DEFAULT 0,--交换状态 0提供 1pda已读取  2pda已回写
 pdaInTime DATETIME NOT NULL DEFAULT 0,--提供时间
 pdaReTime DATETIME NOT NULL DEFAULT 0,--读取时间
 pdaWrTime DATETIME NOT NULL DEFAULT 0,--回写时间
