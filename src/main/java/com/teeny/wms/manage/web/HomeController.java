@@ -41,7 +41,6 @@ public class HomeController {
     @RequestMapping(value = "/api/home/warehouseList", method = RequestMethod.GET)
     public BaseEntity<List<CommonDTO>> getWarehouse(@RequestHeader("account") String account) {
         return homeService.getWarehouse(account);
-        //model.addAttribute("list",data);
     }
 
     //获取订单数

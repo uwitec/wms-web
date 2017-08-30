@@ -9,7 +9,6 @@ public class RecBillDTO implements Serializable {
 
     private int orderId;
     private String billNo;
-    private String status;
     private int buyerId;
     private String buyer;
 
@@ -27,14 +26,6 @@ public class RecBillDTO implements Serializable {
 
     public void setBillNo(String billNo) {
         this.billNo = billNo;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
     }
 
     public int getBuyerId() {

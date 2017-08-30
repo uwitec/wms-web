@@ -1,5 +1,6 @@
 package com.teeny.wms.service.impl;
 
+import com.teeny.wms.config.WmsException;
 import com.teeny.wms.constant.ConstantContract;
 import com.teeny.wms.core.domain.baseEntity.BaseEntity;
 import com.teeny.wms.core.repository.CallProcedureRepository;
@@ -8,6 +9,7 @@ import com.teeny.wms.core.repository.RecBillRepository;
 import com.teeny.wms.dto.*;
 import com.teeny.wms.service.AcceptanceService;
 import com.teeny.wms.utils.CollectionsUtils;
+import com.teeny.wms.utils.Validator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -61,7 +63,6 @@ public class AcceptanceServiceImpl implements AcceptanceService {
         result.setBuyer(bill.getBuyer());
         result.setBuyerId(bill.getBuyerId());
         result.setOrderId(bill.getOrderId());
-        result.setStatus(bill.getStatus());
         int orderId = bill.getOrderId();
         List<GoodsDTO> list = recBillRepository.getGoodsByBillId(orderId, account);
         result.setGoodsList(list);
@@ -83,24 +84,27 @@ public class AcceptanceServiceImpl implements AcceptanceService {
 
     @Override
     public BaseEntity<String> updateGoodsByGoodsId(RecUpdateDTO recUpdateDTO, String account) {
-
-        if (recUpdateDTO.getParam().size() > 0) {
-            List<Integer> ids = recBillRepository.getIdsById(recUpdateDTO.getId(), account);
-
-            for (AcceptAddDTO dto : recUpdateDTO.getParam()) {
-                recBillRepository.addData(recUpdateDTO.getSmbId(), dto.getLotNo(), dto.getAmount(), dto.getPrice(), dto.getSerialNo(), dto.getValidityDate());
-            }
-            for (Integer i : ids) {
-                recBillRepository.deleteById(i, account);
-            }
-        }else {
-            recBillRepository.addData(recUpdateDTO.getSmbId(),null,null,null,null,null);
+        List<AcceptAddDTO> param = recUpdateDTO.getParam();
+        if (Validator.isEmpty(param)) {
+            BaseEntity<String> result = new BaseEntity<>();
+            result.setResult(1);
+            result.setMsg("未添加批号.");
+            throw new WmsException(result);
         }
-        int count = recBillRepository.countByDealType(recUpdateDTO.getSmbId(), account);
+
+        List<Integer> ids = recBillRepository.getIdsById(recUpdateDTO.getId(), account);
+        for (AcceptAddDTO dto : param) {
+            recBillRepository.addData(recUpdateDTO.getSmbId(), dto.getLotNo(), dto.getAmount(), dto.getPrice(), dto.getSerialNo(), dto.getValidityDate(), account);
+        }
+        for (Integer i : ids) {
+            recBillRepository.deleteById(i, account);
+        }
+
+        int count = recBillRepository.countByDealType(recUpdateDTO.getId(), account);
         if (count == 0) {
-            recBillRepository.updateBillByGoodsId(recUpdateDTO.getSmbId(), account);
+            recBillRepository.updateBillByGoodsId(recUpdateDTO.getId(), account);
         }
-        return new BaseEntity<String>();
+        return new BaseEntity<>();
     }
 
 
@@ -113,5 +117,10 @@ public class AcceptanceServiceImpl implements AcceptanceService {
             recBillRepository.updateBillByGoodsId(id, account);
         }
         return new BaseEntity<String>();
+    }
+
+    @Override
+    public BaseEntity<List<AcceptAddDTO>> getLotList(int id, String account) {
+        return new BaseEntity<>(recBillRepository.getLotList(id, account));
     }
 }

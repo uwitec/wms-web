@@ -1,6 +1,7 @@
 package com.teeny.wms.manage.web;
 
 import com.teeny.wms.core.domain.baseEntity.BaseEntity;
+import com.teeny.wms.dto.AcceptAddDTO;
 import com.teeny.wms.dto.CommonDTO;
 import com.teeny.wms.dto.OrderDetailDTO;
 import com.teeny.wms.dto.RecUpdateDTO;
@@ -57,7 +58,7 @@ public class AcceptanceController {
     //单个修改
     @ResponseBody
     @RequestMapping(value = "/api/acceptance/update", method = RequestMethod.POST)
-    public BaseEntity<String> competeByGoodsId(@RequestBody RecUpdateDTO recUpdateDTO, @RequestHeader("account") String account) {
+    public BaseEntity competeByGoodsId(@RequestBody RecUpdateDTO recUpdateDTO, @RequestHeader("account") String account) {
         return acceptanceService.updateGoodsByGoodsId(recUpdateDTO, account);
     }
 
@@ -68,4 +69,20 @@ public class AcceptanceController {
         return acceptanceService.completeOne(id, account);
     }
 
+    @ResponseBody
+    @RequestMapping(value = "/api/acceptance/lots/{id}", method = RequestMethod.GET)
+    public BaseEntity<List<AcceptAddDTO>> getLotList(@PathVariable("id") int id, @RequestHeader("account") String account) {
+        return acceptanceService.getLotList(id, account);
+    }
+
+
+
+
+
+    //完成
+    @ResponseBody
+    @RequestMapping(value = "/api/acceptance/complete", method = RequestMethod.POST)
+    public BaseEntity<String> compete(@RequestBody RecUpdateDTO recUpdateDTO, @RequestHeader("account") String account) {
+        return acceptanceService.updateGoodsByGoodsId(recUpdateDTO, account);
+    }
 }

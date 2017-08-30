@@ -1,9 +1,6 @@
 package com.teeny.wms.core.repository;
 
-import com.teeny.wms.dto.CommonDTO;
-import com.teeny.wms.dto.GoodsDTO;
-import com.teeny.wms.dto.QueryDocumentDTO;
-import com.teeny.wms.dto.RecBillDTO;
+import com.teeny.wms.dto.*;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
@@ -38,21 +35,22 @@ public interface RecBillRepository {
     List<GoodsDTO> getGoodsByBillId(@Param("orderId") int orderId, @Param("account") String account);
 
     ///复制数据
-    void addData(@Param("id") int id, @Param("lotNo") String lotNo, @Param("amount") Float amount, @Param("price") Float price, @Param("seriaNo") String serialNo, @Param("validityDate") String validityDate);
+    void addData(@Param("id") int id, @Param("lotNo") String lotNo, @Param("amount") Float amount, @Param("price") Float price, @Param("seriaNo") String serialNo, @Param("validityDate") String validityDate,@Param("account") String account);
 
     @Update("UPDATE ${account}.dbo.pda_RecBill_D SET DealStates=1 WHERE smb_id=#{id}")
     void completeOne(@Param("id") int id, @Param("account") String account);
 
-    @Select("SELECT count(*) total FROM ${account}.dbo.pda_RecBill_D d WHERE d.DealStates=0 AND d.bill_id=(SELECT d1.bill_id FROM ${account}.dbo.pda_RecBill_D d1 WHERE d1.smb_id=#{id})")
+    @Select("SELECT count(*) total FROM ${account}.dbo.pda_RecBill_D d WHERE d.DealStates=0 AND d.bill_id=(SELECT DISTINCT d1.bill_id FROM ${account}.dbo.pda_RecBill_D d1 WHERE d1.original_id=#{id})")
     int countByDealType(@Param("id") int id, @Param("account") String account);
 
-    @Update("UPDATE ${account}.dbo.pda_RecBill SET billstates=13 WHERE billid=(SELECT d.bill_id FROM ${account}.dbo.pda_RecBill_D d WHERE d.smb_id=#{id})")
+    @Update("UPDATE ${account}.dbo.pda_RecBill SET billstates=13 WHERE billid=(SELECT DISTINCT d.bill_id FROM ${account}.dbo.pda_RecBill_D d WHERE d.original_id=#{id})")
     void updateBillByGoodsId(@Param("id") int id, @Param("account") String account);
 
     @Select("SELECT d.smb_id FROM ${account}.dbo.pda_RecBill_D d WHERE d.original_id=#{id}")
     List<Integer> getIdsById(@Param("id") int id, @Param("account") String account);
 
-    @Select("DELECT FROM ${account}.dbo.pda_RecBill_D WHERE smb_id=#{id}")
+    @Select("DELETE ${account}.dbo.pda_RecBill_D WHERE smb_id=#{id}")
     void deleteById(@Param("id") Integer id, @Param("account") String account);
 
+    List<AcceptAddDTO> getLotList(@Param("id") int id, @Param("account") String account);
 }

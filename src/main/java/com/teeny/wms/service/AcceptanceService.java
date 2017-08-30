@@ -1,6 +1,7 @@
 package com.teeny.wms.service;
 
 import com.teeny.wms.core.domain.baseEntity.BaseEntity;
+import com.teeny.wms.dto.AcceptAddDTO;
 import com.teeny.wms.dto.CommonDTO;
 import com.teeny.wms.dto.OrderDetailDTO;
 import com.teeny.wms.dto.RecUpdateDTO;
@@ -22,4 +23,6 @@ public interface AcceptanceService {
     BaseEntity<String> updateGoodsByGoodsId(RecUpdateDTO recUpdateDTO, String account);
 
     BaseEntity<String> completeOne(int id, String account);
+
+    BaseEntity<List<AcceptAddDTO>> getLotList(int id, String account);
 }

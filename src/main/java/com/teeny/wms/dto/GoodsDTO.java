@@ -8,18 +8,36 @@ import java.io.Serializable;
  */
 public class GoodsDTO implements Serializable {
     private int id;//id 1
+    private int originalId;
     private String billNo;
     private String goodsName; //商品名 1
     private String lotNo; //批号 1
     private String specification; //规格 1
     private String validityDate; //有效期 1
     private float retailPrice; //零售价 1
-    private float amount; //数量 1
+    private float amount; //订单（配送）数量 1
+    private float quantity; //收货数量 1
     private String manufacturer; //厂家 1
     private String produceArea; //产地
     private String serialNo; //序号
+    private String barcode;   //商品码
     private int status;
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getOriginalId() {
+        return originalId;
+    }
+
+    public void setOriginalId(int originalId) {
+        this.originalId = originalId;
+    }
 
     public String getBillNo() {
         return billNo;
@@ -77,28 +95,20 @@ public class GoodsDTO implements Serializable {
         this.amount = amount;
     }
 
+    public float getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(float quantity) {
+        this.quantity = quantity;
+    }
+
     public String getManufacturer() {
         return manufacturer;
     }
 
     public void setManufacturer(String manufacturer) {
         this.manufacturer = manufacturer;
-    }
-
-    public int getStatus() {
-        return status;
-    }
-
-    public void setStatus(int status) {
-        this.status = status;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getProduceArea() {
@@ -115,5 +125,21 @@ public class GoodsDTO implements Serializable {
 
     public void setSerialNo(String serialNo) {
         this.serialNo = serialNo;
+    }
+
+    public String getBarcode() {
+        return barcode;
+    }
+
+    public void setBarcode(String barcode) {
+        this.barcode = barcode;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
     }
 }

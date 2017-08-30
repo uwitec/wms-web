@@ -9,7 +9,6 @@ import java.util.List;
 public class OrderDetailDTO implements Serializable{
     private int orderId; //订单ID
     private String billNo;
-    private String status; //订单状态
     private int buyerId; //验收人ID
     private String buyer; //验收人名
     private List<GoodsDTO> goodsList;
@@ -30,13 +29,6 @@ public class OrderDetailDTO implements Serializable{
         this.billNo = billNo;
     }
 
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
 
     public int getBuyerId() {
         return buyerId;
