@@ -59,4 +59,7 @@ public interface CheckBillRepository {
 
     @Update("UPDATE pda_CheckBill SET diff_remark=#{remark},remark=#{reviewrId},billstates=13 WHERE billnumber=#{billNo}")
     void complete(@Param("billNo") String billNo,@Param("reviewrId") int reviewrId,@Param("remark") String remark, @Param("account") String account);
+
+    @Update("UPDATE pda_CheckBill_B SET DealStates=1 WHERE bill_id=(SELECT b.billid FROM pda_CheckBill b WHERE b.billnumber=#{billNo})")
+    void completeChildren(@Param("billNo") String billNo,@Param("account") String account);
 }

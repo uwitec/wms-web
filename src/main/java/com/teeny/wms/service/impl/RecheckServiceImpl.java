@@ -69,15 +69,14 @@ public class RecheckServiceImpl implements RecheckService {
 
     @Override
     public BaseEntity<List<CommonDTO>> getBills(int sId, String account) {
-
         List<CommonDTO> list = checkBillRepository.getBills(sId, account);
-
         return new BaseEntity<List<CommonDTO>>(list);
     }
 
     @Override
     public BaseEntity<String> complete(RecheckCompleteDTO recheckCompleteDTO, String account) {
         checkBillRepository.complete(recheckCompleteDTO.getBillNo(),recheckCompleteDTO.getReviewrId(),recheckCompleteDTO.getRemark(), account);
+        checkBillRepository.completeChildren(recheckCompleteDTO.getBillNo(), account);
         return new BaseEntity<>();
     }
 
