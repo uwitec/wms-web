@@ -9,7 +9,6 @@ import com.teeny.wms.dto.Putaway.RecheckCompleteDTO;
 import com.teeny.wms.dto.ReviewDTO;
 import com.teeny.wms.dto.ReviewUpdateDTO;
 import com.teeny.wms.service.RecheckService;
-import jdk.internal.org.objectweb.asm.tree.analysis.BasicValue;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -70,7 +69,7 @@ public class RecheckServiceImpl implements RecheckService {
     @Override
     public BaseEntity<List<CommonDTO>> getBills(int sId, String account) {
         List<CommonDTO> list = checkBillRepository.getBills(sId, account);
-        return new BaseEntity<List<CommonDTO>>(list);
+        return new BaseEntity<>(list);
     }
 
     @Override
