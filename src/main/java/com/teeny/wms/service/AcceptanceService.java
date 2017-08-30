@@ -25,4 +25,6 @@ public interface AcceptanceService {
     BaseEntity<String> completeOne(int id, String account);
 
     BaseEntity<List<AcceptAddDTO>> getLotList(int id, String account);
+
+    BaseEntity<List<CommonDTO>> getBillsByBillNo(String billNo, String account, int sId);
 }

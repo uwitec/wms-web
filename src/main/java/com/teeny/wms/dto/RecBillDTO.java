@@ -11,6 +11,15 @@ public class RecBillDTO implements Serializable {
     private String billNo;
     private int buyerId;
     private String buyer;
+    private String unitName;
+
+    public String getUnitName() {
+        return unitName;
+    }
+
+    public void setUnitName(String unitName) {
+        this.unitName = unitName;
+    }
 
     public int getOrderId() {
         return orderId;

@@ -11,6 +11,7 @@ public class OrderDetailDTO implements Serializable{
     private String billNo;
     private int buyerId; //验收人ID
     private String buyer; //验收人名
+    private String unitName; //单位名字
     private List<GoodsDTO> goodsList;
 
     public int getOrderId() {
@@ -29,6 +30,13 @@ public class OrderDetailDTO implements Serializable{
         this.billNo = billNo;
     }
 
+    public String getUnitName() {
+        return unitName;
+    }
+
+    public void setUnitName(String unitName) {
+        this.unitName = unitName;
+    }
 
     public int getBuyerId() {
         return buyerId;

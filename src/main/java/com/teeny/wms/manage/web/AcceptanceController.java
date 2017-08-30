@@ -36,6 +36,13 @@ public class AcceptanceController {
         return acceptanceService.getOrderWithUnitId(unitId, sId, account);
     }
 
+    //  根据billNo返回所有的数据
+    @ResponseBody
+    @RequestMapping(value = "/api/acceptance/orderList/{billNo}", method = RequestMethod.GET)
+    public BaseEntity<List<CommonDTO>> getBillsByBillNo(@PathVariable("billNo") String billNo, @RequestHeader("account") String account, @RequestHeader("sId") int sId) {
+        return acceptanceService.getBillsByBillNo(billNo, account, sId);
+    }
+
     /**
      * 获取订单详情
      *
@@ -49,11 +56,11 @@ public class AcceptanceController {
         return acceptanceService.getOrderListWithUnitId(account, id);
     }
 
-    //一键完成
-    @RequestMapping(value = "/api/acceptance/allCompete", method = RequestMethod.POST)
-    public BaseEntity<String> allCompeteByOrderId(@RequestBody List<Integer> ids, @RequestHeader("account") String account) {
-        return acceptanceService.updateGoodsByOrderId(ids, account);
-    }
+//    //一键完成
+//    @RequestMapping(value = "/api/acceptance/allCompete", method = RequestMethod.POST)
+//    public BaseEntity<String> allCompeteByOrderId(@RequestBody List<Integer> ids, @RequestHeader("account") String account) {
+//        return acceptanceService.updateGoodsByOrderId(ids, account);
+//    }
 
     //单个修改
     @ResponseBody
@@ -62,12 +69,12 @@ public class AcceptanceController {
         return acceptanceService.updateGoodsByGoodsId(recUpdateDTO, account);
     }
 
-    //单个完成
-    @ResponseBody
-    @RequestMapping(value = "/api/acceptance/updateOne", method = RequestMethod.POST)
-    public BaseEntity<String> completeOne(@RequestParam("id") int id, @RequestHeader("account") String account) {
-        return acceptanceService.completeOne(id, account);
-    }
+//    //单个完成
+//    @ResponseBody
+//    @RequestMapping(value = "/api/acceptance/updateOne", method = RequestMethod.POST)
+//    public BaseEntity<String> completeOne(@RequestParam("id") int id, @RequestHeader("account") String account) {
+//        return acceptanceService.completeOne(id, account);
+//    }
 
     @ResponseBody
     @RequestMapping(value = "/api/acceptance/lots/{id}", method = RequestMethod.GET)

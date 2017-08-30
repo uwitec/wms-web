@@ -63,6 +63,7 @@ public class AcceptanceServiceImpl implements AcceptanceService {
         result.setBuyer(bill.getBuyer());
         result.setBuyerId(bill.getBuyerId());
         result.setOrderId(bill.getOrderId());
+        result.setUnitName(bill.getUnitName());
         int orderId = bill.getOrderId();
         List<GoodsDTO> list = recBillRepository.getGoodsByBillId(orderId, account);
         result.setGoodsList(list);
@@ -122,5 +123,17 @@ public class AcceptanceServiceImpl implements AcceptanceService {
     @Override
     public BaseEntity<List<AcceptAddDTO>> getLotList(int id, String account) {
         return new BaseEntity<>(recBillRepository.getLotList(id, account));
+    }
+
+    @Override
+    public BaseEntity<List<CommonDTO>> getBillsByBillNo(String billNo, String account, int sId) {
+        Integer unitId = recBillRepository.findUnitByBillNo(billNo, account);
+        if (unitId == null || unitId == 0) {
+            BaseEntity<String> result = new BaseEntity<>();
+            result.setResult(1);
+            result.setMsg("没有此单号数据！");
+            throw new WmsException(result);
+        }
+        return this.getOrderWithUnitId(unitId, sId, account);
     }
 }

@@ -60,26 +60,26 @@ public class HomeServiceImpl implements HomeService {
     }
 
     @Override
-    public BaseEntity<List<QueryDocumentDTO>> getDocumentList(int type, String account) {
+    public BaseEntity<List<QueryDocumentDTO>> getDocumentList(int type, String account, int sId) {
 
         List<QueryDocumentDTO> data = new ArrayList<QueryDocumentDTO>();
         if (type == 0) {
-            data.addAll(recBillRepository.getBill(account));
-            data.addAll(putOnBillRepository.getBill(account));
-            data.addAll(tranBillRepository.getBill(account));
-            data.addAll(checkBillRepository.getBill(account));
+            data.addAll(recBillRepository.getBill(account, sId));
+            data.addAll(putOnBillRepository.getBill(account, sId));
+            data.addAll(tranBillRepository.getBill(account, sId));
+            data.addAll(checkBillRepository.getBill(account, sId));
         }
         if (type == 1) {
-            data = recBillRepository.getBill(account);
+            data = recBillRepository.getBill(account, sId);
         }
         if (type == 2) {
-            data = putOnBillRepository.getBill(account);
+            data = putOnBillRepository.getBill(account, sId);
         }
         if (type == 3) {
-            data = tranBillRepository.getBill(account);
+            data = tranBillRepository.getBill(account, sId);
         }
         if (type == 4) {
-            data = checkBillRepository.getBill(account);
+            data = checkBillRepository.getBill(account, sId);
         }
 
         return new BaseEntity<List<QueryDocumentDTO>>(data);
