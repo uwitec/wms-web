@@ -46,8 +46,7 @@ public interface PutOnBillRepository {
     //复制数据
     void copyData(@Param("goodsDetailId") int goodsDetailId, @Param("allcationId") int allcationId, @Param("amout") int amount, @Param("account") String account);
 
-    @Select("SELECT b.billid AS id,b.billnumber AS documentNo, b.pdaInTime AS documentDate, CASE b.billstates WHEN 10 THEN '验收中' WHEN 13 THEN '已验收' ELSE '' END AS status FROM ${account}.dbo.pda_PutOnBill b;")
-    List<QueryDocumentDTO> getBill(String account);
+    List<QueryDocumentDTO> getBill(@Param("account") String account, @Param("sId") int sId);
 
     @Update("UPDATE ${account}.dbo.pda_PutOnBill_D SET EligibleQty=#{amount} WHERE smb_id=#{id}")
     void updateGoodsAmount(@Param("id") int id,@Param("amount") float amount,@Param("account") String account);

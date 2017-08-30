@@ -20,5 +20,5 @@ public interface HomeService {
 
     BaseEntity<BillCountDTO> getInfoByWarehouse(String account, int warehouseId);
 
-    BaseEntity<List<QueryDocumentDTO>> getDocumentList(int type, String account);
+    BaseEntity<List<QueryDocumentDTO>> getDocumentList(int type, String account, int sId);
 }

@@ -1,6 +1,7 @@
 package com.teeny.wms.core.repository;
 
 import com.teeny.wms.dto.*;
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
@@ -25,8 +26,7 @@ public interface RecBillRepository {
     @Update("UPDATE ${account}.dbo.pda_RecBill_D SET DealStates=1 WHERE smb_id=#{id}")
     void updateGoodsByOrderId(@Param("id") int id, @Param("account") String account);
 
-    @Select("SELECT b.billid AS id,b.billnumber AS documentNo, b.pdaInTime AS documentDate, CASE b.billstates WHEN 10 THEN '验收中' WHEN 13 THEN '已验收' ELSE '' END AS status FROM ${account}.dbo.pda_RecBill b;")
-    List<QueryDocumentDTO> getBill(@Param("account") String account);
+    List<QueryDocumentDTO> getBill(@Param("account") String account, @Param("sId") int sId);
 
     @Update("UPDATE ${account}.dbo.pda_RecBill SET pdastates = #{type}, pdaReTime = getdate() WHERE billid = #{orderId}")
     void updateBillPdaStatus(@Param("orderId") int orderId, @Param("type") int type, @Param("account") String account);
@@ -49,8 +49,11 @@ public interface RecBillRepository {
     @Select("SELECT d.smb_id FROM ${account}.dbo.pda_RecBill_D d WHERE d.original_id=#{id}")
     List<Integer> getIdsById(@Param("id") int id, @Param("account") String account);
 
-    @Select("DELETE ${account}.dbo.pda_RecBill_D WHERE smb_id=#{id}")
+    @Delete("DELETE FROM ${account}.dbo.pda_RecBill_D WHERE smb_id=#{id}")
     void deleteById(@Param("id") Integer id, @Param("account") String account);
 
     List<AcceptAddDTO> getLotList(@Param("id") int id, @Param("account") String account);
+
+    @Select("SELECT r.c_id FROM ${account}.dbo.pda_RecBill r WHERE r.billnumber=#{billNo}")
+    Integer findUnitByBillNo(@Param("billNo") String billNo,@Param("account") String account);
 }

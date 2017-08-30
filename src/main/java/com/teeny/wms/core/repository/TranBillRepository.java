@@ -21,8 +21,7 @@ public interface TranBillRepository {
 
     List<TransferListDTO> getTransferList(@Param("billNo") String billNo, @Param("account") String account);
 
-    @Select("SELECT b.billid AS id,b.billnumber AS documentNo, b.pdaInTime AS documentDate,CASE b.billstates WHEN 10 THEN '验收中' WHEN 13 THEN '已验收' ELSE '' END AS status FROM ${account}.dbo.pda_TranBill b;")
-    List<QueryDocumentDTO> getBill(String account);
+    List<QueryDocumentDTO> getBill(@Param("account") String account, @Param("sId") int sId);
 
     @Update("UPDATE ${account}.dbo.pda_TranBill_D SET DealStates=1 WHERE smb_id = #{id}")
     void updateOne(@Param("id") int id, @Param("account") String account);

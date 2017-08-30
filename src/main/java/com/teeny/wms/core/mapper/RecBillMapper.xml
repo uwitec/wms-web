@@ -31,9 +31,11 @@
             r.billid     AS orderId,
             r.billnumber AS billNo,
             r.e_id       AS buyerId,
-            e.name       AS buyer
+            e.name       AS buyer,
+            c.name       AS unitName
         FROM ${account}.dbo.pda_RecBill r
             LEFT JOIN ${account}.dbo.pda_employees e ON r.e_id = e.e_id
+            LEFT JOIN ${account}.dbo.pda_clients c ON c.c_id = r.c_id
         WHERE r.c_id = #{unitId} AND r.billstates = 10
     </select>
 
@@ -96,10 +98,10 @@
     </insert>
 
     <select id="getOrderBillWithUnitId" resultType="com.teeny.wms.dto.CommonDTO">
-        SELECT billid AS id, billnumber AS name
-        FROM ${account}.dbo.pda_RecBill WHERE c_id=#{unitId}
+        SELECT r.billid AS id, r.billnumber AS name
+        FROM ${account}.dbo.pda_RecBill r WHERE c_id=#{unitId}
         <if test="sId != 0">
-            AND s_id=#{sId}
+            AND r.s_id=#{sId}
         </if>
     </select>
 
@@ -112,6 +114,17 @@
             d.EligibleQty                           AS lotNo
         FROM ${account}.dbo.pda_RecBill_D d
         WHERE original_id = #{id}
+    </select>
+
+
+    <select id="getBill" resultType="com.teeny.wms.dto.QueryDocumentDTO">
+       SELECT b.billid AS id,b.billnumber AS documentNo, b.pdaInTime AS documentDate,
+           CASE b.billstates WHEN 10 THEN '验收中' WHEN 13 THEN '已验收' ELSE '' END AS status FROM ${account}.dbo.pda_RecBill b
+        <where>
+            <if test="sId != 0">
+                b.s_id = #{sId}
+            </if>
+        </where>
     </select>
 
 </mapper>

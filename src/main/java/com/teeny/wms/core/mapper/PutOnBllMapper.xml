@@ -94,4 +94,16 @@
         </where>
     </select>
 
+
+    <select id="getBill" resultType="com.teeny.wms.dto.QueryDocumentDTO">
+        SELECT b.billid AS id,b.billnumber AS documentNo, b.pdaInTime AS documentDate,
+            CASE b.billstates WHEN 10 THEN '验收中' WHEN 13 THEN '已验收' ELSE '' END AS status FROM ${account}.dbo.pda_PutOnBill b
+        <where>
+            <if test="sId != 0">
+                b.s_id = #{sId}
+            </if>
+        </where>
+
+    </select>
+
 </mapper>

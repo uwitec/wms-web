@@ -53,8 +53,8 @@ public class HomeController {
     //单据查询
     @ResponseBody
     @RequestMapping(value = "/api/home/doucmentList/{type}", method = RequestMethod.GET)
-    public BaseEntity<List<QueryDocumentDTO>> getDocumentList(@PathVariable("type") int type, @RequestHeader("account") String account) {
-        return homeService.getDocumentList(type, account);
+    public BaseEntity<List<QueryDocumentDTO>> getDocumentList(@PathVariable("type") int type, @RequestHeader("account") String account, @RequestHeader("sId") int sId) {
+        return homeService.getDocumentList(type, account, sId);
     }
 
 }
