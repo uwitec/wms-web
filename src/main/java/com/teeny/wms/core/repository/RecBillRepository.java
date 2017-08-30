@@ -35,7 +35,7 @@ public interface RecBillRepository {
     List<GoodsDTO> getGoodsByBillId(@Param("orderId") int orderId, @Param("account") String account);
 
     ///复制数据
-    void addData(@Param("id") int id, @Param("lotNo") String lotNo, @Param("amount") Float amount, @Param("price") Float price, @Param("seriaNo") String serialNo, @Param("validityDate") String validityDate,@Param("account") String account);
+    int addData(@Param("id") int id, @Param("lotNo") String lotNo, @Param("amount") Float amount, @Param("price") Float price, @Param("seriaNo") String serialNo, @Param("validityDate") String validityDate,@Param("account") String account);
 
     @Update("UPDATE ${account}.dbo.pda_RecBill_D SET DealStates=1 WHERE smb_id=#{id}")
     void completeOne(@Param("id") int id, @Param("account") String account);
@@ -56,4 +56,7 @@ public interface RecBillRepository {
 
     @Select("SELECT r.c_id FROM ${account}.dbo.pda_RecBill r WHERE r.billnumber=#{billNo}")
     Integer findUnitByBillNo(@Param("billNo") String billNo,@Param("account") String account);
+
+
+    int test(@Param("id") int id,@Param("date") String date,@Param("lotNo") String lotNo,@Param("amount") double amount,@Param("price") int price,@Param("account") String account);
 }

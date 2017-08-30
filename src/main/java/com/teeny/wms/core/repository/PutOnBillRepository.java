@@ -52,19 +52,19 @@ public interface PutOnBillRepository {
     void updateGoodsAmount(@Param("id") int id,@Param("amount") float amount,@Param("account") String account);
 
 
-    void copyDataByParam(@Param("id") int id,@Param("amount") float amount,@Param("locationId") int locationId, String account);
+    void copyDataByParam(@Param("id") int id,@Param("amount") float amount,@Param("locationId") int locationId,@Param("account") String account);
 
-    @Select("SELECT count(*) FROM ${account}.dbo.pda_PutOnBill_D d WHERE d.DealStates = 0 AND d.bill_id = (SELECT d1.bill_id FROM ${account}.dbo.pda_PutOnBill_D d1 WHERE d1.smb_id=#{id})")
+    @Select("SELECT count(*) FROM ${account}.dbo.pda_PutOnBill_D d WHERE d.DealStates = 0 AND d.bill_id = (SELECT DISTINCT d1.bill_id FROM ${account}.dbo.pda_PutOnBill_D d1 WHERE d1.smb_id=#{id})")
     int countBySmbId(@Param("id") int id, @Param("account") String account);
 
-    @Update("UPDATE ${account}.dbo.pda_PutOnBill SET pdastates=2, pdaWrTime=getdate() WHERE billid=(SELECT d.bill_id FROM ${account}.dbo.pda_PutOnBill_D d WHERE d.smb_id=#{id})")
+    @Update("UPDATE ${account}.dbo.pda_PutOnBill SET pdastates=2, pdaWrTime=getdate() WHERE billid=(SELECT DISTINCT d.bill_id FROM ${account}.dbo.pda_PutOnBill_D d WHERE d.smb_id=#{id})")
     void updatePutBySmbId(@Param("id") int id, @Param("account") String account);
 
     @Update("UPDATE ${account}.dbo.pda_PutOnBill SET pdaReTime = getdate(), pdastates=1 WHERE billid=#{orderNoId}")
     void uodateBillStatus(@Param("orderNoId") int orderNoId,@Param("account") String account,@Param("sId") int sId);
 
     //更新一个
-    @Update("UPDATE ${account}.dbo.pda_PutOnBill_D SET DealStates=1 WHERE smb_id=#{id}")
+    @Update("UPDATE ${account}.dbo.pda_PutOnBill_D SET DealStates=1 WHERE original_id=#{id}")
     void updateOne(@Param("id") Integer id, @Param("account") String account);
 
     @Update("UPDATE ${account}.dbo.pda_PutOnBill SET billstates = 13 WHERE billid = (SELECT d.bill_id FROM ${account}.dbo.pda_PutOnBill_D d WHERE d.smb_id=#{id})")
@@ -73,8 +73,8 @@ public interface PutOnBillRepository {
     @Select("SELECT b.billid FROM ${account}.dbo.pda_PutOnBill b WHERE b.billnumber=#{orderNoId}")
     int getBillByBillNumber(@Param("orderNoId") String orderNoId, @Param("account") String account,@Param("sId") int sId);
 
-    @Delete("DELECT FROM ${account}.dbo.pda_PutOnBill_D WHERE smb_id=#{id}")
-    void deleteBySmbId(@Param("id") Integer id,@Param("account") String account);
+    @Delete("DELECT FROM ${account}.dbo.pda_PutOnBill_D WHERE smb_id=#{id} AND original_id=#{originalId}")
+    void deleteBySmbId(@Param("id") Integer id,@Param("originalId") int originalId ,@Param("account") String account);
 
     @Select("SELECT d.EligibleQty AS amount,l.loc_code AS locationCode FROM ${account}.dbo.pda_PutOnBill_D d, ${account}.dbo.pda_location l WHERE d.Location_id=l.l_id AND d.p_id=(SELECT d1.p_id FROM ${account}.dbo.pda_PutOnBill_D d1 WHERE d1.smb_id=#{id})")
     List<LocationAndCountDTO> getLocationListById(@Param("id") int id, @Param("account") String account);
@@ -87,5 +87,12 @@ public interface PutOnBillRepository {
 
     //获取所有的货位
     List<CommonDTO> getLocations(@Param("sId") int sId,@Param("account") String account);
+
+
+    @Select("SELECT count(*) FROM ${account}.dbo.pda_PutOnBill_D d WHERE d.DealStates = 0 AND d.bill_id = (SELECT DISTINCT d1.bill_id FROM ${account}.dbo.pda_PutOnBill_D d1 WHERE d1.original_id=#{id})")
+    int countByOriginalId(@Param("id") int id,@Param("account") String account);
+
+    @Update("UPDATE ${account}.dbo.pda_PutOnBill SET billstates = 13 WHERE billid = (SELECT DISTINCT d.bill_id FROM ${account}.dbo.pda_PutOnBill_D d WHERE d.original_id=#{id})")
+    void updatePutByOriginalId(@Param("id") int id,@Param("account") String account);
 }
 

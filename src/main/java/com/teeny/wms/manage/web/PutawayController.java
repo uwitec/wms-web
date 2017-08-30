@@ -78,8 +78,8 @@ public class PutawayController {
     //单个上架
     @RequestMapping(value = "/api/shelve/single", method = RequestMethod.POST)
     @ResponseBody
-    public BaseEntity putOnWithOne(@RequestParam("goodsDetailId") int goodsDetailId, @RequestHeader("account") String account) {
-        putOnBillService.putOnBillWithOne(goodsDetailId, account);
+    public BaseEntity putOnWithOne(@RequestParam("id") int originalId, @RequestHeader("account") String account) {
+        putOnBillService.putOnBillWithOne(originalId, account);
         return new BaseEntity();
     }
 

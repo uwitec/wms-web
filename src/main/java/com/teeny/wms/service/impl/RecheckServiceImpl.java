@@ -5,9 +5,11 @@ import com.teeny.wms.core.domain.CheckBillB;
 import com.teeny.wms.core.domain.baseEntity.BaseEntity;
 import com.teeny.wms.core.repository.CheckBillRepository;
 import com.teeny.wms.dto.CommonDTO;
+import com.teeny.wms.dto.Putaway.RecheckCompleteDTO;
 import com.teeny.wms.dto.ReviewDTO;
 import com.teeny.wms.dto.ReviewUpdateDTO;
 import com.teeny.wms.service.RecheckService;
+import jdk.internal.org.objectweb.asm.tree.analysis.BasicValue;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -72,5 +74,12 @@ public class RecheckServiceImpl implements RecheckService {
 
         return new BaseEntity<List<CommonDTO>>(list);
     }
+
+    @Override
+    public BaseEntity<String> complete(RecheckCompleteDTO recheckCompleteDTO, String account) {
+        checkBillRepository.complete(recheckCompleteDTO.getBillNo(),recheckCompleteDTO.getReviewrId(),recheckCompleteDTO.getRemark(), account);
+        return new BaseEntity<>();
+    }
+
 
 }

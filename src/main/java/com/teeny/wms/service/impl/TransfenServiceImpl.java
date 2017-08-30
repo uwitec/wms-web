@@ -42,7 +42,7 @@ public class TransfenServiceImpl implements TransferService {
             }
             int count = tranBillRepository.countByDealstatus(ids.get(0), account);
             if (count == 0) {
-                tranBillRepository.updateBillStatusBySmbId(ids.get(0), account);
+                tranBillRepository.updateBillStatusByOriginalId(ids.get(0), account);
             }
             return new BaseEntity<String>();
         }
@@ -54,14 +54,13 @@ public class TransfenServiceImpl implements TransferService {
         tranBillRepository.updateOne(id, account);
         int count = tranBillRepository.countByDealstatus(id, account);
         if (count == 0) {
-            tranBillRepository.updateBillStatusBySmbId(id, account);
+            tranBillRepository.updateBillStatusByOriginalId(id, account);
         }
         return new BaseEntity<String>();
     }
 
     @Override
     public BaseEntity<String> update(PutawayAddDTO putawayAddDTO, String account) {
-
         List<Integer> ids = tranBillRepository.getIdsByOriginalId(putawayAddDTO.getId(), account);
         if (putawayAddDTO.getLocations().size()>0) {
             for (PutawayAddDTO.Location loc : putawayAddDTO.getLocations()) {
@@ -72,17 +71,17 @@ public class TransfenServiceImpl implements TransferService {
                     baseEntity.setResult(1);
                     throw new WmsException(baseEntity);
                 }
-                tranBillRepository.copyData(putawayAddDTO.getSmbId(),loc.getAmount(),locationId, account);
-            }
-            for (Integer i : ids) {
-                tranBillRepository.deleteById(i,account);
+                tranBillRepository.copyData(putawayAddDTO.getId(),loc.getAmount(),locationId, account);
             }
         }else {
             tranBillRepository.copyData(putawayAddDTO.getId(),0,0, account);
         }
-        int count = tranBillRepository.countByDealstatus(putawayAddDTO.getSmbId(), account);
+        for (Integer i : ids) {
+            tranBillRepository.deleteById(i, putawayAddDTO.getId(),account);
+        }
+        int count = tranBillRepository.countByDealstatus(putawayAddDTO.getId(), account);
         if (count == 0) {
-            tranBillRepository.updateBillStatusBySmbId(putawayAddDTO.getSmbId(), account);
+            tranBillRepository.updateBillStatusByOriginalId(putawayAddDTO.getId(), account);
         }
 
         return new BaseEntity<String>();
@@ -99,6 +98,12 @@ public class TransfenServiceImpl implements TransferService {
     @Override
     public BaseEntity<List<CommonDTO>> getBills(int saId, int sId, String account) {
         List<CommonDTO> list = tranBillRepository.getBills(saId, sId, account);
+        return new BaseEntity<List<CommonDTO>>(list);
+    }
+
+    @Override
+    public BaseEntity<List<CommonDTO>> getGoodsCode(String account) {
+        List<CommonDTO> list = tranBillRepository.getGoodsCode(account);
         return new BaseEntity<List<CommonDTO>>(list);
     }
 

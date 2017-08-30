@@ -29,12 +29,12 @@ public interface PdBillRepository {
 
     List<StoreInventoryGoodsDTO> getStoreInventoryList(@Param("pdType") String pdType, @Param("saId") int saId, @Param("areaId") int areaId, @Param("account") String account, @Param("sId") int sId);
 
-    @Update({"UPDATE ${account}.dbo.pda_pdBill_D SET DealStates = 1 WHERE smb_id = #{goodsDetailId}"})
-    void completeOne(@Param("goodsDetailId") int goodsDetailId, @Param("account") String account);
+    @Update({"UPDATE ${account}.dbo.pda_pdBill_D SET DealStates = 1 WHERE original_id = #{originalId}"})
+    void completeOne(@Param("originalId") int originalId, @Param("account") String account);
 
     //查询未盘点数
-    @Select("SELECT count(*) FROM ${account}.dbo.pda_pdBill_D d WHERE d.DealStates=0 AND d.bill_id = (SELECT d1.bill_id FROM ${account}.dbo.pda_pdBill_D d1 WHERE d1.smb_id=#{goodsDetailId})")
-    int countByType(@Param("goodsDetailId") int goodsDetailId, @Param("account") String account);
+    @Select("SELECT count(*) FROM ${account}.dbo.pda_pdBill_D d WHERE d.DealStates=0 AND d.bill_id = (SELECT DISTINCT d1.bill_id FROM ${account}.dbo.pda_pdBill_D d1 WHERE d1.original_id=#{originalId})")
+    int countByType(@Param("originalId") int originalId, @Param("account") String account);
 
     //完成bill
     @Update("UPDATE ${account}.dbo.pda_pdBill SET billstates = 3 WHERE billid = (SELECT d.bill_id FROM ${account}.dbo.pda_pdBill_D d WHERE d.smb_id = #{goodsDetailId})")
@@ -86,9 +86,12 @@ public interface PdBillRepository {
     @Select("SELECT d.smb_id AS id FROM ${account}.dbo.pda_pdBill_D d WHERE d.p_id=(SELECT d1.p_id FROM ${account}.dbo.pda_pdBill_D d1 WHERE d1.smb_id=#{id}) AND d.bill_id=(SELECT d2.bill_id FROM ${account}.dbo.pda_pdBill_D d2 WHERE d2.smb_id=#{id})")
     List<Integer> getIdsBySmbId(@Param("id") int id, @Param("account") String account);
 
-    @Delete("DELETE FROM ${account}.dbo.pda_pdBill_D WHERE smb_id=#{id}")
-    void deleteBySmbId(@Param("id") Integer id, @Param("account") String account);
+    @Delete("DELETE FROM ${account}.dbo.pda_pdBill_D WHERE smb_id=#{id} AND original_id=#{originalId}")
+    void deleteBySmbId(@Param("id") Integer id, @Param("originalId") int originalId, @Param("account") String account);
 
     @Select("SELECT d.smb_id FROM ${account}.dbo.pda_pdBill_D d WHERE d.original_id=#{id}")
     List<Integer> getIdsByOriginalId(@Param("id") int id, @Param("account") String account);
+
+    @Update("UPDATE ${account}.dbo.pda_pdBill SET billstates = 3 WHERE billid = (SELECT DISTINCT d.bill_id FROM ${account}.dbo.pda_pdBill_D d WHERE d.original_id = #{originalId})")
+    void completeWithOriginalId(@Param("originalId") int originalId,@Param("account") String account);
 }

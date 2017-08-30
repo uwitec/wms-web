@@ -4,6 +4,7 @@ import com.teeny.wms.core.domain.Employess;
 import com.teeny.wms.dto.CommonDTO;
 import com.teeny.wms.dto.EmployeesDTO;
 import com.teeny.wms.security.CurrentUser;
+import com.teeny.wms.service.AcceptanceService;
 import com.teeny.wms.service.SystemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import javax.crypto.interfaces.PBEKey;
+import java.security.PublicKey;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,6 +30,8 @@ public class Test {
 
     @Autowired
     private SystemService systemService;
+    @Autowired
+    AcceptanceService acceptanceService;
 
     @RequestMapping(value = "/api/haha", method = RequestMethod.GET)
     public void haha(Model model) {
@@ -61,4 +66,11 @@ public class Test {
         List<CommonDTO> employees = systemService.findAll(account);
         model.addAttribute("emp",employees);
     }
+
+    @RequestMapping(value = "/test", method = RequestMethod.GET)
+    public void test() {
+        acceptanceService.test();
+    }
+
+
 }

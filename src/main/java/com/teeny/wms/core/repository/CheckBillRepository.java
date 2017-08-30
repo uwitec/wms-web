@@ -56,4 +56,7 @@ public interface CheckBillRepository {
 
     @Select("SELECT b.pdastates FROM ${account}.dbo.pda_CheckBill b WHERE b.billid=#{billId}")
     int getBillStatus(@Param("billId") int billId,@Param("account") String account);
+
+    @Update("UPDATE pda_CheckBill SET diff_remark=#{remark},remark=#{reviewrId},billstates=13 WHERE billnumber=#{billNo}")
+    void complete(@Param("billNo") String billNo,@Param("reviewrId") int reviewrId,@Param("remark") String remark, @Param("account") String account);
 }

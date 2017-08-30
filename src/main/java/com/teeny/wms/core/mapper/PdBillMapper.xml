@@ -135,7 +135,7 @@
                 d.pdastates,
                 d.original_id
             FROM ${account}.dbo.pda_pdBill_D d
-            WHERE d.smb_id = #{id}
+            WHERE d.smb_id = (SELECT max(d1.smb_id) FROM pda_pdBill_D d1 WHERE d1.original_id=#{id})
     </insert>
 
     <!--////////////////////单品盘点////////////////////-->

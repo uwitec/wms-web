@@ -37,25 +37,24 @@ public class InventoryServiceImpl implements InventoryService {
     }
 
     @Override
-    public BaseEntity<String> completeOne(int goodsDetailId, String account) {
-        pdBillRepository.completeOne(goodsDetailId, account);
-        int count = pdBillRepository.countByType(goodsDetailId, account);
+    public BaseEntity<String> completeOne(int originalId, String account) {
+        pdBillRepository.completeOne(originalId, account);
+        int count = pdBillRepository.countByType(originalId, account);
         if (count == 0) {
-            pdBillRepository.completeWithGoodsDetailId(goodsDetailId, account);
+            pdBillRepository.completeWithOriginalId(originalId, account);
         }
         return new BaseEntity<>();
     }
 
     @Override
     public BaseEntity<String> completeByParam(List<Integer> ids, String account) {
-
         if (ids.size() > 0) {
             for (Integer id : ids) {
                 pdBillRepository.completeOne(id, account);
             }
             int count = pdBillRepository.countByType(ids.get(0), account);
             if (count == 0) {
-                pdBillRepository.completeWithGoodsDetailId(ids.get(0), account);
+                pdBillRepository.completeWithOriginalId(ids.get(0), account);
             }
         }
         return new BaseEntity<String>();
@@ -71,19 +70,19 @@ public class InventoryServiceImpl implements InventoryService {
             List<Integer> ids = pdBillRepository.getIdsByOriginalId(pdEditDTO.getId(), account);
 
             for (PdEditParamDTO dto : pdEditDTO.getParam()) {
-                pdBillRepository.edit(pdEditDTO.getSmbId(), dto.getLotNo(), dto.getCount(), dto.getValidateDate(), account);
+                pdBillRepository.edit(pdEditDTO.getId(), dto.getLotNo(), dto.getCount(), dto.getValidateDate(), account);
             }
             for (Integer id : ids) {
-                pdBillRepository.deleteBySmbId(id, account);
+                pdBillRepository.deleteBySmbId(id, pdEditDTO.getId(), account);
             }
         } else {
             pdBillRepository.edit(pdEditDTO.getId(), "", 0, "", account);
-            pdBillRepository.deleteBySmbId(pdEditDTO.getId(), account);
+            pdBillRepository.deleteBySmbId(pdEditDTO.getId(), pdEditDTO.getId(), account);
         }
 
         int count = pdBillRepository.countByType(pdEditDTO.getId(), account);
         if (count == 0) {
-            pdBillRepository.completeWithGoodsDetailId(pdEditDTO.getId(), account);
+            pdBillRepository.completeWithOriginalId(pdEditDTO.getId(), account);
         }
 
 //        pdBillRepository.completeOne(pdEditDTO.getId(), account);

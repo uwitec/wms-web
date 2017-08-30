@@ -44,20 +44,20 @@ public class PutOnBillServiceImpl implements PutOnBillService {
         for (Integer id : ids) {
             putOnBillRepository.updateOne(id, account);
         }
-        int count = putOnBillRepository.countBySmbId(ids.get(0), account);
+        int count = putOnBillRepository.countByOriginalId(ids.get(0), account);
         if (count == 0) {
-            putOnBillRepository.updatePutOnBillDBySmbId(ids.get(0), account);
+            putOnBillRepository.updatePutByOriginalId(ids.get(0), account);
         }
         return new BaseEntity<String>();
     }
 
     @Override
-    public void putOnBillWithOne(int goodsDetailId, String account) {
+    public void putOnBillWithOne(int originalId, String account) {
 
-        putOnBillRepository.updatePutOnBillDById(goodsDetailId, account);
-        int count = putOnBillRepository.countBySmbId(goodsDetailId, account);
+        putOnBillRepository.updateOne(originalId, account);
+        int count = putOnBillRepository.countByOriginalId(originalId, account);
         if (count == 0) {
-            putOnBillRepository.updatePutOnBillDBySmbId(goodsDetailId, account);
+            putOnBillRepository.updatePutByOriginalId(originalId, account);
         }
     }
 
@@ -76,16 +76,16 @@ public class PutOnBillServiceImpl implements PutOnBillService {
                     baseEntity.setResult(1);
                     throw new WmsException(baseEntity);
                 }
-                putOnBillRepository.copyDataByParam(putawayAddDTO.getSmbId(),location.getAmount(),locationId,account);
+                putOnBillRepository.copyDataByParam(putawayAddDTO.getId(),location.getAmount(),locationId,account);
             }
-            for (Integer i : ids) {
-                putOnBillRepository.deleteBySmbId(i, account);
+            for (Integer id : ids) {
+                putOnBillRepository.deleteBySmbId(id, putawayAddDTO.getId(), account);
             }
         }
 
-        int count = putOnBillRepository.countBySmbId(putawayAddDTO.getSmbId(), account);
+        int count = putOnBillRepository.countByOriginalId(putawayAddDTO.getId(), account);
         if (count == 0) {
-            putOnBillRepository.updatePutBySmbId(putawayAddDTO.getSmbId(), account);
+            putOnBillRepository.updatePutByOriginalId(putawayAddDTO.getId(), account);
         }
         return new BaseEntity<String>();
     }

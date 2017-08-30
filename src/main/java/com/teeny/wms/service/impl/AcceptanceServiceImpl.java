@@ -95,7 +95,7 @@ public class AcceptanceServiceImpl implements AcceptanceService {
 
         List<Integer> ids = recBillRepository.getIdsById(recUpdateDTO.getId(), account);
         for (AcceptAddDTO dto : param) {
-            recBillRepository.addData(recUpdateDTO.getSmbId(), dto.getLotNo(), dto.getAmount(), dto.getPrice(), dto.getSerialNo(), dto.getValidityDate(), account);
+            int i = recBillRepository.addData(recUpdateDTO.getSmbId(), dto.getLotNo(), dto.getAmount(), dto.getPrice(), dto.getSerialNo(), dto.getValidityDate(), account);
         }
         for (Integer i : ids) {
             recBillRepository.deleteById(i, account);
@@ -136,4 +136,14 @@ public class AcceptanceServiceImpl implements AcceptanceService {
         }
         return this.getOrderWithUnitId(unitId, sId, account);
     }
+
+    @Override
+    public void test() {
+
+        int a = recBillRepository.test(1,"2012-1-2","批号123",34.3,5435,"yyt");
+        System.out.print(a);
+
+    }
+
+
 }

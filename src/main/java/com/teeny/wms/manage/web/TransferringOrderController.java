@@ -26,6 +26,13 @@ public class TransferringOrderController {
     private CommonService commonService;
 
 
+    //获取商品码
+    @ResponseBody
+    @RequestMapping(value = "/api/transfer/goodsCode", method = RequestMethod.GET)
+    public BaseEntity<List<CommonDTO>> getGoodsCodeAndOid(@RequestHeader("account") String account) {
+        return transferService.getGoodsCode(account);
+    }
+
 
     //获取单据
     @ResponseBody
@@ -75,7 +82,6 @@ public class TransferringOrderController {
     @ResponseBody
     @RequestMapping(value = "/api/transfer/updateOne", method = RequestMethod.POST)
     public BaseEntity<String> updateOne(@RequestParam("id") int id, @RequestHeader("account") String account) {
-        System.out.println(account);
         return transferService.updateOne(id, account);
     }
 

@@ -23,4 +23,6 @@ public interface TransferService {
     BaseEntity<List<LocationAndCountDTO>> getLocationListById(int id, String account);
 
     BaseEntity<List<CommonDTO>> getBills(int saId, int sId, String account);
+
+    BaseEntity<List<CommonDTO>> getGoodsCode(String account);
 }

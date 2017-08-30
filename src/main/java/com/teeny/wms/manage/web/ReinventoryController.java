@@ -50,8 +50,8 @@ public class ReinventoryController {
     //单个完成
     @ResponseBody
     @RequestMapping(value = "/api/secondInventory/single", method = RequestMethod.POST)
-    public BaseEntity<String> completeOne(@RequestParam("goodsDetailId") int goodsDetailId, @RequestHeader("account") String account) {
-        return inventoryService.completeOne(goodsDetailId, account);
+    public BaseEntity<String> completeOne(@RequestParam("id") int originalId, @RequestHeader("account") String account) {
+        return inventoryService.completeOne(originalId, account);
     }
 
     //确定

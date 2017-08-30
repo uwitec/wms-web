@@ -2,9 +2,11 @@ package com.teeny.wms.manage.web;
 
 import com.teeny.wms.core.domain.baseEntity.BaseEntity;
 import com.teeny.wms.dto.CommonDTO;
+import com.teeny.wms.dto.Putaway.RecheckCompleteDTO;
 import com.teeny.wms.dto.ReviewDTO;
 import com.teeny.wms.service.EmployeesService;
 import com.teeny.wms.service.RecheckService;
+import org.apache.ibatis.annotations.Update;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -45,11 +47,20 @@ public class RecheckController {
 
 
 
-//    @RequestMapping(value = "/api/reviewer", method = RequestMethod.GET)
-//    public BaseEntity<List<CommonDTO>> getReviewer(@RequestHeader("account") String account) {
-//        return employeesService.getReviewer(account);
-//    }
-//
+    @ResponseBody
+    @RequestMapping(value = "/api/recheck/reviewer", method = RequestMethod.GET)
+    public BaseEntity<List<CommonDTO>> getReviewer(@RequestHeader("account") String account) {
+        return employeesService.getReviewer(account);
+    }
+
+
+    @ResponseBody
+    @RequestMapping(value = "/api/recheck/complete", method = RequestMethod.POST)
+    public BaseEntity<String> complete(@RequestBody RecheckCompleteDTO recheckCompleteDTO, @RequestHeader("account") String account) {
+        return recheckService.complete(recheckCompleteDTO, account);
+    }
+
+
 //    @RequestMapping(value = "/api/recheck/completed", method = RequestMethod.POST)
 //    public void updateReview(@RequestHeader("account") String account, @RequestBody ReviewUpdateDTO reviewUpdateDTO) {
 //        recheckService.updateRecheckBill(account, reviewUpdateDTO);
