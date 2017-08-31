@@ -91,7 +91,7 @@
         d.bill_id AS billId,
         d.p_id AS goodsId,
         p.name AS goodsName,
-        d.original_id AS originalId;
+        d.original_id AS originalId,
         l.loc_code AS location,
         d.EligibleQty AS countInBill,
         d.pdQty AS inventoryCount,
