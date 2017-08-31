@@ -27,23 +27,23 @@ public class RecheckServiceImpl implements RecheckService {
 
     @Override
     public void updateRecheckBill(String account, ReviewUpdateDTO reviewUpdateDTO) {
-        checkBillRepository.updateCheckBill(reviewUpdateDTO.getBillNo(),reviewUpdateDTO.getReviewerId(),reviewUpdateDTO.getRemark(),account);
+        checkBillRepository.updateCheckBill(reviewUpdateDTO.getBillNo(), reviewUpdateDTO.getReviewerId(), reviewUpdateDTO.getRemark(), account);
     }
 
     @Override
     public BaseEntity<ReviewDTO> getWarehouseReview(String account, String billNo) {
 
         CheckBillB checkBillB = checkBillRepository.getByCode(billNo, account);
-        if (checkBillB==null) {
+        if (checkBillB == null) {
             BaseEntity<String> baseEntity = new BaseEntity<String>();
-            baseEntity.setMsg(billNo+"不存在");
+            baseEntity.setMsg(billNo + "不存在");
             baseEntity.setResult(1);
             baseEntity.setData("");
             throw new WmsException(baseEntity);
         }
         if (checkBillB.getDealStates() == 1) {
             BaseEntity<String> baseEntity1 = new BaseEntity<String>();
-            baseEntity1.setMsg(billNo+"已扫描!");
+            baseEntity1.setMsg(billNo + "已扫描!");
             baseEntity1.setResult(1);
             baseEntity1.setData("");
             throw new WmsException(baseEntity1);
@@ -55,8 +55,8 @@ public class RecheckServiceImpl implements RecheckService {
         }
 
         int count = checkBillRepository.countByStatus(checkBillB.getBillId(), account);
-            if (count==0) {
-                checkBillRepository.completeBill(checkBillB.getBillId(), account);
+        if (count == 0) {
+            checkBillRepository.completeBill(checkBillB.getBillId(), account);
         }
 
         ReviewDTO reviewDTO = checkBillRepository.getIfoByBillNo(billNo, account);
@@ -74,9 +74,13 @@ public class RecheckServiceImpl implements RecheckService {
 
     @Override
     public BaseEntity<String> complete(RecheckCompleteDTO recheckCompleteDTO, String account) {
-        checkBillRepository.complete(recheckCompleteDTO.getBillNo(),recheckCompleteDTO.getReviewrId(),recheckCompleteDTO.getRemark(), account);
-        checkBillRepository.completeChildren(recheckCompleteDTO.getBillNo(), account);
+        checkBillRepository.complete(recheckCompleteDTO.getBillNo(), recheckCompleteDTO.getRecipientId(), recheckCompleteDTO.getRemark(), account);
         return new BaseEntity<>();
+    }
+
+    @Override
+    public BaseEntity<List<CommonDTO>> getRecipients(String account, int sId) {
+        return new BaseEntity<>(checkBillRepository.getRecipients(account, sId));
     }
 
 

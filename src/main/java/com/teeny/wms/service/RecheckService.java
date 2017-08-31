@@ -20,4 +20,6 @@ public interface RecheckService {
     BaseEntity<List<CommonDTO>> getBills(int sId, String account);
 
     BaseEntity<String> complete(RecheckCompleteDTO recheckCompleteDTO, String account);
+
+    BaseEntity<List<CommonDTO>> getRecipients(String account, int sId);
 }

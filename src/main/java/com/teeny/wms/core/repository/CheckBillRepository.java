@@ -19,18 +19,17 @@ public interface CheckBillRepository {
     int countByWarehousId(@Param("warehouseId") int warehouseId, @Param("account") String account);
 
 
-
     ReviewDTO getIfoByBillNo(@Param("billNo") String billNo, @Param("account") String account);
 
 
     @Select("SELECT count(*) FROM ${account}.dbo.pda_CheckBill WHERE FirstStates = '1'")
-    int getReplenishmentCount(@Param("billNo") String billNo,@Param("account") String account);
+    int getReplenishmentCount(@Param("billNo") String billNo, @Param("account") String account);
 
     @Select("SELECT isnull(b.,0) FROM ${account}.dbo.pda_CheckBill_B b LEFT JOIN ${account}.dbo.pda_CheckBill c ON b.bill_id=c.billid WHERE c.billnumber=#{billNo} AND b.PickType = #{type}")
-    Float getCountByType(@Param("type") int type, @Param("billNo") String billNo,@Param("account") String account);
+    Float getCountByType(@Param("type") int type, @Param("billNo") String billNo, @Param("account") String account);
 
     // TODO: 2017/8/3
-    void updateCheckBill(@Param("billNo") String billNo,@Param("reviewerId") int reviewerId,@Param("remark") String remark, String account);
+    void updateCheckBill(@Param("billNo") String billNo, @Param("reviewerId") int reviewerId, @Param("remark") String remark, String account);
 
     List<QueryDocumentDTO> getBill(@Param("account") String account, @Param("sId") int sId);
 
@@ -38,28 +37,30 @@ public interface CheckBillRepository {
     void updateBillPdaStatus(@Param("billId") int billId, @Param("account") String account);
 
     @Select("SELECT count(*) AS total FROM ${account}.dbo.pda_CheckBill_B d LEFT JOIN ${account}.dbo.pda_CheckBill b ON b.billid =d.bill_id WHERE b.billnumber=#{billNo} AND d.PickType=#{type}")
-    int countById(@Param("type") int type,@Param("billNo") String billNo,@Param("account") String account);
+    int countById(@Param("type") int type, @Param("billNo") String billNo, @Param("account") String account);
 
     @Select("SELECT b.smb_id AS smbId,b.bill_id AS billId, b.PickType AS pickType, b.DealStates AS dealStates FROM ${account}.dbo.pda_CheckBill_B b WHERE b.barcode=#{code}")
     CheckBillB getByCode(@Param("code") String code, @Param("account") String account);
 
     @Update("UPDATE ${account}.dbo.pda_CheckBill_B SET DealStates=1,EligibleQty=1 WHERE smb_id=#{smbId}")
-    void updateStatus(@Param("smbId") int smbId,@Param("account") String account);
+    void updateStatus(@Param("smbId") int smbId, @Param("account") String account);
 
     @Select("SELECT count(*) AS total FROM pda_CheckBill_B b WHERE b.bill_id=#{billId} AND b.DealStates=0")
-    int countByStatus(@Param("billId") int billId,@Param("account") String account);
+    int countByStatus(@Param("billId") int billId, @Param("account") String account);
 
-    List<CommonDTO> getBills(@Param("sId") int sId,@Param("account") String account);
+    List<CommonDTO> getBills(@Param("sId") int sId, @Param("account") String account);
 
     @Update("UPDATE ${account}.dbo.pda_CheckBill SET billstates=13 WHERE billid=#{billId}")
-    void completeBill(@Param("billId") int billId,@Param("account") String account);
+    void completeBill(@Param("billId") int billId, @Param("account") String account);
 
     @Select("SELECT b.pdastates FROM ${account}.dbo.pda_CheckBill b WHERE b.billid=#{billId}")
-    int getBillStatus(@Param("billId") int billId,@Param("account") String account);
+    int getBillStatus(@Param("billId") int billId, @Param("account") String account);
 
-    @Update("UPDATE pda_CheckBill SET diff_remark=#{remark},remark=#{reviewrId},billstates=13 WHERE billnumber=#{billNo}")
-    void complete(@Param("billNo") String billNo,@Param("reviewrId") int reviewrId,@Param("remark") String remark, @Param("account") String account);
+    @Update("UPDATE ${account}.dbo.pda_CheckBill SET diff_remark=#{remark}, recipient_id=#{recipientId}, billstates=13 WHERE billnumber=#{billNo}")
+    void complete(@Param("billNo") String billNo, @Param("recipientId") int recipientId, @Param("remark") String remark, @Param("account") String account);
 
-    @Update("UPDATE pda_CheckBill_B SET DealStates=1 WHERE bill_id=(SELECT b.billid FROM pda_CheckBill b WHERE b.billnumber=#{billNo})")
-    void completeChildren(@Param("billNo") String billNo,@Param("account") String account);
+    @Update("UPDATE ${account}.dbo.pda_CheckBill_B SET DealStates=1 WHERE bill_id=(SELECT b.billid FROM pda_CheckBill b WHERE b.billnumber=#{billNo})")
+    void completeChildren(@Param("billNo") String billNo, @Param("account") String account);
+
+    List<CommonDTO> getRecipients(@Param("account") String account, @Param("sId") int sId);
 }

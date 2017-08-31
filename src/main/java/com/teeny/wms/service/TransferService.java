@@ -12,7 +12,7 @@ import java.util.List;
  * Created by lilei on 2017/8/7.
  */
 public interface TransferService {
-    BaseEntity<List<TransferListDTO>> getTransferList(String billNo, String account);
+    BaseEntity<List<TransferListDTO>> getTransferList(String billNo, String goodsCode, int sId, int saId, String account);
 
     BaseEntity<String> updateAll(List<Integer> ids, String account);
 
@@ -24,5 +24,5 @@ public interface TransferService {
 
     BaseEntity<List<CommonDTO>> getBills(int saId, int sId, String account);
 
-    BaseEntity<List<CommonDTO>> getGoodsCode(String account);
+    BaseEntity<List<CommonDTO>> getGoodsCode(String account, int sId, int saId);
 }

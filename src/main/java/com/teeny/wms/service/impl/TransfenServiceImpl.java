@@ -28,10 +28,10 @@ public class TransfenServiceImpl implements TransferService {
     CommonService commonService;
 
     @Override
-    public BaseEntity<List<TransferListDTO>> getTransferList(String billNo, String account) {
-        List<TransferListDTO> list = tranBillRepository.getTransferList(billNo, account);
+    public BaseEntity<List<TransferListDTO>> getTransferList(String billNo, String goodsCode, int sId, int saId, String account) {
+        List<TransferListDTO> list = tranBillRepository.getTransferList(billNo, goodsCode, sId, saId, account);
         tranBillRepository.updateBill(billNo, account);
-        return new BaseEntity<List<TransferListDTO>>(list);
+        return new BaseEntity<>(list);
     }
 
     @Override
@@ -62,7 +62,7 @@ public class TransfenServiceImpl implements TransferService {
     @Override
     public BaseEntity<String> update(PutawayAddDTO putawayAddDTO, String account) {
         List<Integer> ids = tranBillRepository.getIdsByOriginalId(putawayAddDTO.getId(), account);
-        if (putawayAddDTO.getLocations().size()>0) {
+        if (putawayAddDTO.getLocations().size() > 0) {
             for (PutawayAddDTO.Location loc : putawayAddDTO.getLocations()) {
                 int locationId = commonService.getLocationIdByCode(loc.getLocationCode(), account);
                 if (locationId == 0) {
@@ -71,13 +71,13 @@ public class TransfenServiceImpl implements TransferService {
                     baseEntity.setResult(1);
                     throw new WmsException(baseEntity);
                 }
-                tranBillRepository.copyData(putawayAddDTO.getId(),loc.getAmount(),locationId, account);
+                tranBillRepository.copyData(putawayAddDTO.getId(), loc.getAmount(), locationId, account);
             }
-        }else {
-            tranBillRepository.copyData(putawayAddDTO.getId(),0,0, account);
+        } else {
+            tranBillRepository.copyData(putawayAddDTO.getId(), 0, 0, account);
         }
         for (Integer i : ids) {
-            tranBillRepository.deleteById(i, putawayAddDTO.getId(),account);
+            tranBillRepository.deleteById(i, putawayAddDTO.getId(), account);
         }
         int count = tranBillRepository.countByDealstatus(putawayAddDTO.getId(), account);
         if (count == 0) {
@@ -102,9 +102,9 @@ public class TransfenServiceImpl implements TransferService {
     }
 
     @Override
-    public BaseEntity<List<CommonDTO>> getGoodsCode(String account) {
-        List<CommonDTO> list = tranBillRepository.getGoodsCode(account);
-        return new BaseEntity<List<CommonDTO>>(list);
+    public BaseEntity<List<CommonDTO>> getGoodsCode(String account, int sId, int saId) {
+        List<CommonDTO> list = tranBillRepository.getGoodsCode(account, sId, saId);
+        return new BaseEntity<>(list);
     }
 
 }

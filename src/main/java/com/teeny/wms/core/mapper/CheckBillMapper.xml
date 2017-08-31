@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.teeny.wms.core.repository.CheckBillRepository">
-    <cache />
+    <cache/>
 
     <select id="countByWarehousId" resultType="int">
         SELECT count(*) FROM ${account}.dbo.pda_CheckBill
@@ -18,22 +18,42 @@
     <!--q1改为整货数量字段，q2改为拼箱件数字段，q3改为打包件数字段-->
 
     <select id="getIfoByBillNo" resultType="com.teeny.wms.dto.ReviewDTO">
-       SELECT c.billnumber  AS billNo,d.q1 AS wholeQuantity, d.q2 AS pxCount, d.q3 AS packCount,
-           c.FirstStates AS priority, c.TempStore AS tempArea, c.pdastates AS status,
-           c.billstates AS documentStatus, c.remark AS billRemark,
-           cl.name AS customer, cl.RoadName AS deliveryLine,
-           (SELECT count(*) AS total FROM ${account}.dbo.pda_CheckBill_B b, ${account}.dbo.pda_CheckBill_B b1 WHERE b.bill_id=b1.bill_id AND b.PickType=1 AND b1.barcode=#{billNo}) AS wholeQuantityTotal,
-           (SELECT count(*) AS total FROM ${account}.dbo.pda_CheckBill_B b, ${account}.dbo.pda_CheckBill_B b1 WHERE b.bill_id=b1.bill_id AND b.PickType=2 AND b1.barcode=#{billNo}) AS pxCountTotal,
-           (SELECT count(*) AS total FROM ${account}.dbo.pda_CheckBill_B b, ${account}.dbo.pda_CheckBill_B b1 WHERE b.bill_id=b1.bill_id AND b.PickType=3 AND b1.barcode=#{billNo}) AS packCountTotal
+        SELECT
+            c.billnumber                                                                 AS billNo,
+            d.q1                                                                         AS wholeQuantity,
+            d.q2                                                                         AS pxCount,
+            d.q3                                                                         AS packCount,
+            c.FirstStates                                                                AS priority,
+            c.TempStore                                                                  AS tempArea,
+            c.pdastates                                                                  AS status,
+            c.billstates                                                                 AS documentStatus,
+            c.remark                                                                     AS billRemark,
+            cl.name                                                                      AS customer,
+            cl.RoadName                                                                  AS deliveryLine,
+            (SELECT count(*) AS total
+             FROM ${account}.dbo.pda_CheckBill_B b, ${account}.dbo.pda_CheckBill_B b1
+             WHERE b.bill_id = b1.bill_id AND b.PickType = 1 AND b1.barcode = #{billNo}) AS wholeQuantityTotal,
+            (SELECT count(*) AS total
+             FROM ${account}.dbo.pda_CheckBill_B b, ${account}.dbo.pda_CheckBill_B b1
+             WHERE b.bill_id = b1.bill_id AND b.PickType = 2 AND b1.barcode = #{billNo}) AS pxCountTotal,
+            (SELECT count(*) AS total
+             FROM ${account}.dbo.pda_CheckBill_B b, ${account}.dbo.pda_CheckBill_B b1
+             WHERE b.bill_id = b1.bill_id AND b.PickType = 3 AND b1.barcode = #{billNo}) AS packCountTotal
 
-       FROM ${account}.dbo.pda_CheckBill c
-           LEFT JOIN ${account}.dbo.pda_clients cl ON c.c_id=cl.c_id
-           LEFT JOIN ${account}.dbo.pda_CheckBill_D d ON d.bill_id=c.billid
-       WHERE c.billnumber=(SELECT b1.bill_id FROM pda_CheckBill_B b1 WHERE b1.barcode=#{billNo})
+        FROM ${account}.dbo.pda_CheckBill c
+            LEFT JOIN ${account}.dbo.pda_clients cl ON c.c_id = cl.c_id
+            LEFT JOIN ${account}.dbo.pda_CheckBill_D d ON d.bill_id = c.billid
+        WHERE c.billnumber = (SELECT b1.bill_id
+                              FROM pda_CheckBill_B b1
+                              WHERE b1.barcode = #{billNo})
     </select>
 
     <select id="getBills" resultType="com.teeny.wms.dto.CommonDTO">
-        SELECT b.bill_id AS id, b.barcode AS name FROM pda_CheckBill_B b LEFT JOIN pda_CheckBill b1 ON b.bill_id=b1.billid
+        SELECT
+            b.bill_id AS id,
+            b.barcode AS name
+        FROM ${account}.dbo.pda_CheckBill_B b
+            LEFT JOIN ${account}.dbo.pda_CheckBill b1 ON b.bill_id = b1.billid
         <where>
             <if test="sId != 0">
                 b1.s_id=#{sId}
@@ -42,14 +62,37 @@
     </select>
 
     <select id="getBill" resultType="com.teeny.wms.dto.QueryDocumentDTO">
-        SELECT b.billid AS id,b.billnumber AS documentNo, b.pdaInTime AS documentDate,
-            CASE b.billstates WHEN 10 THEN '验收中' WHEN 13 THEN '已验收' ELSE '' END AS status FROM ${account}.dbo.pda_CheckBill b
+        SELECT
+            b.billid     AS id,
+            b.billnumber AS documentNo,
+            b.pdaInTime  AS documentDate,
+            CASE b.billstates
+            WHEN 10
+                THEN '验收中'
+            WHEN 13
+                THEN '已验收'
+            ELSE '' END  AS status
+        FROM ${account}.dbo.pda_CheckBill b
         <where>
             <if test="sId != 0">
                 b.s_id=#{sId}
             </if>
         </where>
+    </select>
 
+
+    <select id="getRecipients" resultType="com.teeny.wms.dto.CommonDTO">
+        SELECT
+            bb.pickemp_id AS id,
+            e.name        AS name
+        FROM ${account}.dbo.pda_CheckBill_B bb
+            LEFT JOIN ${account}.dbo.pda_employees e ON bb.pickemp_id = e.e_id
+            LEFT JOIN ${account}.dbo.pda_CheckBill b ON bb.bill_id = b.billid
+        <where>
+            <if test="sId != 0">
+                b.s_id = #{sId}
+            </if>
+        </where>
     </select>
 
 </mapper>

@@ -7,7 +7,7 @@ import java.io.Serializable;
  */
 public class RecheckCompleteDTO implements Serializable {
     private String billNo;
-    private int reviewrId;
+    private int recipientId;
     private String remark;
 
 
@@ -19,12 +19,12 @@ public class RecheckCompleteDTO implements Serializable {
         this.billNo = billNo;
     }
 
-    public int getReviewrId() {
-        return reviewrId;
+    public int getRecipientId() {
+        return recipientId;
     }
 
-    public void setReviewrId(int reviewrId) {
-        this.reviewrId = reviewrId;
+    public void setRecipientId(int recipientId) {
+        this.recipientId = recipientId;
     }
 
     public String getRemark() {

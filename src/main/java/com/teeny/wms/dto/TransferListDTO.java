@@ -8,6 +8,7 @@ import java.io.Serializable;
 public class TransferListDTO implements Serializable{
 
     private int id; //id
+    private int originalId;
     private String billNo; //单据编号
     private String goodsName; //商品名
     private String lotNo; //批号
@@ -23,12 +24,13 @@ public class TransferListDTO implements Serializable{
     private String exportName;
     private String importName;
 
-    private int exportWId;         //调出仓库id
-    private int exportSId;         //调出库区id
-    private int exportAId;         //调出货位id
-    private int importWId;         //调入仓库id
-    private int importSId;         //调入库区id
-    private int importAId;         //调入货位id
+    public int getOriginalId() {
+        return originalId;
+    }
+
+    public void setOriginalId(int originalId) {
+        this.originalId = originalId;
+    }
 
     public String getBillNo() {
         return billNo;
@@ -140,54 +142,6 @@ public class TransferListDTO implements Serializable{
 
     public void setBarcode(String barcode) {
         this.barcode = barcode;
-    }
-
-    public int getExportWId() {
-        return exportWId;
-    }
-
-    public void setExportWId(int exportWId) {
-        this.exportWId = exportWId;
-    }
-
-    public int getExportSId() {
-        return exportSId;
-    }
-
-    public void setExportSId(int exportSId) {
-        this.exportSId = exportSId;
-    }
-
-    public int getExportAId() {
-        return exportAId;
-    }
-
-    public void setExportAId(int exportAId) {
-        this.exportAId = exportAId;
-    }
-
-    public int getImportWId() {
-        return importWId;
-    }
-
-    public void setImportWId(int importWId) {
-        this.importWId = importWId;
-    }
-
-    public int getImportSId() {
-        return importSId;
-    }
-
-    public void setImportSId(int importSId) {
-        this.importSId = importSId;
-    }
-
-    public int getImportAId() {
-        return importAId;
-    }
-
-    public void setImportAId(int importAId) {
-        this.importAId = importAId;
     }
 
     public int getStatus() {

@@ -6,7 +6,6 @@ import com.teeny.wms.dto.Putaway.RecheckCompleteDTO;
 import com.teeny.wms.dto.ReviewDTO;
 import com.teeny.wms.service.EmployeesService;
 import com.teeny.wms.service.RecheckService;
-import org.apache.ibatis.annotations.Update;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -28,7 +27,7 @@ public class RecheckController {
     /**
      * 出库复核
      *
-             * @param account 账套ID
+     * @param account 账套ID
      * @param billNo  订单单号
      */
     @ResponseBody
@@ -46,11 +45,10 @@ public class RecheckController {
     }
 
 
-
     @ResponseBody
-    @RequestMapping(value = "/api/recheck/reviewer", method = RequestMethod.GET)
-    public BaseEntity<List<CommonDTO>> getReviewer(@RequestHeader("account") String account) {
-        return employeesService.getReviewer(account);
+    @RequestMapping(value = "/api/recheck/recipients", method = RequestMethod.GET)
+    public BaseEntity<List<CommonDTO>> getRecipients(@RequestHeader("account") String account, @RequestHeader("sId") int sId) {
+        return recheckService.getRecipients(account, sId);
     }
 
 

@@ -29,23 +29,23 @@ public class TransferringOrderController {
     //获取商品码
     @ResponseBody
     @RequestMapping(value = "/api/transfer/goodsCode", method = RequestMethod.GET)
-    public BaseEntity<List<CommonDTO>> getGoodsCodeAndOid(@RequestHeader("account") String account) {
-        return transferService.getGoodsCode(account);
+    public BaseEntity<List<CommonDTO>> getGoodsCode(@RequestHeader("account") String account, @RequestParam("sId") int sId, @RequestParam("saId") int saId) {
+        return transferService.getGoodsCode(account, sId, saId);
     }
 
 
     //获取单据
     @ResponseBody
-    @RequestMapping(value = "/api/transfer/billList/{sId}/{saId}", method = RequestMethod.GET)
-    public BaseEntity<List<CommonDTO>> getBills(@PathVariable("sId") int sId, @PathVariable("saId") int saId, @RequestHeader("account") String account){
+    @RequestMapping(value = "/api/transfer/billList", method = RequestMethod.GET)
+    public BaseEntity<List<CommonDTO>> getBills(@RequestParam("sId") int sId, @RequestParam("saId") int saId, @RequestHeader("account") String account) {
         return transferService.getBills(saId, sId, account);
     }
 
     //返回商品详情list
     @ResponseBody
-    @RequestMapping(value = "/api/transfer/list/{billNo}", method = RequestMethod.GET)
-    public BaseEntity<List<TransferListDTO>> getTranList(@PathVariable("billNo") String billNo,  @RequestHeader("account") String account) {
-        return transferService.getTransferList(billNo, account);
+    @RequestMapping(value = "/api/transfer/list", method = RequestMethod.GET)
+    public BaseEntity<List<TransferListDTO>> getTranList(@PathVariable("billCode") String billNo, @PathVariable("goodsCode") String goodsCode, @RequestParam("sId") int sId, @RequestParam("saId") int saId, @RequestHeader("account") String account) {
+        return transferService.getTransferList(billNo, goodsCode, sId, saId, account);
     }
 
     //获取仓库
@@ -94,7 +94,7 @@ public class TransferringOrderController {
 
     //获取每个商品对应的货位
     @ResponseBody
-    @RequestMapping(value = "/api/tranfer/getLocaitons/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/api/transfer/getLocations/{id}", method = RequestMethod.GET)
     public BaseEntity<List<LocationAndCountDTO>> getLocationAndAmount(@PathVariable("id") int id, @RequestHeader("account") String account) {
         return transferService.getLocationListById(id, account);
     }
