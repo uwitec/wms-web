@@ -18,7 +18,7 @@
     <!--AND d.Location_id = #{locationId}-->
     <!--</if>-->
     <!--</where>-->
-    <!--) AND b.billstates = #{typeDescription} AND b.pdastates = 2-->
+    <!--) AND b.billstates = #{type} AND b.pdastates = 2-->
     <!--<if test="pdname != null and pdname != ''">-->
     <!--b.pdname =#{pdType}-->
     <!--</if>-->
@@ -40,7 +40,7 @@
     <!--AND d.Location_id = #{locationId}-->
     <!--</if>-->
     <!--</where>-->
-    <!--) AND b.billstates = #{typeDescription}-->
+    <!--) AND b.billstates = #{type}-->
     <!--<if test="pdname != null and pdname != ''">-->
     <!--b.pdname =#{pdType}-->
     <!--</if>-->
@@ -51,7 +51,7 @@
 
     <!--<select id="getPcount" resultType="int">-->
     <!--SELECT count(*) total FROM ${account}.dbo.pda_pdBill_D d LEFT JOIN ${account}.dbo.pda_pdBill b ON d.bill_id=b.billid-->
-    <!--WHERE b.billstates = #{typeDescription} AND b.pdastates = 2-->
+    <!--WHERE b.billstates = #{type} AND b.pdastates = 2-->
     <!--<if test="saId != 0">-->
     <!--AND b.sa_id = #{saId}-->
     <!--</if>-->
@@ -68,7 +68,7 @@
 
     <!--<select id="getPtotal" resultType="int">-->
     <!--SELECT count(*) total FROM ${account}.dbo.pda_pdBill_D d LEFT JOIN ${account}.dbo.pda_pdBill b ON d.bill_id=b.billid-->
-    <!--WHERE b.billstates = #{typeDescription}-->
+    <!--WHERE b.billstates = #{type}-->
     <!--<if test="saId != 0">-->
     <!--AND b.sa_id = #{saId}-->
     <!--</if>-->
@@ -156,26 +156,26 @@
 
     <select id="getProductsInventoryList" resultType="com.teeny.wms.dto.PdListDTO">
         SELECT
-            d.storehouse_id                         AS id,
-            p.name                                  AS goodsName,
-            p.serial_number                         AS number,
-            d.Batchno                               AS lotNo,
-            l.loc_name                              AS location,
-            d.quantity                              AS repertoryQuantity,
-            d.pdqty                                 AS realQuantity,
-            p.standard                              AS specification,
-            p.unit1Name                             AS unit,
-            CONVERT(VARCHAR (100), d.Validdate, 23) AS validateDate,
-            CONVERT(VARCHAR (100), d.MakeDate, 23)  AS productDate,
-            p.Factory                               AS manufacturer,
-            p.makearea                              AS productionPlace,
-            p.barcode                               AS barCode,
-            l.loc_code                              AS locationCode,
-            d.CostPrice                             AS costPrice,
-            d.CostTotal                             AS costTotal
+        d.storehouse_id                         AS id,
+        p.name                                  AS goodsName,
+        p.serial_number                         AS number,
+        d.Batchno                               AS lotNo,
+        l.loc_name                              AS location,
+        d.quantity                              AS repertoryQuantity,
+        d.pdqty                                 AS realQuantity,
+        p.standard                              AS specification,
+        p.unit1Name                             AS unit,
+        CONVERT(VARCHAR (100), d.Validdate, 23) AS validateDate,
+        CONVERT(VARCHAR (100), d.MakeDate, 23)  AS productDate,
+        p.Factory                               AS manufacturer,
+        p.makearea                              AS productionPlace,
+        p.barcode                               AS barCode,
+        l.loc_code                              AS locationCode,
+        d.CostPrice                             AS costPrice,
+        d.CostTotal                             AS costTotal
         FROM ${account}.dbo.pda_kcpdBill_D d
-            LEFT JOIN ${account}.dbo.pda_Products p ON p.p_id = d.p_id
-            LEFT JOIN ${account}.dbo.pda_location l ON l.l_id = d.Location_id
+        LEFT JOIN ${account}.dbo.pda_Products p ON p.p_id = d.p_id
+        LEFT JOIN ${account}.dbo.pda_location l ON l.l_id = d.Location_id
         WHERE d.DealStates = 0
         <if test="sId != 0">
             d.ss_id = #{sId}

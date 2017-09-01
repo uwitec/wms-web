@@ -39,13 +39,13 @@ public class HomeServiceImpl implements HomeService {
 
     @Override
     public BaseEntity<List<AccountSetDTO>> getAccountSet() {
-        return new BaseEntity<List<AccountSetDTO>>(accountRepository.getAccountSet());
+        return new BaseEntity<>(accountRepository.getAccountSet());
     }
 
     @Override
     public BaseEntity<List<CommonDTO>> getWarehouse(String account) {
         List<CommonDTO> data = storagesRepository.findAll(account);
-        return new BaseEntity<List<CommonDTO>>(data);
+        return new BaseEntity<>(data);
     }
 
     @Override
