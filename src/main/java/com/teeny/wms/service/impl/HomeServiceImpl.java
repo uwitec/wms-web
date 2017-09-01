@@ -60,7 +60,7 @@ public class HomeServiceImpl implements HomeService {
         billCountDTO.setTranferBillCount(tranBillCount);
         billCountDTO.setReviewBillCount(recCount);
         billCountDTO.setReviewBillCount(checkBillCount);
-        return new BaseEntity<BillCountDTO>(billCountDTO);
+        return new BaseEntity<>(billCountDTO);
     }
 
     @Override
