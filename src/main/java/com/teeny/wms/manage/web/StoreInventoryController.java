@@ -18,10 +18,14 @@ import java.util.List;
 public class StoreInventoryController {
 
 
+    private final InventoryService inventoryService;
+    private final CommonService commonService;
+
     @Autowired
-    private InventoryService inventoryService;
-    @Autowired
-    private CommonService commonService;
+    public StoreInventoryController(InventoryService inventoryService, CommonService commonService) {
+        this.inventoryService = inventoryService;
+        this.commonService = commonService;
+    }
 
     //门店盘点
     @ResponseBody

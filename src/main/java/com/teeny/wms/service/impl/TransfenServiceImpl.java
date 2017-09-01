@@ -22,10 +22,14 @@ import java.util.List;
 @Transactional
 public class TransfenServiceImpl implements TransferService {
 
+    private final TranBillRepository tranBillRepository;
+    private final CommonService commonService;
+
     @Autowired
-    TranBillRepository tranBillRepository;
-    @Autowired
-    CommonService commonService;
+    public TransfenServiceImpl(TranBillRepository tranBillRepository, CommonService commonService) {
+        this.tranBillRepository = tranBillRepository;
+        this.commonService = commonService;
+    }
 
     @Override
     public BaseEntity<List<TransferListDTO>> getTransferList(String billNo, String goodsCode, int sId, int saId, String account) {

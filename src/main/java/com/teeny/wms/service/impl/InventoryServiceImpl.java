@@ -20,12 +20,17 @@ import java.util.List;
 @Transactional
 public class InventoryServiceImpl implements InventoryService {
 
-    @Autowired
-    private PdBillRepository pdBillRepository;
-    @Autowired
-    private ProductsRepository productsRepository;
-    @Autowired
+    private final PdBillRepository pdBillRepository;
+    private final ProductsRepository productsRepository;
+    final
     CommonService commonService;
+
+    @Autowired
+    public InventoryServiceImpl(PdBillRepository pdBillRepository, ProductsRepository productsRepository, CommonService commonService) {
+        this.pdBillRepository = pdBillRepository;
+        this.productsRepository = productsRepository;
+        this.commonService = commonService;
+    }
 
     //////////////////////门店盘点//////////////////////////////////////
 

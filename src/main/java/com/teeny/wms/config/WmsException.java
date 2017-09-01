@@ -7,13 +7,13 @@ import com.teeny.wms.core.domain.baseEntity.BaseEntity;
  */
 public class WmsException extends RuntimeException {
 
-    private BaseEntity<String> info;
+    private BaseEntity info;
 
-    public WmsException(BaseEntity<String> info) {
+    public WmsException(BaseEntity info) {
         this.info = info;
     }
 
-    public BaseEntity<String> getInfo() {
+    public BaseEntity getInfo() {
         return info;
     }
 

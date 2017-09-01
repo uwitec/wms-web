@@ -17,8 +17,12 @@ import java.util.List;
 @Transactional
 public class EmployeesServiceImpl implements EmployeesService {
 
+    private final EmployessRepository employessRepository;
+
     @Autowired
-    private EmployessRepository employessRepository;
+    public EmployeesServiceImpl(EmployessRepository employessRepository) {
+        this.employessRepository = employessRepository;
+    }
 
     @Override
     public BaseEntity<List<CommonDTO>> getReviewer(String account) {

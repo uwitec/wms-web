@@ -4,7 +4,6 @@ import com.teeny.wms.core.domain.baseEntity.BaseEntity;
 import com.teeny.wms.dto.CommonDTO;
 import com.teeny.wms.dto.Putaway.RecheckCompleteDTO;
 import com.teeny.wms.dto.ReviewDTO;
-import com.teeny.wms.service.EmployeesService;
 import com.teeny.wms.service.RecheckService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,10 +18,12 @@ import java.util.List;
 @Controller
 public class RecheckController {
 
+    private final RecheckService recheckService;
+
     @Autowired
-    private EmployeesService employeesService;
-    @Autowired
-    private RecheckService recheckService;
+    public RecheckController(RecheckService recheckService) {
+        this.recheckService = recheckService;
+    }
 
     /**
      * 出库复核

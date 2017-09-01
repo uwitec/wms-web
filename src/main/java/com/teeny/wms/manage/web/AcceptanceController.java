@@ -19,8 +19,12 @@ import java.util.List;
 @Controller
 public class AcceptanceController {
 
+    private final AcceptanceService acceptanceService;
+
     @Autowired
-    private AcceptanceService acceptanceService;
+    public AcceptanceController(AcceptanceService acceptanceService) {
+        this.acceptanceService = acceptanceService;
+    }
 
     //获取单位
     @RequestMapping(value = "/api/acceptance/unit", method = RequestMethod.GET)

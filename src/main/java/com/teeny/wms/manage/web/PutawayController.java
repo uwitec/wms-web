@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import javax.crypto.interfaces.PBEKey;
 import java.util.List;
 
 
@@ -22,8 +21,12 @@ import java.util.List;
 public class PutawayController {
 
 
+    private final PutOnBillService putOnBillService;
+
     @Autowired
-    private PutOnBillService putOnBillService;
+    public PutawayController(PutOnBillService putOnBillService) {
+        this.putOnBillService = putOnBillService;
+    }
 
 //    //获取单号
 //    @ResponseBody

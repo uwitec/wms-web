@@ -19,8 +19,12 @@ import java.util.List;
 @Controller
 public class HomeController {
 
+    private final HomeService homeService;
+
     @Autowired
-    private HomeService homeService;
+    public HomeController(HomeService homeService) {
+        this.homeService = homeService;
+    }
 
     // 测试接口
     @RequestMapping(value = "/log/test", method = RequestMethod.GET)

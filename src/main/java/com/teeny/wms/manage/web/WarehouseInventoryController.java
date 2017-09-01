@@ -20,10 +20,14 @@ import java.util.List;
 @Controller
 public class WarehouseInventoryController {
 
+    private final InventoryService inventoryService;
+    private final CommonService commonService;
+
     @Autowired
-    public InventoryService inventoryService;
-    @Autowired
-    public CommonService commonService;
+    public WarehouseInventoryController(InventoryService inventoryService, CommonService commonService) {
+        this.inventoryService = inventoryService;
+        this.commonService = commonService;
+    }
 
     @ResponseBody
     @RequestMapping(value = "/api/warehouseFirst/getList/{pdType}/{saId}/{areaId}", method = RequestMethod.GET)

@@ -20,8 +20,12 @@ import java.util.List;
 @Controller
 public class QueryInvoiceController {
 
+    private final QueryInvoiceService queryInvoiceService;
+
     @Autowired
-    private QueryInvoiceService queryInvoiceService;
+    public QueryInvoiceController(QueryInvoiceService queryInvoiceService) {
+        this.queryInvoiceService = queryInvoiceService;
+    }
 
     @RequestMapping(value = "/api/document/{warehouseId}/{type}", method = RequestMethod.GET)
     public void getDocument(Model model, @PathVariable("warehoustId") int warehouseId, @PathVariable("type") int type, @RequestHeader("account") String account) {

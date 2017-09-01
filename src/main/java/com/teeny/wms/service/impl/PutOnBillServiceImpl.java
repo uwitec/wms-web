@@ -2,7 +2,6 @@ package com.teeny.wms.service.impl;
 
 import com.teeny.wms.config.WmsException;
 import com.teeny.wms.core.domain.baseEntity.BaseEntity;
-import com.teeny.wms.core.repository.LocationRepository;
 import com.teeny.wms.core.repository.PutOnBillRepository;
 import com.teeny.wms.dto.CommonDTO;
 import com.teeny.wms.dto.LocationAndCountDTO;
@@ -24,12 +23,14 @@ import java.util.List;
 @Transactional
 public class PutOnBillServiceImpl implements PutOnBillService {
 
+    private final PutOnBillRepository putOnBillRepository;
+    private final CommonService commonService;
+
     @Autowired
-    private PutOnBillRepository putOnBillRepository;
-    @Autowired
-    private LocationRepository locationRepository;
-    @Autowired
-    private CommonService commonService;
+    public PutOnBillServiceImpl(PutOnBillRepository putOnBillRepository, CommonService commonService) {
+        this.putOnBillRepository = putOnBillRepository;
+        this.commonService = commonService;
+    }
 
     @Override
     public BaseEntity<List<PutawayDTO>> getGoodsDetailList(String orderNo, String account, int sId) {
@@ -63,20 +64,20 @@ public class PutOnBillServiceImpl implements PutOnBillService {
 
 
     @Override
-    public BaseEntity<String> updateOne(PutawayAddDTO putawayAddDTO, String account) {
+    public BaseEntity updateOne(PutawayAddDTO putawayAddDTO, String account) {
 
-        List<Integer> ids = putOnBillRepository.getIdsByOriginalId(putawayAddDTO.getId(),account);
+        List<Integer> ids = putOnBillRepository.getIdsByOriginalId(putawayAddDTO.getId(), account);
 
-        if (putawayAddDTO.getLocations().size()>0) {
+        if (putawayAddDTO.getLocations().size() > 0) {
             for (PutawayAddDTO.Location location : putawayAddDTO.getLocations()) {
                 int locationId = commonService.getLocationIdByCode(location.getLocationCode(), account);
-                if (locationId==0) {
-                    BaseEntity<String> baseEntity = new BaseEntity<String>();
-                    baseEntity.setMsg("找不此货位:"+location.getLocationCode());
+                if (locationId == 0) {
+                    BaseEntity baseEntity = new BaseEntity<>();
+                    baseEntity.setMsg("找不此货位:" + location.getLocationCode());
                     baseEntity.setResult(1);
                     throw new WmsException(baseEntity);
                 }
-                putOnBillRepository.copyDataByParam(putawayAddDTO.getId(),location.getAmount(),locationId,account);
+                putOnBillRepository.copyDataByParam(putawayAddDTO.getId(), location.getAmount(), locationId, account);
             }
             for (Integer id : ids) {
                 putOnBillRepository.deleteBySmbId(id, putawayAddDTO.getId(), account);
@@ -87,7 +88,7 @@ public class PutOnBillServiceImpl implements PutOnBillService {
         if (count == 0) {
             putOnBillRepository.updatePutByOriginalId(putawayAddDTO.getId(), account);
         }
-        return new BaseEntity<String>();
+        return new BaseEntity();
     }
 
     @Override

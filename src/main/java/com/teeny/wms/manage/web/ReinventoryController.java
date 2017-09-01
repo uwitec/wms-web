@@ -21,10 +21,14 @@ import java.util.List;
 public class ReinventoryController {
 
 
+    private final InventoryService inventoryService;
+    private final CommonService commonService;
+
     @Autowired
-    public InventoryService inventoryService;
-    @Autowired
-    public CommonService commonService;
+    public ReinventoryController(InventoryService inventoryService, CommonService commonService) {
+        this.inventoryService = inventoryService;
+        this.commonService = commonService;
+    }
 
     @ResponseBody
     @RequestMapping(value = "/api/secondInventory/getList/{pdType}/{saId}/{areaId}", method = RequestMethod.GET)

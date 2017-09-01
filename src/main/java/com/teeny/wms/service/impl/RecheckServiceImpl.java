@@ -22,8 +22,12 @@ import java.util.List;
 @Transactional
 public class RecheckServiceImpl implements RecheckService {
 
+    private final CheckBillRepository checkBillRepository;
+
     @Autowired
-    private CheckBillRepository checkBillRepository;
+    public RecheckServiceImpl(CheckBillRepository checkBillRepository) {
+        this.checkBillRepository = checkBillRepository;
+    }
 
     @Override
     public void updateRecheckBill(String account, ReviewUpdateDTO reviewUpdateDTO) {

@@ -19,8 +19,12 @@ import java.util.List;
 @Controller
 public class ProductInventoryController {
 
+    private final InventoryService inventoryService;
+
     @Autowired
-    private InventoryService inventoryService;
+    public ProductInventoryController(InventoryService inventoryService) {
+        this.inventoryService = inventoryService;
+    }
 
     //单品盘点
     @ResponseBody

@@ -2,7 +2,6 @@ package com.teeny.wms.manage.web;
 
 import com.teeny.wms.core.domain.Employess;
 import com.teeny.wms.dto.CommonDTO;
-import com.teeny.wms.dto.EmployeesDTO;
 import com.teeny.wms.security.CurrentUser;
 import com.teeny.wms.service.AcceptanceService;
 import com.teeny.wms.service.SystemService;
@@ -14,24 +13,25 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import javax.crypto.interfaces.PBEKey;
-import java.security.PublicKey;
 import java.util.ArrayList;
 import java.util.List;
 
 
 /**
  * Created by QHAHA on 2017/7/8.
- *
  */
 @Controller
 @Transactional
 public class Test {
 
+    private final SystemService systemService;
+    private final AcceptanceService acceptanceService;
+
     @Autowired
-    private SystemService systemService;
-    @Autowired
-    AcceptanceService acceptanceService;
+    public Test(SystemService systemService, AcceptanceService acceptanceService) {
+        this.systemService = systemService;
+        this.acceptanceService = acceptanceService;
+    }
 
     @RequestMapping(value = "/api/haha", method = RequestMethod.GET)
     public void haha(Model model) {
@@ -39,7 +39,7 @@ public class Test {
         list.add("ddd");
         list.add("fff");
         list.add("aaa");
-        model.addAttribute("fff",list);
+        model.addAttribute("fff", list);
     }
 
 //    @RequestMapping(value = "/api/user", method = RequestMethod.GET)
@@ -64,7 +64,7 @@ public class Test {
     public void findEmployerByUsername(Model model, @CurrentUser Employess employess, @RequestHeader("account") String account) {
         System.out.print(employess.getPassword());
         List<CommonDTO> employees = systemService.findAll(account);
-        model.addAttribute("emp",employees);
+        model.addAttribute("emp", employees);
     }
 
     @RequestMapping(value = "/test", method = RequestMethod.GET)

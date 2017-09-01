@@ -16,8 +16,12 @@ import java.util.List;
 @Service
 public class SystemServiceImpl implements SystemService {
 
+    private final EmployessRepository employessRepository;
+
     @Autowired
-    private EmployessRepository employessRepository;
+    public SystemServiceImpl(EmployessRepository employessRepository) {
+        this.employessRepository = employessRepository;
+    }
 
     public Employess findByUsername(String username, String account) {
         return employessRepository.findEmployerByUsername(username, account);

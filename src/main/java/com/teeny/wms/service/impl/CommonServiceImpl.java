@@ -20,14 +20,18 @@ import java.util.List;
 @Transactional
 public class CommonServiceImpl implements CommonService {
 
+    private final StockAreaRepository stockAreaRepository;
+    private final AreaRepository areaRepository;
+    private final StoragesRepository storagesRepository;
+    private final LocationRepository locationRepository;
+
     @Autowired
-    private StockAreaRepository stockAreaRepository;
-    @Autowired
-    private AreaRepository areaRepository;
-    @Autowired
-    private StoragesRepository storagesRepository;
-    @Autowired
-    private LocationRepository locationRepository;
+    public CommonServiceImpl(StockAreaRepository stockAreaRepository, AreaRepository areaRepository, StoragesRepository storagesRepository, LocationRepository locationRepository) {
+        this.stockAreaRepository = stockAreaRepository;
+        this.areaRepository = areaRepository;
+        this.storagesRepository = storagesRepository;
+        this.locationRepository = locationRepository;
+    }
 
     @Override
     public BaseEntity<List<CommonDTO>> getSaList(String account) {

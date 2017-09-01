@@ -20,10 +20,14 @@ import java.util.List;
 @Controller
 public class TransferringOrderController {
 
+    private final TransferService transferService;
+    private final CommonService commonService;
+
     @Autowired
-    private TransferService transferService;
-    @Autowired
-    private CommonService commonService;
+    public TransferringOrderController(TransferService transferService, CommonService commonService) {
+        this.transferService = transferService;
+        this.commonService = commonService;
+    }
 
 
     //获取商品码

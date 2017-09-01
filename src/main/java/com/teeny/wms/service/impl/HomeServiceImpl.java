@@ -21,18 +21,23 @@ import java.util.List;
 @Transactional
 public class HomeServiceImpl implements HomeService {
 
+    private final AccountRepository accountRepository;
+    private final StoragesRepository storagesRepository;
+    private final TranBillRepository tranBillRepository;
+    private final RecBillRepository recBillRepository;
+    private final PutOnBillRepository putOnBillRepository;
+    private final CheckBillRepository checkBillRepository;
+
     @Autowired
-    private AccountRepository accountRepository;
-    @Autowired
-    private StoragesRepository storagesRepository;
-    @Autowired
-    private TranBillRepository tranBillRepository;
-    @Autowired
-    private RecBillRepository recBillRepository;
-    @Autowired
-    private PutOnBillRepository putOnBillRepository;
-    @Autowired
-    private CheckBillRepository checkBillRepository;
+    public HomeServiceImpl(AccountRepository accountRepository, StoragesRepository storagesRepository, TranBillRepository tranBillRepository, RecBillRepository recBillRepository, PutOnBillRepository putOnBillRepository, CheckBillRepository checkBillRepository) {
+        this.accountRepository = accountRepository;
+        this.storagesRepository = storagesRepository;
+        this.tranBillRepository = tranBillRepository;
+        this.recBillRepository = recBillRepository;
+        this.putOnBillRepository = putOnBillRepository;
+        this.checkBillRepository = checkBillRepository;
+    }
+
     @Override
     public BaseEntity<List<AccountSetDTO>> getAccountSet() {
         return new BaseEntity<List<AccountSetDTO>>(accountRepository.getAccountSet());

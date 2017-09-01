@@ -3,8 +3,6 @@ package com.teeny.wms.service.impl;
 import com.teeny.wms.config.WmsException;
 import com.teeny.wms.constant.ConstantContract;
 import com.teeny.wms.core.domain.baseEntity.BaseEntity;
-import com.teeny.wms.core.repository.CallProcedureRepository;
-import com.teeny.wms.core.repository.ClientsRepository;
 import com.teeny.wms.core.repository.RecBillRepository;
 import com.teeny.wms.dto.*;
 import com.teeny.wms.service.AcceptanceService;
@@ -24,12 +22,12 @@ import java.util.List;
 @Transactional
 public class AcceptanceServiceImpl implements AcceptanceService {
 
+    private final RecBillRepository recBillRepository;
+
     @Autowired
-    private ClientsRepository clientsRepository;
-    @Autowired
-    private RecBillRepository recBillRepository;
-    @Autowired
-    private CallProcedureRepository callProcedureRepository;
+    public AcceptanceServiceImpl(RecBillRepository recBillRepository) {
+        this.recBillRepository = recBillRepository;
+    }
 
 
     @Override
