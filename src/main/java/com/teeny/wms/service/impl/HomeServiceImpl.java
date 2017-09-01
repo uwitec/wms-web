@@ -64,7 +64,7 @@ public class HomeServiceImpl implements HomeService {
     }
 
     @Override
-    public BaseEntity<DocumentDTO> getDocumentList(int type, String account, int sId) {
+    public BaseEntity<DocumentDTO> getDocumentList(String account, int sId) {
 
         DocumentDTO result = new DocumentDTO();
         result.setAcceptanceList(recBillRepository.getBill(account, sId));
