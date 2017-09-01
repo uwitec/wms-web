@@ -50,10 +50,10 @@
 
     <select id="getBills" resultType="com.teeny.wms.dto.CommonDTO">
         SELECT
-            b.bill_id AS id,
-            b.barcode AS name
+        b.bill_id AS id,
+        b.barcode AS name
         FROM ${account}.dbo.pda_CheckBill_B b
-            LEFT JOIN ${account}.dbo.pda_CheckBill b1 ON b.bill_id = b1.billid
+        LEFT JOIN ${account}.dbo.pda_CheckBill b1 ON b.bill_id = b1.billid
         <where>
             <if test="sId != 0">
                 b1.s_id=#{sId}
@@ -63,31 +63,32 @@
 
     <select id="getBill" resultType="com.teeny.wms.dto.QueryDocumentDTO">
         SELECT
-            b.billid     AS id,
-            b.billnumber AS documentNo,
-            b.pdaInTime  AS documentDate,
+            b.billid                                AS id,
+            b.billnumber                            AS documentNo,
+            CONVERT(VARCHAR (100), b.pdaInTime, 23) AS documentDate,
+            4                                       AS type,
+            '复核单'                                 AS typeDescription,
             CASE b.billstates
             WHEN 10
                 THEN '验收中'
             WHEN 13
                 THEN '已验收'
-            ELSE '' END  AS status
+            ELSE '' END                             AS status
         FROM ${account}.dbo.pda_CheckBill b
-        <where>
-            <if test="sId != 0">
-                b.s_id=#{sId}
-            </if>
-        </where>
+        WHERE b.pdastates = 1
+        <if test="sId != 0">
+            AND b.s_id=#{sId}
+        </if>
     </select>
 
 
     <select id="getRecipients" resultType="com.teeny.wms.dto.CommonDTO">
         SELECT
-            bb.pickemp_id AS id,
-            e.name        AS name
+        bb.pickemp_id AS id,
+        e.name AS name
         FROM ${account}.dbo.pda_CheckBill_B bb
-            LEFT JOIN ${account}.dbo.pda_employees e ON bb.pickemp_id = e.e_id
-            LEFT JOIN ${account}.dbo.pda_CheckBill b ON bb.bill_id = b.billid
+        LEFT JOIN ${account}.dbo.pda_employees e ON bb.pickemp_id = e.e_id
+        LEFT JOIN ${account}.dbo.pda_CheckBill b ON bb.bill_id = b.billid
         <where>
             <if test="sId != 0">
                 b.s_id = #{sId}

@@ -5,13 +5,12 @@ import com.teeny.wms.core.repository.*;
 import com.teeny.wms.dto.AccountSetDTO;
 import com.teeny.wms.dto.BillCountDTO;
 import com.teeny.wms.dto.CommonDTO;
-import com.teeny.wms.dto.QueryDocumentDTO;
+import com.teeny.wms.dto.DocumentDTO;
 import com.teeny.wms.service.HomeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -65,28 +64,14 @@ public class HomeServiceImpl implements HomeService {
     }
 
     @Override
-    public BaseEntity<List<QueryDocumentDTO>> getDocumentList(int type, String account, int sId) {
+    public BaseEntity<DocumentDTO> getDocumentList(int type, String account, int sId) {
 
-        List<QueryDocumentDTO> data = new ArrayList<QueryDocumentDTO>();
-        if (type == 0) {
-            data.addAll(recBillRepository.getBill(account, sId));
-            data.addAll(putOnBillRepository.getBill(account, sId));
-            data.addAll(tranBillRepository.getBill(account, sId));
-            data.addAll(checkBillRepository.getBill(account, sId));
-        }
-        if (type == 1) {
-            data = recBillRepository.getBill(account, sId);
-        }
-        if (type == 2) {
-            data = putOnBillRepository.getBill(account, sId);
-        }
-        if (type == 3) {
-            data = tranBillRepository.getBill(account, sId);
-        }
-        if (type == 4) {
-            data = checkBillRepository.getBill(account, sId);
-        }
+        DocumentDTO result = new DocumentDTO();
+        result.setAcceptanceList(recBillRepository.getBill(account, sId));
+        result.setAllotList(tranBillRepository.getBill(account, sId));
+        result.setPutawayList(putOnBillRepository.getBill(account, sId));
+        result.setReviewList(checkBillRepository.getBill(account, sId));
 
-        return new BaseEntity<List<QueryDocumentDTO>>(data);
+        return new BaseEntity<>(result);
     }
 }

@@ -1014,14 +1014,14 @@ GET
 #### 单据查询
 1. 单据查询
 * URL 
-home/doucmentList/{type}
+home/doucmentList/{typeDescription}
 * 方法
 GET
 * 入参
 
 参数名      | 类型   | 是否可空 | 参数说明 | 样例
 -----------|--------|---------|---------|-----
-type | int | 否       |0:全部,1:验收单,2:上架单,3:调拨单,4:复核单|  3
+typeDescription | int | 否       |0:全部,1:验收单,2:上架单,3:调拨单,4:复核单|  3
 
 * 出参
 ```

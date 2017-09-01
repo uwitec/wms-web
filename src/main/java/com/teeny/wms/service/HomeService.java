@@ -4,7 +4,7 @@ import com.teeny.wms.core.domain.baseEntity.BaseEntity;
 import com.teeny.wms.dto.AccountSetDTO;
 import com.teeny.wms.dto.BillCountDTO;
 import com.teeny.wms.dto.CommonDTO;
-import com.teeny.wms.dto.QueryDocumentDTO;
+import com.teeny.wms.dto.DocumentDTO;
 
 import java.util.List;
 
@@ -20,5 +20,5 @@ public interface HomeService {
 
     BaseEntity<BillCountDTO> getInfoByWarehouse(String account, int warehouseId);
 
-    BaseEntity<List<QueryDocumentDTO>> getDocumentList(int type, String account, int sId);
+    BaseEntity<DocumentDTO> getDocumentList(String account, int sId);
 }

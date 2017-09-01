@@ -17,27 +17,27 @@
 
     <select id="getTransferList" resultType="com.teeny.wms.dto.TransferListDTO">
         SELECT
-            d.smb_id        AS id,
-            d.original_id   AS originalId,
-            p.name          AS goodsName,
-            d.Batchno       AS lotNo,
-            p.standard      AS specification,
-            p.Factory       AS manufacturer,
-            p.unit1Name     AS unit,
-            d.quantity      AS amount,
-            d.Validdate     AS validateDate,
-            d.MakeDate      AS productDate,
-            p.barcode,
-            b.billnumber    AS billNo,
-            d.DealStates    AS status,
-            p.serial_number AS number,
-            l1.loc_name     AS exportName,
-            l2.loc_name     AS importName
+        d.smb_id AS id,
+        d.original_id AS originalId,
+        p.name AS goodsName,
+        d.Batchno AS lotNo,
+        p.standard AS specification,
+        p.Factory AS manufacturer,
+        p.unit1Name AS unit,
+        d.quantity AS amount,
+        d.Validdate AS validateDate,
+        d.MakeDate AS productDate,
+        p.barcode,
+        b.billnumber AS billNo,
+        d.DealStates AS status,
+        p.serial_number AS number,
+        l1.loc_name AS exportName,
+        l2.loc_name AS importName
         FROM ${account}.dbo.pda_TranBill_D d
-            LEFT JOIN ${account}.dbo.pda_Products p ON p.p_id = d.p_id
-            LEFT JOIN ${account}.dbo.pda_TranBill b ON b.billid = d.bill_id
-            LEFT JOIN ${account}.dbo.pda_location l1 ON l1.l_id = d.Location_id
-            LEFT JOIN ${account}.dbo.pda_location l2 ON l2.l_id = d.location_id2
+        LEFT JOIN ${account}.dbo.pda_Products p ON p.p_id = d.p_id
+        LEFT JOIN ${account}.dbo.pda_TranBill b ON b.billid = d.bill_id
+        LEFT JOIN ${account}.dbo.pda_location l1 ON l1.l_id = d.Location_id
+        LEFT JOIN ${account}.dbo.pda_location l2 ON l2.l_id = d.location_id2
         <where>
             <if test="billNo != null and billNo != ''">
                 b.billnumber = #{billNo}
@@ -72,11 +72,11 @@
 
     <select id="getGoodsCode" resultType="com.teeny.wms.dto.CommonDTO">
         SELECT DISTINCT
-            d.original_id AS id,
-            p.barcode     AS name
+        d.original_id AS id,
+        p.barcode AS name
         FROM ${account}.dbo.pda_TranBill_D d
-            INNER JOIN ${account}.dbo.pda_Products p ON d.p_id = p.p_id
-            LEFT JOIN ${account}.dbo.pda_TranBill b ON d.bill_id = b.billid
+        INNER JOIN ${account}.dbo.pda_Products p ON d.p_id = p.p_id
+        LEFT JOIN ${account}.dbo.pda_TranBill b ON d.bill_id = b.billid
         <where>
             <if test="saId!=0">
                 b.sa_outid = #{saId}
@@ -118,14 +118,23 @@
 
 
     <select id="getBill" resultType="com.teeny.wms.dto.QueryDocumentDTO">
-        SELECT b.billid AS id,b.billnumber AS documentNo, b.pdaInTime AS documentDate,
-        CASE b.billstates WHEN 10 THEN '验收中' WHEN 13 THEN '已验收' ELSE '' END AS status FROM ${account}.dbo.pda_TranBill b
-        <where>
-            <if test="sId != 0">
-                b.s_id = #{sId}
-            </if>
-        </where>
-
+        SELECT
+            b.billid                                AS id,
+            b.billnumber                            AS documentNo,
+            CONVERT(VARCHAR (100), b.pdaInTime, 23) AS documentDate,
+            3                                       AS type,
+            '调拨单'                                 AS typeDescription,
+            CASE b.billstates
+            WHEN 10
+                THEN '验收中'
+            WHEN 13
+                THEN '已验收'
+            ELSE '' END                             AS status
+        FROM ${account}.dbo.pda_TranBill b
+        WHERE b.pdastates = 1
+        <if test="sId != 0">
+            AND b.s_id=#{sId}
+        </if>
     </select>
 
 </mapper>

@@ -10,6 +10,8 @@ public class QueryDocumentDTO implements Serializable {
 
     private int id;
     private String status;
+    private int type;
+    private String typeDescription;
     private String documentNo;
     private String documentDate;
 
@@ -20,6 +22,22 @@ public class QueryDocumentDTO implements Serializable {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
+    }
+
+    public String getTypeDescription() {
+        return typeDescription;
+    }
+
+    public void setTypeDescription(String typeDescription) {
+        this.typeDescription = typeDescription;
     }
 
     public String getStatus() {

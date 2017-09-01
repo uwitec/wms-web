@@ -18,7 +18,7 @@
     <!--AND d.Location_id = #{locationId}-->
     <!--</if>-->
     <!--</where>-->
-    <!--) AND b.billstates = #{type} AND b.pdastates = 2-->
+    <!--) AND b.billstates = #{typeDescription} AND b.pdastates = 2-->
     <!--<if test="pdname != null and pdname != ''">-->
     <!--b.pdname =#{pdType}-->
     <!--</if>-->
@@ -40,7 +40,7 @@
     <!--AND d.Location_id = #{locationId}-->
     <!--</if>-->
     <!--</where>-->
-    <!--) AND b.billstates = #{type}-->
+    <!--) AND b.billstates = #{typeDescription}-->
     <!--<if test="pdname != null and pdname != ''">-->
     <!--b.pdname =#{pdType}-->
     <!--</if>-->
@@ -51,7 +51,7 @@
 
     <!--<select id="getPcount" resultType="int">-->
     <!--SELECT count(*) total FROM ${account}.dbo.pda_pdBill_D d LEFT JOIN ${account}.dbo.pda_pdBill b ON d.bill_id=b.billid-->
-    <!--WHERE b.billstates = #{type} AND b.pdastates = 2-->
+    <!--WHERE b.billstates = #{typeDescription} AND b.pdastates = 2-->
     <!--<if test="saId != 0">-->
     <!--AND b.sa_id = #{saId}-->
     <!--</if>-->
@@ -68,7 +68,7 @@
 
     <!--<select id="getPtotal" resultType="int">-->
     <!--SELECT count(*) total FROM ${account}.dbo.pda_pdBill_D d LEFT JOIN ${account}.dbo.pda_pdBill b ON d.bill_id=b.billid-->
-    <!--WHERE b.billstates = #{type}-->
+    <!--WHERE b.billstates = #{typeDescription}-->
     <!--<if test="saId != 0">-->
     <!--AND b.sa_id = #{saId}-->
     <!--</if>-->
