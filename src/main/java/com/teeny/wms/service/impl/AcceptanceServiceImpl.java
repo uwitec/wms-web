@@ -124,7 +124,7 @@ public class AcceptanceServiceImpl implements AcceptanceService {
     }
 
     @Override
-    public BaseEntity<List<CommonDTO>> getBillsByBillNo(String billNo, String account, int sId) {
+    public BaseEntity<List<OrderDetailDTO>> getBillsByBillNo(String billNo, String account, int sId) {
         Integer unitId = recBillRepository.findUnitByBillNo(billNo, account);
         if (unitId == null || unitId == 0) {
             BaseEntity<String> result = new BaseEntity<>();
@@ -132,13 +132,13 @@ public class AcceptanceServiceImpl implements AcceptanceService {
             result.setMsg("没有此单号数据！");
             throw new WmsException(result);
         }
-        return this.getOrderWithUnitId(unitId, sId, account);
+        return getOrderListWithUnitId(account, unitId);
     }
 
     @Override
     public void test() {
 
-        int a = recBillRepository.test(1,"2012-1-2","批号123",34.3,5435,"yyt");
+        int a = recBillRepository.test(1, "2012-1-2", "批号123", 34.3, 5435, "yyt");
         System.out.print(a);
 
     }

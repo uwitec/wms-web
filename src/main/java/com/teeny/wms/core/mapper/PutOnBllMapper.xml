@@ -26,7 +26,7 @@
         d.MakeDate AS productionDate,
         p.unit1Name AS unit,
         d.EligibleQty AS amount,
-        p.Factory AS manufacturers
+        p.Factory AS manufacturers,
         l.loc_code AS locationCode,
         p.barcode AS goodsCode
 
@@ -126,10 +126,13 @@
     </insert>
 
     <select id="getBills" resultType="com.teeny.wms.dto.CommonDTO">
-        SELECT b.billid AS id, b.billnumber AS name FROM pda_PutOnBill b
+        SELECT b.billid AS id, b.billnumber AS name FROM ${account}.dbo.pda_PutOnBill b
         <where>
             <if test="saId!=0">
                 b.sa_id=#{saId}
+            </if>
+            <if test="saId==0 and sId != 0">
+                b.s_id=#{sId}
             </if>
         </where>
     </select>
@@ -163,6 +166,18 @@
         WHERE b.pdastates = 1
         <if test="sId != 0">
             AND b.s_id=#{sId}
+        </if>
+    </select>
+
+    <select id="getSaListBysId" resultType="com.teeny.wms.dto.CommonDTO">
+        SELECT DISTINCT
+            b.sa_id AS id,
+            a.name
+        FROM ${account}.dbo.pda_PutOnBill b
+            INNER JOIN ${account}.dbo.pda_stockArea a ON b.sa_id = a.sa_id
+        WHERE b.billstates = 10
+        <if test="sId != 0">
+           AND b.s_id = #{sId}
         </if>
     </select>
 

@@ -98,17 +98,15 @@ public class PutOnBillServiceImpl implements PutOnBillService {
     }
 
     @Override
-    public BaseEntity<List<CommonDTO>> getBills(int saId, String account) {
-
-        List<CommonDTO> list = putOnBillRepository.getBills(saId, account);
-
+    public BaseEntity<List<CommonDTO>> getBills(int sId, int saId, String account) {
+        List<CommonDTO> list = putOnBillRepository.getBills(sId, saId, account);
         return new BaseEntity<List<CommonDTO>>(list);
     }
 
     @Override
     public BaseEntity<List<CommonDTO>> getSaList(int sId, String account) {
-        List<CommonDTO> list = commonService.getSaListBysId(sId, account).getData();
-        return new BaseEntity<List<CommonDTO>>(list);
+        List<CommonDTO> list = putOnBillRepository.getSaListBysId(sId, account);
+        return new BaseEntity<>(list);
     }
 
     @Override

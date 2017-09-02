@@ -53,8 +53,8 @@ public class PutawayController {
     //获取单号
     @ResponseBody
     @RequestMapping(value = "/api/shelve/billList/{saId}", method = RequestMethod.GET)
-    public BaseEntity<List<CommonDTO>> getBills(@PathVariable("saId") int saId, @RequestHeader("account") String account) {
-        return putOnBillService.getBills(saId, account);
+    public BaseEntity<List<CommonDTO>> getBills(@PathVariable("saId") int saId, @RequestHeader("account") String account, @RequestHeader("sId") int sId) {
+        return putOnBillService.getBills(sId, saId, account);
     }
 
     //获取库区仓库下的库区

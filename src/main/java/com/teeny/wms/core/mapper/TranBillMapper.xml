@@ -31,8 +31,8 @@
         b.billnumber AS billNo,
         d.DealStates AS status,
         p.serial_number AS number,
-        l1.loc_name AS exportName,
-        l2.loc_name AS importName
+        l1.loc_code AS exportName,
+        l2.loc_code AS importName
         FROM ${account}.dbo.pda_TranBill_D d
         LEFT JOIN ${account}.dbo.pda_Products p ON p.p_id = d.p_id
         LEFT JOIN ${account}.dbo.pda_TranBill b ON b.billid = d.bill_id
@@ -43,13 +43,13 @@
                 b.billnumber = #{billNo}
             </if>
             <if test="goodsCode != null and goodsCode != ''">
-                p.barcode = #{goodsCode}
+                AND p.barcode = #{goodsCode}
             </if>
             <if test="sId != 0">
-                b.sout_id = #{sId}
+                AND b.sout_id = #{sId}
             </if>
             <if test="saId != 0">
-                b.sa_outid = #{saId}
+                AND b.sa_outid = #{saId}
             </if>
         </where>
     </select>

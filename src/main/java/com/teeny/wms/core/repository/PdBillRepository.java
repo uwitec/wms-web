@@ -80,7 +80,7 @@ public interface PdBillRepository {
     void addProduct(@Param("pId") int pId, @Param("lotNo") String lotNo, @Param("locationId") int locationId, @Param("amount") float amount, @Param("validateDate") String validateDate);
 
     //获取批次
-    @Select("SELECT CONVERT(varchar(100), d.Validdate, 23) AS validateDate, d.Batchno AS lotNo, d.EligibleQty AS count FROM ${account}.dbo.pda_pdBill_D d WHERE d.originalId = #{originalId}")
+    @Select("SELECT CONVERT(varchar(100), d.Validdate, 23) AS validateDate, d.Batchno AS lotNo, d.EligibleQty AS count FROM ${account}.dbo.pda_pdBill_D d WHERE d.original_id = #{originalId}")
     List<LotDTO> getLotList(@Param("originalId") int originalId, @Param("account") String account);
 
     @Select("SELECT d.smb_id AS id FROM ${account}.dbo.pda_pdBill_D d WHERE d.p_id=(SELECT d1.p_id FROM ${account}.dbo.pda_pdBill_D d1 WHERE d1.smb_id=#{id}) AND d.bill_id=(SELECT d2.bill_id FROM ${account}.dbo.pda_pdBill_D d2 WHERE d2.smb_id=#{id})")

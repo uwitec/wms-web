@@ -42,8 +42,8 @@ public class AcceptanceController {
 
     //  根据billNo返回所有的数据
     @ResponseBody
-    @RequestMapping(value = "/api/acceptance/orderList/{billNo}", method = RequestMethod.GET)
-    public BaseEntity<List<CommonDTO>> getBillsByBillNo(@PathVariable("billNo") String billNo, @RequestHeader("account") String account, @RequestHeader("sId") int sId) {
+    @RequestMapping(value = "/api/acceptance/detail", method = RequestMethod.GET)
+    public BaseEntity<List<OrderDetailDTO>> getBillsByBillNo(@RequestParam("billNo") String billNo, @RequestHeader("account") String account, @RequestHeader("sId") int sId) {
         return acceptanceService.getBillsByBillNo(billNo, account, sId);
     }
 

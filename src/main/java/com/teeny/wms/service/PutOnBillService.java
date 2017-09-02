@@ -24,7 +24,7 @@ public interface PutOnBillService {
 
     BaseEntity<List<LocationAndCountDTO>> getLocationList(int id, String account);
 
-    BaseEntity<List<CommonDTO>> getBills(int saId, String account);
+    BaseEntity<List<CommonDTO>> getBills(int sId, int saId, String account);
 
     BaseEntity<List<CommonDTO>> getSaList(int sId, String account);
 

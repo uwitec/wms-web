@@ -48,7 +48,7 @@ public class TransferringOrderController {
     //返回商品详情list
     @ResponseBody
     @RequestMapping(value = "/api/transfer/list", method = RequestMethod.GET)
-    public BaseEntity<List<TransferListDTO>> getTranList(@PathVariable("billCode") String billNo, @PathVariable("goodsCode") String goodsCode, @RequestParam("sId") int sId, @RequestParam("saId") int saId, @RequestHeader("account") String account) {
+    public BaseEntity<List<TransferListDTO>> getTranList(@RequestParam("billCode") String billNo, @RequestParam("goodsCode") String goodsCode, @RequestParam("sId") int sId, @RequestParam("saId") int saId, @RequestHeader("account") String account) {
         return transferService.getTransferList(billNo, goodsCode, sId, saId, account);
     }
 
