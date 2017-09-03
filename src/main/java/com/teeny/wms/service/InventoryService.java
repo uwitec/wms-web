@@ -24,7 +24,7 @@ public interface InventoryService {
 
     BaseEntity<List<String>> getStandardList(String goodsName, String account);
 
-    BaseEntity<String> addProduct(AddProductDTO addProductDTO, String account);
+    BaseEntity<String> addProduct(AddProductDTO addProductDTO, String account, int sId);
 
     BaseEntity<ProductAddDetailDTO> getDetailsByNameAndStandard(String goodsCode, String account);
 

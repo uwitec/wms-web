@@ -94,7 +94,7 @@ public class PutOnBillServiceImpl implements PutOnBillService {
     @Override
     public BaseEntity<List<LocationAndCountDTO>> getLocationList(int id, String account) {
         List<LocationAndCountDTO> list = putOnBillRepository.getLocationListById(id, account);
-        return new BaseEntity<List<LocationAndCountDTO>>(list);
+        return new BaseEntity<>(list);
     }
 
     @Override

@@ -96,7 +96,7 @@ public class AcceptanceServiceImpl implements AcceptanceService {
             int i = recBillRepository.addData(recUpdateDTO.getSmbId(), dto.getLotNo(), dto.getAmount(), dto.getPrice(), dto.getSerialNo(), dto.getValidityDate(), account);
         }
         for (Integer i : ids) {
-            recBillRepository.deleteById(i, account);
+            recBillRepository.deleteById(i, recUpdateDTO.getId(), account);
         }
 
         int count = recBillRepository.countByDealType(recUpdateDTO.getId(), account);

@@ -88,7 +88,7 @@ public class PutawayController {
 
     //修改
     @RequestMapping(value = "/api/shelve/update", method = RequestMethod.POST)
-    public BaseEntity<String> updateByBdId(@RequestBody PutawayAddDTO putawayAddDTO, @RequestHeader("account") String account) {
+    public BaseEntity updateByBdId(@RequestBody PutawayAddDTO putawayAddDTO, @RequestHeader("account") String account) {
         return putOnBillService.updateOne(putawayAddDTO, account);
     }
 

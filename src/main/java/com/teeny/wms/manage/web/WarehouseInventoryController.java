@@ -34,7 +34,7 @@ public class WarehouseInventoryController {
     public BaseEntity<List<StroePdListDTO>> getList(@PathVariable("pdType") String pdType, @PathVariable("saId") int saId,
                                                     @PathVariable("areaId") int areaId, @RequestHeader("account") String account,
                                                     @RequestHeader("sId") int sId) {
-        return inventoryService.getStroeList(pdType, saId, areaId, account, 4, 10, sId);
+        return inventoryService.getStroeList(pdType, saId, areaId, account, 4, 1, sId);
     }
 
     //获取库区
@@ -54,7 +54,7 @@ public class WarehouseInventoryController {
     //单个完成
     @ResponseBody
     @RequestMapping(value = "/api/warehouseFirst/single", method = RequestMethod.POST)
-    public BaseEntity<String> completeOne(@RequestParam("goodsDetailId") int goodsDetailId, @RequestHeader("account") String account) {
+    public BaseEntity<String> completeOne(@RequestParam("id") int goodsDetailId, @RequestHeader("account") String account) {
         return inventoryService.completeOne(goodsDetailId, account);
     }
 

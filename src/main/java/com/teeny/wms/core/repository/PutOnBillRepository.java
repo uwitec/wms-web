@@ -72,7 +72,7 @@ public interface PutOnBillRepository {
     @Select("SELECT b.billid FROM ${account}.dbo.pda_PutOnBill b WHERE b.billnumber=#{orderNoId}")
     int getBillByBillNumber(@Param("orderNoId") String orderNoId, @Param("account") String account, @Param("sId") int sId);
 
-    @Delete("DELECT FROM ${account}.dbo.pda_PutOnBill_D WHERE smb_id=#{id} AND original_id=#{originalId}")
+    @Delete("DELETE FROM ${account}.dbo.pda_PutOnBill_D WHERE smb_id=#{id} AND original_id=#{originalId}")
     void deleteBySmbId(@Param("id") Integer id, @Param("originalId") int originalId, @Param("account") String account);
 
     @Select("SELECT d.EligibleQty AS amount,l.loc_code AS locationCode FROM ${account}.dbo.pda_PutOnBill_D d, ${account}.dbo.pda_location l WHERE d.Location_id=l.l_id AND d.p_id=(SELECT DISTINCT d1.p_id FROM ${account}.dbo.pda_PutOnBill_D d1 WHERE d1.original_id=#{id})")
@@ -81,7 +81,7 @@ public interface PutOnBillRepository {
     //获取库区下的单号
     List<CommonDTO> getBills(@Param("sId") int sId, @Param("saId") int saId, @Param("account") String account);
 
-    @Select("SELECT d.smb_id FROM #{id}.dbo.pda_PutOnBill_D d WHERE d.original_id=#{id}")
+    @Select("SELECT d.smb_id FROM ${account}.dbo.pda_PutOnBill_D d WHERE d.original_id=#{id}")
     List<Integer> getIdsByOriginalId(@Param("id") int id, @Param("account") String account);
 
     //获取所有的货位

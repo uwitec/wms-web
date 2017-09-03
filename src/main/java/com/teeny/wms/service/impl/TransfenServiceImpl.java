@@ -64,7 +64,7 @@ public class TransfenServiceImpl implements TransferService {
     }
 
     @Override
-    public BaseEntity<String> update(PutawayAddDTO putawayAddDTO, String account) {
+    public BaseEntity update(PutawayAddDTO putawayAddDTO, String account) {
         List<Integer> ids = tranBillRepository.getIdsByOriginalId(putawayAddDTO.getId(), account);
         if (putawayAddDTO.getLocations().size() > 0) {
             for (PutawayAddDTO.Location loc : putawayAddDTO.getLocations()) {
@@ -88,7 +88,7 @@ public class TransfenServiceImpl implements TransferService {
             tranBillRepository.updateBillStatusByOriginalId(putawayAddDTO.getId(), account);
         }
 
-        return new BaseEntity<String>();
+        return new BaseEntity();
     }
 
     @Override

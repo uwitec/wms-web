@@ -25,7 +25,7 @@ public interface TranBillRepository {
     @Update("UPDATE ${account}.dbo.pda_TranBill_D SET DealStates=1 WHERE original_id = #{id}")
     void updateOne(@Param("id") int id, @Param("account") String account);
 
-    @Select("SELECT count(*) AS total FROM ${account}.dbo.pda_TranBill_D d WHERE d.DealStates=0 AND d.bill_id = (SELECT DISTINCT d1.bill_id FROM ${account}.dbo.pda_TranBill_D d1 WHERE d1.original_d=#{id})")
+    @Select("SELECT count(*) AS total FROM ${account}.dbo.pda_TranBill_D d WHERE d.DealStates=0 AND d.bill_id = (SELECT DISTINCT d1.bill_id FROM ${account}.dbo.pda_TranBill_D d1 WHERE d1.original_id=#{id})")
     int countByDealstatus(@Param("id") int id, @Param("account") String account);
 
     @Update("UPDATE ${account}.dbo.pda_TranBill SET billstates=3 WHERE billid=(SELECT d.bill_id FROM ${account}.dbo.pda_TranBill_D d WHERE d.smb_id=#{id})")
@@ -42,7 +42,7 @@ public interface TranBillRepository {
     @Delete("DELETE FROM ${account}.dbo.pda_TranBill_D WHERE smb_id=#{id} AND original_id=#{originalId}")
     void deleteById(@Param("id") Integer id, @Param("originalId") int originalId, @Param("account") String account);
 
-    @Select("SELECT d.quantity,l.loc_code AS amount FROM ${account}.dbo.pda_TranBill_D d, ${account}.dbo.pda_location l WHERE d.Location_id=l.l_id AND d.smb_id=#{id} AND d.p_id=(SELECT d1.p_id FROM ${account}.dbo.pda_TranBill_D d1 WHERE d1.smb_id=#{id})")
+    @Select("SELECT d.quantity AS amount,l.loc_code AS locationCode FROM ${account}.dbo.pda_TranBill_D d, ${account}.dbo.pda_location l WHERE d.Location_id=l.l_id AND d.original_id=#{id}")
     List<LocationAndCountDTO> getLocationById(@Param("id") int id, @Param("account") String account);
 
     @Update("UPDATE ${account}.dbo.pda_TranBill SET pdaReTime=getdate(),pdastates=1 WHERE billnumber = #{billNo}")

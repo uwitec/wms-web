@@ -49,8 +49,8 @@ public interface RecBillRepository {
     @Select("SELECT d.smb_id FROM ${account}.dbo.pda_RecBill_D d WHERE d.original_id=#{id}")
     List<Integer> getIdsById(@Param("id") int id, @Param("account") String account);
 
-    @Delete("DELETE FROM ${account}.dbo.pda_RecBill_D WHERE smb_id=#{id}")
-    void deleteById(@Param("id") Integer id, @Param("account") String account);
+    @Delete("DELETE FROM ${account}.dbo.pda_RecBill_D WHERE original_id=#{originalId} AND smb_id=#{id}")
+    void deleteById(@Param("id") Integer id, @Param("originalId") int originalId, @Param("account") String account);
 
     List<AcceptAddDTO> getLotList(@Param("id") int id, @Param("account") String account);
 

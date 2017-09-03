@@ -77,7 +77,7 @@ public interface PdBillRepository {
 
 
     //添加数据
-    void addProduct(@Param("pId") int pId, @Param("lotNo") String lotNo, @Param("locationId") int locationId, @Param("amount") float amount, @Param("validateDate") String validateDate);
+    void addProduct(@Param("pId") int pId, @Param("lotNo") String lotNo, @Param("locationId") int locationId, @Param("amount") float amount, @Param("validateDate") String validateDate, @Param("account") String account, @Param("sId") int sId);
 
     //获取批次
     @Select("SELECT CONVERT(varchar(100), d.Validdate, 23) AS validateDate, d.Batchno AS lotNo, d.EligibleQty AS count FROM ${account}.dbo.pda_pdBill_D d WHERE d.original_id = #{originalId}")
@@ -94,4 +94,7 @@ public interface PdBillRepository {
 
     @Update("UPDATE ${account}.dbo.pda_pdBill SET billstates = 3 WHERE billid = (SELECT DISTINCT d.bill_id FROM ${account}.dbo.pda_pdBill_D d WHERE d.original_id = #{originalId})")
     void completeWithOriginalId(@Param("originalId") int originalId,@Param("account") String account);
+
+    @Update("UPDATE ${account}.dbo.pda_pdBill SET pdastates=1,pdaWrTime=getdate() WHERE a_id=#{areaId} AND sa_id=#{saId} AND pdname=#{pdType} AND billstates=#{type}")
+    void updatePdaStatus(@Param("pdType") String pdType,@Param("saId") int saId,@Param("areaId") int areaId,@Param("account") String account,@Param("type") int type);
 }

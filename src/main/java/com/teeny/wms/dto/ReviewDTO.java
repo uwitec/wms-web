@@ -20,9 +20,9 @@ public class ReviewDTO implements Serializable {
     private Float pxCount; //拼箱件数
     private Float packCount; //打包件数
 
-    private Float wholeQuantityTotal; //整货数量
-    private Float pxCountTotal; //拼箱件数
-    private Float packCountTotal; //打包件数
+    private Float wholeQuantityTotal; //整货数量总数
+    private Float pxCountTotal; //拼箱件数总数
+    private Float packCountTotal; //打包件数总数
 
 
 

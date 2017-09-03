@@ -38,6 +38,9 @@ public class InventoryServiceImpl implements InventoryService {
     @Override
     public BaseEntity<List<StoreInventoryGoodsDTO>> getInventoryList(String pdType, int saId, int areaId, String account, int sId) {
         List<StoreInventoryGoodsDTO> list = pdBillRepository.getStoreInventoryList(pdType, saId, areaId, account, sId);
+
+        pdBillRepository.updatePdaStatus(pdType,saId,areaId,account, 1);
+
         return new BaseEntity<List<StoreInventoryGoodsDTO>>(list);
     }
 
@@ -122,7 +125,7 @@ public class InventoryServiceImpl implements InventoryService {
 
 
         List<StroePdListDTO> list = pdBillRepository.getStroePdList(pdType, saId, areaId, account, btype, dtype, sId);
-
+        pdBillRepository.updatePdaStatus(pdType, saId, areaId, account, btype);
         return new BaseEntity<List<StroePdListDTO>>(list);
     }
 
@@ -177,7 +180,7 @@ public class InventoryServiceImpl implements InventoryService {
     }
 
     @Override
-    public BaseEntity<String> addProduct(AddProductDTO dto, String account) {
+    public BaseEntity<String> addProduct(AddProductDTO dto, String account, int sId) {
         int locationId = commonService.getLocationIdByCode(dto.getLocationCode(), account);
         if (locationId == 0) {
             BaseEntity<String> baseEntity = new BaseEntity<String>();
@@ -185,7 +188,7 @@ public class InventoryServiceImpl implements InventoryService {
             baseEntity.setResult(1);
             throw new WmsException(baseEntity);
         }
-        pdBillRepository.addProduct(dto.getpId(), dto.getLotNo(), locationId, dto.getAmount(), dto.getValidateDate());
+        pdBillRepository.addProduct(dto.getpId(), dto.getLotNo(), locationId, dto.getAmount(), dto.getValidateDate(), account, sId);
         return new BaseEntity<String>();
     }
 

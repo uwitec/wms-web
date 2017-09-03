@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.teeny.wms.core.repository.RecBillRepository">
-    <cache/>
+
 
     <select id="countByWarehousId" resultType="int">
         SELECT count(*) FROM ${account}.dbo.pda_RecBill p
@@ -36,7 +36,7 @@
         FROM ${account}.dbo.pda_RecBill r
             LEFT JOIN ${account}.dbo.pda_employees e ON r.e_id = e.e_id
             LEFT JOIN ${account}.dbo.pda_clients c ON c.c_id = r.c_id
-        WHERE r.c_id = #{unitId} AND r.billstates = 10
+        WHERE r.c_id = #{unitId} AND r.billstates = 10 AND r.pdastates!=2
     </select>
 
     <select id="getOrder" resultType="com.teeny.wms.dto.RecBillDTO">
@@ -94,7 +94,7 @@
                 d.pdastates,
                 d.original_id
             FROM ${account}.dbo.pda_RecBill_D d
-            WHERE d.smb_id = #{id}
+            WHERE d.smb_id = (SELECT max(d1.smb_id) FROM ${account}.dbo.pda_RecBill_D d1 WHERE d1.original_id=#{originalId})
     </insert>
 
     <select id="getOrderBillWithUnitId" resultType="com.teeny.wms.dto.CommonDTO">

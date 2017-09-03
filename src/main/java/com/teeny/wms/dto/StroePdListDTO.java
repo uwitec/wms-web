@@ -8,7 +8,7 @@ import java.io.Serializable;
 public class StroePdListDTO implements Serializable {
 
     private int    id; //id
-    private int originalId;
+    private int    originalId;
     private int    billId;       //盘点单id
     private int    goodsId;       //商品id
     private String locationCode;   //货位码
@@ -162,4 +162,5 @@ public class StroePdListDTO implements Serializable {
     public void setStatus(int status) {
         this.status = status;
     }
+
 }

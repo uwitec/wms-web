@@ -92,7 +92,7 @@ public class TransferringOrderController {
     //修改
     @ResponseBody
     @RequestMapping(value = "/api/transfer/update", method = RequestMethod.POST)
-    public BaseEntity<String> update(@RequestBody PutawayAddDTO putawayAddDTO, @RequestHeader("account") String account) {
+    public BaseEntity update(@RequestBody PutawayAddDTO putawayAddDTO, @RequestHeader("account") String account) {
         return transferService.update(putawayAddDTO, account);
     }
 

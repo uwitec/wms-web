@@ -18,7 +18,7 @@ public interface TransferService {
 
     BaseEntity<String> updateOne(int id, String account);
 
-    BaseEntity<String> update(PutawayAddDTO putawayAddDTO, String account);
+    BaseEntity update(PutawayAddDTO putawayAddDTO, String account);
 
     BaseEntity<List<LocationAndCountDTO>> getLocationListById(int id, String account);
 

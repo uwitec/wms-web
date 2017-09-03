@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.teeny.wms.core.repository.CheckBillRepository">
-    <cache/>
+
 
     <select id="countByWarehousId" resultType="int">
         SELECT count(*) FROM ${account}.dbo.pda_CheckBill
@@ -20,9 +20,9 @@
     <select id="getIfoByBillNo" resultType="com.teeny.wms.dto.ReviewDTO">
         SELECT
             c.billnumber                                                                 AS billNo,
-            d.q1                                                                         AS wholeQuantity,
-            d.q2                                                                         AS pxCount,
-            d.q3                                                                         AS packCount,
+            d.q1                                                                         AS wholeQuantityTotal,
+            d.q2                                                                         AS pxCountTotal,
+            d.q3                                                                         AS packCountTotal,
             c.FirstStates                                                                AS priority,
             c.TempStore                                                                  AS tempArea,
             c.pdastates                                                                  AS status,
@@ -32,13 +32,13 @@
             cl.RoadName                                                                  AS deliveryLine,
             (SELECT count(*) AS total
              FROM ${account}.dbo.pda_CheckBill_B b, ${account}.dbo.pda_CheckBill_B b1
-             WHERE b.bill_id = b1.bill_id AND b.PickType = 1 AND b1.barcode = #{billNo}) AS wholeQuantityTotal,
+             WHERE b.bill_id = b1.bill_id AND b.EligibleQty=1 AND b.PickType = 1 AND b1.barcode = #{billNo}) AS wholeQuantity,
             (SELECT count(*) AS total
              FROM ${account}.dbo.pda_CheckBill_B b, ${account}.dbo.pda_CheckBill_B b1
-             WHERE b.bill_id = b1.bill_id AND b.PickType = 2 AND b1.barcode = #{billNo}) AS pxCountTotal,
+             WHERE b.bill_id = b1.bill_id AND b.EligibleQty=1 AND b.PickType = 2 AND b1.barcode = #{billNo}) AS pxCount,
             (SELECT count(*) AS total
              FROM ${account}.dbo.pda_CheckBill_B b, ${account}.dbo.pda_CheckBill_B b1
-             WHERE b.bill_id = b1.bill_id AND b.PickType = 3 AND b1.barcode = #{billNo}) AS packCountTotal
+             WHERE b.bill_id = b1.bill_id AND b.EligibleQty=1 AND b.PickType = 3 AND b1.barcode = #{billNo}) AS packCount
 
         FROM ${account}.dbo.pda_CheckBill c
             LEFT JOIN ${account}.dbo.pda_clients cl ON c.c_id = cl.c_id

@@ -20,7 +20,7 @@ public interface PutOnBillService {
 
     void putOnBillWithOne(int bdId, String account);
 
-    BaseEntity<String> updateOne(PutawayAddDTO putawayAddDTO, String account);
+    BaseEntity updateOne(PutawayAddDTO putawayAddDTO, String account);
 
     BaseEntity<List<LocationAndCountDTO>> getLocationList(int id, String account);
 

@@ -109,7 +109,7 @@
         LEFT JOIN ${account}.dbo.pda_Area a ON a.sc_id=b.a_id
         LEFT JOIN ${account}.dbo.pda_location l ON l.l_id=d.Location_id
         WHERE
-        b.pdname = #{pdType} AND b.billstates = 1 AND d.billstates=10 AND b.sa_id = #{saId} AND b.a_id=#{areaId}
+        b.pdname = #{pdType} AND b.billstates = 1 AND d.billstates=1 AND b.sa_id = #{saId} AND b.a_id=#{areaId} AND b.pdastates != 2
         <if test="sId != 0">
             AND b.s_id = #{sId}
         </if>
@@ -135,7 +135,7 @@
                 d.pdastates,
                 d.original_id
             FROM ${account}.dbo.pda_pdBill_D d
-            WHERE d.smb_id = (SELECT max(d1.smb_id) FROM pda_pdBill_D d1 WHERE d1.original_id=#{id})
+            WHERE d.smb_id = (SELECT max(d1.smb_id) FROM ${account}.dbo.pda_pdBill_D d1 WHERE d1.original_id=#{id})
     </insert>
 
     <!--////////////////////单品盘点////////////////////-->
@@ -216,7 +216,8 @@
         CONVERT(varchar(100), d.Validdate, 23) AS validateDate,
         CONVERT(varchar(100), d.MakeDate, 23) AS productionDate,
         p.unit1Name AS unit,
-        d.DealStates AS status
+        d.DealStates AS status,
+        d.original_id AS originalId
         FROM ${account}.dbo.pda_pdBill_D d
         LEFT JOIN ${account}.dbo.pda_pdBill b ON b.billid = d.bill_id
         LEFT JOIN ${account}.dbo.pda_Products p ON d.p_id = p.p_id
@@ -224,7 +225,7 @@
         LEFT JOIN ${account}.dbo.pda_clients c ON c.c_id = d.Supplier_id
         LEFT JOIN ${account}.dbo.pda_Area a ON a.sc_id = b.a_id
         LEFT JOIN ${account}.dbo.pda_location l ON l.l_id = d.Location_id
-        WHERE b.pdname = #{pdType} AND b.sa_id = #{saId} AND b.a_id = #{areaId} AND b.billstates = #{btype}
+        WHERE b.pdname = #{pdType} AND b.sa_id = #{saId} AND b.a_id = #{areaId} AND b.billstates = #{btype} AND b.pdastates != 2
         AND d.billstates = #{dtype}
         <if test="sId != 0">
             AND b.s_id = #{sId}
@@ -243,10 +244,10 @@
                 #{amount},
                 0,
                 0,
-                #{s_id},
+                #{sId},
                 #{locationId},
                 1,
-                d.pdastates
+                0
             FROM ${account}.dbo.pda_Products p
             WHERE p.p_id = #{pId}
     </insert>

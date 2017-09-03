@@ -68,8 +68,8 @@ public class ProductInventoryController {
     //新增单品
     @ResponseBody
     @RequestMapping(value = "/api/productsInventory/add", method = RequestMethod.PUT)
-    public BaseEntity<String> addProduct(@RequestBody AddProductDTO addProductDTO, @RequestHeader("account") String account) {
-        return inventoryService.addProduct(addProductDTO, account);
+    public BaseEntity<String> addProduct(@RequestBody AddProductDTO addProductDTO, @RequestHeader("account") String account, @RequestHeader("sId") int sId) {
+        return inventoryService.addProduct(addProductDTO, account, sId);
     }
 
 

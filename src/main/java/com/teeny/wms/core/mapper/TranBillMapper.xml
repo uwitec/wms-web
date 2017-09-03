@@ -4,7 +4,6 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.teeny.wms.core.repository.TranBillRepository">
-    <cache/>
 
     <select id="countByWarehousId" resultType="int">
         SELECT count(*) FROM ${account}.dbo.pda_TranBill p
@@ -65,7 +64,7 @@
                 b.sa_outid = #{saId}
             </if>
             <if test="sId!=0">
-                b.sout_id = #{sId}
+                AND b.sout_id = #{sId}
             </if>
         </where>
     </select>
@@ -110,9 +109,7 @@
                 d.pdastates,
                 d.original_id
             FROM ${account}.dbo.pda_TranBill_D d
-            WHERE d.smb_id = (SELECT max(d1.smb_id)
-                              FROM pda_RecBill_D d1
-                              WHERE d1.original_id = #{id})
+            WHERE d.smb_id = (SELECT max(d1.smb_id) FROM ${account}.dbo.pda_TranBill_D d1 WHERE d1.original_id = #{id})
 
     </insert>
 
@@ -133,7 +130,7 @@
         FROM ${account}.dbo.pda_TranBill b
         WHERE b.pdastates = 1
         <if test="sId != 0">
-            AND b.s_id=#{sId}
+            AND b.sout_id=#{sId}
         </if>
     </select>
 

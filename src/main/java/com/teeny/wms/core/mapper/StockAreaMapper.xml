@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.teeny.wms.core.repository.StockAreaRepository">
-    <cache/>
+
 
     <select id="getSaListBySid" resultType="com.teeny.wms.dto.CommonDTO">
         SELECT s.sa_id AS id, s.name FROM ${account}.dbo.pda_stockArea s
