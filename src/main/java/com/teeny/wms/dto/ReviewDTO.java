@@ -15,43 +15,15 @@ public class ReviewDTO implements Serializable {
     private String tempArea; //暂存区
     private String status;//状态
     private int documentStatus; //单据状态
-    private Integer replenishmentOrderCount; //补货订单数
-    private Float wholeQuantity; //整货数量
-    private Float pxCount; //拼箱件数
-    private Float packCount; //打包件数
-
-    private Float wholeQuantityTotal; //整货数量总数
-    private Float pxCountTotal; //拼箱件数总数
-    private Float packCountTotal; //打包件数总数
-
-
-
     private String billRemark; //单据备注
 
+    private float zhQuantity; //整货数量
+    private float pxQuantity; //拼箱件数
+    private float dbQuantity; //打包件数
 
-    public Float getWholeQuantityTotal() {
-        return wholeQuantityTotal;
-    }
-
-    public void setWholeQuantityTotal(Float wholeQuantityTotal) {
-        this.wholeQuantityTotal = wholeQuantityTotal;
-    }
-
-    public Float getPxCountTotal() {
-        return pxCountTotal;
-    }
-
-    public void setPxCountTotal(Float pxCountTotal) {
-        this.pxCountTotal = pxCountTotal;
-    }
-
-    public Float getPackCountTotal() {
-        return packCountTotal;
-    }
-
-    public void setPackCountTotal(Float packCountTotal) {
-        this.packCountTotal = packCountTotal;
-    }
+    private float zhQuantityTotal; //整货数量总数
+    private float pxQuantityTotal; //拼箱件数总数
+    private float dbQuantityTotal; //打包件数总数
 
     public String getBillNo() {
         return billNo;
@@ -109,43 +81,59 @@ public class ReviewDTO implements Serializable {
         this.documentStatus = documentStatus;
     }
 
-    public Integer getReplenishmentOrderCount() {
-        return replenishmentOrderCount;
-    }
-
-    public void setReplenishmentOrderCount(Integer replenishmentOrderCount) {
-        this.replenishmentOrderCount = replenishmentOrderCount;
-    }
-
-    public Float getWholeQuantity() {
-        return wholeQuantity;
-    }
-
-    public void setWholeQuantity(Float wholeQuantity) {
-        this.wholeQuantity = wholeQuantity;
-    }
-
-    public Float getPxCount() {
-        return pxCount;
-    }
-
-    public void setPxCount(Float pxCount) {
-        this.pxCount = pxCount;
-    }
-
-    public Float getPackCount() {
-        return packCount;
-    }
-
-    public void setPackCount(Float packCount) {
-        this.packCount = packCount;
-    }
-
     public String getBillRemark() {
         return billRemark;
     }
 
     public void setBillRemark(String billRemark) {
         this.billRemark = billRemark;
+    }
+
+    public float getZhQuantity() {
+        return zhQuantity;
+    }
+
+    public void setZhQuantity(float zhQuantity) {
+        this.zhQuantity = zhQuantity;
+    }
+
+    public float getPxQuantity() {
+        return pxQuantity;
+    }
+
+    public void setPxQuantity(float pxQuantity) {
+        this.pxQuantity = pxQuantity;
+    }
+
+    public float getDbQuantity() {
+        return dbQuantity;
+    }
+
+    public void setDbQuantity(float dbQuantity) {
+        this.dbQuantity = dbQuantity;
+    }
+
+    public float getZhQuantityTotal() {
+        return zhQuantityTotal;
+    }
+
+    public void setZhQuantityTotal(float zhQuantityTotal) {
+        this.zhQuantityTotal = zhQuantityTotal;
+    }
+
+    public float getPxQuantityTotal() {
+        return pxQuantityTotal;
+    }
+
+    public void setPxQuantityTotal(float pxQuantityTotal) {
+        this.pxQuantityTotal = pxQuantityTotal;
+    }
+
+    public float getDbQuantityTotal() {
+        return dbQuantityTotal;
+    }
+
+    public void setDbQuantityTotal(float dbQuantityTotal) {
+        this.dbQuantityTotal = dbQuantityTotal;
     }
 }

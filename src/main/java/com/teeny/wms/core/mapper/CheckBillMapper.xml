@@ -19,33 +19,53 @@
 
     <select id="getIfoByBillNo" resultType="com.teeny.wms.dto.ReviewDTO">
         SELECT
-            c.billnumber                                                                 AS billNo,
-            d.q1                                                                         AS wholeQuantityTotal,
-            d.q2                                                                         AS pxCountTotal,
-            d.q3                                                                         AS packCountTotal,
-            c.FirstStates                                                                AS priority,
-            c.TempStore                                                                  AS tempArea,
-            c.pdastates                                                                  AS status,
-            c.billstates                                                                 AS documentStatus,
-            c.remark                                                                     AS billRemark,
-            cl.name                                                                      AS customer,
-            cl.RoadName                                                                  AS deliveryLine,
-            (SELECT count(*) AS total
-             FROM ${account}.dbo.pda_CheckBill_B b, ${account}.dbo.pda_CheckBill_B b1
-             WHERE b.bill_id = b1.bill_id AND b.EligibleQty=1 AND b.PickType = 1 AND b1.barcode = #{billNo}) AS wholeQuantity,
-            (SELECT count(*) AS total
-             FROM ${account}.dbo.pda_CheckBill_B b, ${account}.dbo.pda_CheckBill_B b1
-             WHERE b.bill_id = b1.bill_id AND b.EligibleQty=1 AND b.PickType = 2 AND b1.barcode = #{billNo}) AS pxCount,
-            (SELECT count(*) AS total
-             FROM ${account}.dbo.pda_CheckBill_B b, ${account}.dbo.pda_CheckBill_B b1
-             WHERE b.bill_id = b1.bill_id AND b.EligibleQty=1 AND b.PickType = 3 AND b1.barcode = #{billNo}) AS packCount
+            b.billnumber                                                                       AS billNo,
+            c.RoadName                                                                         AS deliveryLine,
+            c.name                                                                             AS customer,
+            b.FirstStates                                                                      AS priority,
+            b.TempStore                                                                        AS tempArea,
+            b.pdastates                                                                        AS status,
+            b.billstates                                                                       AS documentStatus,
+            b.remark                                                                           AS billRemark,
 
-        FROM ${account}.dbo.pda_CheckBill c
-            LEFT JOIN ${account}.dbo.pda_clients cl ON c.c_id = cl.c_id
-            LEFT JOIN ${account}.dbo.pda_CheckBill_D d ON d.bill_id = c.billid
-        WHERE c.billnumber = (SELECT b1.bill_id
-                              FROM pda_CheckBill_B b1
-                              WHERE b1.barcode = #{billNo})
+            (SELECT count(EligibleQty)
+             FROM ${account}.dbo.pda_CheckBill_B
+             WHERE PickType = 1 AND EligibleQty = 1 AND bill_id = (SELECT DISTINCT bill_id
+                                                                   FROM ${account}.dbo.pda_CheckBill_B
+                                                                   WHERE barcode = #{billNo})) AS zhQuantity,
+            (SELECT count(EligibleQty)
+             FROM ${account}.dbo.pda_CheckBill_B
+             WHERE PickType = 2 AND EligibleQty = 1 AND bill_id = (SELECT DISTINCT bill_id
+                                                                   FROM ${account}.dbo.pda_CheckBill_B
+                                                                   WHERE barcode = #{billNo})) AS pxQuantity,
+            (SELECT count(EligibleQty)
+             FROM ${account}.dbo.pda_CheckBill_B
+             WHERE PickType = 3 AND EligibleQty = 1 AND bill_id = (SELECT DISTINCT bill_id
+                                                                   FROM ${account}.dbo.pda_CheckBill_B
+                                                                   WHERE barcode = #{billNo})) AS dbQuantity,
+
+
+            (SELECT count(EligibleQty)
+             FROM ${account}.dbo.pda_CheckBill_B
+             WHERE PickType = 1 AND bill_id = (SELECT DISTINCT bill_id
+                                               FROM ${account}.dbo.pda_CheckBill_B
+                                               WHERE barcode = #{billNo}))                     AS zhQuantityTotal,
+            (SELECT count(EligibleQty)
+             FROM ${account}.dbo.pda_CheckBill_B
+             WHERE PickType = 2 AND bill_id = (SELECT DISTINCT bill_id
+                                               FROM ${account}.dbo.pda_CheckBill_B
+                                               WHERE barcode = #{billNo}))                     AS pxQuantityTotal,
+            (SELECT count(EligibleQty)
+             FROM ${account}.dbo.pda_CheckBill_B
+             WHERE PickType = 3 AND bill_id = (SELECT DISTINCT bill_id
+                                               FROM ${account}.dbo.pda_CheckBill_B
+                                               WHERE barcode = #{billNo}))                     AS dbQuantityTotal
+
+        FROM ${account}.dbo.pda_CheckBill b
+            LEFT JOIN ${account}.dbo.pda_clients c ON b.c_id = c.c_id
+        WHERE b.billid = (SELECT DISTINCT bb.bill_id
+                          FROM ${account}.dbo.pda_CheckBill_B bb
+                          WHERE bb.barcode = #{billNo})
     </select>
 
     <select id="getBills" resultType="com.teeny.wms.dto.CommonDTO">
@@ -54,26 +74,25 @@
         b.barcode AS name
         FROM ${account}.dbo.pda_CheckBill_B b
         LEFT JOIN ${account}.dbo.pda_CheckBill b1 ON b.bill_id = b1.billid
-        <where>
-            <if test="sId != 0">
-                b1.s_id=#{sId}
-            </if>
-        </where>
+        WHERE b.DealStates = 0
+        <if test="sId != 0">
+            AND b1.s_id=#{sId}
+        </if>
     </select>
 
     <select id="getBill" resultType="com.teeny.wms.dto.QueryDocumentDTO">
         SELECT
-            b.billid                                AS id,
-            b.billnumber                            AS documentNo,
-            CONVERT(VARCHAR (100), b.pdaInTime, 23) AS documentDate,
-            4                                       AS type,
-            '复核单'                                 AS typeDescription,
-            CASE b.billstates
-            WHEN 10
-                THEN '验收中'
-            WHEN 13
-                THEN '已验收'
-            ELSE '' END                             AS status
+        b.billid AS id,
+        b.billnumber AS documentNo,
+        CONVERT(VARCHAR (100), b.pdaInTime, 23) AS documentDate,
+        4 AS type,
+        '复核单' AS typeDescription,
+        CASE b.billstates
+        WHEN 10
+        THEN '未复核'
+        WHEN 13
+        THEN '复核中'
+        ELSE '' END AS status
         FROM ${account}.dbo.pda_CheckBill b
         WHERE b.pdastates = 1
         <if test="sId != 0">
@@ -94,6 +113,15 @@
                 b.s_id = #{sId}
             </if>
         </where>
+    </select>
+
+    <select id="getReplenishmentCount" resultType="int">
+        SELECT count(*)
+        FROM ${account}.dbo.pda_CheckBill
+        WHERE FirstStates = '1'
+        <if test="sId != 0">
+            AND s_id = #{sId}
+        </if>
     </select>
 
 </mapper>

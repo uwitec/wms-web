@@ -2,6 +2,7 @@ package com.teeny.wms.service.impl;
 
 import com.teeny.wms.config.WmsException;
 import com.teeny.wms.constant.ConstantContract;
+import com.teeny.wms.core.domain.RecBillD;
 import com.teeny.wms.core.domain.baseEntity.BaseEntity;
 import com.teeny.wms.core.repository.RecBillRepository;
 import com.teeny.wms.dto.*;
@@ -91,12 +92,19 @@ public class AcceptanceServiceImpl implements AcceptanceService {
             throw new WmsException(result);
         }
 
-        List<Integer> ids = recBillRepository.getIdsById(recUpdateDTO.getId(), account);
+        RecBillD original = recBillRepository.getOriginal(account, recUpdateDTO.getId());
+        System.out.println(original);
+
+        recBillRepository.deleteById(recUpdateDTO.getId(), account);
+
         for (AcceptAddDTO dto : param) {
-            int i = recBillRepository.addData(recUpdateDTO.getSmbId(), dto.getLotNo(), dto.getAmount(), dto.getPrice(), dto.getSerialNo(), dto.getValidityDate(), account);
-        }
-        for (Integer i : ids) {
-            recBillRepository.deleteById(i, recUpdateDTO.getId(), account);
+            RecBillD in = new RecBillD(original);
+            in.DealStates = 1;
+            in.Batchno = dto.getLotNo();
+            in.Validdate = dto.getValidityDate();
+            in.EligibleQty = dto.getAmount();
+            in.CostPrice = dto.getPrice();
+            recBillRepository.addData(account, in);
         }
 
         int count = recBillRepository.countByDealType(recUpdateDTO.getId(), account);

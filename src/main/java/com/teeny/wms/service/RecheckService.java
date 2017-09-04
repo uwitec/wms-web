@@ -22,4 +22,6 @@ public interface RecheckService {
     BaseEntity<String> complete(RecheckCompleteDTO recheckCompleteDTO, String account);
 
     BaseEntity<List<CommonDTO>> getRecipients(String account, int sId);
+
+    BaseEntity<Integer> getReplenishmentCount(String account, int sId);
 }

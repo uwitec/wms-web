@@ -24,8 +24,8 @@
         p.Factory AS manufacturer,
         p.unit1Name AS unit,
         d.quantity AS amount,
-        d.Validdate AS validateDate,
-        d.MakeDate AS productDate,
+        CONVERT(VARCHAR (100), d.Validdate, 23) AS validateDate,
+        CONVERT(VARCHAR (100), d.MakeDate, 23) AS productDate,
         p.barcode,
         b.billnumber AS billNo,
         d.DealStates AS status,
@@ -109,24 +109,26 @@
                 d.pdastates,
                 d.original_id
             FROM ${account}.dbo.pda_TranBill_D d
-            WHERE d.smb_id = (SELECT max(d1.smb_id) FROM ${account}.dbo.pda_TranBill_D d1 WHERE d1.original_id = #{id})
+            WHERE d.smb_id = (SELECT max(d1.smb_id)
+                              FROM ${account}.dbo.pda_TranBill_D d1
+                              WHERE d1.original_id = #{id})
 
     </insert>
 
 
     <select id="getBill" resultType="com.teeny.wms.dto.QueryDocumentDTO">
         SELECT
-            b.billid                                AS id,
-            b.billnumber                            AS documentNo,
-            CONVERT(VARCHAR (100), b.pdaInTime, 23) AS documentDate,
-            3                                       AS type,
-            '调拨单'                                 AS typeDescription,
-            CASE b.billstates
-            WHEN 10
-                THEN '验收中'
-            WHEN 13
-                THEN '已验收'
-            ELSE '' END                             AS status
+        b.billid AS id,
+        b.billnumber AS documentNo,
+        CONVERT(VARCHAR (100), b.pdaInTime, 23) AS documentDate,
+        3 AS type,
+        '调拨单' AS typeDescription,
+        CASE b.billstates
+        WHEN 2
+        THEN '待调拨'
+        WHEN 3
+        THEN '调拨中'
+        ELSE '' END AS status
         FROM ${account}.dbo.pda_TranBill b
         WHERE b.pdastates = 1
         <if test="sId != 0">

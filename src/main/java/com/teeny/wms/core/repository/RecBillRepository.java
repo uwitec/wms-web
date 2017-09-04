@@ -1,5 +1,6 @@
 package com.teeny.wms.core.repository;
 
+import com.teeny.wms.core.domain.RecBillD;
 import com.teeny.wms.dto.*;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Param;
@@ -35,7 +36,7 @@ public interface RecBillRepository {
     List<GoodsDTO> getGoodsByBillId(@Param("orderId") int orderId, @Param("account") String account);
 
     ///复制数据
-    int addData(@Param("id") int id, @Param("lotNo") String lotNo, @Param("amount") Float amount, @Param("price") Float price, @Param("seriaNo") String serialNo, @Param("validityDate") String validityDate,@Param("account") String account);
+    void addData(@Param("account") String account,@Param("item") RecBillD d);
 
     @Update("UPDATE ${account}.dbo.pda_RecBill_D SET DealStates=1 WHERE smb_id=#{id}")
     void completeOne(@Param("id") int id, @Param("account") String account);
@@ -49,8 +50,8 @@ public interface RecBillRepository {
     @Select("SELECT d.smb_id FROM ${account}.dbo.pda_RecBill_D d WHERE d.original_id=#{id}")
     List<Integer> getIdsById(@Param("id") int id, @Param("account") String account);
 
-    @Delete("DELETE FROM ${account}.dbo.pda_RecBill_D WHERE original_id=#{originalId} AND smb_id=#{id}")
-    void deleteById(@Param("id") Integer id, @Param("originalId") int originalId, @Param("account") String account);
+    @Delete("DELETE FROM ${account}.dbo.pda_RecBill_D WHERE original_id=#{originalId}")
+    void deleteById(@Param("originalId") int originalId, @Param("account") String account);
 
     List<AcceptAddDTO> getLotList(@Param("id") int id, @Param("account") String account);
 
@@ -59,4 +60,6 @@ public interface RecBillRepository {
 
 
     int test(@Param("id") int id,@Param("date") String date,@Param("lotNo") String lotNo,@Param("amount") double amount,@Param("price") int price,@Param("account") String account);
+
+    RecBillD getOriginal(@Param("account") String account,@Param("id") int originalId);
 }

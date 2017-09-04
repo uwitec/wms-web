@@ -65,9 +65,7 @@ public class RecheckServiceImpl implements RecheckService {
 
         ReviewDTO reviewDTO = checkBillRepository.getIfoByBillNo(billNo, account);
 
-        //获取补货订单数
-        int replenishmentCount = checkBillRepository.getReplenishmentCount(billNo, account);
-        return new BaseEntity<ReviewDTO>(reviewDTO);
+        return new BaseEntity<>(reviewDTO);
     }
 
     @Override
@@ -85,6 +83,11 @@ public class RecheckServiceImpl implements RecheckService {
     @Override
     public BaseEntity<List<CommonDTO>> getRecipients(String account, int sId) {
         return new BaseEntity<>(checkBillRepository.getRecipients(account, sId));
+    }
+
+    @Override
+    public BaseEntity<Integer> getReplenishmentCount(String account, int sId) {
+        return new BaseEntity<>(checkBillRepository.getReplenishmentCount(account, sId));
     }
 
 

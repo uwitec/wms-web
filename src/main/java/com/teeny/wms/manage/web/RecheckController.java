@@ -65,4 +65,11 @@ public class RecheckController {
 //        recheckService.updateRecheckBill(account, reviewUpdateDTO);
 //    }
 
+
+    @ResponseBody
+    @RequestMapping(value = "/api/recheck/replenishment", method = RequestMethod.GET)
+    public BaseEntity<Integer> getReplenishmentCount(@RequestHeader("account") String account, @RequestHeader("sId") int sId) {
+        return recheckService.getReplenishmentCount(account, sId);
+    }
+
 }

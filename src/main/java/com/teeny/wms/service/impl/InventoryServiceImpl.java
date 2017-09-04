@@ -189,7 +189,7 @@ public class InventoryServiceImpl implements InventoryService {
             throw new WmsException(baseEntity);
         }
         pdBillRepository.addProduct(dto.getpId(), dto.getLotNo(), locationId, dto.getAmount(), dto.getValidateDate(), account, sId);
-        return new BaseEntity<String>();
+        return new BaseEntity<>();
     }
 
     /*-----------------------------------------------------Common---------------------------------------------*/

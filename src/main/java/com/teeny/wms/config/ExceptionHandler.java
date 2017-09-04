@@ -25,7 +25,7 @@ public class ExceptionHandler implements HandlerExceptionResolver {
             model.addAttribute("msg", wmsException.getInfo().getMsg());
             return new ModelAndView("",model);
         }else {
-            model.addAttribute("message", ex.getMessage());
+            model.addAttribute("msg", ex.getMessage());
             model.addAttribute("result",1);
             return new ModelAndView("",model);
         }

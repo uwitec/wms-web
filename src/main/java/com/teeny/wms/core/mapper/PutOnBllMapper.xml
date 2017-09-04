@@ -158,9 +158,9 @@
             '上架单'                                 AS typeDescription,
             CASE b.billstates
             WHEN 10
-                THEN '验收中'
+                THEN '待上架'
             WHEN 13
-                THEN '已验收'
+                THEN '已上架'
             ELSE '' END                             AS status
         FROM ${account}.dbo.pda_PutOnBill b
         WHERE b.pdastates = 1

@@ -22,8 +22,7 @@ public interface CheckBillRepository {
     ReviewDTO getIfoByBillNo(@Param("billNo") String billNo, @Param("account") String account);
 
 
-    @Select("SELECT count(*) FROM ${account}.dbo.pda_CheckBill WHERE FirstStates = '1'")
-    int getReplenishmentCount(@Param("billNo") String billNo, @Param("account") String account);
+    int getReplenishmentCount( @Param("account") String account, @Param("sId") int sId);
 
     @Select("SELECT isnull(b.,0) FROM ${account}.dbo.pda_CheckBill_B b LEFT JOIN ${account}.dbo.pda_CheckBill c ON b.bill_id=c.billid WHERE c.billnumber=#{billNo} AND b.PickType = #{type}")
     Float getCountByType(@Param("type") int type, @Param("billNo") String billNo, @Param("account") String account);
