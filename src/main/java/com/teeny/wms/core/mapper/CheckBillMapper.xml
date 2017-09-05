@@ -70,7 +70,7 @@
 
     <select id="getBills" resultType="com.teeny.wms.dto.CommonDTO">
         SELECT
-        b.bill_id AS id,
+        b.smb_id AS id,
         b.barcode AS name
         FROM ${account}.dbo.pda_CheckBill_B b
         LEFT JOIN ${account}.dbo.pda_CheckBill b1 ON b.bill_id = b1.billid

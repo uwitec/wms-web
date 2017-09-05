@@ -37,20 +37,19 @@
         LEFT JOIN ${account}.dbo.pda_TranBill b ON b.billid = d.bill_id
         LEFT JOIN ${account}.dbo.pda_location l1 ON l1.l_id = d.Location_id
         LEFT JOIN ${account}.dbo.pda_location l2 ON l2.l_id = d.location_id2
-        <where>
-            <if test="billNo != null and billNo != ''">
-                b.billnumber = #{billNo}
-            </if>
-            <if test="goodsCode != null and goodsCode != ''">
-                AND p.barcode = #{goodsCode}
-            </if>
-            <if test="sId != 0">
-                AND b.sout_id = #{sId}
-            </if>
-            <if test="saId != 0">
-                AND b.sa_outid = #{saId}
-            </if>
-        </where>
+        WHERE d.DealStates = 0
+        <if test="billNo != null and billNo != ''">
+            AND b.billnumber = #{billNo}
+        </if>
+        <if test="goodsCode != null and goodsCode != ''">
+            AND p.barcode = #{goodsCode}
+        </if>
+        <if test="sId != 0">
+            AND b.sout_id = #{sId}
+        </if>
+        <if test="saId != 0">
+            AND b.sa_outid = #{saId}
+        </if>
     </select>
 
 

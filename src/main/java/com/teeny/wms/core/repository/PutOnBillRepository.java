@@ -64,7 +64,7 @@ public interface PutOnBillRepository {
 
     //更新一个
     @Update("UPDATE ${account}.dbo.pda_PutOnBill_D SET DealStates=1 WHERE original_id=#{id}")
-    void updateOne(@Param("id") Integer id, @Param("account") String account);
+    void updateOne(@Param("id") int id, @Param("account") String account);
 
     @Update("UPDATE ${account}.dbo.pda_PutOnBill SET billstates = 13 WHERE billid = (SELECT d.bill_id FROM ${account}.dbo.pda_PutOnBill_D d WHERE d.smb_id=#{id})")
     void updatePutOnBillDBySmbId(@Param("id") Integer id, @Param("account") String account);
