@@ -167,7 +167,6 @@ public class InventoryServiceImpl implements InventoryService {
 
     @Override
     public BaseEntity<List<String>> getStandardList(String goodsName, String account) {
-
         List<String> list = productsRepository.getStandardList(goodsName, account);
         return new BaseEntity<List<String>>(list);
     }
