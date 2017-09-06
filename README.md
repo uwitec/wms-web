@@ -1,7 +1,7 @@
 # App接口文档
 
 #### Base URL    
-* http://host:port/wms/api/
+* http://171.217.88.215:1111/wms/api/
 
 #### 登陆模块    
 1.服务器连接测试    

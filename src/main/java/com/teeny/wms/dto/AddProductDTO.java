@@ -11,11 +11,29 @@ import java.io.Serializable;
  * @since 2017/8/12
  */
 public class AddProductDTO implements Serializable{
+    private int id;
     private int pId;
     private String lotNo;
     private String locationCode;
     private float amount;
+    private float originalAmount;
     private String validateDate; //有效期
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public float getOriginalAmount() {
+        return originalAmount;
+    }
+
+    public void setOriginalAmount(float originalAmount) {
+        this.originalAmount = originalAmount;
+    }
 
     public int getpId() {
         return pId;
