@@ -41,7 +41,7 @@ public interface CheckBillRepository {
     @Select("SELECT b.smb_id AS smbId,b.bill_id AS billId, b.PickType AS pickType, b.DealStates AS dealStates FROM ${account}.dbo.pda_CheckBill_B b WHERE b.barcode=#{code}")
     CheckBillB getByCode(@Param("code") String code, @Param("account") String account);
 
-    @Update("UPDATE ${account}.dbo.pda_CheckBill_B SET DealStates=1,EligibleQty=1 WHERE smb_id=#{smbId}")
+    @Update("UPDATE ${account}.dbo.pda_CheckBill_B SET DealStates=1,EligibleQty=1, wctime = getdate() WHERE smb_id=#{smbId}")
     void updateStatus(@Param("smbId") int smbId, @Param("account") String account);
 
     @Select("SELECT count(*) AS total FROM pda_CheckBill_B b WHERE b.bill_id=#{billId} AND b.DealStates=0")

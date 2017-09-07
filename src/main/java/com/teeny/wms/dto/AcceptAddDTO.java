@@ -13,7 +13,7 @@ import java.io.Serializable;
 public class AcceptAddDTO implements Serializable {
 
     private String lotNo;
-    private String serialNo;
+    private int serialNo;
     private String validityDate;
     private float price;
     private float amount;
@@ -27,11 +27,11 @@ public class AcceptAddDTO implements Serializable {
         this.lotNo = lotNo;
     }
 
-    public String getSerialNo() {
+    public int getSerialNo() {
         return serialNo;
     }
 
-    public void setSerialNo(String serialNo) {
+    public void setSerialNo(int serialNo) {
         this.serialNo = serialNo;
     }
 

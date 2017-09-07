@@ -87,9 +87,6 @@ public class AcceptanceController {
     }
 
 
-
-
-
     //完成
     @ResponseBody
     @RequestMapping(value = "/api/acceptance/complete", method = RequestMethod.POST)

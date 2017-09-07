@@ -67,6 +67,6 @@ public class CommonServiceImpl implements CommonService {
     @Override
     public int getLocationIdByCode(String locationCode, String account) {
         Integer id = locationRepository.getIdByCode(locationCode, account);
-        return id==null?0:id;
+        return id == null ? 0 : id;
     }
 }

@@ -99,7 +99,7 @@
     </update>
 
     <insert id="copyDataByParam">
-        INSERT INTO ${account}.dbo.pda_PutOnBill_D (bill_id, p_id, MakeDate, Validdate, Batchno, EligibleQty, TaxPrice, TaxTotal, CostPrice, CostTotal, S_id, Location_id, Supplier_id, InstoreTime, LineSort, DealStates, pdastates, original_id)
+        INSERT INTO ${account}.dbo.pda_PutOnBill_D (bill_id, p_id, MakeDate, Validdate, Batchno, EligibleQty, TaxPrice, TaxTotal, CostPrice, CostTotal, S_id, Location_id, Supplier_id, InstoreTime, LineSort, DealStates, pdastates, original_id, wctime)
             SELECT
                 d.bill_id,
                 d.p_id,
@@ -118,7 +118,8 @@
                 d.LineSort,
                 1,
                 d.pdastates,
-                d.original_id
+                d.original_id,
+                getdate()
             FROM ${account}.dbo.pda_PutOnBill_D d
             WHERE d.smb_id = (SELECT max(d1.smb_id)
                               FROM ${account}.dbo.pda_PutOnBill_D d1

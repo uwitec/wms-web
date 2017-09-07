@@ -104,6 +104,7 @@ public class AcceptanceServiceImpl implements AcceptanceService {
             in.Validdate = dto.getValidityDate();
             in.EligibleQty = dto.getAmount();
             in.TaxPrice = dto.getPrice();
+            in.rownumber = dto.getSerialNo();
             recBillRepository.addData(account, in);
         }
 

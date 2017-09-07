@@ -1,10 +1,7 @@
 package com.teeny.wms.manage.web;
 
 import com.teeny.wms.core.domain.baseEntity.BaseEntity;
-import com.teeny.wms.dto.CommonDTO;
-import com.teeny.wms.dto.LotDTO;
-import com.teeny.wms.dto.PdEditDTO;
-import com.teeny.wms.dto.StroePdListDTO;
+import com.teeny.wms.dto.*;
 import com.teeny.wms.service.CommonService;
 import com.teeny.wms.service.InventoryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -77,5 +74,19 @@ public class WarehouseInventoryController {
     @RequestMapping(value = "/api/warehouseFirst/getLotList", method = RequestMethod.GET)
     public BaseEntity<List<LotDTO>> getLotList(@RequestParam("originalId") int originalId, @RequestHeader("account") String account) {
         return inventoryService.getLotList(originalId, account);
+    }
+
+    //获取盘点类型
+    @ResponseBody
+    @RequestMapping(value = "/api/warehouseFirst/pdType", method = RequestMethod.GET)
+    public BaseEntity<List<String>> getPdType(@RequestHeader("account") String account, @RequestHeader("sId") int sId) {
+        return inventoryService.getPdType(account, sId);
+    }
+
+    //新增
+    @ResponseBody
+    @RequestMapping(value = "/api/warehouseFirst/add", method = RequestMethod.PUT)
+    public BaseEntity addProduct(@RequestBody InventoryAddDTO addProductDTO, @RequestHeader("account") String account, @RequestHeader("sId") int sId) {
+        return inventoryService.addProduct(4, addProductDTO, account, sId);
     }
 }

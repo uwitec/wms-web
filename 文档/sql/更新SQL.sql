@@ -18,6 +18,17 @@ ALTER TABLE pda_PutOnBill ADD sa_id INT;  -- 库区id
 
 ALTER TABLE pda_CheckBill ADD recipient_id INT;  -- 增加接收人id
 
+-- 2017.9.6
+ALTER TABLE  pda_PutOnBill_D ADD wctime DATETIME ;-- 完成时间
+ALTER TABLE pda_CheckBill_B  ADD wctime DATETIME  ;-- 完成时间
+ALTER TABLE pda_pdBill_D  ADD wctime DATETIME; -- 完成时间
+ALTER TABLE pda_RecBill_D  ADD wctime DATETIME; -- 完成时间
+ALTER TABLE pda_TranBill_D  ADD wctime DATETIME; -- 完成时间
+ALTER TABLE pda_kcpdBill_D  ADD wctime DATETIME; -- 完成时间
+ALTER TABLE pda_mdRecBill_D  ADD wctime DATETIME; -- 完成时间
+
+# 2017.9.7
+ALTER TABLE pda_RecBill_D  ADD rownumber int;  -- 添加序号
 
 # 导入数据初盘状态应该为1、复盘为2
 UPDATE pda_pdBill_D SET pda_pdBill_D.billstates=1

@@ -28,6 +28,7 @@ public class RecBillD implements Serializable {
     public int DealStates;
     public int pdastates;
     public int original_id;
+    public int rownumber;
 
     public RecBillD() {
 
@@ -51,6 +52,7 @@ public class RecBillD implements Serializable {
         this.DealStates = d.DealStates;
         this.pdastates = d.pdastates;
         this.original_id = d.original_id;
+        this.rownumber = d.rownumber;
     }
 
     @Override

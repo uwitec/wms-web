@@ -8,25 +8,23 @@ import java.io.Serializable;
  */
 public class PdListDTO implements Serializable {
 
-    private int id;                                 //id
+    private int id;                                 //库存表id
+    private int goodsId;                            //商品id
     private String goodsName;                       //商品名
+    private String barcode;                         //商品条码
     private String number;                          //编号(serial_number)
+    private String locationName;                    //货位名
+    private int locationId;                         //货位id
     private String lotNo;                           //批号
-    private String location;                        //货位
-    private float repertoryQuantity;                //库存数量
-    private float realQuantity;                     //实际数量
-    private String specification;                   //规格
-    private String unit;                            //单位
+    private String manufacturer;                    //厂家
+    private float quantity;                         //库存数量
     private String validateDate;                    //有效期
     private String productDate;                     //生产日期
-    private String manufacturer;                    //厂家
-    private String productionPlace;                 //生产地址
-    private String barCode;                         //商品码
-    private String locationCode;                    //货位码
+    private String specification;                   //规格
+    private String unit;                            //单位
     private float costPrice;                        //成本单价
     private float costTotal;                        //成本金额
-    private float price;                            //单价
-    private float total;                            //金额
+    private String productionPlace;                 //产地
 
     public int getId() {
         return id;
@@ -34,6 +32,14 @@ public class PdListDTO implements Serializable {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public int getGoodsId() {
+        return goodsId;
+    }
+
+    public void setGoodsId(int goodsId) {
+        this.goodsId = goodsId;
     }
 
     public String getGoodsName() {
@@ -44,12 +50,36 @@ public class PdListDTO implements Serializable {
         this.goodsName = goodsName;
     }
 
+    public String getBarcode() {
+        return barcode;
+    }
+
+    public void setBarcode(String barcode) {
+        this.barcode = barcode;
+    }
+
     public String getNumber() {
         return number;
     }
 
     public void setNumber(String number) {
         this.number = number;
+    }
+
+    public String getLocationName() {
+        return locationName;
+    }
+
+    public void setLocationName(String locationName) {
+        this.locationName = locationName;
+    }
+
+    public int getLocationId() {
+        return locationId;
+    }
+
+    public void setLocationId(int locationId) {
+        this.locationId = locationId;
     }
 
     public String getLotNo() {
@@ -60,44 +90,20 @@ public class PdListDTO implements Serializable {
         this.lotNo = lotNo;
     }
 
-    public String getLocation() {
-        return location;
+    public String getManufacturer() {
+        return manufacturer;
     }
 
-    public void setLocation(String location) {
-        this.location = location;
+    public void setManufacturer(String manufacturer) {
+        this.manufacturer = manufacturer;
     }
 
-    public float getRepertoryQuantity() {
-        return repertoryQuantity;
+    public float getQuantity() {
+        return quantity;
     }
 
-    public void setRepertoryQuantity(float repertoryQuantity) {
-        this.repertoryQuantity = repertoryQuantity;
-    }
-
-    public float getRealQuantity() {
-        return realQuantity;
-    }
-
-    public void setRealQuantity(float realQuantity) {
-        this.realQuantity = realQuantity;
-    }
-
-    public String getSpecification() {
-        return specification;
-    }
-
-    public void setSpecification(String specification) {
-        this.specification = specification;
-    }
-
-    public String getUnit() {
-        return unit;
-    }
-
-    public void setUnit(String unit) {
-        this.unit = unit;
+    public void setQuantity(float quantity) {
+        this.quantity = quantity;
     }
 
     public String getValidateDate() {
@@ -116,36 +122,20 @@ public class PdListDTO implements Serializable {
         this.productDate = productDate;
     }
 
-    public String getManufacturer() {
-        return manufacturer;
+    public String getSpecification() {
+        return specification;
     }
 
-    public void setManufacturer(String manufacturer) {
-        this.manufacturer = manufacturer;
+    public void setSpecification(String specification) {
+        this.specification = specification;
     }
 
-    public String getProductionPlace() {
-        return productionPlace;
+    public String getUnit() {
+        return unit;
     }
 
-    public void setProductionPlace(String productionPlace) {
-        this.productionPlace = productionPlace;
-    }
-
-    public String getBarCode() {
-        return barCode;
-    }
-
-    public void setBarCode(String barCode) {
-        this.barCode = barCode;
-    }
-
-    public String getLocationCode() {
-        return locationCode;
-    }
-
-    public void setLocationCode(String locationCode) {
-        this.locationCode = locationCode;
+    public void setUnit(String unit) {
+        this.unit = unit;
     }
 
     public float getCostPrice() {
@@ -164,19 +154,11 @@ public class PdListDTO implements Serializable {
         this.costTotal = costTotal;
     }
 
-    public float getPrice() {
-        return price;
+    public String getProductionPlace() {
+        return productionPlace;
     }
 
-    public void setPrice(float price) {
-        this.price = price;
-    }
-
-    public float getTotal() {
-        return total;
-    }
-
-    public void setTotal(float total) {
-        this.total = total;
+    public void setProductionPlace(String productionPlace) {
+        this.productionPlace = productionPlace;
     }
 }

@@ -12,7 +12,7 @@ public interface InventoryService {
 
     BaseEntity<List<StoreInventoryGoodsDTO>> getInventoryList(String pdType, int saId, int areaId, String account, int sId);
 
-    BaseEntity<List<PdListDTO>> getProductsInventoryList(int sId, String account);
+    BaseEntity<List<PdListDTO>> getProductsInventoryList(int sId, String account, String locationCode, String barcode);
 
     BaseEntity<ProductDetailsDTO> getDetailsById(int id, String account);
 
@@ -37,4 +37,8 @@ public interface InventoryService {
     BaseEntity<String> edit(PdEditDTO pdEditDTO, String account);
 
     BaseEntity<List<LotDTO>> getLotList(int originalId, String account);
+
+    BaseEntity<List<String>> getPdType(String account, int sId);
+
+    BaseEntity addProduct(int type, InventoryAddDTO dto, String account, int sId);
 }

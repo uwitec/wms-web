@@ -74,7 +74,7 @@
     </select>
 
     <insert id="addData" parameterType="com.teeny.wms.core.domain.RecBillD" >
-        INSERT INTO pda_RecBill_D
+        INSERT INTO ${account}.dbo.pda_RecBill_D
         (bill_id,
          p_id,
          MakeDate,
@@ -91,7 +91,9 @@
          Supplier_id,
          DealStates,
          pdastates,
-         original_id)
+         original_id,
+         rownumber,
+        wctime)
         VALUES
             (#{item.bill_id},
              #{item.p_id},
@@ -109,7 +111,9 @@
              #{item.Supplier_id},
              #{item.DealStates},
              #{item.pdastates},
-             #{item.original_id} )
+             #{item.original_id},
+             #{item.rownumber},
+            getdate())
     </insert>
 
     <select id="getOrderBillWithUnitId" resultType="com.teeny.wms.dto.CommonDTO">
@@ -123,10 +127,11 @@
 
     <select id="getLotList" resultType="com.teeny.wms.dto.AcceptAddDTO">
         SELECT
-            d.Batchno                               AS lotNo,
-            CONVERT(VARCHAR (100), d.Validdate, 23) AS validityDate,
-            d.TaxPrice                              AS lotNo,
-            d.EligibleQty                           AS lotNo
+            d.Batchno                                AS lotNo,
+            CONVERT(VARCHAR (100), d.Validdate, 23)  AS validityDate,
+            d.TaxPrice                               AS price,
+            d.rownumber                              AS serialNo,
+            d.EligibleQty                            AS amount
         FROM ${account}.dbo.pda_RecBill_D d
         WHERE original_id = #{id}
     </select>
@@ -178,8 +183,7 @@
 
 
     <select id="getOriginal" resultType="com.teeny.wms.core.domain.RecBillD">
-        SELECT
-            TOP 1
+        SELECT TOP 1
         bill_id,
             p_id,
             MakeDate,

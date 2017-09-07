@@ -87,7 +87,7 @@
 
     <insert id="copyData">
         INSERT INTO ${account}.dbo.pda_TranBill_D
-        (bill_id, p_id, MakeDate, Validdate, Batchno, quantity, TaxPrice, TaxTotal, CostPrice, CostTotal, ss_id, sd_id, Location_id, location_id2, Supplier_id, DealStates, pdastates, original_id)
+        (bill_id, p_id, MakeDate, Validdate, Batchno, quantity, TaxPrice, TaxTotal, CostPrice, CostTotal, ss_id, sd_id, Location_id, location_id2, Supplier_id, DealStates, pdastates, original_id, wctime)
             SELECT
                 d.bill_id,
                 d.p_id,
@@ -106,7 +106,8 @@
                 d.Supplier_id,
                 1,
                 d.pdastates,
-                d.original_id
+                d.original_id,
+                getdate()
             FROM ${account}.dbo.pda_TranBill_D d
             WHERE d.smb_id = (SELECT max(d1.smb_id)
                               FROM ${account}.dbo.pda_TranBill_D d1

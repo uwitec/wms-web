@@ -22,7 +22,7 @@ public interface TranBillRepository {
 
     List<QueryDocumentDTO> getBill(@Param("account") String account, @Param("sId") int sId);
 
-    @Update("UPDATE ${account}.dbo.pda_TranBill_D SET DealStates=1 WHERE original_id = #{id}")
+    @Update("UPDATE ${account}.dbo.pda_TranBill_D SET DealStates=1, wctime = getdate() WHERE original_id = #{id}")
     void updateOne(@Param("id") int id, @Param("account") String account);
 
     @Select("SELECT count(*) AS total FROM ${account}.dbo.pda_TranBill_D d WHERE d.DealStates=0 AND d.bill_id = (SELECT DISTINCT d1.bill_id FROM ${account}.dbo.pda_TranBill_D d1 WHERE d1.original_id=#{id})")

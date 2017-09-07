@@ -11,67 +11,12 @@ import java.io.Serializable;
  * @since 2017/8/12
  */
 public class AddProductDTO implements Serializable{
-    private int id;
-    private int pId;
-    private String lotNo;
-    private String locationCode;
-    private float amount;
-    private float originalAmount;
-    private String validateDate; //有效期
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public float getOriginalAmount() {
-        return originalAmount;
-    }
-
-    public void setOriginalAmount(float originalAmount) {
-        this.originalAmount = originalAmount;
-    }
-
-    public int getpId() {
-        return pId;
-    }
-
-    public void setpId(int pId) {
-        this.pId = pId;
-    }
-
-    public String getLotNo() {
-        return lotNo;
-    }
-
-    public void setLotNo(String lotNo) {
-        this.lotNo = lotNo;
-    }
-
-    public String getLocationCode() {
-        return locationCode;
-    }
-
-    public void setLocationCode(String locationCode) {
-        this.locationCode = locationCode;
-    }
-
-    public float getAmount() {
-        return amount;
-    }
-
-    public void setAmount(float amount) {
-        this.amount = amount;
-    }
-
-    public String getValidateDate() {
-        return validateDate;
-    }
-
-    public void setValidateDate(String validateDate) {
-        this.validateDate = validateDate;
-    }
+    public int id;
+    public int pId;
+    public String lotNo;
+    public String locationCode;
+    public int locationId;
+    public float amount;
+    public float originalAmount;
+    public String validateDate; //有效期
 }

@@ -2,7 +2,6 @@ package com.teeny.wms.manage.web;
 
 import com.teeny.wms.core.domain.baseEntity.BaseEntity;
 import com.teeny.wms.dto.AddProductDTO;
-import com.teeny.wms.dto.CommonDTO;
 import com.teeny.wms.dto.PdListDTO;
 import com.teeny.wms.dto.ProductAddDetailDTO;
 import com.teeny.wms.service.InventoryService;
@@ -29,8 +28,8 @@ public class ProductInventoryController {
     //单品盘点
     @ResponseBody
     @RequestMapping(value = "/api/productsInventory/getList", method = RequestMethod.GET)
-    public BaseEntity<List<PdListDTO>> getProductsInvertoryList(@RequestHeader("sId") int sId, @RequestHeader("account") String account) {
-        return inventoryService.getProductsInventoryList(sId, account);
+    public BaseEntity<List<PdListDTO>> getProductsInvertoryList(@RequestHeader("sId") int sId, @RequestHeader("account") String account, @RequestParam("location") String locationCode, @RequestParam("barcode") String barcode) {
+        return inventoryService.getProductsInventoryList(sId, account, locationCode, barcode);
     }
 
 //    //商品明细
@@ -51,16 +50,15 @@ public class ProductInventoryController {
     //商品修改(商品明细 保存)
     @ResponseBody
     @RequestMapping(value = "/api/productsInventory/update", method = RequestMethod.POST)
-    public BaseEntity<String> update(@RequestParam("id") int id, @RequestParam("count") float count, @RequestHeader("account") String account) {
-        BaseEntity<CommonDTO> data = inventoryService.updateProduct(id, count, account);
-        return new BaseEntity<>();
+    public BaseEntity<String> update(@RequestBody AddProductDTO addProductDTO, @RequestHeader("account") String account, @RequestHeader("sId") int sId) {
+        return inventoryService.addProduct(addProductDTO, account, sId);
     }
 
 
     //新增单品查询
     @ResponseBody
-    @RequestMapping(value = "/api/productsInventory/detail/{goodsCode}", method = RequestMethod.GET)
-    public BaseEntity<ProductAddDetailDTO> getProductDetail(@PathVariable("goodsCode") String goodsCode, @RequestHeader("account") String account) {
+    @RequestMapping(value = "/api/productsInventory/detail", method = RequestMethod.GET)
+    public BaseEntity<ProductAddDetailDTO> getProductDetail(@RequestParam("goodsCode") String goodsCode, @RequestHeader("account") String account) {
         return inventoryService.getDetailsByNameAndStandard(goodsCode, account);
     }
 

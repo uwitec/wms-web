@@ -39,7 +39,7 @@ public class InventoryServiceImpl implements InventoryService {
     public BaseEntity<List<StoreInventoryGoodsDTO>> getInventoryList(String pdType, int saId, int areaId, String account, int sId) {
         List<StoreInventoryGoodsDTO> list = pdBillRepository.getStoreInventoryList(pdType, saId, areaId, account, sId);
 
-        pdBillRepository.updatePdaStatus(pdType,saId,areaId,account, 1);
+        pdBillRepository.updatePdaStatus(pdType, saId, areaId, account, 1);
 
         return new BaseEntity<List<StoreInventoryGoodsDTO>>(list);
     }
@@ -132,8 +132,8 @@ public class InventoryServiceImpl implements InventoryService {
 
     ////////////////单品盘点/////////////////////////////////////
     @Override
-    public BaseEntity<List<PdListDTO>> getProductsInventoryList(int sId, String account) {
-        List<PdListDTO> data = pdBillRepository.getProductsInventoryList(sId, account);
+    public BaseEntity<List<PdListDTO>> getProductsInventoryList(int sId, String account, String locationCode, String barcode) {
+        List<PdListDTO> data = pdBillRepository.getProductsInventoryList(sId, account, locationCode, barcode);
         return new BaseEntity<>(data);
     }
 
@@ -180,14 +180,18 @@ public class InventoryServiceImpl implements InventoryService {
 
     @Override
     public BaseEntity<String> addProduct(AddProductDTO dto, String account, int sId) {
-        int locationId = commonService.getLocationIdByCode(dto.getLocationCode(), account);
-        if (locationId == 0) {
-            BaseEntity<String> baseEntity = new BaseEntity<String>();
-            baseEntity.setMsg("找不此货位:"+dto.getLocationCode());
-            baseEntity.setResult(1);
-            throw new WmsException(baseEntity);
+        int locationId = dto.locationId;
+        if (locationId <= 0) {
+            locationId = commonService.getLocationIdByCode(dto.locationCode, account);
+            if (locationId == 0) {
+                BaseEntity<String> baseEntity = new BaseEntity<String>();
+                baseEntity.setMsg("找不此货位:" + dto.locationCode);
+                baseEntity.setResult(1);
+                throw new WmsException(baseEntity);
+            }
         }
-        pdBillRepository.addProduct(dto.getpId(), dto.getLotNo(), locationId, dto.getAmount(), dto.getValidateDate(), account, sId);
+        dto.locationId = locationId;
+        pdBillRepository.addProduct(dto, account, sId);
         return new BaseEntity<>();
     }
 
@@ -197,6 +201,32 @@ public class InventoryServiceImpl implements InventoryService {
     public BaseEntity<List<LotDTO>> getLotList(int originalId, String account) {
         List<LotDTO> data = pdBillRepository.getLotList(originalId, account);
         return new BaseEntity<>(data);
+    }
+
+    @Override
+    public BaseEntity<List<String>> getPdType(String account, int sId) {
+        return new BaseEntity<>(pdBillRepository.getPdType(account, sId));
+    }
+
+    @Override
+    public BaseEntity addProduct(int type, InventoryAddDTO dto, String account, int sId) {
+        int locationId = commonService.getLocationIdByCode(dto.locationCode, account);
+        if (locationId != 0) {
+            dto.locationId = locationId;
+            if (type != 2){
+                dto.billState = 1;
+            }else {
+                dto.billState = 2;
+            }
+
+            pdBillRepository.addProduct(dto, type, account, sId);
+            return new BaseEntity();
+        } else {
+            BaseEntity baseEntity = new BaseEntity();
+            baseEntity.setMsg("找不此货位:" + dto.locationCode);
+            baseEntity.setResult(1);
+            throw new WmsException(baseEntity);
+        }
     }
 
 }

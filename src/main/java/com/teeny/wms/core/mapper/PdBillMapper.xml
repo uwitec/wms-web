@@ -109,7 +109,8 @@
         LEFT JOIN ${account}.dbo.pda_Area a ON a.sc_id=b.a_id
         LEFT JOIN ${account}.dbo.pda_location l ON l.l_id=d.Location_id
         WHERE
-        b.pdname = #{pdType} AND b.billstates = 1 AND d.billstates=1 AND b.sa_id = #{saId} AND b.a_id=#{areaId} AND b.pdastates != 2
+        b.pdname = #{pdType} AND b.billstates = 1 AND d.billstates=1 AND b.sa_id = #{saId} AND b.a_id=#{areaId} AND
+        b.pdastates != 2
         <if test="sId != 0">
             AND b.s_id = #{sId}
         </if>
@@ -117,7 +118,7 @@
 
     <!--//复制数据-->
     <insert id="edit">
-        INSERT INTO ${account}.dbo.pda_pdBill_D (bill_id, p_id, MakeDate, EligibleQty, S_id, Location_id, Supplier_id, InstoreTime, billstates, Validdate, Batchno, pdQty, DealStates, pdastates, original_id)
+        INSERT INTO ${account}.dbo.pda_pdBill_D (bill_id, p_id, MakeDate, EligibleQty, S_id, Location_id, Supplier_id, InstoreTime, billstates, Validdate, Batchno, pdQty, DealStates, pdastates, original_id, wctime)
             SELECT
                 d.bill_id,
                 d.p_id,
@@ -133,9 +134,12 @@
                 #{count},
                 1,
                 d.pdastates,
-                d.original_id
+                d.original_id,
+                getdate()
             FROM ${account}.dbo.pda_pdBill_D d
-            WHERE d.smb_id = (SELECT max(d1.smb_id) FROM ${account}.dbo.pda_pdBill_D d1 WHERE d1.original_id=#{id})
+            WHERE d.smb_id = (SELECT max(d1.smb_id)
+                              FROM ${account}.dbo.pda_pdBill_D d1
+                              WHERE d1.original_id = #{id})
     </insert>
 
     <!--////////////////////单品盘点////////////////////-->
@@ -156,30 +160,33 @@
 
     <select id="getProductsInventoryList" resultType="com.teeny.wms.dto.PdListDTO">
         SELECT
-        d.storehouse_id                         AS id,
-        p.name                                  AS goodsName,
-        p.serial_number                         AS number,
-        d.Batchno                               AS lotNo,
-        l.loc_name                              AS location,
-        d.quantity                              AS repertoryQuantity,
-        d.pdqty                                 AS realQuantity,
-        p.standard                              AS specification,
-        p.unit1Name                             AS unit,
-        CONVERT(VARCHAR (100), d.Validdate, 23) AS validateDate,
-        CONVERT(VARCHAR (100), d.MakeDate, 23)  AS productDate,
-        p.Factory                               AS manufacturer,
-        p.makearea                              AS productionPlace,
-        p.barcode                               AS barCode,
-        l.loc_code                              AS locationCode,
-        d.CostPrice                             AS costPrice,
-        d.CostTotal                             AS costTotal
-        FROM ${account}.dbo.pda_kcpdBill_D d
-        LEFT JOIN ${account}.dbo.pda_Products p ON p.p_id = d.p_id
-        LEFT JOIN ${account}.dbo.pda_location l ON l.l_id = d.Location_id
-        WHERE d.DealStates = 0
-        <if test="sId != 0">
-            d.ss_id = #{sId}
-        </if>
+        s.storehouse_id                        AS id,
+        s.p_id                                 AS goodsId,
+        s.Pname                                AS goodsName,
+        s.Code                                 AS number,
+        s.Locname                              AS locationName,
+        s.location_id                          AS locationId,
+        s.batchno                              AS lotNo,
+        s.factory                              AS manufacturer,
+        s.quantity,
+        CONVERT(VARCHAR(100), s.validdate, 23) AS validateDate,
+        CONVERT(VARCHAR(100), s.makedate, 23)  AS productDate,
+        s.Standard                             AS specification,
+        s.Name1                                AS unit,
+        s.costprice                            AS costPrice,
+        s.costtotal                            AS costTotal,
+        s.Makearea                             AS productionPlace
+        FROM VW_PDA_Storehouse s
+        LEFT JOIN pda_location l ON l.l_id = s.location_id
+        LEFT JOIN pda_Products p ON p.p_id = s.p_id
+        <where>
+            <if test="location != null and location != ''">
+                l.loc_code = #{location}
+            </if>
+            <if test="barcode != null and barcode != ''">
+                AND p.barcode = #{barcode}
+            </if>
+        </where>
     </select>
 
 
@@ -225,7 +232,8 @@
         LEFT JOIN ${account}.dbo.pda_clients c ON c.c_id = d.Supplier_id
         LEFT JOIN ${account}.dbo.pda_Area a ON a.sc_id = b.a_id
         LEFT JOIN ${account}.dbo.pda_location l ON l.l_id = d.Location_id
-        WHERE b.pdname = #{pdType} AND b.sa_id = #{saId} AND b.a_id = #{areaId} AND b.billstates = #{btype} AND b.pdastates != 2
+        WHERE b.pdname = #{pdType} AND b.sa_id = #{saId} AND b.a_id = #{areaId} AND b.billstates = #{btype} AND
+        b.pdastates != 2
         AND d.billstates = #{dtype}
         <if test="sId != 0">
             AND b.s_id = #{sId}
@@ -233,23 +241,76 @@
     </select>
 
 
-    <insert id="addProduct">
-        INSERT INTO ${account}.dbo.pda_kcpdBill_D (p_id, MakeDate, Validdate, Batchno, quantity, pdqty, CostPrice, CostTotal, ss_id, Location_id, DealStates, pdastates)
+    <insert id="addProduct" parameterType="com.teeny.wms.dto.AddProductDTO">
+        INSERT INTO ${account}.dbo.pda_kcpdBill_D (
+            storehouse_id,
+            p_id,
+            Batchno,
+            Location_id,
+            quantity,
+            pdqty,
+            Validdate,
+            ss_id,
+            DealStates,
+            pdastates,
+            wctime)
+        VALUES (
+            #{item.id},
+            #{item.pId},
+            #{item.lotNo},
+            #{item.locationId},
+            #{item.amount},
+            #{item.originalAmount},
+            #{item.validateDate},
+            #{sId},
+            1,
+            0,
+            getdate()
+        )
+    </insert>
+
+
+    <select id="getPdType" resultType="String">
+        SELECT DISTINCT b.pdname
+        FROM ${account}.dbo.pda_pdBill b
+        <where>
+            <if test="sId != 0">
+                b.s_id = #{sId}
+            </if>
+        </where>
+    </select>
+
+    <insert id="addProduct" parameterType="com.teeny.wms.dto.InventoryAddDTO">
+        INSERT INTO ${account}.dbo.pda_pdBill_D
+        (bill_id,
+         p_id,
+         Validdate,
+         Batchno,
+         EligibleQty,
+         pdQty,
+         S_id,
+         Location_id,
+         Supplier_id,
+         InstoreTime,
+         billstates,
+         DealStates,
+         pdastates)
             SELECT
-                p.p_id,
-                0,
-                #{validateDate},
-                #{lotNo},
-                #{amount},
-                #{amount},
-                0,
-                0,
+                b.billid,
+                #{item.goodsId},
+                #{item.validateDate},
+                #{item.lotNo},
+                #{item.amount},
+                #{item.amount},
                 #{sId},
-                #{locationId},
+                #{item.locationId},
+                p.Supplier_id,
+                getdate(),
+                #{item.billState},
                 1,
                 0
-            FROM ${account}.dbo.pda_Products p
-            WHERE p.p_id = #{pId}
+            FROM ${account}.dbo.pda_pdBill b, ${account}.dbo.pda_Products p
+            WHERE b.pdname = #{item.type} AND b.sa_id = #{item.saId} AND b.a_id = #{item.aId}
     </insert>
 
 </mapper>

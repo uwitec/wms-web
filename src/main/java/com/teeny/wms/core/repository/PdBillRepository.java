@@ -29,7 +29,7 @@ public interface PdBillRepository {
 
     List<StoreInventoryGoodsDTO> getStoreInventoryList(@Param("pdType") String pdType, @Param("saId") int saId, @Param("areaId") int areaId, @Param("account") String account, @Param("sId") int sId);
 
-    @Update({"UPDATE ${account}.dbo.pda_pdBill_D SET DealStates = 1 WHERE original_id = #{originalId}"})
+    @Update({"UPDATE ${account}.dbo.pda_pdBill_D SET DealStates = 1, pdQty = EligibleQty , wctime = getdate() WHERE original_id = #{originalId}"})
     void completeOne(@Param("originalId") int originalId, @Param("account") String account);
 
     //查询未盘点数
@@ -52,7 +52,7 @@ public interface PdBillRepository {
 
     ///////////////单品盘点///////////////////////////
 
-    List<PdListDTO> getProductsInventoryList(@Param("sId") int sId, @Param("account") String account);
+    List<PdListDTO> getProductsInventoryList(@Param("sId") int sId, @Param("account") String account, @Param("location") String locationCode, @Param("barcode") String barcode);
 
     //单品盘点获取数量
     //int countProductInventory(@Param("product") String product, @Param("location") String location, @Param("sId") int sId ,@Param("account") String account);
@@ -77,7 +77,7 @@ public interface PdBillRepository {
 
 
     //添加数据
-    void addProduct(@Param("pId") int pId, @Param("lotNo") String lotNo, @Param("locationId") int locationId, @Param("amount") float amount, @Param("validateDate") String validateDate, @Param("account") String account, @Param("sId") int sId);
+    void addProduct(@Param("item") AddProductDTO dto, @Param("account") String account, @Param("sId") int sId);
 
     //获取批次
     @Select("SELECT CONVERT(varchar(100), d.Validdate, 23) AS validateDate, d.Batchno AS lotNo, d.EligibleQty AS count FROM ${account}.dbo.pda_pdBill_D d WHERE d.original_id = #{originalId}")
@@ -93,8 +93,14 @@ public interface PdBillRepository {
     List<Integer> getIdsByOriginalId(@Param("id") int id, @Param("account") String account);
 
     @Update("UPDATE ${account}.dbo.pda_pdBill SET billstates = 3 WHERE billid = (SELECT DISTINCT d.bill_id FROM ${account}.dbo.pda_pdBill_D d WHERE d.original_id = #{originalId})")
-    void completeWithOriginalId(@Param("originalId") int originalId,@Param("account") String account);
+    void completeWithOriginalId(@Param("originalId") int originalId, @Param("account") String account);
 
     @Update("UPDATE ${account}.dbo.pda_pdBill SET pdastates=1,pdaWrTime=getdate() WHERE a_id=#{areaId} AND sa_id=#{saId} AND pdname=#{pdType} AND billstates=#{type}")
-    void updatePdaStatus(@Param("pdType") String pdType,@Param("saId") int saId,@Param("areaId") int areaId,@Param("account") String account,@Param("type") int type);
+    void updatePdaStatus(@Param("pdType") String pdType, @Param("saId") int saId, @Param("areaId") int areaId, @Param("account") String account, @Param("type") int type);
+
+    List<String> getPdType(@Param("account") String account, @Param("sId") int sId);
+
+
+    //添加数据
+    void addProduct(@Param("item") InventoryAddDTO dto, @Param("type") int type, @Param("account") String account, @Param("sId") int sId);
 }

@@ -102,17 +102,10 @@
 
 
     <select id="getRecipients" resultType="com.teeny.wms.dto.CommonDTO">
-        SELECT
-        bb.pickemp_id AS id,
+        SELECT DISTINCT
+        e.e_id AS id,
         e.name AS name
-        FROM ${account}.dbo.pda_CheckBill_B bb
-        LEFT JOIN ${account}.dbo.pda_employees e ON bb.pickemp_id = e.e_id
-        LEFT JOIN ${account}.dbo.pda_CheckBill b ON bb.bill_id = b.billid
-        <where>
-            <if test="sId != 0">
-                b.s_id = #{sId}
-            </if>
-        </where>
+        FROM ${account}.dbo.pda_employees e
     </select>
 
     <select id="getReplenishmentCount" resultType="int">
