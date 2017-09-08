@@ -21,8 +21,9 @@
         c.name AS name
         FROM ${account}.dbo.pda_RecBill b
         LEFT JOIN ${account}.dbo.pda_clients c ON b.c_id = c.c_id
+        WHERE b.billstates = 10
         <if test="sId != 0">
-            WHERE b.s_id = #{sId}
+            AND b.s_id = #{sId}
         </if>
     </select>
 
@@ -133,7 +134,7 @@
             d.rownumber                              AS serialNo,
             d.EligibleQty                            AS amount
         FROM ${account}.dbo.pda_RecBill_D d
-        WHERE original_id = #{id}
+        WHERE d.DealStates = 1 AND d.original_id = #{id}
     </select>
 
 
