@@ -273,6 +273,7 @@
     <select id="getPdType" resultType="String">
         SELECT DISTINCT b.pdname
         FROM ${account}.dbo.pda_pdBill b
+        WHERE b.billstates = #{type}
         <where>
             <if test="sId != 0">
                 b.s_id = #{sId}

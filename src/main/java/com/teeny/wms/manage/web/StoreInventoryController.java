@@ -82,7 +82,7 @@ public class StoreInventoryController {
     @ResponseBody
     @RequestMapping(value = "/api/shopFirst/pdType", method = RequestMethod.GET)
     public BaseEntity<List<String>> getPdType(@RequestHeader("account") String account, @RequestHeader("sId") int sId) {
-        return inventoryService.getPdType(account, sId);
+        return inventoryService.getPdType(1, account, sId);
     }
 
     //新增

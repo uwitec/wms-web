@@ -98,7 +98,7 @@ public interface PdBillRepository {
     @Update("UPDATE ${account}.dbo.pda_pdBill SET pdastates=1,pdaWrTime=getdate() WHERE a_id=#{areaId} AND sa_id=#{saId} AND pdname=#{pdType} AND billstates=#{type}")
     void updatePdaStatus(@Param("pdType") String pdType, @Param("saId") int saId, @Param("areaId") int areaId, @Param("account") String account, @Param("type") int type);
 
-    List<String> getPdType(@Param("account") String account, @Param("sId") int sId);
+    List<String> getPdType(@Param("account") String account, @Param("type") int type, @Param("sId") int sId);
 
 
     //添加数据

@@ -80,7 +80,7 @@ public class ReinventoryController {
     @ResponseBody
     @RequestMapping(value = "/api/secondInventory/pdType", method = RequestMethod.GET)
     public BaseEntity<List<String>> getPdType(@RequestHeader("account") String account, @RequestHeader("sId") int sId) {
-        return inventoryService.getPdType(account, sId);
+        return inventoryService.getPdType(2, account, sId);
     }
 
     //新增

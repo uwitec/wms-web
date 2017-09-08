@@ -38,7 +38,7 @@ public interface InventoryService {
 
     BaseEntity<List<LotDTO>> getLotList(int originalId, String account);
 
-    BaseEntity<List<String>> getPdType(String account, int sId);
+    BaseEntity<List<String>> getPdType(int type, String account, int sId);
 
     BaseEntity addProduct(int type, InventoryAddDTO dto, String account, int sId);
 }

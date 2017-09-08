@@ -204,8 +204,8 @@ public class InventoryServiceImpl implements InventoryService {
     }
 
     @Override
-    public BaseEntity<List<String>> getPdType(String account, int sId) {
-        return new BaseEntity<>(pdBillRepository.getPdType(account, sId));
+    public BaseEntity<List<String>> getPdType(int type, String account, int sId) {
+        return new BaseEntity<>(pdBillRepository.getPdType(account, type, sId));
     }
 
     @Override
@@ -213,9 +213,9 @@ public class InventoryServiceImpl implements InventoryService {
         int locationId = commonService.getLocationIdByCode(dto.locationCode, account);
         if (locationId != 0) {
             dto.locationId = locationId;
-            if (type != 2){
+            if (type != 2) {
                 dto.billState = 1;
-            }else {
+            } else {
                 dto.billState = 2;
             }
 
