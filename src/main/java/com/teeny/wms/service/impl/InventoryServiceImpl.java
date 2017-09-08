@@ -219,7 +219,7 @@ public class InventoryServiceImpl implements InventoryService {
                 dto.billState = 2;
             }
 
-            pdBillRepository.addProduct(dto, type, account, sId);
+            pdBillRepository.addInventory(dto, type, account, sId);
             return new BaseEntity();
         } else {
             BaseEntity baseEntity = new BaseEntity();

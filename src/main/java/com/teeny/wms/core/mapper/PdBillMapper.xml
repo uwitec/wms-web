@@ -280,7 +280,7 @@
         </where>
     </select>
 
-    <insert id="addProduct" parameterType="com.teeny.wms.dto.InventoryAddDTO">
+    <insert id="addInventory" parameterType="com.teeny.wms.dto.InventoryAddDTO">
         INSERT INTO ${account}.dbo.pda_pdBill_D
         (bill_id,
          p_id,

@@ -102,5 +102,5 @@ public interface PdBillRepository {
 
 
     //添加数据
-    void addProduct(@Param("item") InventoryAddDTO dto, @Param("type") int type, @Param("account") String account, @Param("sId") int sId);
+    void addInventory(@Param("item") InventoryAddDTO dto, @Param("type") int type, @Param("account") String account, @Param("sId") int sId);
 }
