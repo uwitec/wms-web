@@ -295,7 +295,8 @@
          InstoreTime,
          billstates,
          DealStates,
-         pdastates)
+         pdastates,
+         wctime)
             SELECT
                 b.billid,
                 #{item.goodsId},
@@ -309,8 +310,10 @@
                 getdate(),
                 #{item.billState},
                 1,
-                0
-            FROM ${account}.dbo.pda_pdBill b, ${account}.dbo.pda_Products p
+                0,
+                getdate()
+            FROM ${account}.dbo.pda_pdBill b
+              INNER JOIN ${account}.dbo.pda_Products p ON p.p_id = #{item.goodsId}
             WHERE b.pdname = #{item.type} AND b.sa_id = #{item.saId} AND b.a_id = #{item.aId}
     </insert>
 
