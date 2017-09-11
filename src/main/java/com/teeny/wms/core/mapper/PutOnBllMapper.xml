@@ -17,7 +17,8 @@
 
 
     <select id="getGoodsDetailList" parameterType="string" resultType="com.teeny.wms.dto.PutawayDTO">
-        SELECT d.smb_id AS id,
+        SELECT
+        d.smb_id AS id,
         d.original_id AS originalId,
         d.DealStates AS status,
         p.name AS goodsName,
@@ -26,12 +27,11 @@
         d.MakeDate AS productionDate,
         p.unit1Name AS unit,
         d.EligibleQty AS amount,
-        p.Factory AS manufacturers,
+        p.Factory AS manufacturer,
         l.loc_code AS locationCode,
         p.barcode AS goodsCode
-
         FROM ${account}.dbo.pda_PutOnBill_D d
-        LEFT JOIN ${account}.dbo.pda_PutOnBill b ON d.bill_id=b.billid
+        INNER JOIN ${account}.dbo.pda_PutOnBill b ON d.bill_id = b.billid AND b.pdastates != 2
         LEFT JOIN ${account}.dbo.pda_location l ON l.l_id=d.Location_id
         LEFT JOIN ${account}.dbo.pda_Products p ON p.p_id=d.p_id
         WHERE b.billnumber=#{orderNoId}

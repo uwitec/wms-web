@@ -37,9 +37,9 @@ public class StoreInventoryController {
     //单个完成
     @ResponseBody
     @RequestMapping(value = "/api/shopFirst/single", method = RequestMethod.POST)
-    public BaseEntity<String> completeOne(@RequestParam("id") int goodsDetailId, @RequestHeader("account") String account) {
-        BaseEntity<String> result = inventoryService.completeOne(goodsDetailId, account);
-        result.setData(String.valueOf(goodsDetailId));
+    public BaseEntity<Integer> completeOne(@RequestParam("id") int goodsDetailId, @RequestHeader("account") String account) {
+        BaseEntity<Integer> result = inventoryService.completeOne(goodsDetailId, account);
+        result.setData(goodsDetailId);
         return result;
     }
 

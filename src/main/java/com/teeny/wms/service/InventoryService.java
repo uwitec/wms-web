@@ -28,7 +28,7 @@ public interface InventoryService {
 
     BaseEntity<ProductAddDetailDTO> getDetailsByNameAndStandard(String goodsCode, String account);
 
-    BaseEntity<String> completeOne(int goodsDetailId, String account);
+    BaseEntity<Integer> completeOne(int goodsDetailId, String account);
 
     BaseEntity<String> completeByParam(List<Integer> ids, String account);
 

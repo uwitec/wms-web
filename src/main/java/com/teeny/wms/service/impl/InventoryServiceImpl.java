@@ -45,13 +45,13 @@ public class InventoryServiceImpl implements InventoryService {
     }
 
     @Override
-    public BaseEntity<String> completeOne(int originalId, String account) {
+    public BaseEntity<Integer> completeOne(int originalId, String account) {
         pdBillRepository.completeOne(originalId, account);
         int count = pdBillRepository.countByType(originalId, account);
         if (count == 0) {
             pdBillRepository.completeWithOriginalId(originalId, account);
         }
-        return new BaseEntity<>();
+        return new BaseEntity<>(originalId);
     }
 
     @Override
