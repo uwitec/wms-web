@@ -128,14 +128,13 @@
 
     <select id="getBills" resultType="com.teeny.wms.dto.CommonDTO">
         SELECT b.billid AS id, b.billnumber AS name FROM ${account}.dbo.pda_PutOnBill b
-        <where>
-            <if test="saId!=0">
-                b.sa_id=#{saId}
-            </if>
-            <if test="saId==0 and sId != 0">
-                b.s_id=#{sId}
-            </if>
-        </where>
+        WHERE b.pdastates !=2
+        <if test="saId!=0">
+            AND b.sa_id=#{saId}
+        </if>
+        <if test="saId==0 and sId != 0">
+            AND b.s_id=#{sId}
+        </if>
     </select>
 
 
