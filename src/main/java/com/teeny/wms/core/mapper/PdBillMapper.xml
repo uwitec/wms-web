@@ -110,7 +110,7 @@
         LEFT JOIN ${account}.dbo.pda_location l ON l.l_id=d.Location_id
         WHERE
         b.pdname = #{pdType} AND b.billstates = 1 AND d.billstates=1 AND b.sa_id = #{saId} AND b.a_id=#{areaId} AND
-        b.pdastates != 2 AND d.smb_id = (SELECT min(smb_id) FROM ${account}.dbo.pda_pdBill_D WHERE d.original_id = original_id)
+        b.pdastates != 2 AND d.smb_id = (SELECT TOP 1 smb_id FROM ${account}.dbo.pda_pdBill_D WHERE d.original_id = original_id)
         <if test="sId != 0">
             AND b.s_id = #{sId}
         </if>
