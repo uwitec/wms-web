@@ -31,6 +31,15 @@ public class TransfenServiceImpl implements TransferService {
         this.commonService = commonService;
     }
 
+    /**
+     * 获取调拨单的详细数据
+     * @param billNo
+     * @param goodsCode
+     * @param sId
+     * @param saId
+     * @param account
+     * @return
+     */
     @Override
     public BaseEntity<List<TransferListDTO>> getTransferList(String billNo, String goodsCode, int sId, int saId, String account) {
         List<TransferListDTO> list = tranBillRepository.getTransferList(billNo, goodsCode, sId, saId, account);
@@ -38,6 +47,12 @@ public class TransfenServiceImpl implements TransferService {
         return new BaseEntity<>(list);
     }
 
+    /**
+     * 更新调拨单的数据
+     * @param ids
+     * @param account
+     * @return
+     */
     @Override
     public BaseEntity<String> updateAll(List<Integer> ids, String account) {
         if (ids.size() > 0) {

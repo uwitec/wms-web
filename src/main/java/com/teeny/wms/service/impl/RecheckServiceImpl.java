@@ -34,6 +34,12 @@ public class RecheckServiceImpl implements RecheckService {
         checkBillRepository.updateCheckBill(reviewUpdateDTO.getBillNo(), reviewUpdateDTO.getReviewerId(), reviewUpdateDTO.getRemark(), account);
     }
 
+    /**
+     * 出库复核更新状态
+     * @param account
+     * @param billNo
+     * @return
+     */
     @Override
     public BaseEntity<ReviewDTO> getWarehouseReview(String account, String billNo) {
 

@@ -32,6 +32,13 @@ public class PutOnBillServiceImpl implements PutOnBillService {
         this.commonService = commonService;
     }
 
+    /**
+     * 获取上架单详情
+     * @param orderNo
+     * @param account
+     * @param sId
+     * @return
+     */
     @Override
     public BaseEntity<List<PutawayDTO>> getGoodsDetailList(String orderNo, String account, int sId) {
         List<PutawayDTO> list = putOnBillRepository.getGoodsDetailList(orderNo, account, sId);
@@ -40,6 +47,12 @@ public class PutOnBillServiceImpl implements PutOnBillService {
         return new BaseEntity<List<PutawayDTO>>(list);
     }
 
+    /**
+     * 快速上架
+     * @param ids
+     * @param account
+     * @return
+     */
     @Override
     public BaseEntity<String> putOnBillQuickly(List<Integer> ids, String account) {
         for (Integer id : ids) {
@@ -52,6 +65,11 @@ public class PutOnBillServiceImpl implements PutOnBillService {
         return new BaseEntity<String>();
     }
 
+    /**
+     * 单个上架
+     * @param originalId
+     * @param account
+     */
     @Override
     public void putOnBillWithOne(int originalId, String account) {
 
@@ -63,6 +81,12 @@ public class PutOnBillServiceImpl implements PutOnBillService {
     }
 
 
+    /**
+     * 更新一条数据状态
+     * @param putawayAddDTO
+     * @param account
+     * @return
+     */
     @Override
     public BaseEntity updateOne(PutawayAddDTO putawayAddDTO, String account) {
 

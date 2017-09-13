@@ -34,7 +34,15 @@ public class InventoryServiceImpl implements InventoryService {
 
     //////////////////////门店盘点//////////////////////////////////////
 
-
+    /**
+     * 获取门店盘点的详细数据
+     * @param pdType
+     * @param saId
+     * @param areaId
+     * @param account
+     * @param sId
+     * @return
+     */
     @Override
     public BaseEntity<List<StoreInventoryGoodsDTO>> getInventoryList(String pdType, int saId, int areaId, String account, int sId) {
         List<StoreInventoryGoodsDTO> list = pdBillRepository.getStoreInventoryList(pdType, saId, areaId, account, sId);
@@ -44,6 +52,12 @@ public class InventoryServiceImpl implements InventoryService {
         return new BaseEntity<List<StoreInventoryGoodsDTO>>(list);
     }
 
+    /**
+     * 完成单个
+     * @param originalId
+     * @param account
+     * @return
+     */
     @Override
     public BaseEntity<Integer> completeOne(int originalId, String account) {
         pdBillRepository.completeOne(originalId, account);
@@ -70,7 +84,6 @@ public class InventoryServiceImpl implements InventoryService {
 
 
     //盘点编辑
-
     @Override
     public BaseEntity<String> edit(PdEditDTO pdEditDTO, String account) {
 
@@ -109,6 +122,17 @@ public class InventoryServiceImpl implements InventoryService {
 
     /////////////////////仓库盘点//////////////////////////////////////////
 
+    /**
+     * 仓库盘点获取详细数据
+     * @param pdType
+     * @param saId
+     * @param areaId
+     * @param account
+     * @param btype
+     * @param dtype
+     * @param sId
+     * @return
+     */
     @Override
     public BaseEntity<List<StroePdListDTO>> getStroeList(String pdType, int saId, int areaId, String account, int btype, int dtype, int sId) {
 
@@ -178,6 +202,13 @@ public class InventoryServiceImpl implements InventoryService {
         return new BaseEntity<ProductAddDetailDTO>(data);
     }
 
+    /**
+     * 单品盘点添加数据
+     * @param dto
+     * @param account
+     * @param sId
+     * @return
+     */
     @Override
     public BaseEntity<String> addProduct(AddProductDTO dto, String account, int sId) {
         int locationId = dto.locationId;

@@ -30,7 +30,12 @@ public class AcceptanceServiceImpl implements AcceptanceService {
         this.recBillRepository = recBillRepository;
     }
 
-
+    /**
+     * 根据仓库ID获取单位
+     * @param account
+     * @param sId 仓库ID
+     * @return
+     */
     @Override
     public BaseEntity<List<CommonDTO>> getUnit(String account, int sId) {
         List<CommonDTO> unitList = recBillRepository.getUnitList(account, sId);
@@ -42,6 +47,12 @@ public class AcceptanceServiceImpl implements AcceptanceService {
         return new BaseEntity<List<CommonDTO>>(recBillRepository.getOrderBillWithUnitId(unitId, sId, account));
     }
 
+    /**
+     * 根据往来单位ID获取订单详情
+     * @param account
+     * @param unitId
+     * @return
+     */
     @Override
     public BaseEntity<List<OrderDetailDTO>> getOrderListWithUnitId(String account, int unitId) {
         List<RecBillDTO> list = recBillRepository.getOrderList(account, unitId);
@@ -82,6 +93,13 @@ public class AcceptanceServiceImpl implements AcceptanceService {
         return new BaseEntity<>();
     }
 
+
+    /**
+     * 更新子数据的状态
+     * @param recUpdateDTO
+     * @param account
+     * @return
+     */
     @Override
     public BaseEntity<String> updateGoodsByGoodsId(RecUpdateDTO recUpdateDTO, String account) {
         List<AcceptAddDTO> param = recUpdateDTO.getParam();
@@ -132,6 +150,14 @@ public class AcceptanceServiceImpl implements AcceptanceService {
         return new BaseEntity<>(recBillRepository.getLotList(id, account));
     }
 
+
+    /**
+     * 根据订单号获取订单数据
+     * @param billNo
+     * @param account
+     * @param sId
+     * @return
+     */
     @Override
     public BaseEntity<List<OrderDetailDTO>> getBillsByBillNo(String billNo, String account, int sId) {
         Integer unitId = recBillRepository.findUnitByBillNo(billNo, account);

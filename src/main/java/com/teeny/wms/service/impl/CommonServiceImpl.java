@@ -33,30 +33,57 @@ public class CommonServiceImpl implements CommonService {
         this.locationRepository = locationRepository;
     }
 
+    /**
+     * 获取库区
+     * @param account
+     * @return
+     */
     @Override
     public BaseEntity<List<CommonDTO>> getSaList(String account) {
         List<CommonDTO> list = stockAreaRepository.getSaList(account);
         return new BaseEntity<List<CommonDTO>>(list);
     }
 
+    /**
+     * 获取区域
+     * @param account
+     * @return
+     */
     @Override
     public BaseEntity<List<CommonDTO>> getAreaList(String account) {
         List<CommonDTO> list = areaRepository.getAreaList(account);
         return new BaseEntity<List<CommonDTO>>(list);
     }
 
+    /**
+     * 获取仓库
+     * @param account
+     * @return
+     */
     @Override
     public BaseEntity<List<CommonDTO>> getWarehouseList(String account) {
         List<CommonDTO> list = storagesRepository.findAll(account);
         return new BaseEntity<List<CommonDTO>>(list);
     }
 
+    /**
+     * 根据仓库ID获取库区
+     * @param sid
+     * @param account
+     * @return
+     */
     @Override
     public BaseEntity<List<CommonDTO>> getSaListBysId(int sid, String account) {
         List<CommonDTO> list = stockAreaRepository.getSaListBySid(sid, account);
         return new BaseEntity<List<CommonDTO>>(list);
     }
 
+    /**
+     * 获取货位
+     * @param saId
+     * @param account
+     * @return
+     */
     @Override
     public BaseEntity<List<CommonDTO>> getLocationList(int saId, String account) {
         List<CommonDTO> list = locationRepository.getBysaId(saId, account);
@@ -64,6 +91,12 @@ public class CommonServiceImpl implements CommonService {
         return new BaseEntity<List<CommonDTO>>(list);
     }
 
+    /**
+     * 根据货位码获取货位ID
+     * @param locationCode
+     * @param account
+     * @return
+     */
     @Override
     public int getLocationIdByCode(String locationCode, String account) {
         Integer id = locationRepository.getIdByCode(locationCode, account);
