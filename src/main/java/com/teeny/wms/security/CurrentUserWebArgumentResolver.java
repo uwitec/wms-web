@@ -13,7 +13,7 @@ import java.security.Principal;
  */
 public class CurrentUserWebArgumentResolver implements WebArgumentResolver {
     public Object resolveArgument(MethodParameter methodParameter, NativeWebRequest webRequest) throws Exception {
-        if (methodParameter.getParameterType() == User.class  && methodParameter.getParameterAnnotation(CurrentUser.class) != null) {
+        if (methodParameter.getParameterType() == WmsUser.class  && methodParameter.getParameterAnnotation(CurrentUser.class) != null) {
             Principal principal = webRequest.getUserPrincipal();
             WmsUser userDetails = (WmsUser) ((Authentication) principal).getPrincipal();
             return userDetails.getUser();
