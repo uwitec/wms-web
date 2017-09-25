@@ -18,6 +18,7 @@
         SELECT
         d.smb_id AS id,
         d.original_id AS originalId,
+        p.p_id AS goodsId,
         p.name AS goodsName,
         d.Batchno AS lotNo,
         p.standard AS specification,

@@ -10,6 +10,7 @@ public class TransferListDTO implements Serializable{
     private int id; //id
     private int originalId;
     private String billNo; //单据编号
+    private int goodsId;
     private String goodsName; //商品名
     private String lotNo; //批号
     private String specification; //规格
@@ -70,6 +71,14 @@ public class TransferListDTO implements Serializable{
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public int getGoodsId() {
+        return goodsId;
+    }
+
+    public void setGoodsId(int goodsId) {
+        this.goodsId = goodsId;
     }
 
     public String getGoodsName() {

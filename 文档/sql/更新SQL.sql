@@ -27,6 +27,15 @@ ALTER TABLE pda_TranBill_D  ADD wctime DATETIME; -- 完成时间
 ALTER TABLE pda_kcpdBill_D  ADD wctime DATETIME; -- 完成时间
 ALTER TABLE pda_mdRecBill_D  ADD wctime DATETIME; -- 完成时间
 
+ALTER TABLE  pda_PutOnBill_D ADD loginid int;  -- 操作人id
+ALTER TABLE pda_CheckBill_B  ADD loginid int;  -- 操作人id
+ALTER TABLE pda_pdBill_D  ADD loginid int;     -- 操作人id
+ALTER TABLE pda_RecBill_D  ADD loginid int;    -- 操作人id
+ALTER TABLE pda_TranBill_D  ADD loginid int;   -- 操作人id
+ALTER TABLE pda_kcpdBill_D  ADD loginid int;   -- 操作人id
+ALTER TABLE pda_mdRecBill_D  ADD loginid int;  -- 操作人id
+
+
 # 2017.9.7
 ALTER TABLE pda_RecBill_D  ADD rownumber int;  -- 添加序号
 

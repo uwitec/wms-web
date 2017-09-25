@@ -12,6 +12,7 @@ public class PutawayDTO implements Serializable {
     private int id;
     private int originalId;
     private int status;
+    private int goodsId;
     private String goodsName;
     private String lotNo;
     private String specification;
@@ -45,6 +46,14 @@ public class PutawayDTO implements Serializable {
 
     public void setStatus(int status) {
         this.status = status;
+    }
+
+    public int getGoodsId() {
+        return goodsId;
+    }
+
+    public void setGoodsId(int goodsId) {
+        this.goodsId = goodsId;
     }
 
     public String getGoodsName() {

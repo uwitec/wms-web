@@ -3,6 +3,7 @@ package com.teeny.wms.core.repository;
 import com.teeny.wms.core.domain.CheckBillB;
 import com.teeny.wms.dto.CommonDTO;
 import com.teeny.wms.dto.QueryDocumentDTO;
+import com.teeny.wms.dto.RecipientDTO;
 import com.teeny.wms.dto.ReviewDTO;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
@@ -61,5 +62,5 @@ public interface CheckBillRepository {
     @Update("UPDATE ${account}.dbo.pda_CheckBill_B SET DealStates=1 WHERE bill_id=(SELECT b.billid FROM pda_CheckBill b WHERE b.billnumber=#{billNo})")
     void completeChildren(@Param("billNo") String billNo, @Param("account") String account);
 
-    List<CommonDTO> getRecipients(@Param("account") String account, @Param("sId") int sId);
+    List<RecipientDTO> getRecipients(@Param("account") String account, @Param("sId") int sId);
 }

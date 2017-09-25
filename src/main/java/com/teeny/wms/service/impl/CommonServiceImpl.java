@@ -1,11 +1,9 @@
 package com.teeny.wms.service.impl;
 
 import com.teeny.wms.core.domain.baseEntity.BaseEntity;
-import com.teeny.wms.core.repository.AreaRepository;
-import com.teeny.wms.core.repository.LocationRepository;
-import com.teeny.wms.core.repository.StockAreaRepository;
-import com.teeny.wms.core.repository.StoragesRepository;
+import com.teeny.wms.core.repository.*;
 import com.teeny.wms.dto.CommonDTO;
+import com.teeny.wms.dto.HistoryAllocationDTO;
 import com.teeny.wms.service.CommonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,17 +22,20 @@ public class CommonServiceImpl implements CommonService {
     private final AreaRepository areaRepository;
     private final StoragesRepository storagesRepository;
     private final LocationRepository locationRepository;
+    private final CommonRepository mCommonRepository;
 
     @Autowired
-    public CommonServiceImpl(StockAreaRepository stockAreaRepository, AreaRepository areaRepository, StoragesRepository storagesRepository, LocationRepository locationRepository) {
+    public CommonServiceImpl(StockAreaRepository stockAreaRepository, AreaRepository areaRepository, StoragesRepository storagesRepository, LocationRepository locationRepository, CommonRepository commonRepository) {
         this.stockAreaRepository = stockAreaRepository;
         this.areaRepository = areaRepository;
         this.storagesRepository = storagesRepository;
         this.locationRepository = locationRepository;
+        this.mCommonRepository = commonRepository;
     }
 
     /**
      * 获取库区
+     *
      * @param account
      * @return
      */
@@ -46,6 +47,7 @@ public class CommonServiceImpl implements CommonService {
 
     /**
      * 获取区域
+     *
      * @param account
      * @return
      */
@@ -57,6 +59,7 @@ public class CommonServiceImpl implements CommonService {
 
     /**
      * 获取仓库
+     *
      * @param account
      * @return
      */
@@ -68,6 +71,7 @@ public class CommonServiceImpl implements CommonService {
 
     /**
      * 根据仓库ID获取库区
+     *
      * @param sid
      * @param account
      * @return
@@ -80,6 +84,7 @@ public class CommonServiceImpl implements CommonService {
 
     /**
      * 获取货位
+     *
      * @param saId
      * @param account
      * @return
@@ -93,6 +98,7 @@ public class CommonServiceImpl implements CommonService {
 
     /**
      * 根据货位码获取货位ID
+     *
      * @param locationCode
      * @param account
      * @return
@@ -101,5 +107,10 @@ public class CommonServiceImpl implements CommonService {
     public int getLocationIdByCode(String locationCode, String account) {
         Integer id = locationRepository.getIdByCode(locationCode, account);
         return id == null ? 0 : id;
+    }
+
+    @Override
+    public BaseEntity<List<HistoryAllocationDTO>> getHistoryLocation(String account, int pId) {
+        return new BaseEntity<>(mCommonRepository.getHistoryLocation(account, pId));
     }
 }

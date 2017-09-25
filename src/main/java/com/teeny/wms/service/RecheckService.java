@@ -3,6 +3,7 @@ package com.teeny.wms.service;
 import com.teeny.wms.core.domain.baseEntity.BaseEntity;
 import com.teeny.wms.dto.CommonDTO;
 import com.teeny.wms.dto.Putaway.RecheckCompleteDTO;
+import com.teeny.wms.dto.RecipientDTO;
 import com.teeny.wms.dto.ReviewDTO;
 import com.teeny.wms.dto.ReviewUpdateDTO;
 
@@ -21,7 +22,7 @@ public interface RecheckService {
 
     BaseEntity<String> complete(RecheckCompleteDTO recheckCompleteDTO, String account);
 
-    BaseEntity<List<CommonDTO>> getRecipients(String account, int sId);
+    BaseEntity<List<RecipientDTO>> getRecipients(String account, int sId);
 
     BaseEntity<Integer> getReplenishmentCount(String account, int sId);
 }

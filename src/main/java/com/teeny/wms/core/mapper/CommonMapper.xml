@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.teeny.wms.core.repository.CommonRepository">
+
+    <select id="getHistoryLocation" resultType="com.teeny.wms.dto.HistoryAllocationDTO">
+        SELECT
+            l.loc_code AS code,
+            l.loc_name AS name
+        FROM ${account}.dbo.pda_locationTrace lt LEFT JOIN ${account}.dbo.pda_location l ON l.l_id = lt.Location_id
+        WHERE rectime IN (
+            SELECT max(rectime) AS time
+            FROM ${account}.dbo.pda_locationTrace lt1
+            WHERE lt1.p_id = #{pId}
+            GROUP BY lt1.Location_id
+        )
+        ORDER BY lt.rectime DESC
+    </select>
+</mapper>

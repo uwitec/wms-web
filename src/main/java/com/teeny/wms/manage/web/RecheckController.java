@@ -3,6 +3,7 @@ package com.teeny.wms.manage.web;
 import com.teeny.wms.core.domain.baseEntity.BaseEntity;
 import com.teeny.wms.dto.CommonDTO;
 import com.teeny.wms.dto.Putaway.RecheckCompleteDTO;
+import com.teeny.wms.dto.RecipientDTO;
 import com.teeny.wms.dto.ReviewDTO;
 import com.teeny.wms.service.RecheckService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,7 +49,7 @@ public class RecheckController {
 
     @ResponseBody
     @RequestMapping(value = "/api/recheck/recipients", method = RequestMethod.GET)
-    public BaseEntity<List<CommonDTO>> getRecipients(@RequestHeader("account") String account, @RequestHeader("sId") int sId) {
+    public BaseEntity<List<RecipientDTO>> getRecipients(@RequestHeader("account") String account, @RequestHeader("sId") int sId) {
         return recheckService.getRecipients(account, sId);
     }
 

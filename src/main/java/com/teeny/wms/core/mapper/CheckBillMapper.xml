@@ -73,8 +73,8 @@
         b.smb_id AS id,
         b.barcode AS name
         FROM ${account}.dbo.pda_CheckBill_B b
-        LEFT JOIN ${account}.dbo.pda_CheckBill b1 ON b.bill_id = b1.billid
-        WHERE b.DealStates = 0
+        INNER JOIN ${account}.dbo.pda_CheckBill b1 ON b.bill_id = b1.billid
+        WHERE b.DealStates = 0 AND b1.billstates = 10
         <if test="sId != 0">
             AND b1.s_id=#{sId}
         </if>
@@ -101,11 +101,13 @@
     </select>
 
 
-    <select id="getRecipients" resultType="com.teeny.wms.dto.CommonDTO">
+    <select id="getRecipients" resultType="com.teeny.wms.dto.RecipientDTO">
         SELECT DISTINCT
-        e.e_id AS id,
-        e.name AS name
-        FROM ${account}.dbo.pda_employees e
+            e.e_id AS id,
+            e.serial_number AS serialNumber,
+            e.pinyin,
+            e.name
+        FROM ${account}.dbo.pda_employees e ORDER BY pinyin ASC
     </select>
 
     <select id="getReplenishmentCount" resultType="int">
