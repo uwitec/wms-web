@@ -34,7 +34,7 @@ public class Test {
     }
 
     @RequestMapping(value = "/api/haha", method = RequestMethod.GET)
-    public void haha(Model model) {
+    public void haha(Model model, @CurrentUser Employess user) {
         List<String> list = new ArrayList<String>();
         list.add("ddd");
         list.add("fff");

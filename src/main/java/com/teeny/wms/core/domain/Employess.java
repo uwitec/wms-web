@@ -8,7 +8,7 @@ import java.io.Serializable;
  */
 
 public class Employess implements Serializable{
-    private int eid;
+    private int id;
     private String serialNumber;
     private String password;
     private String pinyin;
@@ -18,13 +18,12 @@ public class Employess implements Serializable{
     private String address;
     private int ZT;
 
-
-    public int getEid() {
-        return eid;
+    public int getId() {
+        return id;
     }
 
-    public void setEid(int eid) {
-        this.eid = eid;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getSerialNumber() {

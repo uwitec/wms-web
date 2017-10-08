@@ -1,5 +1,6 @@
 package com.teeny.wms.security;
 
+import com.teeny.wms.core.domain.Employess;
 import com.teeny.wms.core.domain.User;
 import org.springframework.core.MethodParameter;
 import org.springframework.security.core.Authentication;
@@ -13,7 +14,7 @@ import java.security.Principal;
  */
 public class CurrentUserWebArgumentResolver implements WebArgumentResolver {
     public Object resolveArgument(MethodParameter methodParameter, NativeWebRequest webRequest) throws Exception {
-        if (methodParameter.getParameterType() == WmsUser.class  && methodParameter.getParameterAnnotation(CurrentUser.class) != null) {
+        if (methodParameter.getParameterType() == Employess.class  && methodParameter.getParameterAnnotation(CurrentUser.class) != null) {
             Principal principal = webRequest.getUserPrincipal();
             WmsUser userDetails = (WmsUser) ((Authentication) principal).getPrincipal();
             return userDetails.getUser();
