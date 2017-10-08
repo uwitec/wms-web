@@ -89,4 +89,19 @@ public class Employess implements Serializable{
     public void setZT(int ZT) {
         this.ZT = ZT;
     }
+
+    @Override
+    public String toString() {
+        return "Employess{" +
+                "id=" + id +
+                ", serialNumber='" + serialNumber + '\'' +
+                ", password='" + password + '\'' +
+                ", pinyin='" + pinyin + '\'' +
+                ", username='" + username + '\'' +
+                ", alias='" + alias + '\'' +
+                ", phone='" + phone + '\'' +
+                ", address='" + address + '\'' +
+                ", ZT=" + ZT +
+                '}';
+    }
 }

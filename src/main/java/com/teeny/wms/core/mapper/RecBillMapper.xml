@@ -94,7 +94,8 @@
          pdastates,
          original_id,
          rownumber,
-        wctime)
+         wctime,
+         loginid)
         VALUES
             (#{item.bill_id},
              #{item.p_id},
@@ -114,7 +115,8 @@
              #{item.pdastates},
              #{item.original_id},
              #{item.rownumber},
-            getdate())
+            getdate(),
+            #{userId})
     </insert>
 
     <select id="getOrderBillWithUnitId" resultType="com.teeny.wms.dto.CommonDTO">

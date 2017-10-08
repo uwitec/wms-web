@@ -1,10 +1,12 @@
 package com.teeny.wms.manage.web;
 
+import com.teeny.wms.core.domain.Employess;
 import com.teeny.wms.core.domain.baseEntity.BaseEntity;
 import com.teeny.wms.dto.CommonDTO;
 import com.teeny.wms.dto.LocationAndCountDTO;
 import com.teeny.wms.dto.Putaway.PutawayAddDTO;
 import com.teeny.wms.dto.TransferListDTO;
+import com.teeny.wms.security.CurrentUser;
 import com.teeny.wms.service.CommonService;
 import com.teeny.wms.service.TransferService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -77,23 +79,23 @@ public class TransferringOrderController {
     //完成
     @ResponseBody
     @RequestMapping(value = "/api/transfer/updateAll", method = RequestMethod.POST)
-    public BaseEntity<String> updateAll(@RequestBody List<Integer> ids, @RequestHeader("account") String account) {
-        return transferService.updateAll(ids, account);
+    public BaseEntity<String> updateAll(@RequestBody List<Integer> ids, @RequestHeader("account") String account, @CurrentUser Employess user) {
+        return transferService.updateAll(ids, account, user.getId());
     }
 
 
     //完成一个
     @ResponseBody
     @RequestMapping(value = "/api/transfer/updateOne", method = RequestMethod.POST)
-    public BaseEntity<String> updateOne(@RequestParam("id") int id, @RequestHeader("account") String account) {
-        return transferService.updateOne(id, account);
+    public BaseEntity<String> updateOne(@RequestParam("id") int id, @RequestHeader("account") String account, @CurrentUser Employess user) {
+        return transferService.updateOne(id, account, user.getId());
     }
 
     //修改
     @ResponseBody
     @RequestMapping(value = "/api/transfer/update", method = RequestMethod.POST)
-    public BaseEntity update(@RequestBody PutawayAddDTO putawayAddDTO, @RequestHeader("account") String account) {
-        return transferService.update(putawayAddDTO, account);
+    public BaseEntity update(@RequestBody PutawayAddDTO putawayAddDTO, @RequestHeader("account") String account, @CurrentUser Employess user) {
+        return transferService.update(putawayAddDTO, account, user.getId());
     }
 
     //获取每个商品对应的货位

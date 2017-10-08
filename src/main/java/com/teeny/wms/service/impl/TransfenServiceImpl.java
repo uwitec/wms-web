@@ -54,10 +54,10 @@ public class TransfenServiceImpl implements TransferService {
      * @return
      */
     @Override
-    public BaseEntity<String> updateAll(List<Integer> ids, String account) {
+    public BaseEntity<String> updateAll(List<Integer> ids, String account, int userId) {
         if (ids.size() > 0) {
             for (Integer id : ids) {
-                tranBillRepository.updateOne(id, account);
+                tranBillRepository.updateOne(id, account, userId);
             }
             int count = tranBillRepository.countByDealstatus(ids.get(0), account);
             if (count == 0) {
@@ -69,8 +69,8 @@ public class TransfenServiceImpl implements TransferService {
     }
 
     @Override
-    public BaseEntity<String> updateOne(int id, String account) {
-        tranBillRepository.updateOne(id, account);
+    public BaseEntity<String> updateOne(int id, String account, int userId) {
+        tranBillRepository.updateOne(id, account, userId);
         int count = tranBillRepository.countByDealstatus(id, account);
         if (count == 0) {
             tranBillRepository.updateBillStatusByOriginalId(id, account);
@@ -79,7 +79,7 @@ public class TransfenServiceImpl implements TransferService {
     }
 
     @Override
-    public BaseEntity update(PutawayAddDTO putawayAddDTO, String account) {
+    public BaseEntity update(PutawayAddDTO putawayAddDTO, String account, int userId) {
         List<Integer> ids = tranBillRepository.getIdsByOriginalId(putawayAddDTO.getId(), account);
         if (putawayAddDTO.getLocations().size() > 0) {
             for (PutawayAddDTO.Location loc : putawayAddDTO.getLocations()) {
@@ -90,10 +90,10 @@ public class TransfenServiceImpl implements TransferService {
                     baseEntity.setResult(1);
                     throw new WmsException(baseEntity);
                 }
-                tranBillRepository.copyData(putawayAddDTO.getId(), loc.getAmount(), locationId, account);
+                tranBillRepository.copyData(putawayAddDTO.getId(), loc.getAmount(), locationId, account, userId);
             }
         } else {
-            tranBillRepository.copyData(putawayAddDTO.getId(), 0, 0, account);
+            tranBillRepository.copyData(putawayAddDTO.getId(), 0, 0, account, userId);
         }
         for (Integer i : ids) {
             tranBillRepository.deleteById(i, putawayAddDTO.getId(), account);

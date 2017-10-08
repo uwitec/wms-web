@@ -16,7 +16,7 @@ public interface RecheckService {
 
     void updateRecheckBill(String account, ReviewUpdateDTO reviewUpdateDTO);
 
-    BaseEntity<ReviewDTO> getWarehouseReview(String account, String billNo);
+    BaseEntity<ReviewDTO> getWarehouseReview(String account, String billNo, int userId);
 
     BaseEntity<List<CommonDTO>> getBills(int sId, String account);
 

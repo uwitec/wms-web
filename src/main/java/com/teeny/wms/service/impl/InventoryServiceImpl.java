@@ -59,8 +59,8 @@ public class InventoryServiceImpl implements InventoryService {
      * @return
      */
     @Override
-    public BaseEntity<Integer> completeOne(int originalId, String account) {
-        pdBillRepository.completeOne(originalId, account);
+    public BaseEntity<Integer> completeOne(int originalId, String account, int userId) {
+        pdBillRepository.completeOne(originalId, account, userId);
         int count = pdBillRepository.countByType(originalId, account);
         if (count == 0) {
             pdBillRepository.completeWithOriginalId(originalId, account);
@@ -69,10 +69,10 @@ public class InventoryServiceImpl implements InventoryService {
     }
 
     @Override
-    public BaseEntity<String> completeByParam(List<Integer> ids, String account) {
+    public BaseEntity<String> completeByParam(List<Integer> ids, String account, int userId) {
         if (ids.size() > 0) {
             for (Integer id : ids) {
-                pdBillRepository.completeOne(id, account);
+                pdBillRepository.completeOne(id, account, userId);
             }
             int count = pdBillRepository.countByType(ids.get(0), account);
             if (count == 0) {
@@ -85,19 +85,19 @@ public class InventoryServiceImpl implements InventoryService {
 
     //盘点编辑
     @Override
-    public BaseEntity<String> edit(PdEditDTO pdEditDTO, String account) {
+    public BaseEntity<String> edit(PdEditDTO pdEditDTO, String account, int userId) {
 
         if (pdEditDTO.getParam().size() > 0) {
             List<Integer> ids = pdBillRepository.getIdsByOriginalId(pdEditDTO.getId(), account);
 
             for (PdEditParamDTO dto : pdEditDTO.getParam()) {
-                pdBillRepository.edit(pdEditDTO.getId(), dto.getLotNo(), dto.getCount(), dto.getValidateDate(), account);
+                pdBillRepository.edit(pdEditDTO.getId(), dto.getLotNo(), dto.getCount(), dto.getValidateDate(), account, userId);
             }
             for (Integer id : ids) {
                 pdBillRepository.deleteBySmbId(id, pdEditDTO.getId(), account);
             }
         } else {
-            pdBillRepository.edit(pdEditDTO.getId(), "", 0, "", account);
+            pdBillRepository.edit(pdEditDTO.getId(), "", 0, "", account, userId);
             pdBillRepository.deleteBySmbId(pdEditDTO.getId(), pdEditDTO.getId(), account);
         }
 
@@ -168,9 +168,9 @@ public class InventoryServiceImpl implements InventoryService {
     }
 
     @Override
-    public BaseEntity<String> confirmProductPd(List<Integer> ids, int sId, String account) {
+    public BaseEntity<String> confirmProductPd(List<Integer> ids, int sId, String account, int userId) {
         for (Integer id : ids) {
-            pdBillRepository.updateStatus(id, sId, account);
+            pdBillRepository.updateStatus(id, sId, account, userId);
         }
         return new BaseEntity<String>();
     }
@@ -210,7 +210,7 @@ public class InventoryServiceImpl implements InventoryService {
      * @return
      */
     @Override
-    public BaseEntity<String> addProduct(AddProductDTO dto, String account, int sId) {
+    public BaseEntity<String> addProduct(AddProductDTO dto, String account, int sId, int userId) {
         int locationId = dto.locationId;
         if (locationId <= 0) {
             locationId = commonService.getLocationIdByCode(dto.locationCode, account);
@@ -222,7 +222,7 @@ public class InventoryServiceImpl implements InventoryService {
             }
         }
         dto.locationId = locationId;
-        pdBillRepository.addProduct(dto, account, sId);
+        pdBillRepository.addProduct(dto, account, sId, userId);
         return new BaseEntity<>();
     }
 
@@ -240,7 +240,7 @@ public class InventoryServiceImpl implements InventoryService {
     }
 
     @Override
-    public BaseEntity addProduct(int type, InventoryAddDTO dto, String account, int sId) {
+    public BaseEntity addProduct(int type, InventoryAddDTO dto, String account, int sId, int userId) {
         int locationId = commonService.getLocationIdByCode(dto.locationCode, account);
         if (locationId != 0) {
             dto.locationId = locationId;
@@ -250,7 +250,7 @@ public class InventoryServiceImpl implements InventoryService {
                 dto.billState = 2;
             }
 
-            pdBillRepository.addInventory(dto, type, account, sId);
+            pdBillRepository.addInventory(dto, type, account, sId, userId);
             return new BaseEntity();
         } else {
             BaseEntity baseEntity = new BaseEntity();

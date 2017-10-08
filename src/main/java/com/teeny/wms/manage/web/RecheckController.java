@@ -1,10 +1,12 @@
 package com.teeny.wms.manage.web;
 
+import com.teeny.wms.core.domain.Employess;
 import com.teeny.wms.core.domain.baseEntity.BaseEntity;
 import com.teeny.wms.dto.CommonDTO;
 import com.teeny.wms.dto.Putaway.RecheckCompleteDTO;
 import com.teeny.wms.dto.RecipientDTO;
 import com.teeny.wms.dto.ReviewDTO;
+import com.teeny.wms.security.CurrentUser;
 import com.teeny.wms.service.RecheckService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -34,8 +36,8 @@ public class RecheckController {
      */
     @ResponseBody
     @RequestMapping(value = "/api/recheck/exWarehouseReview/{billNo}", method = RequestMethod.GET)
-    public BaseEntity<ReviewDTO> getWarehouseReview(@RequestHeader("account") String account, @PathVariable("billNo") String billNo) {
-        return recheckService.getWarehouseReview(account, billNo);
+    public BaseEntity<ReviewDTO> getWarehouseReview(@RequestHeader("account") String account, @PathVariable("billNo") String billNo, @CurrentUser Employess user) {
+        return recheckService.getWarehouseReview(account, billNo, user.getId());
     }
 
 

@@ -14,11 +14,11 @@ import java.util.List;
 public interface TransferService {
     BaseEntity<List<TransferListDTO>> getTransferList(String billNo, String goodsCode, int sId, int saId, String account);
 
-    BaseEntity<String> updateAll(List<Integer> ids, String account);
+    BaseEntity<String> updateAll(List<Integer> ids, String account, int userId);
 
-    BaseEntity<String> updateOne(int id, String account);
+    BaseEntity<String> updateOne(int id, String account, int userId);
 
-    BaseEntity update(PutawayAddDTO putawayAddDTO, String account);
+    BaseEntity update(PutawayAddDTO putawayAddDTO, String account, int userId);
 
     BaseEntity<List<LocationAndCountDTO>> getLocationListById(int id, String account);
 

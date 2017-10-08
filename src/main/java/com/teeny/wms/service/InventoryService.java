@@ -16,7 +16,7 @@ public interface InventoryService {
 
     BaseEntity<ProductDetailsDTO> getDetailsById(int id, String account);
 
-    BaseEntity<String> confirmProductPd(List<Integer> ids, int sId, String account);
+    BaseEntity<String> confirmProductPd(List<Integer> ids, int sId, String account, int userId);
 
     BaseEntity<CommonDTO> updateProduct(int id, float count, String account);
 
@@ -24,21 +24,21 @@ public interface InventoryService {
 
     BaseEntity<List<String>> getStandardList(String goodsName, String account);
 
-    BaseEntity<String> addProduct(AddProductDTO addProductDTO, String account, int sId);
+    BaseEntity<String> addProduct(AddProductDTO addProductDTO, String account, int sId, int userId);
 
     BaseEntity<ProductAddDetailDTO> getDetailsByNameAndStandard(String goodsCode, String account);
 
-    BaseEntity<Integer> completeOne(int goodsDetailId, String account);
+    BaseEntity<Integer> completeOne(int goodsDetailId, String account, int userId);
 
-    BaseEntity<String> completeByParam(List<Integer> ids, String account);
+    BaseEntity<String> completeByParam(List<Integer> ids, String account, int userId);
 
     BaseEntity<List<StroePdListDTO>> getStroeList(String pdType, int saId, int areaId, String account, int btype, int dype, int sId);
 
-    BaseEntity<String> edit(PdEditDTO pdEditDTO, String account);
+    BaseEntity<String> edit(PdEditDTO pdEditDTO, String account, int userId);
 
     BaseEntity<List<LotDTO>> getLotList(int originalId, String account);
 
     BaseEntity<List<String>> getPdType(int type, String account, int sId);
 
-    BaseEntity addProduct(int type, InventoryAddDTO dto, String account, int sId);
+    BaseEntity addProduct(int type, InventoryAddDTO dto, String account, int sId, int userId);
 }

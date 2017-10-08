@@ -101,7 +101,7 @@ public class AcceptanceServiceImpl implements AcceptanceService {
      * @return
      */
     @Override
-    public BaseEntity<String> updateGoodsByGoodsId(RecUpdateDTO recUpdateDTO, String account) {
+    public BaseEntity<String> updateGoodsByGoodsId(RecUpdateDTO recUpdateDTO, String account, int userId) {
         List<AcceptAddDTO> param = recUpdateDTO.getParam();
         if (Validator.isEmpty(param)) {
             BaseEntity<String> result = new BaseEntity<>();
@@ -111,7 +111,6 @@ public class AcceptanceServiceImpl implements AcceptanceService {
         }
 
         RecBillD original = recBillRepository.getOriginal(account, recUpdateDTO.getId());
-        System.out.println(original);
 
         recBillRepository.deleteById(recUpdateDTO.getId(), account);
 
@@ -123,7 +122,7 @@ public class AcceptanceServiceImpl implements AcceptanceService {
             in.EligibleQty = dto.getAmount();
             in.TaxPrice = dto.getPrice();
             in.rownumber = dto.getSerialNo();
-            recBillRepository.addData(account, in);
+            recBillRepository.addData(account, in, userId);
         }
 
         int count = recBillRepository.countByDealType(recUpdateDTO.getId(), account);

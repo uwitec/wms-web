@@ -1,10 +1,12 @@
 package com.teeny.wms.manage.web;
 
+import com.teeny.wms.core.domain.Employess;
 import com.teeny.wms.core.domain.baseEntity.BaseEntity;
 import com.teeny.wms.dto.AcceptAddDTO;
 import com.teeny.wms.dto.CommonDTO;
 import com.teeny.wms.dto.OrderDetailDTO;
 import com.teeny.wms.dto.RecUpdateDTO;
+import com.teeny.wms.security.CurrentUser;
 import com.teeny.wms.service.AcceptanceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -69,8 +71,8 @@ public class AcceptanceController {
     //单个修改
     @ResponseBody
     @RequestMapping(value = "/api/acceptance/update", method = RequestMethod.POST)
-    public BaseEntity competeByGoodsId(@RequestBody RecUpdateDTO recUpdateDTO, @RequestHeader("account") String account) {
-        return acceptanceService.updateGoodsByGoodsId(recUpdateDTO, account);
+    public BaseEntity competeByGoodsId(@RequestBody RecUpdateDTO recUpdateDTO, @RequestHeader("account") String account, @CurrentUser Employess user) {
+        return acceptanceService.updateGoodsByGoodsId(recUpdateDTO, account, user.getId());
     }
 
 //    //单个完成
@@ -90,7 +92,7 @@ public class AcceptanceController {
     //完成
     @ResponseBody
     @RequestMapping(value = "/api/acceptance/complete", method = RequestMethod.POST)
-    public BaseEntity<String> compete(@RequestBody RecUpdateDTO recUpdateDTO, @RequestHeader("account") String account) {
-        return acceptanceService.updateGoodsByGoodsId(recUpdateDTO, account);
+    public BaseEntity<String> compete(@RequestBody RecUpdateDTO recUpdateDTO, @RequestHeader("account") String account, @CurrentUser Employess user) {
+        return acceptanceService.updateGoodsByGoodsId(recUpdateDTO, account, user.getId());
     }
 }

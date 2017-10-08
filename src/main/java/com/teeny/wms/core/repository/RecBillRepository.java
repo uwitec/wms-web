@@ -36,7 +36,7 @@ public interface RecBillRepository {
     List<GoodsDTO> getGoodsByBillId(@Param("orderId") int orderId, @Param("account") String account);
 
     ///复制数据
-    void addData(@Param("account") String account,@Param("item") RecBillD d);
+    void addData(@Param("account") String account, @Param("item") RecBillD d, @Param("userId") int id);
 
     @Update("UPDATE ${account}.dbo.pda_RecBill_D SET DealStates=1 WHERE smb_id=#{id}")
     void completeOne(@Param("id") int id, @Param("account") String account);
@@ -56,10 +56,10 @@ public interface RecBillRepository {
     List<AcceptAddDTO> getLotList(@Param("id") int id, @Param("account") String account);
 
     @Select("SELECT r.c_id FROM ${account}.dbo.pda_RecBill r WHERE r.billnumber=#{billNo}")
-    Integer findUnitByBillNo(@Param("billNo") String billNo,@Param("account") String account);
+    Integer findUnitByBillNo(@Param("billNo") String billNo, @Param("account") String account);
 
 
-    int test(@Param("id") int id,@Param("date") String date,@Param("lotNo") String lotNo,@Param("amount") double amount,@Param("price") int price,@Param("account") String account);
+    int test(@Param("id") int id, @Param("date") String date, @Param("lotNo") String lotNo, @Param("amount") double amount, @Param("price") int price, @Param("account") String account);
 
-    RecBillD getOriginal(@Param("account") String account,@Param("id") int originalId);
+    RecBillD getOriginal(@Param("account") String account, @Param("id") int originalId);
 }

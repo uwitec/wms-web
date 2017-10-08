@@ -20,7 +20,7 @@ public interface AcceptanceService {
 
     BaseEntity<String> updateGoodsByOrderId(List<Integer> ids, String account);
 
-    BaseEntity<String> updateGoodsByGoodsId(RecUpdateDTO recUpdateDTO, String account);
+    BaseEntity<String> updateGoodsByGoodsId(RecUpdateDTO recUpdateDTO, String account, int userId);
 
     BaseEntity<String> completeOne(int id, String account);
 

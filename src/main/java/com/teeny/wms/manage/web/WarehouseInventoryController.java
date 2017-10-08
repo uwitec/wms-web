@@ -1,7 +1,9 @@
 package com.teeny.wms.manage.web;
 
+import com.teeny.wms.core.domain.Employess;
 import com.teeny.wms.core.domain.baseEntity.BaseEntity;
 import com.teeny.wms.dto.*;
+import com.teeny.wms.security.CurrentUser;
 import com.teeny.wms.service.CommonService;
 import com.teeny.wms.service.InventoryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,22 +53,22 @@ public class WarehouseInventoryController {
     //单个完成
     @ResponseBody
     @RequestMapping(value = "/api/warehouseFirst/single", method = RequestMethod.POST)
-    public BaseEntity<Integer> completeOne(@RequestParam("id") int goodsDetailId, @RequestHeader("account") String account) {
-        return inventoryService.completeOne(goodsDetailId, account);
+    public BaseEntity<Integer> completeOne(@RequestParam("id") int goodsDetailId, @RequestHeader("account") String account, @CurrentUser Employess user) {
+        return inventoryService.completeOne(goodsDetailId, account, user.getId());
     }
 
     //确定
     @ResponseBody
     @RequestMapping(value = "/api/warehouseFirst/complete", method = RequestMethod.POST)
-    public BaseEntity<String> completeByBillId(@RequestBody List<Integer> ids, @RequestHeader("account") String account, @RequestHeader("sId") int sId) {
-        return inventoryService.completeByParam(ids, account);
+    public BaseEntity<String> completeByBillId(@RequestBody List<Integer> ids, @RequestHeader("account") String account, @CurrentUser Employess user) {
+        return inventoryService.completeByParam(ids, account, user.getId());
     }
 
     //盘点编辑
     @ResponseBody
     @RequestMapping(value = "/api/warehouseFirst/edit", method = RequestMethod.POST)
-    public BaseEntity<String> edit(@RequestBody PdEditDTO pdEditDTO, @RequestHeader("account") String account) {
-        return inventoryService.edit(pdEditDTO, account);
+    public BaseEntity<String> edit(@RequestBody PdEditDTO pdEditDTO, @RequestHeader("account") String account, @CurrentUser Employess user) {
+        return inventoryService.edit(pdEditDTO, account, user.getId());
     }
 
     //获取批次
@@ -86,7 +88,7 @@ public class WarehouseInventoryController {
     //新增
     @ResponseBody
     @RequestMapping(value = "/api/warehouseFirst/add", method = RequestMethod.PUT)
-    public BaseEntity addProduct(@RequestBody InventoryAddDTO addProductDTO, @RequestHeader("account") String account, @RequestHeader("sId") int sId) {
-        return inventoryService.addProduct(4, addProductDTO, account, sId);
+    public BaseEntity addProduct(@RequestBody InventoryAddDTO addProductDTO, @RequestHeader("account") String account, @RequestHeader("sId") int sId, @CurrentUser Employess user) {
+        return inventoryService.addProduct(4, addProductDTO, account, sId, user.getId());
     }
 }

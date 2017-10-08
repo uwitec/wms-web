@@ -16,11 +16,11 @@ public interface PutOnBillService {
 
     BaseEntity<List<PutawayDTO>> getGoodsDetailList(String orderNoId, String account, int sId);
 
-    BaseEntity<String> putOnBillQuickly(List<Integer> ids, String account);
+    BaseEntity<String> putOnBillQuickly(List<Integer> ids, String account, int userId);
 
-    void putOnBillWithOne(int bdId, String account);
+    void putOnBillWithOne(int bdId, String account, int userId);
 
-    BaseEntity updateOne(PutawayAddDTO putawayAddDTO, String account);
+    BaseEntity updateOne(PutawayAddDTO putawayAddDTO, String account, int userId);
 
     BaseEntity<List<LocationAndCountDTO>> getLocationList(int id, String account);
 

@@ -74,9 +74,9 @@ BEGIN
 CREATE TABLE [dbo].pda_employees (
 e_id INT NOT NULL DEFAULT 0, --职员id
 serial_number VARCHAR (26) NOT NULL DEFAULT '', --编码
-PASSWORD VARCHAR (30) NULL DEFAULT '', --密码
+password VARCHAR (30) NULL DEFAULT '', --密码
 pinyin VARCHAR (80) NOT NULL DEFAULT '', --拼音
-NAME VARCHAR (80) NOT NULL DEFAULT '', --名称
+name VARCHAR (80) NOT NULL DEFAULT '', --名称
 alias VARCHAR (30) NOT NULL DEFAULT '', --简名
 phone VARCHAR (60) NOT NULL DEFAULT '', --联系电话
 address VARCHAR (66) NOT NULL DEFAULT '', --联系地址

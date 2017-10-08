@@ -22,8 +22,8 @@ public interface TranBillRepository {
 
     List<QueryDocumentDTO> getBill(@Param("account") String account, @Param("sId") int sId);
 
-    @Update("UPDATE ${account}.dbo.pda_TranBill_D SET DealStates=1, wctime = getdate() WHERE original_id = #{id}")
-    void updateOne(@Param("id") int id, @Param("account") String account);
+    @Update("UPDATE ${account}.dbo.pda_TranBill_D SET DealStates=1, wctime = getdate(), loginid = #{userId} WHERE original_id = #{id}")
+    void updateOne(@Param("id") int id, @Param("account") String account, @Param("userId") int userId);
 
     @Select("SELECT count(*) AS total FROM ${account}.dbo.pda_TranBill_D d WHERE d.DealStates=0 AND d.bill_id = (SELECT DISTINCT d1.bill_id FROM ${account}.dbo.pda_TranBill_D d1 WHERE d1.original_id=#{id})")
     int countByDealstatus(@Param("id") int id, @Param("account") String account);
@@ -34,7 +34,7 @@ public interface TranBillRepository {
     @Update("UPDATE pda_TranBill_D SET quantity=#{amount}, DealStates=1, pdastates=1 WHERE smb_id=#{id}")
     void updateDetails(@Param("id") int id, @Param("amount") float amount, @Param("account") String account);
 
-    void copyData(@Param("id") int id, @Param("amount") float amount, @Param("locationId") int locationId, @Param("account") String account);
+    void copyData(@Param("id") int id, @Param("amount") float amount, @Param("locationId") int locationId, @Param("account") String account, @Param("userId") int userId);
 
     @Select("SELECT d.smb_id FROM ${account}.dbo.pda_TranBill_D d WHERE d.original_id=#{id}")
     List<Integer> getIdsByOriginalId(@Param("id") int id, @Param("account") String account);

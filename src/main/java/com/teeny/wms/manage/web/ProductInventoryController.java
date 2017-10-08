@@ -1,9 +1,11 @@
 package com.teeny.wms.manage.web;
 
+import com.teeny.wms.core.domain.Employess;
 import com.teeny.wms.core.domain.baseEntity.BaseEntity;
 import com.teeny.wms.dto.AddProductDTO;
 import com.teeny.wms.dto.PdListDTO;
 import com.teeny.wms.dto.ProductAddDetailDTO;
+import com.teeny.wms.security.CurrentUser;
 import com.teeny.wms.service.InventoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -43,15 +45,15 @@ public class ProductInventoryController {
     //盘点确定
     @ResponseBody
     @RequestMapping(value = "/api/productsInventory/confirm", method = RequestMethod.POST)
-    public BaseEntity<String> confirm(@RequestBody List<Integer> ids, @RequestHeader("account") String account, @RequestHeader("sId") int sId) {
-        return inventoryService.confirmProductPd(ids, sId, account);
+    public BaseEntity<String> confirm(@RequestBody List<Integer> ids, @RequestHeader("account") String account, @RequestHeader("sId") int sId, @CurrentUser Employess user) {
+        return inventoryService.confirmProductPd(ids, sId, account, user.getId());
     }
 
     //商品修改(商品明细 保存)
     @ResponseBody
     @RequestMapping(value = "/api/productsInventory/update", method = RequestMethod.POST)
-    public BaseEntity<String> update(@RequestBody AddProductDTO addProductDTO, @RequestHeader("account") String account, @RequestHeader("sId") int sId) {
-        return inventoryService.addProduct(addProductDTO, account, sId);
+    public BaseEntity<String> update(@RequestBody AddProductDTO addProductDTO, @RequestHeader("account") String account, @RequestHeader("sId") int sId, @CurrentUser Employess user) {
+        return inventoryService.addProduct(addProductDTO, account, sId, user.getId());
     }
 
 
@@ -66,8 +68,8 @@ public class ProductInventoryController {
     //新增单品
     @ResponseBody
     @RequestMapping(value = "/api/productsInventory/add", method = RequestMethod.PUT)
-    public BaseEntity<String> addProduct(@RequestBody AddProductDTO addProductDTO, @RequestHeader("account") String account, @RequestHeader("sId") int sId) {
-        return inventoryService.addProduct(addProductDTO, account, sId);
+    public BaseEntity<String> addProduct(@RequestBody AddProductDTO addProductDTO, @RequestHeader("account") String account, @RequestHeader("sId") int sId, @CurrentUser Employess user) {
+        return inventoryService.addProduct(addProductDTO, account, sId, user.getId());
     }
 
 

@@ -54,9 +54,9 @@ public class PutOnBillServiceImpl implements PutOnBillService {
      * @return
      */
     @Override
-    public BaseEntity<String> putOnBillQuickly(List<Integer> ids, String account) {
+    public BaseEntity<String> putOnBillQuickly(List<Integer> ids, String account, int userId) {
         for (Integer id : ids) {
-            putOnBillRepository.updateOne(id, account);
+            putOnBillRepository.updateOne(id, account, userId);
         }
         int count = putOnBillRepository.countByOriginalId(ids.get(0), account);
         if (count == 0) {
@@ -71,9 +71,9 @@ public class PutOnBillServiceImpl implements PutOnBillService {
      * @param account
      */
     @Override
-    public void putOnBillWithOne(int originalId, String account) {
+    public void putOnBillWithOne(int originalId, String account, int userId) {
 
-        putOnBillRepository.updateOne(originalId, account);
+        putOnBillRepository.updateOne(originalId, account, userId);
         int count = putOnBillRepository.countByOriginalId(originalId, account);
         if (count == 0) {
             putOnBillRepository.updatePutByOriginalId(originalId, account);
@@ -88,7 +88,7 @@ public class PutOnBillServiceImpl implements PutOnBillService {
      * @return
      */
     @Override
-    public BaseEntity updateOne(PutawayAddDTO putawayAddDTO, String account) {
+    public BaseEntity updateOne(PutawayAddDTO putawayAddDTO, String account, int userId) {
 
         List<Integer> ids = putOnBillRepository.getIdsByOriginalId(putawayAddDTO.getId(), account);
 

@@ -118,7 +118,7 @@
 
     <!--//复制数据-->
     <insert id="edit">
-        INSERT INTO ${account}.dbo.pda_pdBill_D (bill_id, p_id, MakeDate, EligibleQty, S_id, Location_id, Supplier_id, InstoreTime, billstates, Validdate, Batchno, pdQty, DealStates, pdastates, original_id, wctime)
+        INSERT INTO ${account}.dbo.pda_pdBill_D (bill_id, p_id, MakeDate, EligibleQty, S_id, Location_id, Supplier_id, InstoreTime, billstates, Validdate, Batchno, pdQty, DealStates, pdastates, original_id, wctime, loginid)
             SELECT
                 d.bill_id,
                 d.p_id,
@@ -135,7 +135,8 @@
                 1,
                 d.pdastates,
                 d.original_id,
-                getdate()
+                getdate(),
+                #{userId}
             FROM ${account}.dbo.pda_pdBill_D d
             WHERE d.smb_id = (SELECT max(d1.smb_id)
                               FROM ${account}.dbo.pda_pdBill_D d1
@@ -253,7 +254,8 @@
             ss_id,
             DealStates,
             pdastates,
-            wctime)
+            wctime,
+            loginid)
         VALUES (
             #{item.id},
             #{item.pId},
@@ -265,7 +267,8 @@
             #{sId},
             1,
             0,
-            getdate()
+            getdate(),
+            #{userId}
         )
     </insert>
 
@@ -296,7 +299,8 @@
          billstates,
          DealStates,
          pdastates,
-         wctime)
+         wctime,
+         loginid)
             SELECT
                 b.billid,
                 #{item.goodsId},
@@ -311,7 +315,8 @@
                 #{item.billState},
                 1,
                 0,
-                getdate()
+                getdate(),
+                #{userId}
             FROM ${account}.dbo.pda_pdBill b
               INNER JOIN ${account}.dbo.pda_Products p ON p.p_id = #{item.goodsId}
             WHERE b.pdname = #{item.type} AND b.sa_id = #{item.saId} AND b.a_id = #{item.aId}

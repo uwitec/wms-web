@@ -42,7 +42,7 @@ public class RecheckServiceImpl implements RecheckService {
      * @return
      */
     @Override
-    public BaseEntity<ReviewDTO> getWarehouseReview(String account, String billNo) {
+    public BaseEntity<ReviewDTO> getWarehouseReview(String account, String billNo, int userId) {
 
         CheckBillB checkBillB = checkBillRepository.getByCode(billNo, account);
         if (checkBillB == null) {
@@ -59,7 +59,7 @@ public class RecheckServiceImpl implements RecheckService {
             baseEntity1.setData("");
             throw new WmsException(baseEntity1);
         }
-        checkBillRepository.updateStatus(checkBillB.getSmbId(), account);
+        checkBillRepository.updateStatus(checkBillB.getSmbId(), account, userId);
         int billStatus = checkBillRepository.getBillStatus(checkBillB.getBillId(), account);
         if (billStatus == 0) {
             checkBillRepository.updateBillPdaStatus(checkBillB.getBillId(), account);
