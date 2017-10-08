@@ -101,7 +101,7 @@ public class PutOnBillServiceImpl implements PutOnBillService {
                     baseEntity.setResult(1);
                     throw new WmsException(baseEntity);
                 }
-                putOnBillRepository.copyDataByParam(putawayAddDTO.getId(), location.getAmount(), locationId, account);
+                putOnBillRepository.copyDataByParam(putawayAddDTO.getId(), location.getAmount(), locationId, account, userId);
             }
             for (Integer id : ids) {
                 putOnBillRepository.deleteBySmbId(id, putawayAddDTO.getId(), account);

@@ -51,7 +51,7 @@ public interface PutOnBillRepository {
     void updateGoodsAmount(@Param("id") int id, @Param("amount") float amount, @Param("account") String account);
 
 
-    void copyDataByParam(@Param("id") int id, @Param("amount") float amount, @Param("locationId") int locationId, @Param("account") String account);
+    void copyDataByParam(@Param("id") int id, @Param("amount") float amount, @Param("locationId") int locationId, @Param("account") String account, @Param("userId") int userId);
 
     @Select("SELECT count(*) FROM ${account}.dbo.pda_PutOnBill_D d WHERE d.DealStates = 0 AND d.bill_id = (SELECT DISTINCT d1.bill_id FROM ${account}.dbo.pda_PutOnBill_D d1 WHERE d1.smb_id=#{id})")
     int countBySmbId(@Param("id") int id, @Param("account") String account);
@@ -75,7 +75,7 @@ public interface PutOnBillRepository {
     @Delete("DELETE FROM ${account}.dbo.pda_PutOnBill_D WHERE smb_id=#{id} AND original_id=#{originalId}")
     void deleteBySmbId(@Param("id") Integer id, @Param("originalId") int originalId, @Param("account") String account);
 
-    @Select("SELECT d.EligibleQty AS amount,l.loc_code AS locationCode FROM ${account}.dbo.pda_PutOnBill_D d, ${account}.dbo.pda_location l WHERE d.Location_id=l.l_id AND d.p_id=(SELECT DISTINCT d1.p_id FROM ${account}.dbo.pda_PutOnBill_D d1 WHERE d1.original_id=#{id})")
+    @Select("SELECT d.EligibleQty AS amount, l.loc_code AS locationCode FROM ${account}.dbo.pda_PutOnBill_D d LEFT JOIN ${account}.dbo.pda_location l ON d.Location_id = l.l_id WHERE d.original_id = #{id}")
     List<LocationAndCountDTO> getLocationListById(@Param("id") int id, @Param("account") String account);
 
     //获取库区下的单号

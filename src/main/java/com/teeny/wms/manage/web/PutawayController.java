@@ -92,6 +92,7 @@ public class PutawayController {
     @RequestMapping(value = "/api/shelve/update", method = RequestMethod.POST)
     @ResponseBody
     public BaseEntity updateByBdId(@RequestBody PutawayAddDTO putawayAddDTO, @RequestHeader("account") String account, @CurrentUser Employess user) {
+        System.out.println(user);
         return putOnBillService.updateOne(putawayAddDTO, account, user.getId());
     }
 
