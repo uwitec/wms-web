@@ -11,9 +11,7 @@ import java.io.Serializable;
  * @since 2017/9/7
  */
 public class InventoryAddDTO implements Serializable {
-    public String type;                     //盘点类型
-    public int saId;                        //库区id
-    public int aId;                         //区域id
+    public int inventoryId;                 //盘点单id
     public int goodsId;                     //商品id
     public String locationCode;             //货位码
     public String lotNo;                    //批号

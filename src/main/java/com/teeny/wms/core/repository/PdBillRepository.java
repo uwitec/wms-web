@@ -92,7 +92,7 @@ public interface PdBillRepository {
     @Select("SELECT d.smb_id FROM ${account}.dbo.pda_pdBill_D d WHERE d.original_id=#{id}")
     List<Integer> getIdsByOriginalId(@Param("id") int id, @Param("account") String account);
 
-    @Update("UPDATE ${account}.dbo.pda_pdBill SET billstates = 3 WHERE billid = (SELECT DISTINCT d.bill_id FROM ${account}.dbo.pda_pdBill_D d WHERE d.original_id = #{originalId})")
+    @Update("UPDATE ${account}.dbo.pda_pdBill SET pdastates = 2 WHERE billid = (SELECT DISTINCT d.bill_id FROM ${account}.dbo.pda_pdBill_D d WHERE d.original_id = #{originalId})")
     void completeWithOriginalId(@Param("originalId") int originalId, @Param("account") String account);
 
     @Update("UPDATE ${account}.dbo.pda_pdBill SET pdastates=1,pdaWrTime=getdate() WHERE a_id=#{areaId} AND sa_id=#{saId} AND pdname=#{pdType} AND billstates=#{type}")

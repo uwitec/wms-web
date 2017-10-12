@@ -305,7 +305,7 @@
          wctime,
          loginid)
             SELECT
-                b.billid,
+                #{item.inventoryId},
                 #{item.goodsId},
                 #{item.validateDate},
                 #{item.lotNo},
@@ -320,9 +320,8 @@
                 0,
                 getdate(),
                 #{userId}
-            FROM ${account}.dbo.pda_pdBill b
-                INNER JOIN ${account}.dbo.pda_Products p ON p.p_id = #{item.goodsId}
-            WHERE b.pdname = #{item.type} AND b.sa_id = #{item.saId} AND b.a_id = #{item.aId}
+            FROM ${account}.dbo.pda_Products p
+            WHERE p.p_id = #{item.goodsId}
     </insert>
 
     <!--2017/10/12修改-->
