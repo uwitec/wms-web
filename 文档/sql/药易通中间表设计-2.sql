@@ -306,7 +306,7 @@ pdaWrTime DATETIME NOT NULL DEFAULT 0--回写时间
 END
 GO
 
---动态盘点单
+-- 动态盘点单
 -- drop table pda_pdBill
 IF NOT EXISTS ( SELECT 1 FROM dbo.sysobjects WHERE id = object_id(N'[dbo].[pda_pdBill]') AND OBJECTPROPERTY(id, N'IsUserTable') = 1)
 BEGIN
@@ -315,14 +315,16 @@ billid INT NOT NULL DEFAULT 0, --盘点单id
 sa_id INT NOT NULL DEFAULT 0, --库区id   0808
 pdname VARCHAR (50) NOT NULL DEFAULT '', --盘点名称
 s_id INT NOT NULL DEFAULT 0, --仓库id, =pda_storages.s_id
-billstates INT NOT NULL DEFAULT 10, --盘单状态 0:未完成 1：门店初盘 2：复盘 3：已完成  4:仓库初盘
-pdastates INT NOT NULL DEFAULT 0, --交换状态 0提供 1pda已读取 2pda已回写
+billstates INT NOT NULL DEFAULT 10, --盘单状态 1：门店初盘 2：复盘  4:仓库初盘
+pdastates INT NOT NULL DEFAULT 0, --交换状态 0提供 1pda已读取,2pda已完成,3pda已回写
 pdaInTime DATETIME NOT NULL DEFAULT 0, --提供时间
 pdaReTime DATETIME NOT NULL DEFAULT 0, --读取时间
 pdaWrTime DATETIME NOT NULL DEFAULT 0--回写时间
 ) ON [PRIMARY]
 END
 GO
+-- 2017/10/12
+-- 修改pda_pdBill billstates不可改变(去除未完成状态0和完成状态3), pdastates完成变为2, 已回写改为3
 
 
 --动态盘点明细表

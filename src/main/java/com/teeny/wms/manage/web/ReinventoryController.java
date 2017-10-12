@@ -81,7 +81,7 @@ public class ReinventoryController {
     //获取盘点类型
     @ResponseBody
     @RequestMapping(value = "/api/secondInventory/pdType", method = RequestMethod.GET)
-    public BaseEntity<List<String>> getPdType(@RequestHeader("account") String account, @RequestHeader("sId") int sId) {
+    public BaseEntity<List<CommonDTO>> getPdType(@RequestHeader("account") String account, @RequestHeader("sId") int sId) {
         return inventoryService.getPdType(2, account, sId);
     }
 
@@ -90,5 +90,13 @@ public class ReinventoryController {
     @RequestMapping(value = "/api/secondInventory/add", method = RequestMethod.PUT)
     public BaseEntity addProduct(@RequestBody InventoryAddDTO addProductDTO, @RequestHeader("account") String account, @RequestHeader("sId") int sId, @CurrentUser Employess user) {
         return inventoryService.addProduct(2, addProductDTO, account, sId, user.getId());
+    }
+
+    //2017/10/12修改
+    //门店盘点
+    @ResponseBody
+    @RequestMapping(value = "/api/secondInventory/getList", method = RequestMethod.GET)
+    public BaseEntity<List<InventoryGoodsDTO>> getInventory(@RequestParam("id") int id, @RequestHeader("account") String account) {
+        return inventoryService.getInventoryList(id, false, account);
     }
 }

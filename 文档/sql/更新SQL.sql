@@ -36,6 +36,11 @@ ALTER TABLE pda_kcpdBill_D  ADD loginid int;   -- 操作人id
 ALTER TABLE pda_mdRecBill_D  ADD loginid int;  -- 操作人id
 
 
+ALTER TABLE  pda_RecBill_D ADD WholeQty  NUMERIC(18,4);   -- 整货数量
+ALTER TABLE  pda_RecBill_D ADD retailQty  NUMERIC(18,4);  -- 零货数量
+
+
+
 # 2017.9.7
 ALTER TABLE pda_RecBill_D  ADD rownumber int;  -- 添加序号
 

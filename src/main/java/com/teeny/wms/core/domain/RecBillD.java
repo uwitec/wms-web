@@ -30,8 +30,10 @@ public class RecBillD implements Serializable {
     public int original_id;
     public int rownumber;
 
-    public RecBillD() {
+    public float retailQty;
+    public float WholeQty;
 
+    public RecBillD() {
     }
 
     public RecBillD(RecBillD d) {
@@ -53,29 +55,7 @@ public class RecBillD implements Serializable {
         this.pdastates = d.pdastates;
         this.original_id = d.original_id;
         this.rownumber = d.rownumber;
+        this.retailQty = d.retailQty;
+        this.WholeQty = d.WholeQty;
     }
-
-    @Override
-    public String toString() {
-        return "RecBillD{" +
-                "bill_id='" + bill_id + '\'' +
-                ", p_id='" + p_id + '\'' +
-                ", MakeDate='" + MakeDate + '\'' +
-                ", Validdate='" + Validdate + '\'' +
-                ", Batchno='" + Batchno + '\'' +
-                ", Yqty='" + Yqty + '\'' +
-                ", EligibleQty='" + EligibleQty + '\'' +
-                ", TaxPrice='" + TaxPrice + '\'' +
-                ", TaxTotal='" + TaxTotal + '\'' +
-                ", CostPrice='" + CostPrice + '\'' +
-                ", CostTotal='" + CostTotal + '\'' +
-                ", S_id='" + S_id + '\'' +
-                ", Location_id='" + Location_id + '\'' +
-                ", Supplier_id='" + Supplier_id + '\'' +
-                ", DealStates='" + DealStates + '\'' +
-                ", pdastates='" + pdastates + '\'' +
-                ", original_id='" + original_id + '\'' +
-                '}';
-    }
-
 }

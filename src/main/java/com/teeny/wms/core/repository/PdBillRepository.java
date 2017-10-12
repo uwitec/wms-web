@@ -98,9 +98,32 @@ public interface PdBillRepository {
     @Update("UPDATE ${account}.dbo.pda_pdBill SET pdastates=1,pdaWrTime=getdate() WHERE a_id=#{areaId} AND sa_id=#{saId} AND pdname=#{pdType} AND billstates=#{type}")
     void updatePdaStatus(@Param("pdType") String pdType, @Param("saId") int saId, @Param("areaId") int areaId, @Param("account") String account, @Param("type") int type);
 
-    List<String> getPdType(@Param("account") String account, @Param("type") int type, @Param("sId") int sId);
+    List<CommonDTO> getPdType(@Param("account") String account, @Param("type") int type, @Param("sId") int sId);
 
 
     //添加数据
     void addInventory(@Param("item") InventoryAddDTO dto, @Param("type") int type, @Param("account") String account, @Param("sId") int sId, @Param("userId") int userId);
+
+
+    //2017/10/12
+
+    /**
+     * 获取盘点数据列表
+     *
+     * @param id      对应字段billid
+     * @param isMerge 是否合并
+     * @param account 账套
+     * @return
+     */
+    List<InventoryGoodsDTO> getInventoryList(@Param("id") int id, @Param("isMerge") boolean isMerge, @Param("account") String account);
+
+    /**
+     * 更新盘点单状态
+     *
+     * @param id      盘点单id
+     * @param status  盘点单状态 0提供,1pda已读取,2pda已完成,3pda已回写(后台更改,前台不做)
+     * @param account 账套
+     */
+    @Update("UPDATE ${account}.dbo.pda_pdBill SET pdastates=#{status},pdaWrTime=getdate() WHERE billid = #{id}")
+    void updateInventoryStatus(@Param("id") int id, @Param("status") int status, @Param("account") String account);
 }

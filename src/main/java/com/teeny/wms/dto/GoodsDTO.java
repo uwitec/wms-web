@@ -23,6 +23,10 @@ public class GoodsDTO implements Serializable {
     private String barcode;   //商品码
     private int status;
 
+    private float rate;
+    private String zhUnit;
+    private String lhUnit;
+
     public int getId() {
         return id;
     }
@@ -141,5 +145,29 @@ public class GoodsDTO implements Serializable {
 
     public void setStatus(int status) {
         this.status = status;
+    }
+
+    public float getRate() {
+        return rate;
+    }
+
+    public void setRate(float rate) {
+        this.rate = rate;
+    }
+
+    public String getZhUnit() {
+        return zhUnit;
+    }
+
+    public void setZhUnit(String zhUnit) {
+        this.zhUnit = zhUnit;
+    }
+
+    public String getLhUnit() {
+        return lhUnit;
+    }
+
+    public void setLhUnit(String lhUnit) {
+        this.lhUnit = lhUnit;
     }
 }

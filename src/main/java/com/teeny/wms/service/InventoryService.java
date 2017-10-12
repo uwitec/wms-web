@@ -38,7 +38,12 @@ public interface InventoryService {
 
     BaseEntity<List<LotDTO>> getLotList(int originalId, String account);
 
-    BaseEntity<List<String>> getPdType(int type, String account, int sId);
+    BaseEntity<List<CommonDTO>> getPdType(int type, String account, int sId);
 
     BaseEntity addProduct(int type, InventoryAddDTO dto, String account, int sId, int userId);
+
+
+
+    //2017/10/12
+    BaseEntity<List<InventoryGoodsDTO>> getInventoryList(int id,boolean isMerge, String account);
 }

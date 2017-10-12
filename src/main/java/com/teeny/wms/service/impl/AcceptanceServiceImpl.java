@@ -32,8 +32,9 @@ public class AcceptanceServiceImpl implements AcceptanceService {
 
     /**
      * 根据仓库ID获取单位
+     *
      * @param account
-     * @param sId 仓库ID
+     * @param sId     仓库ID
      * @return
      */
     @Override
@@ -49,6 +50,7 @@ public class AcceptanceServiceImpl implements AcceptanceService {
 
     /**
      * 根据往来单位ID获取订单详情
+     *
      * @param account
      * @param unitId
      * @return
@@ -96,6 +98,7 @@ public class AcceptanceServiceImpl implements AcceptanceService {
 
     /**
      * 更新子数据的状态
+     *
      * @param recUpdateDTO
      * @param account
      * @return
@@ -122,6 +125,8 @@ public class AcceptanceServiceImpl implements AcceptanceService {
             in.EligibleQty = dto.getAmount();
             in.TaxPrice = dto.getPrice();
             in.rownumber = dto.getSerialNo();
+            in.retailQty = dto.getLhAmount();
+            in.WholeQty = dto.getZhAmount();
             recBillRepository.addData(account, in, userId);
         }
 
@@ -152,6 +157,7 @@ public class AcceptanceServiceImpl implements AcceptanceService {
 
     /**
      * 根据订单号获取订单数据
+     *
      * @param billNo
      * @param account
      * @param sId

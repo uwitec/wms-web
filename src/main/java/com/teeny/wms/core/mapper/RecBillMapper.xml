@@ -66,7 +66,10 @@
             CONVERT(VARCHAR (100), d.Validdate, 23) AS validityDate,
             CONVERT(VARCHAR (100), p.makearea, 23)  AS produceArea,
             p.barcode                               AS barcode,
-            d.DealStates                            AS status
+            d.DealStates                            AS status,
+            p.WholeUnitName                          AS zhUnit,
+            p.unit1Name                              AS lhUnit,
+            p.WholeRate                              AS rate
         FROM ${account}.dbo.pda_RecBill_D d
             LEFT JOIN ${account}.dbo.pda_RecBill b ON b.billid = d.bill_id
             LEFT JOIN ${account}.dbo.pda_Products p ON d.p_id = p.p_id
@@ -134,8 +137,13 @@
             CONVERT(VARCHAR (100), d.Validdate, 23)  AS validityDate,
             d.TaxPrice                               AS price,
             d.rownumber                              AS serialNo,
-            d.EligibleQty                            AS amount
+            d.WholeQty                               AS zhAmount,
+            p.WholeUnitName                          AS zhUnit,
+            d.retailQty                              AS lhAmount,
+            p.unit1Name                              AS lhUnit,
+            p.WholeRate                              AS rate
         FROM ${account}.dbo.pda_RecBill_D d
+            LEFT JOIN ${account}.dbo.pda_Products p ON d.p_id = p.p_id
         WHERE d.DealStates = 1 AND d.original_id = #{id}
     </select>
 

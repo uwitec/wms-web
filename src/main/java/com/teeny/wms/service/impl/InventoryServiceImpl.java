@@ -36,6 +36,7 @@ public class InventoryServiceImpl implements InventoryService {
 
     /**
      * 获取门店盘点的详细数据
+     *
      * @param pdType
      * @param saId
      * @param areaId
@@ -54,6 +55,7 @@ public class InventoryServiceImpl implements InventoryService {
 
     /**
      * 完成单个
+     *
      * @param originalId
      * @param account
      * @return
@@ -124,6 +126,7 @@ public class InventoryServiceImpl implements InventoryService {
 
     /**
      * 仓库盘点获取详细数据
+     *
      * @param pdType
      * @param saId
      * @param areaId
@@ -204,6 +207,7 @@ public class InventoryServiceImpl implements InventoryService {
 
     /**
      * 单品盘点添加数据
+     *
      * @param dto
      * @param account
      * @param sId
@@ -235,7 +239,7 @@ public class InventoryServiceImpl implements InventoryService {
     }
 
     @Override
-    public BaseEntity<List<String>> getPdType(int type, String account, int sId) {
+    public BaseEntity<List<CommonDTO>> getPdType(int type, String account, int sId) {
         return new BaseEntity<>(pdBillRepository.getPdType(account, type, sId));
     }
 
@@ -260,4 +264,10 @@ public class InventoryServiceImpl implements InventoryService {
         }
     }
 
+    @Override
+    public BaseEntity<List<InventoryGoodsDTO>> getInventoryList(int id, boolean isMerge, String account) {
+        List<InventoryGoodsDTO> list = pdBillRepository.getInventoryList(id, isMerge, account);
+        pdBillRepository.updateInventoryStatus(id, 1, account);
+        return new BaseEntity<>(list);
+    }
 }

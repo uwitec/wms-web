@@ -81,7 +81,7 @@
                 b.sa_outid = #{saId}
             </if>
             <if test="sId!=0">
-                b.sout_id = #{sId}
+                AND b.sout_id = #{sId}
             </if>
         </where>
     </select>

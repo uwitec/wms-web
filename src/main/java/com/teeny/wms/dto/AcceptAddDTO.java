@@ -16,8 +16,11 @@ public class AcceptAddDTO implements Serializable {
     private int serialNo;
     private String validityDate;
     private float price;
-    private float amount;
-
+    private float zhAmount;
+    private String zhUnit;
+    private float lhAmount;
+    private String lhUnit;
+    private float rate;
 
     public String getLotNo() {
         return lotNo;
@@ -51,11 +54,47 @@ public class AcceptAddDTO implements Serializable {
         this.price = price;
     }
 
-    public float getAmount() {
-        return amount;
+    public float getZhAmount() {
+        return zhAmount;
     }
 
-    public void setAmount(float amount) {
-        this.amount = amount;
+    public void setZhAmount(float zhAmount) {
+        this.zhAmount = zhAmount;
+    }
+
+    public String getZhUnit() {
+        return zhUnit;
+    }
+
+    public void setZhUnit(String zhUnit) {
+        this.zhUnit = zhUnit;
+    }
+
+    public float getLhAmount() {
+        return lhAmount;
+    }
+
+    public void setLhAmount(float lhAmount) {
+        this.lhAmount = lhAmount;
+    }
+
+    public String getLhUnit() {
+        return lhUnit;
+    }
+
+    public void setLhUnit(String lhUnit) {
+        this.lhUnit = lhUnit;
+    }
+
+    public float getRate() {
+        return rate;
+    }
+
+    public void setRate(float rate) {
+        this.rate = rate;
+    }
+
+    public float getAmount() {
+        return zhAmount * rate + lhAmount;
     }
 }

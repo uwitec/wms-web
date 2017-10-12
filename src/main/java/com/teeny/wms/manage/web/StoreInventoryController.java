@@ -81,9 +81,10 @@ public class StoreInventoryController {
     }
 
     //获取盘点类型
+    //2017/10/12修改
     @ResponseBody
     @RequestMapping(value = "/api/shopFirst/pdType", method = RequestMethod.GET)
-    public BaseEntity<List<String>> getPdType(@RequestHeader("account") String account, @RequestHeader("sId") int sId) {
+    public BaseEntity<List<CommonDTO>> getPdType(@RequestHeader("account") String account, @RequestHeader("sId") int sId) {
         return inventoryService.getPdType(1, account, sId);
     }
 
@@ -92,5 +93,14 @@ public class StoreInventoryController {
     @RequestMapping(value = "/api/shopFirst/add", method = RequestMethod.PUT)
     public BaseEntity addProduct(@RequestBody InventoryAddDTO addProductDTO, @RequestHeader("account") String account, @RequestHeader("sId") int sId, @CurrentUser Employess user) {
         return inventoryService.addProduct(1, addProductDTO, account, sId, user.getId());
+    }
+
+
+    //2017/10/12修改
+    //门店盘点
+    @ResponseBody
+    @RequestMapping(value = "/api/shopFirst/getList", method = RequestMethod.GET)
+    public BaseEntity<List<InventoryGoodsDTO>> getInventory(@RequestParam("id") int id, @RequestHeader("account") String account) {
+        return inventoryService.getInventoryList(id, true, account);
     }
 }
