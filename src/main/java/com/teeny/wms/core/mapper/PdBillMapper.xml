@@ -344,8 +344,8 @@
             d.Batchno                              AS lotNo,
             CONVERT(VARCHAR(100), d.Validdate, 23) AS validateDate,
             CONVERT(VARCHAR(100), d.MakeDate, 23)  AS productionDate,
-            sa.name                                AS repositoryName,
-            a.name                                 AS areaName
+            isnull(sa.name , '')                   AS repositoryName,
+            isnull(a.name, '')                     AS areaName
         FROM ${account}.dbo.pda_pdBill_D d
             INNER JOIN ${account}.dbo.pda_pdBill b ON b.billid = d.bill_id
             LEFT JOIN ${account}.dbo.pda_Products p ON d.p_id = p.p_id
