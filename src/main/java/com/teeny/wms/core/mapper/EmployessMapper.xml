@@ -6,20 +6,20 @@
 <mapper namespace="com.teeny.wms.core.repository.EmployessRepository">
 
 
-    
     <select id="findEmployerByUsername" parameterType="string" resultType="com.teeny.wms.core.domain.Employess">
         SELECT
-        e.e_id AS id,
-        e.password,
+            e.e_id          AS id,
+            e.password,
             e.serial_number AS serialNumber,
             e.pinyin,
-            e.name AS username,
+            e.name          AS username,
             e.alias,
             e.phone,
             e.address,
             e.ZT
 
-        FROM ${account}.dbo.pda_employees e WHERE e.pinyin = #{username}
+        FROM ${account}.dbo.pda_employees e
+        WHERE e.pinyin = #{username} OR e.serial_number = #{username};
     </select>
 
     <select id="findByPinyin" parameterType="string" resultType="com.teeny.wms.dto.EmployeesDTO">
@@ -28,6 +28,7 @@
             e.pinyin,
             e.password,
             e.name AS username
-        FROM pda_employees e WHERE e.name = #{username}
+        FROM pda_employees e
+        WHERE e.name = #{username}
     </select>
 </mapper>
