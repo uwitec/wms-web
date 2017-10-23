@@ -17,7 +17,6 @@
             e.phone,
             e.address,
             e.ZT
-
         FROM ${account}.dbo.pda_employees e
         WHERE e.pinyin = #{username} OR e.serial_number = #{username};
     </select>
