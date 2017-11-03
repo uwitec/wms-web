@@ -9,11 +9,12 @@
   <url>http://maven.apache.org</url>
 
   <properties>
-    <java-version>6</java-version>
+    <jdk.version>1.7</jdk.version>
     <org.springframework-version>3.2.6.RELEASE</org.springframework-version>
     <org.aspectj-version>1.7.2</org.aspectj-version>
     <org.slf4j-version>1.6.6</org.slf4j-version>
     <jackson-2-version>2.2.0</jackson-2-version>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
 
   <dependencies>
@@ -341,10 +342,10 @@
 
   </dependencies>
 
-
   <build>
-
-    <finalName>wms</finalName>
+    <finalName>${artifactId}</finalName>
+    <sourceDirectory>src/main/java</sourceDirectory>
+    <testSourceDirectory>src/test/java</testSourceDirectory>
 
     <resources>
       <resource>
@@ -360,14 +361,47 @@
         </includes>
       </resource>
     </resources>
+
+    <testResources>
+      <testResource>
+        <directory>src/test/resources</directory>
+      </testResource>
+    </testResources>
+
+    <outputDirectory>src/main/webapp/WEB-INF/classes</outputDirectory>
+    <testOutputDirectory>src/main/webapp/WEB-INF/classes</testOutputDirectory>
+
     <plugins>
+      <!-- 编译插件 -->
       <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
-        <version>2.5.1</version>
+        <version>3.7.0</version>
         <configuration>
-          <source>1.7</source>
-          <target>1.7</target>
-          <encoding>utf-8</encoding>
+          <source>${jdk.version}</source> <!-- 源代码使用的开发版本 -->
+          <target>${jdk.version}</target> <!-- 需要生成的目标class文件的编译版本 -->
+          <!-- 一般而言，target与source是保持一致的， -->
+          <!-- 但是，有时候为了让程序能在其他版本的jdk中运行(对于低版本目标jdk，源代码中需要没有使用低版本jdk中不支持的语法)， -->
+          <!-- 会存在target不同于source的情况 -->
+          <encoding>${project.build.sourceEncoding}</encoding>
+          <fork>true</fork>
+          <meminitial>512m</meminitial>
+          <maxmem>2048m</maxmem>
+        </configuration>
+      </plugin>
+
+      <!-- 设置资源文件的编码方式  -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-resources-plugin</artifactId>
+        <version>3.0.2</version>
+        <executions>
+          <execution>
+            <phase>compile</phase>
+          </execution>
+        </executions>
+        <configuration>
+          <encoding>${project.build.sourceEncoding}</encoding>
         </configuration>
       </plugin>
     </plugins>
