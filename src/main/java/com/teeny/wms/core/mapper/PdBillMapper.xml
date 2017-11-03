@@ -280,11 +280,9 @@
         b.pdname AS name
         FROM ${account}.dbo.pda_pdBill b
         WHERE b.billstates = #{type} AND b.pdastates &lt; 2
-        <where>
-            <if test="sId != 0">
-                AND b.s_id = #{sId}
-            </if>
-        </where>
+        <if test="sId != 0">
+            AND b.s_id = #{sId}
+        </if>
     </select>
 
     <insert id="addInventory" parameterType="com.teeny.wms.dto.InventoryAddDTO">
