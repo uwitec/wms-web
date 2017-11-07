@@ -18,6 +18,6 @@ public interface LocationRepository {
     @Select("SELECT l.l_id AS id, loc_name AS name FROM ${account}.dbo.pda_location l WHERE l.sa_id=#{saId}")
     List<CommonDTO> getBysaId(@Param("saId") int saId, @Param("account") String account);
 
-    @Select("SELECT DISTINCT l.l_id FROM pda_location l WHERE l.loc_code=#{locationCode}")
+    @Select("SELECT TOP 1 l.l_id FROM ${account}.dbo.pda_location l WHERE l.loc_code=#{locationCode}")
     Integer getIdByCode(@Param("locationCode") String locationCode,@Param("account") String account);
 }

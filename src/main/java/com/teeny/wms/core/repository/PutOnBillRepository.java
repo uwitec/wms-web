@@ -69,8 +69,8 @@ public interface PutOnBillRepository {
     @Update("UPDATE ${account}.dbo.pda_PutOnBill SET billstates = 13 WHERE billid = (SELECT d.bill_id FROM ${account}.dbo.pda_PutOnBill_D d WHERE d.smb_id=#{id})")
     void updatePutOnBillDBySmbId(@Param("id") Integer id, @Param("account") String account);
 
-    @Select("SELECT b.billid FROM ${account}.dbo.pda_PutOnBill b WHERE b.billnumber=#{orderNoId}")
-    int getBillByBillNumber(@Param("orderNoId") String orderNoId, @Param("account") String account, @Param("sId") int sId);
+    @Select({"SELECT b.billid FROM ${account}.dbo.pda_PutOnBill b WHERE b.billnumber=#{orderNoId}"})
+    Integer getBillByBillNumber(@Param("orderNoId") String orderNoId, @Param("account") String account, @Param("sId") int sId);
 
     @Delete("DELETE FROM ${account}.dbo.pda_PutOnBill_D WHERE smb_id=#{id} AND original_id=#{originalId}")
     void deleteBySmbId(@Param("id") Integer id, @Param("originalId") int originalId, @Param("account") String account);

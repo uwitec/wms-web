@@ -1,14 +1,19 @@
 package com.teeny.wms.manage.web;
 
+import com.teeny.wms.core.domain.Employess;
 import com.teeny.wms.core.domain.baseEntity.BaseEntity;
 import com.teeny.wms.dto.AccountSetDTO;
 import com.teeny.wms.dto.BillCountDTO;
 import com.teeny.wms.dto.CommonDTO;
 import com.teeny.wms.dto.DocumentDTO;
+import com.teeny.wms.security.CurrentUser;
 import com.teeny.wms.service.HomeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
 
@@ -59,6 +64,13 @@ public class HomeController {
     @RequestMapping(value = "/api/home/documentList", method = RequestMethod.GET)
     public BaseEntity<DocumentDTO> getDocumentList(@RequestHeader("account") String account, @RequestHeader("sId") int sId) {
         return homeService.getDocumentList(account, sId);
+    }
+
+    //单据查询
+    @ResponseBody
+    @RequestMapping(value = "/api/home/username", method = RequestMethod.GET)
+    public BaseEntity<String> getUsername(@CurrentUser Employess employess) {
+        return new BaseEntity<>(employess.getUsername());
     }
 
 }

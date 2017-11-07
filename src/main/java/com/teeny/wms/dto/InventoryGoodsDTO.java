@@ -31,6 +31,8 @@ public class InventoryGoodsDTO implements Serializable {
     private String repositoryName;    //库区名字
     private String areaName;          //区域名字
 
+    private String pinyin;
+
     public int getId() {
         return id;
     }
@@ -181,5 +183,13 @@ public class InventoryGoodsDTO implements Serializable {
 
     public void setAreaName(String areaName) {
         this.areaName = areaName;
+    }
+
+    public String getPinyin() {
+        return pinyin;
+    }
+
+    public void setPinyin(String pinyin) {
+        this.pinyin = pinyin;
     }
 }

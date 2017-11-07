@@ -27,6 +27,8 @@ public class GoodsDTO implements Serializable {
     private String zhUnit;
     private String lhUnit;
 
+    private String pinyin;
+
     public int getId() {
         return id;
     }
@@ -169,5 +171,13 @@ public class GoodsDTO implements Serializable {
 
     public void setLhUnit(String lhUnit) {
         this.lhUnit = lhUnit;
+    }
+
+    public String getPinyin() {
+        return pinyin;
+    }
+
+    public void setPinyin(String pinyin) {
+        this.pinyin = pinyin;
     }
 }

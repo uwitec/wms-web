@@ -42,7 +42,7 @@ public class PutOnBillServiceImpl implements PutOnBillService {
     @Override
     public BaseEntity<List<PutawayDTO>> getGoodsDetailList(String orderNo, String account, int sId) {
         List<PutawayDTO> list = putOnBillRepository.getGoodsDetailList(orderNo, account, sId);
-        int id = putOnBillRepository.getBillByBillNumber(orderNo, account, sId);
+        Integer id = putOnBillRepository.getBillByBillNumber(orderNo, account, sId);
         putOnBillRepository.uodateBillStatus(id, account, sId);
         return new BaseEntity<List<PutawayDTO>>(list);
     }

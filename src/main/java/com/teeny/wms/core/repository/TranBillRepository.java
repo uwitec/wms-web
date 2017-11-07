@@ -42,7 +42,7 @@ public interface TranBillRepository {
     @Delete("DELETE FROM ${account}.dbo.pda_TranBill_D WHERE smb_id=#{id} AND original_id=#{originalId}")
     void deleteById(@Param("id") Integer id, @Param("originalId") int originalId, @Param("account") String account);
 
-    @Select("SELECT d.quantity AS amount,l.loc_code AS locationCode FROM ${account}.dbo.pda_TranBill_D d, ${account}.dbo.pda_location l WHERE d.Location_id=l.l_id AND d.original_id=#{id}")
+    @Select("SELECT d.quantity AS amount, l.loc_code AS locationCode FROM ${account}.dbo.pda_TranBill_D d LEFT JOIN ${account}.dbo.pda_location l ON d.location_id2 = l.l_id WHERE d.original_id = #{id}")
     List<LocationAndCountDTO> getLocationById(@Param("id") int id, @Param("account") String account);
 
     @Update("UPDATE ${account}.dbo.pda_TranBill SET pdaReTime=getdate(),pdastates=1 WHERE billnumber = #{billNo}")

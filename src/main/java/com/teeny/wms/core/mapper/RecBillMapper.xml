@@ -53,23 +53,24 @@
 
     <select id="getGoodsByBillId" resultType="com.teeny.wms.dto.GoodsDTO">
         SELECT
-            d.smb_id                                AS id,
-            d.original_id                           AS originalId,
-            b.billnumber                            AS billNo,
-            d.TaxPrice                              AS retailPrice,
-            d.Yqty                                  AS amount,
-            d.EligibleQty                           AS quantity,
-            c.name                                  AS manufacturer,
-            d.Batchno                               AS lotNo,
-            p.name                                  AS goodsName,
-            p.standard                              AS specification,
-            CONVERT(VARCHAR (100), d.Validdate, 23) AS validityDate,
-            CONVERT(VARCHAR (100), p.makearea, 23)  AS produceArea,
-            p.barcode                               AS barcode,
-            d.DealStates                            AS status,
-            p.WholeUnitName                          AS zhUnit,
-            p.unit1Name                              AS lhUnit,
-            p.WholeRate                              AS rate
+            d.smb_id                               AS id,
+            d.original_id                          AS originalId,
+            b.billnumber                           AS billNo,
+            d.TaxPrice                             AS retailPrice,
+            d.Yqty                                 AS amount,
+            d.EligibleQty                          AS quantity,
+            c.name                                 AS manufacturer,
+            d.Batchno                              AS lotNo,
+            p.name                                 AS goodsName,
+            p.standard                             AS specification,
+            CONVERT(VARCHAR(100), d.Validdate, 23) AS validityDate,
+            CONVERT(VARCHAR(100), p.makearea, 23)  AS produceArea,
+            p.barcode                              AS barcode,
+            d.DealStates                           AS status,
+            p.WholeUnitName                        AS zhUnit,
+            p.unit1Name                            AS lhUnit,
+            p.WholeRate                            AS rate,
+            p.pinyin                               AS pinyin
         FROM ${account}.dbo.pda_RecBill_D d
             LEFT JOIN ${account}.dbo.pda_RecBill b ON b.billid = d.bill_id
             LEFT JOIN ${account}.dbo.pda_Products p ON d.p_id = p.p_id
@@ -77,7 +78,7 @@
         WHERE d.bill_id = #{orderId} AND d.pdastates = 0
     </select>
 
-    <insert id="addData" parameterType="com.teeny.wms.core.domain.RecBillD" >
+    <insert id="addData" parameterType="com.teeny.wms.core.domain.RecBillD">
         INSERT INTO ${account}.dbo.pda_RecBill_D
         (bill_id,
          p_id,
@@ -101,16 +102,16 @@
          loginid)
         VALUES
             (#{item.bill_id},
-             #{item.p_id},
-             #{item.MakeDate},
-             #{item.Validdate},
-             #{item.Batchno},
-             #{item.Yqty},
-             #{item.EligibleQty},
-             #{item.TaxPrice},
-             #{item.TaxTotal},
-             #{item.CostPrice},
-             #{item.CostTotal},
+                #{item.p_id},
+                #{item.MakeDate},
+                #{item.Validdate},
+                #{item.Batchno},
+                #{item.Yqty},
+                #{item.EligibleQty},
+                #{item.TaxPrice},
+                #{item.TaxTotal},
+                #{item.CostPrice},
+                #{item.CostTotal},
              #{item.S_id},
              #{item.Location_id},
              #{item.Supplier_id},
@@ -118,8 +119,8 @@
              #{item.pdastates},
              #{item.original_id},
              #{item.rownumber},
-            getdate(),
-            #{userId})
+             getdate(),
+             #{userId})
     </insert>
 
     <select id="getOrderBillWithUnitId" resultType="com.teeny.wms.dto.CommonDTO">
@@ -133,15 +134,15 @@
 
     <select id="getLotList" resultType="com.teeny.wms.dto.AcceptAddDTO">
         SELECT
-            d.Batchno                                AS lotNo,
-            CONVERT(VARCHAR (100), d.Validdate, 23)  AS validityDate,
-            d.TaxPrice                               AS price,
-            d.rownumber                              AS serialNo,
-            d.WholeQty                               AS zhAmount,
-            p.WholeUnitName                          AS zhUnit,
-            d.retailQty                              AS lhAmount,
-            p.unit1Name                              AS lhUnit,
-            p.WholeRate                              AS rate
+            d.Batchno                              AS lotNo,
+            CONVERT(VARCHAR(100), d.Validdate, 23) AS validityDate,
+            d.TaxPrice                             AS price,
+            d.rownumber                            AS serialNo,
+            d.WholeQty                             AS zhAmount,
+            p.WholeUnitName                        AS zhUnit,
+            d.retailQty                            AS lhAmount,
+            p.unit1Name                            AS lhUnit,
+            p.WholeRate                            AS rate
         FROM ${account}.dbo.pda_RecBill_D d
             LEFT JOIN ${account}.dbo.pda_Products p ON d.p_id = p.p_id
         WHERE d.DealStates = 1 AND d.original_id = #{id}
@@ -166,6 +167,7 @@
         <if test="sId != 0">
             AND b.s_id=#{sId}
         </if>
+        ORDER BY documentDate DESC
     </select>
 
 
@@ -195,7 +197,7 @@
 
     <select id="getOriginal" resultType="com.teeny.wms.core.domain.RecBillD">
         SELECT TOP 1
-        bill_id,
+            bill_id,
             p_id,
             MakeDate,
             Validdate,

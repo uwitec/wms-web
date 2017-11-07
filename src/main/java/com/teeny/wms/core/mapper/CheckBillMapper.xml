@@ -98,6 +98,7 @@
         <if test="sId != 0">
             AND b.s_id=#{sId}
         </if>
+        ORDER BY documentDate DESC
     </select>
 
 

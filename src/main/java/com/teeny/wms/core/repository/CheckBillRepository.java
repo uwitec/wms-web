@@ -23,7 +23,7 @@ public interface CheckBillRepository {
     ReviewDTO getIfoByBillNo(@Param("billNo") String billNo, @Param("account") String account);
 
 
-    int getReplenishmentCount( @Param("account") String account, @Param("sId") int sId);
+    int getReplenishmentCount(@Param("account") String account, @Param("sId") int sId);
 
     @Select("SELECT isnull(b.,0) FROM ${account}.dbo.pda_CheckBill_B b LEFT JOIN ${account}.dbo.pda_CheckBill c ON b.bill_id=c.billid WHERE c.billnumber=#{billNo} AND b.PickType = #{type}")
     Float getCountByType(@Param("type") int type, @Param("billNo") String billNo, @Param("account") String account);
@@ -45,7 +45,7 @@ public interface CheckBillRepository {
     @Update("UPDATE ${account}.dbo.pda_CheckBill_B SET DealStates=1,EligibleQty=1, wctime = getdate(), loginid = #{userId} WHERE smb_id=#{smbId}")
     void updateStatus(@Param("smbId") int smbId, @Param("account") String account, @Param("userId") int userId);
 
-    @Select("SELECT count(*) AS total FROM pda_CheckBill_B b WHERE b.bill_id=#{billId} AND b.DealStates=0")
+    @Select("SELECT count(*) AS total FROM ${account}.dbo.pda_CheckBill_B b WHERE b.bill_id=#{billId} AND b.DealStates=0")
     int countByStatus(@Param("billId") int billId, @Param("account") String account);
 
     List<CommonDTO> getBills(@Param("sId") int sId, @Param("account") String account);

@@ -6,7 +6,7 @@ import org.springframework.security.authentication.encoding.PasswordEncoder;
 /**
  * Created by lilei on 2017/7/10.
  */
-public class PasswordValidater implements PasswordEncoder{
+public class PasswordValidater implements PasswordEncoder {
 
     public PasswordValidater() {
         super();
@@ -23,7 +23,7 @@ public class PasswordValidater implements PasswordEncoder{
     }
 
     public boolean isPasswordValid(String encPass, String rawPass, Object salt) {
-        String pass1 = ""+encPass;
+        String pass1 = "" + encPass;
         String pass2 = encodePassword(rawPass, salt);
         //return pass1.equals(pass2);
         boolean flag = encPass.equals(rawPass);

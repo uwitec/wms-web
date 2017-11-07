@@ -343,7 +343,8 @@
             CONVERT(VARCHAR(100), d.Validdate, 23) AS validateDate,
             CONVERT(VARCHAR(100), d.MakeDate, 23)  AS productionDate,
             isnull(sa.name , '')                   AS repositoryName,
-            isnull(a.name, '')                     AS areaName
+            isnull(a.name, '')                     AS areaName,
+            p.pinyin                               AS pinyin
         FROM ${account}.dbo.pda_pdBill_D d
             LEFT JOIN ${account}.dbo.pda_Products p ON d.p_id = p.p_id
             LEFT JOIN ${account}.dbo.pda_clients c ON c.c_id = d.Supplier_id
