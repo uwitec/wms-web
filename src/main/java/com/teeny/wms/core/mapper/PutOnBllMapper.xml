@@ -18,24 +18,25 @@
 
     <select id="getGoodsDetailList" parameterType="string" resultType="com.teeny.wms.dto.PutawayDTO">
         SELECT
-        d.smb_id AS id,
-        d.original_id AS originalId,
-        d.DealStates AS status,
-        p.p_id AS goodsId,
-        p.name AS goodsName,
-        d.Batchno AS lotNo,
-        p.standard AS specification,
-        d.MakeDate AS productionDate,
-        p.unit1Name AS unit,
-        d.EligibleQty AS amount,
-        p.Factory AS manufacturer,
-        l.loc_code AS locationCode,
-        p.barcode AS goodsCode
+            d.smb_id      AS id,
+            d.original_id AS originalId,
+            d.DealStates  AS status,
+            p.p_id        AS goodsId,
+            p.name        AS goodsName,
+            d.Batchno     AS lotNo,
+            p.standard    AS specification,
+            d.MakeDate    AS productionDate,
+            p.unit1Name   AS unit,
+            d.EligibleQty AS amount,
+            p.Factory     AS manufacturer,
+            l.loc_code    AS locationCode,
+            p.barcode     AS goodsCode,
+            p.pinyin      AS pinyin
         FROM ${account}.dbo.pda_PutOnBill_D d
-        INNER JOIN ${account}.dbo.pda_PutOnBill b ON d.bill_id = b.billid AND b.pdastates != 2
-        LEFT JOIN ${account}.dbo.pda_location l ON l.l_id=d.Location_id
-        LEFT JOIN ${account}.dbo.pda_Products p ON p.p_id=d.p_id
-        WHERE b.billnumber=#{orderNoId}
+            INNER JOIN ${account}.dbo.pda_PutOnBill b ON d.bill_id = b.billid AND b.pdastates != 2
+            LEFT JOIN ${account}.dbo.pda_location l ON l.l_id = d.Location_id
+            LEFT JOIN ${account}.dbo.pda_Products p ON p.p_id = d.p_id
+        WHERE b.billnumber = #{orderNoId}
         <if test="sId !=0 ">
             AND d.S_id=#{sId}
         </if>

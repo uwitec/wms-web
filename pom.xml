@@ -217,9 +217,9 @@
       <version>${jackson-2-version}</version>
     </dependency>
     <dependency>
-      <groupId>c3p0</groupId>
-      <artifactId>c3p0</artifactId>
-      <version>0.9.1.2</version>
+      <groupId>com.alibaba</groupId>
+      <artifactId>druid</artifactId>
+      <version>1.1.5</version>
     </dependency>
 
     <dependency>

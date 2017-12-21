@@ -53,6 +53,21 @@ public class PutawayAddDTO implements Serializable {
         public void setAmount(float amount) {
             this.amount = amount;
         }
+
+        @Override
+        public String toString() {
+            return "Location{" +
+                    "locationCode='" + locationCode + '\'' +
+                    ", amount=" + amount +
+                    '}';
+        }
     }
 
+    @Override
+    public String toString() {
+        return "PutawayAddDTO{" +
+                "id=" + id +
+                ", locations=" + locations +
+                '}';
+    }
 }

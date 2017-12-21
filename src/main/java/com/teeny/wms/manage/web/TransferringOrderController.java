@@ -95,6 +95,7 @@ public class TransferringOrderController {
     @ResponseBody
     @RequestMapping(value = "/api/transfer/update", method = RequestMethod.POST)
     public BaseEntity update(@RequestBody PutawayAddDTO putawayAddDTO, @RequestHeader("account") String account, @CurrentUser Employess user) {
+        System.out.println(putawayAddDTO);
         return transferService.update(putawayAddDTO, account, user.getId());
     }
 

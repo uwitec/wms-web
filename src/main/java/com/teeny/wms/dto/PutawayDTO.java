@@ -22,6 +22,7 @@ public class PutawayDTO implements Serializable {
     private String manufacturer;
     private String locationCode;
     private String goodsCode;
+    private String pinyin;
 
 
     public int getId() {
@@ -126,5 +127,13 @@ public class PutawayDTO implements Serializable {
 
     public void setGoodsCode(String goodsCode) {
         this.goodsCode = goodsCode;
+    }
+
+    public String getPinyin() {
+        return pinyin;
+    }
+
+    public void setPinyin(String pinyin) {
+        this.pinyin = pinyin;
     }
 }

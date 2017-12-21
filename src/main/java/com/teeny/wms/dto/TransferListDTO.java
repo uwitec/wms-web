@@ -24,6 +24,7 @@ public class TransferListDTO implements Serializable{
     private String number;
     private String exportName;
     private String importName;
+    private String pinyin;
 
     public int getOriginalId() {
         return originalId;
@@ -159,5 +160,13 @@ public class TransferListDTO implements Serializable{
 
     public void setStatus(int status) {
         this.status = status;
+    }
+
+    public String getPinyin() {
+        return pinyin;
+    }
+
+    public void setPinyin(String pinyin) {
+        this.pinyin = pinyin;
     }
 }

@@ -8,6 +8,7 @@ import java.io.Serializable;
 public class CommonDTO implements Serializable {
     private int id;
     private String name;
+    private String alternate;
 
     public int getId() {
         return id;
@@ -23,5 +24,13 @@ public class CommonDTO implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getAlternate() {
+        return alternate;
+    }
+
+    public void setAlternate(String alternate) {
+        this.alternate = alternate;
     }
 }

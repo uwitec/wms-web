@@ -226,6 +226,7 @@ public class InventoryServiceImpl implements InventoryService {
             }
         }
         dto.locationId = locationId;
+        System.out.println(dto);
         pdBillRepository.addProduct(dto, account, sId, userId);
         return new BaseEntity<>();
     }

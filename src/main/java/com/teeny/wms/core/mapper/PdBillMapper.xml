@@ -162,31 +162,31 @@
 
     <select id="getProductsInventoryList" resultType="com.teeny.wms.dto.PdListDTO">
         SELECT
-        s.storehouse_id AS id,
-        s.p_id AS goodsId,
-        s.Pname AS goodsName,
-        s.Code AS number,
-        s.Locname AS locationName,
-        s.location_id AS locationId,
-        s.batchno AS lotNo,
-        s.factory AS manufacturer,
-        s.quantity,
-        CONVERT(VARCHAR(100), s.validdate, 23) AS validateDate,
-        CONVERT(VARCHAR(100), s.makedate, 23) AS productDate,
-        s.Standard AS specification,
-        s.Name1 AS unit,
-        s.costprice AS costPrice,
-        s.costtotal AS costTotal,
-        s.Makearea AS productionPlace
+            s.storehouse_id                        AS id,
+            s.p_id                                 AS goodsId,
+            s.Pname                                AS goodsName,
+            s.Code                                 AS number,
+            s.Locname                              AS locationName,
+            s.location_id                          AS locationId,
+            s.batchno                              AS lotNo,
+            s.factory                              AS manufacturer,
+            s.quantity,
+            CONVERT(VARCHAR(100), s.validdate, 23) AS validateDate,
+            CONVERT(VARCHAR(100), s.makedate, 23)  AS productDate,
+            s.Standard                             AS specification,
+            s.Name1                                AS unit,
+            s.costprice                            AS costPrice,
+            s.costtotal                            AS costTotal,
+            s.Makearea                             AS productionPlace
         FROM ${account}.dbo.VW_PDA_Storehouse s
-        LEFT JOIN ${account}.dbo.pda_location l ON l.l_id = s.location_id
-        INNER JOIN ${account}.dbo.pda_Products p ON p.p_id = s.p_id
+            LEFT JOIN ${account}.dbo.pda_location l ON l.l_id = s.location_id
+            INNER JOIN ${account}.dbo.pda_Products p ON p.p_id = s.p_id
         <where>
             <if test="location != null and location != ''">
                 l.loc_code = #{location}
             </if>
             <if test="barcode != null and barcode != ''">
-                AND p.barcode = #{barcode}
+                AND p.barcode = #{barcode} OR p.pinyin like '%${barcode}%'
             </if>
         </where>
     </select>
@@ -335,7 +335,7 @@
             d.pdQty                                AS inventoryCount,
             p.unit1Name                            AS unit,
             p.standard                             AS specification,
-            c.name                                 AS manufacturer,
+            p.Factory                              AS manufacturer,
             d.DealStates                           AS status,
             l.loc_code                             AS locationCode,
             p.barcode                              AS goodsCode,
@@ -347,7 +347,6 @@
             p.pinyin                               AS pinyin
         FROM ${account}.dbo.pda_pdBill_D d
             LEFT JOIN ${account}.dbo.pda_Products p ON d.p_id = p.p_id
-            LEFT JOIN ${account}.dbo.pda_clients c ON c.c_id = d.Supplier_id
             LEFT JOIN ${account}.dbo.pda_location l ON l.l_id = d.Location_id
             LEFT JOIN ${account}.dbo.pda_stockArea sa ON sa.sa_id = l.sa_id
             LEFT JOIN ${account}.dbo.pda_Area a ON a.sc_id = l.sc_id
