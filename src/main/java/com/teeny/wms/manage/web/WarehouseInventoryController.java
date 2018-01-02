@@ -29,7 +29,7 @@ public class WarehouseInventoryController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/api/warehouseFirst/getList/{pdType}/{saId}/{areaId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/api/warehouseFirst/getHomeData/{pdType}/{saId}/{areaId}", method = RequestMethod.GET)
     public BaseEntity<List<StroePdListDTO>> getList(@PathVariable("pdType") String pdType, @PathVariable("saId") int saId,
                                                     @PathVariable("areaId") int areaId, @RequestHeader("account") String account,
                                                     @RequestHeader("sId") int sId) {
@@ -96,7 +96,7 @@ public class WarehouseInventoryController {
     //2017/10/12修改
     //门店盘点
     @ResponseBody
-    @RequestMapping(value = "/api/warehouseFirst/getList", method = RequestMethod.GET)
+    @RequestMapping(value = "/api/warehouseFirst/getHomeData", method = RequestMethod.GET)
     public BaseEntity<List<InventoryGoodsDTO>> getInventory(@RequestParam("id") int id, @RequestHeader("account") String account) {
         return inventoryService.getInventoryList(id, false, account);
     }

@@ -200,9 +200,9 @@ public class InventoryServiceImpl implements InventoryService {
 
 
     @Override
-    public BaseEntity<ProductAddDetailDTO> getDetailsByNameAndStandard(String goodsCode, String account) {
-        ProductAddDetailDTO data = productsRepository.getByParams(goodsCode, account);
-        return new BaseEntity<ProductAddDetailDTO>(data);
+    public BaseEntity<List<ProductAddDetailDTO>> getDetailsByNameAndStandard(String goodsCode, String account) {
+        List<ProductAddDetailDTO> data = productsRepository.getByParams(goodsCode, account);
+        return new BaseEntity<>(data);
     }
 
     /**

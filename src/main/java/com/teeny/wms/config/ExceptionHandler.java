@@ -17,6 +17,7 @@ public class ExceptionHandler implements HandlerExceptionResolver {
 
     @Override
     public ModelAndView resolveException(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) {
+        ex.printStackTrace();
         ModelMap model = new ModelMap();
         response.setStatus(200);
         if (ex instanceof WmsException) {

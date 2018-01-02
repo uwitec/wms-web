@@ -21,5 +21,5 @@ public interface ProductsRepository {
     List<String> getStandardList(@Param("goodsName") String goodsName, @Param("account") String account);
 
     @Select("SELECT p.p_id AS pId, p.name AS goodsName, p.unit1Name AS unit, p.standard, p.serial_number AS number ,p.Factory AS manufacturers FROM ${account}.dbo.pda_Products p WHERE p.barcode=#{goodsCode}")
-    ProductAddDetailDTO getByParams(@Param("goodsCode") String goodsCode, @Param("account") String account);
+    List<ProductAddDetailDTO> getByParams(@Param("goodsCode") String goodsCode, @Param("account") String account);
 }

@@ -29,7 +29,7 @@ public class ProductInventoryController {
 
     //单品盘点
     @ResponseBody
-    @RequestMapping(value = "/api/productsInventory/getList", method = RequestMethod.GET)
+    @RequestMapping(value = "/api/productsInventory/getHomeData", method = RequestMethod.GET)
     public BaseEntity<List<PdListDTO>> getProductsInvertoryList(@RequestHeader("sId") int sId, @RequestHeader("account") String account, @RequestParam("location") String locationCode, @RequestParam("barcode") String barcode) {
         return inventoryService.getProductsInventoryList(sId, account, locationCode, barcode);
     }
@@ -60,7 +60,7 @@ public class ProductInventoryController {
     //新增单品查询
     @ResponseBody
     @RequestMapping(value = "/api/productsInventory/detail", method = RequestMethod.GET)
-    public BaseEntity<ProductAddDetailDTO> getProductDetail(@RequestParam("goodsCode") String goodsCode, @RequestHeader("account") String account) {
+    public BaseEntity<List<ProductAddDetailDTO>> getProductDetail(@RequestParam("goodsCode") String goodsCode, @RequestHeader("account") String account) {
         return inventoryService.getDetailsByNameAndStandard(goodsCode, account);
     }
 

@@ -31,7 +31,7 @@ public class StoreInventoryController {
 
     //门店盘点
     @ResponseBody
-    @RequestMapping(value = "/api/shopFirst/getList/{pdType}/{saId}/{areaId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/api/shopFirst/getHomeData/{pdType}/{saId}/{areaId}", method = RequestMethod.GET)
     public BaseEntity<List<StoreInventoryGoodsDTO>> getInventory(@PathVariable("pdType") String pdType, @PathVariable("saId") int saId, @PathVariable("areaId") int areaId, @RequestHeader("account") String account, @RequestHeader("sId") int sId) {
         return inventoryService.getInventoryList(pdType, saId, areaId, account, sId);
     }
@@ -99,7 +99,7 @@ public class StoreInventoryController {
     //2017/10/12修改
     //门店盘点
     @ResponseBody
-    @RequestMapping(value = "/api/shopFirst/getList", method = RequestMethod.GET)
+    @RequestMapping(value = "/api/shopFirst/getHomeData", method = RequestMethod.GET)
     public BaseEntity<List<InventoryGoodsDTO>> getInventory(@RequestParam("id") int id, @RequestHeader("account") String account) {
         return inventoryService.getInventoryList(id, true, account);
     }

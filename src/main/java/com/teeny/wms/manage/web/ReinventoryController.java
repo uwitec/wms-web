@@ -30,7 +30,7 @@ public class ReinventoryController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/api/secondInventory/getList/{pdType}/{saId}/{areaId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/api/secondInventory/getHomeData/{pdType}/{saId}/{areaId}", method = RequestMethod.GET)
     public BaseEntity<List<StroePdListDTO>> getList(@PathVariable("pdType") String pdType, @PathVariable("saId") int saId,
                                                     @PathVariable("areaId") int areaId, @RequestHeader("account") String account, @RequestHeader("sId") int sId) {
         return inventoryService.getStroeList(pdType, saId, areaId, account, 2, 2, sId);
@@ -95,7 +95,7 @@ public class ReinventoryController {
     //2017/10/12修改
     //门店盘点
     @ResponseBody
-    @RequestMapping(value = "/api/secondInventory/getList", method = RequestMethod.GET)
+    @RequestMapping(value = "/api/secondInventory/getHomeData", method = RequestMethod.GET)
     public BaseEntity<List<InventoryGoodsDTO>> getInventory(@RequestParam("id") int id, @RequestHeader("account") String account) {
         return inventoryService.getInventoryList(id, false, account);
     }
