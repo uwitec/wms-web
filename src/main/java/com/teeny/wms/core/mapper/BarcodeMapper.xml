@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.teeny.wms.core.repository.BarcodeRepository">
+
+    <select id="getGoodsList" resultType="BarcodeGoodsEntity">
+        SELECT
+            s.p_id     AS id,
+            s.Pname    AS goodsName,
+            s.Code     AS barcode,
+            s.Standard AS specification,
+            s.Name1    AS unit,
+            s.factory  AS manufacturer
+        FROM ${account}.dbo.VW_PDA_Storehouse s
+            LEFT JOIN ${account}.dbo.pda_location l ON l.l_id = s.location_id
+        WHERE l.loc_code = #{location}
+        <if test="goods != null and goods != ''">
+            AND (s.Pname LIKE '%'+#{goods}+'%')
+        </if>
+    </select>
+
+    <select id="getListByGoods" resultType="BarcodeGoodsEntity">
+        SELECT
+            p.p_id      AS id,
+            p.name      AS goodsName,
+            p.barcode   AS barcode,
+            p.Standard  AS specification,
+            p.unit1Name AS unit,
+            p.medtype   AS dosageForm,
+            p.factory   AS manufacturer
+        FROM ${account}.dbo.pda_Products p
+        WHERE p.pinyin LIKE '%' + #{goods} + '%' OR p.name LIKE '%' + #{goods} + '%'
+    </select>
+
+</mapper>

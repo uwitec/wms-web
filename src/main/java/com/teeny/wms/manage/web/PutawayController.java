@@ -47,7 +47,7 @@ public class PutawayController {
 //    //获取商品
 //    @ResponseBody
 //    @RequestMapping(value = "/api/shelve/goodsList/{orderNoId}/{allocationId}", method = RequestMethod.GET)
-//    public BaseEntity<List<CommonDTO>> getGoodsList(@PathVariable("orderNoId") int orderNoId, @PathVariable("allocationId") int allocationId) {
+//    public BaseEntity<List<CommonDTO>> getList(@PathVariable("orderNoId") int orderNoId, @PathVariable("allocationId") int allocationId) {
 //
 //        return null;
 //    }

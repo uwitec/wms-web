@@ -25,7 +25,7 @@
             p.name        AS goodsName,
             d.Batchno     AS lotNo,
             p.standard    AS specification,
-            d.MakeDate    AS productionDate,
+            d.Validdate    AS productionDate,
             p.unit1Name   AS unit,
             d.EligibleQty AS amount,
             p.Factory     AS manufacturer,

@@ -535,3 +535,23 @@ lt_id ASC
 ) ON [PRIMARY]
 END
 GO
+
+
+--条码采集表
+-- drop table pda_Products
+IF not exists (select 1 from dbo.sysobjects where id = object_id(N'[dbo].[pda_PBarcode]') and OBJECTPROPERTY(id, N'IsUserTable') = 1)
+  begin
+    CREATE TABLE [dbo].pda_PBarcode (
+      p_id INT NOT NULL DEFAULT 0, --商品id, 关联pda_products 表
+      oldbarcode VARCHAR(50) NOT NULL DEFAULT '', --去pda_products 表中的barcode 字段
+      barcode VARCHAR(50) NOT NULL DEFAULT '',	--新扫描录入的条码
+      createtime datetime  not null default (getdate()),  --创建时间
+      ZT int not null default 0,   -- 状态 0 pda 新增，1 药易通已经处理，当药易通已经处理了，再次更新条码时需要将状态修改为0
+      CONSTRAINT [PK_pda_PBarcode] PRIMARY KEY CLUSTERED
+        (
+          p_id ASC
+        )
+    ) ON [PRIMARY]
+  end
+GO
+
