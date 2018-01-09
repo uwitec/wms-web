@@ -1,6 +1,6 @@
 package com.teeny.wms.manage.web;
 
-import com.teeny.wms.core.domain.Employess;
+import com.teeny.wms.core.domain.UserEntity;
 import com.teeny.wms.core.domain.baseEntity.BaseEntity;
 import com.teeny.wms.dto.CommonDTO;
 import com.teeny.wms.model.response.InventoryCountEntity;
@@ -97,7 +97,7 @@ public class InventoryController {
     //确定
     @ResponseBody
     @RequestMapping(value = "complete", method = RequestMethod.POST)
-    public BaseEntity completeByBillId(@RequestBody List<Integer> ids, @RequestHeader("account") String account, @CurrentUser Employess user) {
+    public BaseEntity completeByBillId(@RequestBody List<Integer> ids, @RequestHeader("account") String account, @CurrentUser UserEntity user) {
         mInventoryService.complete(account, ids, user.getId());
         return new BaseEntity();
     }

@@ -7,7 +7,7 @@ import java.io.Serializable;
  *
  */
 
-public class Employess implements Serializable{
+public class UserEntity implements Serializable{
     private int id;
     private String serialNumber;
     private String password;
@@ -92,7 +92,7 @@ public class Employess implements Serializable{
 
     @Override
     public String toString() {
-        return "Employess{" +
+        return "UserEntity{" +
                 "id=" + id +
                 ", serialNumber='" + serialNumber + '\'' +
                 ", password='" + password + '\'' +

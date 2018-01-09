@@ -18,20 +18,20 @@
 
     <select id="getGoodsDetailList" parameterType="string" resultType="com.teeny.wms.dto.PutawayDTO">
         SELECT
-            d.smb_id      AS id,
-            d.original_id AS originalId,
-            d.DealStates  AS status,
-            p.p_id        AS goodsId,
-            p.name        AS goodsName,
-            d.Batchno     AS lotNo,
-            p.standard    AS specification,
-            d.Validdate    AS productionDate,
-            p.unit1Name   AS unit,
-            d.EligibleQty AS amount,
-            p.Factory     AS manufacturer,
-            l.loc_code    AS locationCode,
-            p.barcode     AS goodsCode,
-            p.pinyin      AS pinyin
+            d.smb_id                               AS id,
+            d.original_id                          AS originalId,
+            d.DealStates                           AS status,
+            p.p_id                                 AS goodsId,
+            p.name                                 AS goodsName,
+            d.Batchno                              AS lotNo,
+            p.standard                             AS specification,
+            CONVERT(VARCHAR(100), d.Validdate, 23) AS productionDate,
+            p.unit1Name                            AS unit,
+            d.EligibleQty                          AS amount,
+            p.Factory                              AS manufacturer,
+            l.loc_code                             AS locationCode,
+            p.barcode                              AS goodsCode,
+            p.pinyin                               AS pinyin
         FROM ${account}.dbo.pda_PutOnBill_D d
             INNER JOIN ${account}.dbo.pda_PutOnBill b ON d.bill_id = b.billid AND b.pdastates != 2
             LEFT JOIN ${account}.dbo.pda_location l ON l.l_id = d.Location_id

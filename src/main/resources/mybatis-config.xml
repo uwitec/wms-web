@@ -8,8 +8,6 @@
     </settings>
 
     <typeAliases>
-        <!--<typeAlias type="com.teeny.wms.core.domain.User" alias="User" />-->
-        <!--<typeAlias type="com.teeny.wms.core.domain.Employess" alias="Employess" />-->
         <package name="com.teeny.wms.model"/>
     </typeAliases>
 

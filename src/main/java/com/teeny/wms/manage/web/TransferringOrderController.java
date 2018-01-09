@@ -1,6 +1,6 @@
 package com.teeny.wms.manage.web;
 
-import com.teeny.wms.core.domain.Employess;
+import com.teeny.wms.core.domain.UserEntity;
 import com.teeny.wms.core.domain.baseEntity.BaseEntity;
 import com.teeny.wms.dto.CommonDTO;
 import com.teeny.wms.dto.LocationAndCountDTO;
@@ -22,12 +22,12 @@ import java.util.List;
 @Controller
 public class TransferringOrderController {
 
-    private final TransferService transferService;
+    private final TransferService mTransferService;
     private final CommonService commonService;
 
     @Autowired
     public TransferringOrderController(TransferService transferService, CommonService commonService) {
-        this.transferService = transferService;
+        this.mTransferService = transferService;
         this.commonService = commonService;
     }
 
@@ -36,7 +36,7 @@ public class TransferringOrderController {
     @ResponseBody
     @RequestMapping(value = "/api/transfer/goodsCode", method = RequestMethod.GET)
     public BaseEntity<List<CommonDTO>> getGoodsCode(@RequestHeader("account") String account, @RequestParam("sId") int sId, @RequestParam("saId") int saId) {
-        return transferService.getGoodsCode(account, sId, saId);
+        return mTransferService.getGoodsCode(account, sId, saId);
     }
 
 
@@ -44,14 +44,14 @@ public class TransferringOrderController {
     @ResponseBody
     @RequestMapping(value = "/api/transfer/billList", method = RequestMethod.GET)
     public BaseEntity<List<CommonDTO>> getBills(@RequestParam("sId") int sId, @RequestParam("saId") int saId, @RequestHeader("account") String account) {
-        return transferService.getBills(saId, sId, account);
+        return mTransferService.getBills(saId, sId, account);
     }
 
     //返回商品详情list
     @ResponseBody
     @RequestMapping(value = "/api/transfer/list", method = RequestMethod.GET)
     public BaseEntity<List<TransferListDTO>> getTranList(@RequestParam("billCode") String billNo, @RequestParam("goodsCode") String goodsCode, @RequestParam("sId") int sId, @RequestParam("saId") int saId, @RequestHeader("account") String account) {
-        return transferService.getTransferList(billNo, goodsCode, sId, saId, account);
+        return mTransferService.getTransferList(billNo, goodsCode, sId, saId, account);
     }
 
     //获取仓库
@@ -79,33 +79,31 @@ public class TransferringOrderController {
     //完成
     @ResponseBody
     @RequestMapping(value = "/api/transfer/updateAll", method = RequestMethod.POST)
-    public BaseEntity<String> updateAll(@RequestBody List<Integer> ids, @RequestHeader("account") String account, @CurrentUser Employess user) {
-        return transferService.updateAll(ids, account, user.getId());
+    public BaseEntity<String> updateAll(@RequestBody List<Integer> ids, @RequestHeader("account") String account, @CurrentUser UserEntity user) {
+        return mTransferService.updateAll(ids, account, user.getId());
     }
 
 
     //完成一个
     @ResponseBody
     @RequestMapping(value = "/api/transfer/updateOne", method = RequestMethod.POST)
-    public BaseEntity<String> updateOne(@RequestParam("id") int id, @RequestHeader("account") String account, @CurrentUser Employess user) {
-        return transferService.updateOne(id, account, user.getId());
+    public BaseEntity<String> updateOne(@RequestParam("id") int id, @RequestHeader("account") String account, @CurrentUser UserEntity user) {
+        return mTransferService.updateOne(id, account, user.getId());
     }
 
     //修改
     @ResponseBody
     @RequestMapping(value = "/api/transfer/update", method = RequestMethod.POST)
-    public BaseEntity update(@RequestBody PutawayAddDTO putawayAddDTO, @RequestHeader("account") String account, @CurrentUser Employess user) {
+    public BaseEntity update(@RequestBody PutawayAddDTO putawayAddDTO, @RequestHeader("account") String account, @CurrentUser UserEntity user) {
         System.out.println(putawayAddDTO);
-        return transferService.update(putawayAddDTO, account, user.getId());
+        return mTransferService.update(putawayAddDTO, account, user.getId());
     }
 
     //获取每个商品对应的货位
     @ResponseBody
     @RequestMapping(value = "/api/transfer/getLocations/{id}", method = RequestMethod.GET)
     public BaseEntity<List<LocationAndCountDTO>> getLocationAndAmount(@PathVariable("id") int id, @RequestHeader("account") String account) {
-        return transferService.getLocationListById(id, account);
+        return mTransferService.getLocationListById(id, account);
     }
-
-
 }
 

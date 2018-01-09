@@ -1,6 +1,6 @@
 package com.teeny.wms.service.impl;
 
-import com.teeny.wms.core.domain.Employess;
+import com.teeny.wms.core.domain.UserEntity;
 import com.teeny.wms.core.repository.EmployessRepository;
 import com.teeny.wms.dto.CommonDTO;
 import com.teeny.wms.dto.EmployeesDTO;
@@ -23,7 +23,7 @@ public class SystemServiceImpl implements SystemService {
         this.employessRepository = employessRepository;
     }
 
-    public Employess findByUsername(String username, String account) {
+    public UserEntity findByUsername(String username, String account) {
         return employessRepository.findEmployerByUsername(username, account);
     }
 

@@ -1,5 +1,6 @@
 package com.teeny.wms.core.repository;
 
+import com.teeny.wms.model.request.BarcodeAddRequestEntity;
 import com.teeny.wms.model.response.BarcodeGoodsEntity;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
@@ -20,4 +21,10 @@ public interface BarcodeRepository {
     List<BarcodeGoodsEntity> getList(@Param("account") String account, @Param("location") String location, @Param("goods") String goods);
 
     List<BarcodeGoodsEntity> getListByGoods(@Param("account") String account, @Param("goods") String goods);
+
+    BarcodeGoodsEntity getGoodsById(@Param("account") String account, @Param("id") int id);
+
+    List<BarcodeGoodsEntity> getGoodsList(@Param("account") String account, @Param("goods") String goods);
+
+    void add(@Param("account") String account, @Param("item") BarcodeAddRequestEntity entity);
 }

@@ -542,6 +542,7 @@ GO
 IF not exists (select 1 from dbo.sysobjects where id = object_id(N'[dbo].[pda_PBarcode]') and OBJECTPROPERTY(id, N'IsUserTable') = 1)
   begin
     CREATE TABLE [dbo].pda_PBarcode (
+      id INT IDENTITY (1,1),
       p_id INT NOT NULL DEFAULT 0, --商品id, 关联pda_products 表
       oldbarcode VARCHAR(50) NOT NULL DEFAULT '', --去pda_products 表中的barcode 字段
       barcode VARCHAR(50) NOT NULL DEFAULT '',	--新扫描录入的条码
@@ -553,5 +554,63 @@ IF not exists (select 1 from dbo.sysobjects where id = object_id(N'[dbo].[pda_PB
         )
     ) ON [PRIMARY]
   end
+GO
+
+---新增调拨单
+-- drop table pda_AddTranBill
+IF not exists (select 1 from dbo.sysobjects where id = object_id(N'[dbo].[pda_AddTranBill]') and OBJECTPROPERTY(id, N'IsUserTable') = 1)
+  begin
+    CREATE TABLE [dbo].pda_AddTranBill(
+      billid INT IDENTITY(1,1), --调拨单id，自增列
+      billnumber VARCHAR(30) NOT NULL DEFAULT '',--调拨单单号，根据职员编码+时间（yymmddhhmmss） 生成
+      e_id INT NOT NULL DEFAULT 0,--经手人 pda_employees.e_id， 取pda登录人员id
+      billstates INT NOT NULL DEFAULT 0,--状态 0草稿，后台不采集 1 已正式提交，正式提交后，pda不允许修改，后台允许读取数据，后台不允许修改这个字段，避免pda 判断状态时出错
+      pdastates INT NOT NULL DEFAULT 0,--交换状态 0, 新增， 1 后台已经成功读取数据， -1 后台读取数据出错
+      createtime datetime  not null default (getdate()),--创建时间
+      pdaReTime DATETIME NOT NULL DEFAULT 0,--读取时间
+      CONSTRAINT [PK_pda_AddTranBill] PRIMARY KEY CLUSTERED
+        (
+          billid ASC
+        )
+    ) ON [PRIMARY]
+  end
+
+GO
+
+
+--新增调拨单明细
+-- drop table pda_AddTranBill_D
+IF not exists (select 1 from dbo.sysobjects where id = object_id(N'[dbo].[pda_AddTranBill_D]') and OBJECTPROPERTY(id, N'IsUserTable') = 1)
+  begin
+    CREATE TABLE [dbo].pda_AddTranBill_D(
+      smb_id INT IDENTITY(1,1),--调拨单明细表(自增列)
+      bill_id INT NOT NULL DEFAULT 0,--调拨单id,=pda_AddTranBill.billid
+      p_id INT NOT NULL DEFAULT 0,--商品id,=pda_Products.p_id
+      storehouse_id int not null default 0, --库存表唯一id
+      Batchno	VARCHAR(20) NOT NULL DEFAULT '',--批号
+      createtime datetime  not null default (getdate()),--创建时间
+      pdastates INT NOT NULL DEFAULT 0,--状态 0暂存数据(pda_AddTranBillLoc_D没有smb_id相同的数据)   1完成数据
+      CONSTRAINT [PK_pda_AddTranBill_D] PRIMARY KEY CLUSTERED
+        (
+          smb_id ASC
+        )
+
+    ) ON [PRIMARY]
+  end
+
+go
+-- drop table pda_AddTranBillLoc_D
+IF not exists (select 1 from dbo.sysobjects where id = object_id(N'[dbo].[pda_AddTranBillLoc_D]') and OBJECTPROPERTY(id, N'IsUserTable') = 1)
+  begin
+    CREATE TABLE [dbo].pda_AddTranBillLoc_D(
+      id INT IDENTITY (1,1),
+      bill_id INT NOT NULL DEFAULT 0,--调拨单id,=pda_TranBill.billid
+      smb_id INT not null default(0), --调拨单明细表id和pda_AddTranBill_D表关联
+      quantity	NUMERIC(18,4) NOT NULL DEFAULT 0,--数量
+      location_id2	INT NOT NULL DEFAULT 0,--调入货位id,=pda_location.l_id
+      createtime datetime  not null default (getdate()),--创建时间
+    ) ON [PRIMARY]
+  end
+
 GO
 

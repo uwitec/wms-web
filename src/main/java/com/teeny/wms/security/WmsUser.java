@@ -1,6 +1,6 @@
 package com.teeny.wms.security;
 
-import com.teeny.wms.core.domain.Employess;
+import com.teeny.wms.core.domain.UserEntity;
 import com.teeny.wms.core.enums.RoleType;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -14,9 +14,9 @@ import java.util.Collection;
  */
 public class WmsUser implements UserDetails {
 
-    private Employess user;
+    private UserEntity user;
 
-    public WmsUser(Employess user) {
+    public WmsUser(UserEntity user) {
         super();
         this.user = user;
     }
@@ -52,7 +52,7 @@ public class WmsUser implements UserDetails {
         return true;
     }
 
-    public Employess getUser() {
+    public UserEntity getUser() {
         return this.user;
     }
 }

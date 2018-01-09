@@ -6,7 +6,7 @@
 <mapper namespace="com.teeny.wms.core.repository.EmployessRepository">
 
 
-    <select id="findEmployerByUsername" parameterType="string" resultType="com.teeny.wms.core.domain.Employess">
+    <select id="findEmployerByUsername" parameterType="string" resultType="com.teeny.wms.core.domain.UserEntity">
         SELECT
             e.e_id          AS id,
             e.password,

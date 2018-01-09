@@ -1,6 +1,6 @@
 package com.teeny.wms.core.repository;
 
-import com.teeny.wms.core.domain.Employess;
+import com.teeny.wms.core.domain.UserEntity;
 import com.teeny.wms.dto.CommonDTO;
 import com.teeny.wms.dto.EmployeesDTO;
 import org.apache.ibatis.annotations.Param;
@@ -19,8 +19,8 @@ public interface EmployessRepository {
     @Select("SELECT e_id AS id, name FROM pda_employees")
     List<CommonDTO> findAll(String account);
 
-    Employess findEmployerByUsername(@Param("username") String username, @Param("account") String account);
+    UserEntity findEmployerByUsername(@Param("username") String username, @Param("account") String account);
 
-    public void addEmployer(Employess employess);
+    public void addEmployer(UserEntity userEntity);
     public EmployeesDTO findByPinyin(@Param("username") String username);
 }

@@ -61,6 +61,7 @@
             d.EligibleQty                          AS quantity,
             c.name                                 AS manufacturer,
             d.Batchno                              AS lotNo,
+            p.p_id                                 AS goodsId,
             p.name                                 AS goodsName,
             p.standard                             AS specification,
             CONVERT(VARCHAR(100), d.Validdate, 23) AS validityDate,

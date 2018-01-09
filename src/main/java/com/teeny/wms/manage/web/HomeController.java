@@ -1,6 +1,6 @@
 package com.teeny.wms.manage.web;
 
-import com.teeny.wms.core.domain.Employess;
+import com.teeny.wms.core.domain.UserEntity;
 import com.teeny.wms.core.domain.baseEntity.BaseEntity;
 import com.teeny.wms.dto.AccountSetDTO;
 import com.teeny.wms.dto.BillCountDTO;
@@ -69,8 +69,8 @@ public class HomeController {
     //单据查询
     @ResponseBody
     @RequestMapping(value = "/api/home/username", method = RequestMethod.GET)
-    public BaseEntity<String> getUsername(@CurrentUser Employess employess) {
-        return new BaseEntity<>(employess.getUsername());
+    public BaseEntity<String> getUsername(@CurrentUser UserEntity userEntity) {
+        return new BaseEntity<>(userEntity.getUsername());
     }
 
 }

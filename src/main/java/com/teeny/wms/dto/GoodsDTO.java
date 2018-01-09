@@ -11,6 +11,7 @@ public class GoodsDTO implements Serializable {
     private int originalId;
     private String billNo;
     private String goodsName; //商品名 1
+    private int goodsId; //商品id
     private String lotNo; //批号 1
     private String specification; //规格 1
     private String validityDate; //有效期 1
@@ -179,5 +180,13 @@ public class GoodsDTO implements Serializable {
 
     public void setPinyin(String pinyin) {
         this.pinyin = pinyin;
+    }
+
+    public int getGoodsId() {
+        return goodsId;
+    }
+
+    public void setGoodsId(int goodsId) {
+        this.goodsId = goodsId;
     }
 }

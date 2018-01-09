@@ -21,6 +21,9 @@ public class BarcodeGoodsEntity {
     private String manufacturer;          //厂家
     private String dosageForm;            //剂型
 
+    private String makeArea;              //产地
+    private String approvalNumber;        //批准文号
+
     public int getId() {
         return id;
     }
@@ -75,5 +78,21 @@ public class BarcodeGoodsEntity {
 
     public void setDosageForm(String dosageForm) {
         this.dosageForm = dosageForm;
+    }
+
+    public String getMakeArea() {
+        return makeArea;
+    }
+
+    public void setMakeArea(String makeArea) {
+        this.makeArea = makeArea;
+    }
+
+    public String getApprovalNumber() {
+        return approvalNumber;
+    }
+
+    public void setApprovalNumber(String approvalNumber) {
+        this.approvalNumber = approvalNumber;
     }
 }

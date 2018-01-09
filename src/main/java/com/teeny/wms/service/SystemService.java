@@ -1,6 +1,6 @@
 package com.teeny.wms.service;
 
-import com.teeny.wms.core.domain.Employess;
+import com.teeny.wms.core.domain.UserEntity;
 import com.teeny.wms.dto.CommonDTO;
 import com.teeny.wms.dto.EmployeesDTO;
 
@@ -11,7 +11,7 @@ import java.util.List;
  *
  */
 public interface SystemService {
-    Employess findByUsername(String username, String account);
+    UserEntity findByUsername(String username, String account);
 
     EmployeesDTO findByPinyin(String username);
 

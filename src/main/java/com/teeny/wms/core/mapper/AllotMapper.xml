@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.teeny.wms.core.repository.AllotRepository">
+    <select id="getAllotGoodsList" resultType="AllotGoodsEntity">
+        SELECT
+            s.storehouse_id                       AS id,
+            p.p_id                                AS goodsId,
+            p.name                                AS goodsName,
+            s.batchno                             AS lotNo,
+            p.standard                            AS specification,
+            CONVERT(VARCHAR(100), p.validday, 23) AS validityDate,
+            CONVERT(VARCHAR(100), s.makedate, 23) AS productionDate,
+            p.unit1Name                           AS unit,
+            s.quantity                            AS amount,
+            p.Factory                             AS manufacturer,
+            l.loc_code                            AS locationCode,
+            p.barcode                             AS goodsCode
+        FROM ${account}.dbo.VW_PDA_Storehouse s
+            LEFT JOIN ${account}.dbo.pda_location l ON l.l_id = s.location_id
+            LEFT JOIN ${account}.dbo.pda_Products p ON p.p_id = s.p_id
+        <where>
+            <if test="location != null and location != ''">
+                l.loc_code = #{location}
+            </if>
+            <if test="goods != null and goods != ''">
+                AND (p.barcode = #{goods} OR p.pinyin LIKE '%' + #{goods} + '%' OR p.name LIKE '%' + #{goods} + '%')
+            </if>
+        </where>
+    </select>
+
+    <insert id="generateBill">
+        <selectKey keyProperty="count" resultType="int" order="BEFORE">
+            SELECT count(1) FROM ${account}.dbo.pda_AddTranBill b WHERE b.pdastates = 0 AND b.e_id = #{userId}
+        </selectKey>
+
+        <if test="count == 0">
+            INSERT INTO ${account}.dbo.pda_AddTranBill (billnumber, e_id, billstates, pdastates, createtime) VALUES (#{billNo}, #{userId}, 0, 0, getdate())
+        </if>
+    </insert>
+
+    <select id="getId" resultType="int">
+        SELECT billid FROM ${account}.dbo.pda_AddTranBill b WHERE b.pdastates = 0 AND b.e_id = #{userId}
+    </select>
+
+    <insert id="select">
+        <selectKey keyProperty="count" resultType="int" order="BEFORE">
+            SELECT count(1)  FROM ${account}.dbo.pda_AddTranBill_D d WHERE d.storehouse_id = #{id}
+        </selectKey>
+        <if test="count == 0">
+            INSERT INTO ${account}.dbo.pda_AddTranBill_D
+                (bill_id,
+                p_id,
+                storehouse_id,
+                Batchno,
+                createtime,
+                pdastates)
+            SELECT
+                #{billId},
+                s.p_id,
+                #{id},
+                s.batchno,
+                getdate(),
+                0
+            FROM ${account}.dbo.VW_PDA_Storehouse s
+            WHERE s.storehouse_id = #{id}
+        </if>
+        <if test="count > 0">
+            UPDATE ${account}.dbo.pda_AddTranBill_D SET createtime = getdate() d.storehouse_id = #{id}
+        </if>
+    </insert>
+</mapper>

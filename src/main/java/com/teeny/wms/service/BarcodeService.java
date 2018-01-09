@@ -1,5 +1,6 @@
 package com.teeny.wms.service;
 
+import com.teeny.wms.model.request.BarcodeAddRequestEntity;
 import com.teeny.wms.model.response.BarcodeGoodsEntity;
 
 import java.util.List;
@@ -14,5 +15,11 @@ import java.util.List;
  */
 public interface BarcodeService {
 
-    List<BarcodeGoodsEntity> getGoodsList(String account, String location, String goods);
+    List<BarcodeGoodsEntity> getList(String account, String location, String goods);
+
+    BarcodeGoodsEntity getGoodsById(String account, int id);
+
+    List<BarcodeGoodsEntity> getGoodsList(String account, String goods);
+
+    void add(String account, BarcodeAddRequestEntity entity);
 }

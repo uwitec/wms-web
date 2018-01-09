@@ -1,6 +1,6 @@
 package com.teeny.wms.manage.web;
 
-import com.teeny.wms.core.domain.Employess;
+import com.teeny.wms.core.domain.UserEntity;
 import com.teeny.wms.core.domain.baseEntity.BaseEntity;
 import com.teeny.wms.dto.*;
 import com.teeny.wms.security.CurrentUser;
@@ -39,7 +39,7 @@ public class StoreInventoryController {
     //单个完成
     @ResponseBody
     @RequestMapping(value = "/api/shopFirst/single", method = RequestMethod.POST)
-    public BaseEntity<Integer> completeOne(@RequestParam("id") int goodsDetailId, @RequestHeader("account") String account, @CurrentUser Employess user) {
+    public BaseEntity<Integer> completeOne(@RequestParam("id") int goodsDetailId, @RequestHeader("account") String account, @CurrentUser UserEntity user) {
         BaseEntity<Integer> result = inventoryService.completeOne(goodsDetailId, account, user.getId());
         result.setData(goodsDetailId);
         return result;
@@ -48,14 +48,14 @@ public class StoreInventoryController {
     //确定
     @ResponseBody
     @RequestMapping(value = "/api/shopFirst/complete", method = RequestMethod.POST)
-    public BaseEntity<String> completeByBillId(@RequestBody List<Integer> ids, @RequestHeader("account") String account, @CurrentUser Employess user) {
+    public BaseEntity<String> completeByBillId(@RequestBody List<Integer> ids, @RequestHeader("account") String account, @CurrentUser UserEntity user) {
         return inventoryService.completeByParam(ids, account, user.getId());
     }
 
     //盘点编辑
     @ResponseBody
     @RequestMapping(value = "/api/shopFirst/edit", method = RequestMethod.POST)
-    public BaseEntity<String> edit(@RequestBody PdEditDTO pdEditDTO, @RequestHeader("account") String account, @CurrentUser Employess user) {
+    public BaseEntity<String> edit(@RequestBody PdEditDTO pdEditDTO, @RequestHeader("account") String account, @CurrentUser UserEntity user) {
         return inventoryService.edit(pdEditDTO, account, user.getId());
     }
 
@@ -91,7 +91,7 @@ public class StoreInventoryController {
     //新增
     @ResponseBody
     @RequestMapping(value = "/api/shopFirst/add", method = RequestMethod.PUT)
-    public BaseEntity addProduct(@RequestBody InventoryAddDTO addProductDTO, @RequestHeader("account") String account, @RequestHeader("sId") int sId, @CurrentUser Employess user) {
+    public BaseEntity addProduct(@RequestBody InventoryAddDTO addProductDTO, @RequestHeader("account") String account, @RequestHeader("sId") int sId, @CurrentUser UserEntity user) {
         return inventoryService.addProduct(1, addProductDTO, account, sId, user.getId());
     }
 

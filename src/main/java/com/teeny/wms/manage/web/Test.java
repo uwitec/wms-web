@@ -1,6 +1,6 @@
 package com.teeny.wms.manage.web;
 
-import com.teeny.wms.core.domain.Employess;
+import com.teeny.wms.core.domain.UserEntity;
 import com.teeny.wms.dto.CommonDTO;
 import com.teeny.wms.security.CurrentUser;
 import com.teeny.wms.service.AcceptanceService;
@@ -34,7 +34,7 @@ public class Test {
     }
 
     @RequestMapping(value = "/api/haha", method = RequestMethod.GET)
-    public void haha(Model model, @CurrentUser Employess user) {
+    public void haha(Model model, @CurrentUser UserEntity user) {
         List<String> list = new ArrayList<String>();
         list.add("ddd");
         list.add("fff");
@@ -61,8 +61,8 @@ public class Test {
 //    }
 
     @RequestMapping(value = "/employer", method = RequestMethod.GET)
-    public void findEmployerByUsername(Model model, @CurrentUser Employess employess, @RequestHeader("account") String account) {
-        System.out.print(employess.getPassword());
+    public void findEmployerByUsername(Model model, @CurrentUser UserEntity userEntity, @RequestHeader("account") String account) {
+        System.out.print(userEntity.getPassword());
         List<CommonDTO> employees = systemService.findAll(account);
         model.addAttribute("emp", employees);
     }
