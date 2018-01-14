@@ -38,6 +38,7 @@ public class AllotServiceImpl implements AllotService {
     }
 
     @Override
+
     public void select(String account, int id, int userId, String serial) {
         String billNo = serial + DateFormatUtils.format(new Date(), DATE_PATTERN);
         //生成大单据
