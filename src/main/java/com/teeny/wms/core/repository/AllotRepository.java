@@ -21,7 +21,5 @@ public interface AllotRepository {
 
     void generateBill(@Param("account") String account, @Param("userId") int userId, @Param("billNo") String billNo);
 
-    int getId(@Param("account") String account, @Param("userId") int userId);
-
-    void select(@Param("account") String account, @Param("id") int id, @Param("billId") int billId);
+    void select(@Param("account") String account, @Param("id") int id, @Param("userId") int userId);
 }

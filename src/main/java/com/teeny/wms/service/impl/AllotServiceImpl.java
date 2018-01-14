@@ -42,9 +42,7 @@ public class AllotServiceImpl implements AllotService {
         String billNo = serial + DateFormatUtils.format(new Date(), DATE_PATTERN);
         //生成大单据
         mAllotRepository.generateBill(account, userId, billNo);
-        //查找大单据id
-        int billId = mAllotRepository.getId(account, userId);
         //添加至待完成
-        mAllotRepository.select(account, id, billId);
+        mAllotRepository.select(account, id, userId);
     }
 }
